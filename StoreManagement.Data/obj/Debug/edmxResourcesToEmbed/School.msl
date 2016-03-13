@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StoreManagementModelStoreContainer" CdmEntityContainer="StoreManagementEntities">
+    <FunctionImportMapping FunctionImportName="USP_Chemical_Insert" FunctionName="StoreManagementModel.Store.USP_Chemical_Insert">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StoreManagementModel.USP_Chemical_Insert_Result">
+          <ScalarProperty Name="CID" ColumnName="CID" />
+          <ScalarProperty Name="CFormula" ColumnName="CFormula" />
+          <ScalarProperty Name="CName" ColumnName="CName" />
+          <ScalarProperty Name="CDescription" ColumnName="CDescription" />
+          <ScalarProperty Name="CState" ColumnName="CState" />
+          <ScalarProperty Name="CColor" ColumnName="CColor" />
+          <ScalarProperty Name="IsSoluble" ColumnName="IsSoluble" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="T_Chemical">
+      <EntityTypeMapping TypeName="StoreManagementModel.T_Chemical">
+        <MappingFragment StoreEntitySet="T_Chemical">
+          <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsSoluble" ColumnName="IsSoluble" />
+          <ScalarProperty Name="CColor" ColumnName="CColor" />
+          <ScalarProperty Name="CState" ColumnName="CState" />
+          <ScalarProperty Name="CDescription" ColumnName="CDescription" />
+          <ScalarProperty Name="CName" ColumnName="CName" />
+          <ScalarProperty Name="CFormula" ColumnName="CFormula" />
+          <ScalarProperty Name="CID" ColumnName="CID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_Chemical_All_Count" FunctionName="StoreManagementModel.Store.USP_Chemical_All_Count">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StoreManagementModel.USP_Chemical_All_Count_Result">
+          <ScalarProperty Name="Result" ColumnName="Result" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_Chemical_All_Get" FunctionName="StoreManagementModel.Store.USP_Chemical_All_Get">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StoreManagementModel.USP_Chemical_All_Get_Result">
+          <ScalarProperty Name="CID" ColumnName="CID" />
+          <ScalarProperty Name="CFormula" ColumnName="CFormula" />
+          <ScalarProperty Name="CName" ColumnName="CName" />
+          <ScalarProperty Name="CDescription" ColumnName="CDescription" />
+          <ScalarProperty Name="CState" ColumnName="CState" />
+          <ScalarProperty Name="CColor" ColumnName="CColor" />
+          <ScalarProperty Name="IsSoluble" ColumnName="IsSoluble" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_State_All_Get" FunctionName="StoreManagementModel.Store.USP_State_All_Get">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StoreManagementModel.USP_State_All_Get_Result">
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateDescription" ColumnName="StateDescription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_Reaction_All_Count" FunctionName="StoreManagementModel.Store.USP_Reaction_All_Count" />
+    <FunctionImportMapping FunctionImportName="USP_Reaction_All_Get" FunctionName="StoreManagementModel.Store.USP_Reaction_All_Get">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StoreManagementModel.USP_Reaction_All_Get_Result">
+          <ScalarProperty Name="ReactionID" ColumnName="ReactionID" />
+          <ScalarProperty Name="REquation" ColumnName="REquation" />
+          <ScalarProperty Name="RDescription" ColumnName="RDescription" />
+          <ScalarProperty Name="IsRequireLight" ColumnName="IsRequireLight" />
+          <ScalarProperty Name="IsRequireTemperature" ColumnName="IsRequireTemperature" />
+          <ScalarProperty Name="IsRequirePressure" ColumnName="IsRequirePressure" />
+          <ScalarProperty Name="MinTemperature" ColumnName="MinTemperature" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_Reaction_Insert" FunctionName="StoreManagementModel.Store.USP_Reaction_Insert" />
+  </EntityContainerMapping>
+</Mapping>

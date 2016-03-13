@@ -1,0 +1,5 @@
+E:\Work\MySchool\MySchool.Common\bin\Debug\MySchool.Common.dll
+E:\Work\MySchool\MySchool.Common\bin\Debug\MySchool.Common.pdb
+E:\Work\MySchool\MySchool.Common\obj\Debug\MySchool.Common.dll
+E:\Work\MySchool\MySchool.Common\obj\Debug\MySchool.Common.pdb
+E:\Work\MySchool\MySchool.Common\obj\Debug\MySchool.Common.csprojResolveAssemblyReference.cache

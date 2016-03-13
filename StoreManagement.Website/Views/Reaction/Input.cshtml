@@ -1,0 +1,106 @@
+@{
+    ViewBag.Title = "Collect Reaction";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/Reaction")
+}
+
+<div class="container" ng-controller="ReactionController">
+    <div class="row">
+        <div class="col-md-8">
+            <label>Equation:</label>
+            <input type="text" placeholder="ie. C + O2 = CO2" ng-model="Form.REquation" class="form-control" check-empty="" check-empty-message="Please enter value!" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label>Description:</label>
+            <input type="text" class="form-control" ng-model="Form.RDescription" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label>Light:</label>
+            <select class="form-control" ng-model="Form.IsRequireLight">
+                <option value="">--Unknown--</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Pressure:</label>
+            <select class="form-control" ng-model="Form.IsRequirePressure">
+                <option value="">--Unknown--</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Temperature:</label>
+            <select class="form-control" ng-model="Form.IsRequireTemperature">
+                <option value="">--Unknown--</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Min Temperature:</label>
+            <input type="text" class="form-control" ng-model="Form.MinTemperature" ng-disabled="Form.IsRequireTemperature != 'true'" check-empty="" check-empty-message="Please enter value!" />
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-9 text-center">
+            <button class="btn btn-primary btn-sm" type="button" ng-click="SaveReaction()">Save </button>
+            <button class="btn btn-primary btn-sm" type="button" ng-click="ResetForm()"> Reset </button>
+        </div>
+    </div>
+    <div class="row" style="margin: 10px 0px">
+        <div class="col-md-9">
+            <label>Result:</label>
+        </div>
+        <div class="col-md-3 pull-right">
+            <grid-filter></grid-filter>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th grid-sort-by="REquation"><span>Equation</span></th>
+                        <th grid-sort-by="RDescription"><span>Description</span></th>
+                        <th grid-sort-by="IsRequireLight"><span>Light</span></th>
+                        <th grid-sort-by="IsRequirePressure"><span>Pressure</span></th>
+                        <th grid-sort-by="IsRequireTemperature"><span>Temperature</span></th>
+                        <th grid-sort-by="MinTemperature"><span>Min Temperature</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in DataSet.Data" >
+                        <td ng-bind="item.REquation"></td>
+                        <td ng-bind="item.RDescription"></td>
+                        <td ng-bind="item.IsRequireLight"></td>
+                        <td ng-bind="item.IsRequirePressure"></td>
+                        <td ng-bind="item.IsRequireTemperature"></td>
+                        <td ng-bind="item.MinTemperature"></td>
+                    </tr>
+                    <tr ng-if="!HasRecord()">
+                        <td colspan="6" align="center"> No Item Found! </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-9 pull-left">
+                    <grid-paging></grid-paging>
+                </div>
+
+                <div class="col-md-3 pull-right">
+                    <grid-page-size></grid-page-size>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+﻿<div class="row" style="padding-top: 5px">
+    <div class="col-md-5 pull-right">
+        <button class="btn btn-primary" ng-click="SaveProductForm(false)">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-click="SaveProductForm(true)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu và tiếp tục</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseProductDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <h4>Thông tin cơ bản</h4>
+        <span>Nhập tên và các thông tin cơ bản của hàng hoá</span>
+    </div>
+    <div class="col-md-9 form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label margin-top-10">Tên hàng hóa</label>
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Nhập tên hàng hóa"
+                       check-empty="" check-empty-message="Vui lòng nhập tên hàng hóa."
+                       check-length="500" check-length-message="Chiều dài tối ta là {0}." />
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Số lượng</label>
+
+                <input class="form-control text-right" ng-model="ProductForm.Quantity" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1' " check-integer
+                       check-range="0;100000" check-range-message="Số lượng nằm trong khoảng [0;100000]" />
+
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 ">
+                        <input class="form-control" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
+                               ng-true-value="'1'" ng-false-value="'0'" />
+                    </div>
+                    <div class="col-md-11 margin-top-10"> Theo dõi tồn kho?</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <input class="form-control" type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
+                               ng-true-value="'1'" ng-false-value="'0'" />
+                    </div>
+                    <div class="col-md-11 margin-top-10"> Cho phép bán âm?</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Giá vốn</label>
+                <input class="form-control text-right" ng-model="ProductForm.Cost"
+                       check-currency />
+            </div>
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Giá bán</label>
+                <input class="form-control text-right" ng-model="ProductForm.Price"
+                       check-currency />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Nhóm hàng</label>
+                <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                        dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""></select>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Nhà sản xuất</label>
+                <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
+                        dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Mã hàng hóa</label> <span> (Tối đa 32 kí tự) </span>
+                <input class="form-control" ng-model="ProductForm.ProductCode"
+                       placeholder="Hệ thống tự tạo mã nếu để trống (HH000001)"
+                       check-length="32" check-length-message="Chiều dài tối ta là {0}."
+                       check-custom="CheckProductCodeUnique" check-custom-message="Mã hàng hóa không được trùng mã đã tồn tại." />
+            </div>
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Thuế VAT</label>
+                <select class="form-control" ng-model="ProductForm.VAT">
+                    <option value="0">Không tính thuế</option>
+                    <option value="0">0%</option>
+                    <option value="10">10%</option>
+                    <option value="15">15%</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hr"></div>
+<div class="row">
+    <div class="col-md-3">
+        <h4>Chính sách kho</h4>
+        <span>Thiết lập phương thức quản lý kho đối với hàng hoá này.</span>
+    </div>
+    <div class="col-md-9 form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Mức tồn kho tối thiểu</label>
+                <input class="form-control text-right" ng-model="ProductForm.AllowMin" check-integer />
+            </div>
+            <div class="col-md-6">
+                <label class="control-label margin-top-10">Mức tồn kho tối đa</label>
+                <input class="form-control text-right" ng-model="ProductForm.AllowMax" check-integer
+                       check-range="{{ProductForm.AllowMin}};" check-range-message="Tồn kho tối đa phải lớn hơn hoặc bằng tồn kho tối thiểu." />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 ">
+                <input class="form-control" type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
+                       ng-true-value="'1'" ng-false-value="'0'" />
+            </div>
+            <div class="col-md-11 margin-top-10"> Quản lý tồn kho theo serial</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 ">
+                <input class="form-control" type="checkbox" ng-model="ProductForm.IsManageAttribute"
+                       ng-true-value="'1'" ng-false-value="'0'" />
+            </div>
+            <div class="col-md-8 margin-top-10"> Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...) </div>
+            <div class="col-md-3 margin-top-10">
+                <button class="btn btn-primary btn-sm" >
+                    <i class="fa-list fa"></i>Quản lý thuộc tính
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hr"></div>
+<div class="row">
+    <div class="col-md-3">
+        <h4>Mô tả chi tiết</h4>
+        <span>Hình ảnh và mô tả hàng hóa.</span>
+    </div>
+    <div class="col-md-9 form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label margin-top-10">Hình ảnh</label>
+                <input class="form-control" type="file" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label margin-top-10">Mô tả</label>
+                <textarea class="form-control" ng-model="ProductForm.Description" > </textarea>
+            </div>
+        </div>
+     </div>
+</div>

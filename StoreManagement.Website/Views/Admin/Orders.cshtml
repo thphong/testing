@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Store Management";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/DataList")
+}
+
+<div ng-controller="RootController">
+    <div class="container-fluid">
+        <div class="row" style="padding-top: 5px">
+            <div class="col-md-offset-6 col-md-4 pull-right" >
+                <button class="btn btn-success btn-primary">
+                    <i class="fa fa-shopping-cart white"></i>
+                    <span >Đặt hàng</span>
+                </button>
+                <button class="btn btn-success btn-primary">
+                    <i class="fa fa-desktop white"></i>
+                    <span>Bán hàng</span>
+                </button>
+                <span grid-export-import-for="DataList_001"></span>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+            <div class="col-md-3">
+                <span grid-filter-for="DataList_001"></span>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control input-sm" style="margin-left: 5px; width: 160px;">
+                    <option selected="selected" value="0">Đơn hàng</option>
+                    <option value="1">Đơn hàng đã xóa</option>
+                    <option value="2">Đơn hàng còn nợ</option>
+                </select>
+            </div>
+            <div class="col-md-6 pull-right">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table grid-data="DataList_001"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="get" @*get/getall*@
+                       grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
+                       grid-filter-condition="[IsActive] = {{1}}" @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[OrderCode] ASC" @*must have [fieldname] for each colum field*@
+                       class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
+                            <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
+                            <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
+                            <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
+                            <th grid-defined-colum="Customer.CustomerName, CustomerName"><span>Khách hàng</span></th>
+                            <th grid-defined-colum="OrderStatus.StatusName"><span>Trạng thái</span></th>
+                            <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                            <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                            <th></th>
+                            <th></th>
+                            <th style="display:none;" grid-defined-colum="OrderId"></th>
+                            <th style="display:none;" grid-defined-colum="Cashier"></th>
+                            <th style="display:none;" grid-defined-colum="StoreId"></th>
+                            <th style="display:none;" grid-defined-colum="OrderStatus"></th>
+                            <th style="display:none;" grid-defined-colum="Customer"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*Dataset must have grid id*@
+                        <tr ng-repeat="item in DataSet.DataList_001.Data" ng-click="ClickOnItem(item)" ng-class="{'curent-record' : (item.OrderId == Form.OrderId)}">
+                            <td ng-bind="item.OrderCode"></td>
+                            <td ng-bind="item.StoreCode"></td>
+                            <td ng-bind="item.SoldDate"></td>
+                            <td ng-bind="item.CashierName"></td>
+                            <td ng-bind="item.CustomerName"></td>
+                            <td >
+                                <span class="label label-success" ng-class="{1:'label-warning', 2:'label-success', 3:'label-warning', 4:'label-warning', 5:'label-success',6:'label-success' }[item.OrderStatus]" ng-bind="item.StatusName"></span>
+                            </td>
+                            <td ><span ng-bind="item.SumMoney" class="bold"></span></td>
+                            <td ng-bind="item.DebtMoney"></td>
+                            <td>
+                                <a class="grey margin-left-10">
+                                    <i class="fa-print fa"></i>
+                                </a>
+                                <a class="red margin-left-10">
+                                    <i class="fa-trash fa"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <input type="checkbox" />
+                            </td>
+                        </tr>
+                        <tr ng-if="!DataSet.DataList_001.HasRecord()">
+                            @*Edit colspan*@
+                            <td colspan="11" align="center"> No Item Found! </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-9 pull-left">
+                        <span grid-paging-for="DataList_001"></span>
+                    </div>
+
+                    <div class="col-md-3 pull-right">
+                        <span grid-page-size-for="DataList_001"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

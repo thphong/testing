@@ -1,0 +1,10 @@
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll.config
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\StoreManagement.Data.pdb
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\EntityFramework.dll
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\EntityFramework.xml
+E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
+E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb
+E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache

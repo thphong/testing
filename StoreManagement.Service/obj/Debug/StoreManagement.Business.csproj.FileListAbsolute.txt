@@ -1,0 +1,16 @@
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\StoreManagement.Business.dll.config
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\StoreManagement.Business.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\StoreManagement.Business.pdb
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\AutoMapper.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\EntityFramework.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\EntityFramework.SqlServer.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\SharpRepository.EfRepository.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\SharpRepository.Repository.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\StoreManagement.Data.dll
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\StoreManagement.Data.pdb
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\AutoMapper.xml
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\EntityFramework.xml
+E:\Work\StoreManagement\StoreManagement.Service\bin\Debug\EntityFramework.SqlServer.xml
+E:\Work\StoreManagement\StoreManagement.Service\obj\Debug\StoreManagement.Business.csprojResolveAssemblyReference.cache
+E:\Work\StoreManagement\StoreManagement.Service\obj\Debug\StoreManagement.Business.dll
+E:\Work\StoreManagement\StoreManagement.Service\obj\Debug\StoreManagement.Business.pdb

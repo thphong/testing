@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Test data list";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/DataList")
+}
+
+<div ng-controller="RootController">
+    
+    <div class="row">
+        <div class="col-md-4">
+            <label>Mã Đơn Hàng:</label>
+            <input type="text" placeholder="ie. EX_0001" ng-model="Form.OrderCode" class="form-control" check-empty="" check-empty-message="Vui lòng nhập giá trị!" />
+        </div>
+        <div class="col-md-4">
+            <label>Cửa hàng:</label>
+            <select  ng-model="Form.StoreId" class="form-control" 
+                    dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId" dropdown-name-field="StoreCode" dropdown-empty-text="--Chọn Cửa Hàng--"
+                    check-empty="0" check-empty-message="Vui lòng nhập giá trị!">
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label>Thu Ngân:</label>
+            <select  ng-model="Form.Cashier" class="form-control"
+            dropdown-master-table="T_Master_User" dropdown-value-field="UserId" dropdown-name-field="UserName" dropdown-empty-text="--Chọn Thu Ngân--"
+            check-empty="0" check-empty-message="Vui lòng nhập giá trị!">
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Khách hàng:</label>
+            <select ng-model="Form.Customer" class="form-control"
+                    dropdown-master-table="T_Master_Customers" dropdown-value-field="CustomerId" dropdown-name-field="FirstName" dropdown-empty-text="--Chọn Khách Hàng--"
+                    check-empty="0" check-empty-message="Vui lòng nhập giá trị!"></select>
+        </div>
+        <div class="col-md-4">
+            <label>Tổng tiền:</label>
+            <input type="text" ng-model="Form.SumMoney" class="form-control" check-range="0;" check-range-message="Vui lòng nhập số không âm!"/>
+        </div>
+        <div class="col-md-4">
+            <label>Nợ:</label>
+            <input type="text" ng-model="Form.DebtMoney" class="form-control" check-range="0;" check-range-message="Vui lòng nhập số không âm!" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Ngày bán:</label>
+            <input type="text" ng-model="Form.SoldDate" class="form-control" check-empty="" check-empty-message="Vui lòng nhập giá trị!" />
+        </div>
+        <div class="col-md-4">
+            <label>Tình trạng:</label>
+            <select ng-model="Form.OrderStatus" class="form-control"
+                    dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId" dropdown-name-field="StatusName" dropdown-empty-text="--Chọn Tình Trạng--"
+                    check-empty="0" check-empty-message="Vui lòng nhập giá trị!"></select>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary btn-sm" type="button" ng-click="SaveForm()">Save </button>
+            <button class="btn btn-primary btn-sm" type="button" ng-click="ResetForm()"> Reset </button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="row" style="margin: 10px 0px">
+        <div class="col-md-3 pull-right">
+            <span grid-filter-for="DataList_001"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table grid-data="DataList_001"
+                   grid-data-type="table" @*table/storedprocedure*@
+                   grid-data-action="get" @*get/getall*@
+                   grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
+                   grid-filter-condition="[IsActive] = {{1}}" @*must have [fieldname] for each colum field*@
+                   grid-sort-condition="[OrderStatus.StatusName] DESC" @*must have [fieldname] for each colum field*@
+                   class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
+                        <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
+                        <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
+                        <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
+                        <th grid-defined-colum="Customer.FirstName, CustomerName"><span>Khách hàng</span></th>
+                        <th grid-defined-colum="OrderStatus.StatusName"><span>Trạng thái</span></th>
+                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                        <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                        <th style="display:none;" grid-defined-colum="OrderId"></th>
+                        <th style="display:none;" grid-defined-colum="Cashier"></th>
+                        <th style="display:none;" grid-defined-colum="StoreId"></th>
+                        <th style="display:none;" grid-defined-colum="OrderStatus"></th>
+                        <th style="display:none;" grid-defined-colum="Customer"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Dataset must have grid id*@
+                    <tr ng-repeat="item in DataSet.DataList_001.Data" ng-click="ClickOnItem(item)" ng-class="{'curent-record' : (item.OrderId == Form.OrderId)}">
+                        <td ng-bind="item.OrderCode"></td>
+                        <td ng-bind="item.StoreCode"></td>
+                        <td ng-bind="item.SoldDate"></td>
+                        <td ng-bind="item.CashierName"></td>
+                        <td ng-bind="item.CustomerName"></td>
+                        <td ng-bind="item.StatusName"></td>
+                        <td ng-bind="item.SumMoney"></td>
+                        <td ng-bind="item.DebtMoney"></td>
+                    </tr>
+                    <tr ng-if="!DataSet.DataList_001.HasRecord()">
+                        @*Edit colspan*@
+                        <td colspan="9" align="center"> No Item Found! </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-9 pull-left">
+                    <span grid-paging-for="DataList_001"></span>
+                </div>
+
+                <div class="col-md-3 pull-right">
+                    <span grid-page-size-for="DataList_001"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

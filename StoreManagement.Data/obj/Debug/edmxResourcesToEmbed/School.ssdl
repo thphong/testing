@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="T_Chemical">
+    <Key>
+      <PropertyRef Name="CID" />
+    </Key>
+    <Property Name="CID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CFormula" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CDescription" Type="nvarchar" MaxLength="200" />
+    <Property Name="CState" Type="int" />
+    <Property Name="CColor" Type="varchar" MaxLength="10" />
+    <Property Name="IsSoluble" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedOn" Type="datetime" />
+  </EntityType>
+  <Function Name="USP_Chemical_All_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilterBy" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="USP_Chemical_All_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilterBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="StartRow" Type="int" Mode="In" />
+    <Parameter Name="EndRow" Type="int" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="OrderDirection" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_Chemical_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CID" Type="int" Mode="In" />
+    <Parameter Name="Formula" Type="nvarchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="State" Type="nvarchar" Mode="In" />
+    <Parameter Name="Color" Type="varchar" Mode="In" />
+    <Parameter Name="IsSoluble" Type="bit" Mode="In" />
+    <Parameter Name="CreatedBy" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_Reaction_All_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilterBy" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="USP_Reaction_All_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilterBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="StartRow" Type="int" Mode="In" />
+    <Parameter Name="EndRow" Type="int" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="OrderDirection" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_Reaction_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="REquation" Type="varchar(max)" Mode="In" />
+    <Parameter Name="RDescription" Type="varchar" Mode="In" />
+    <Parameter Name="IsRequireLight" Type="bit" Mode="In" />
+    <Parameter Name="IsRequireTemperature" Type="bit" Mode="In" />
+    <Parameter Name="IsRequirePressure" Type="bit" Mode="In" />
+    <Parameter Name="MinTemperature" Type="int" Mode="In" />
+    <Parameter Name="CreatedBy" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_State_All_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="StoreManagementModelStoreContainer">
+    <EntitySet Name="T_Chemical" EntityType="Self.T_Chemical" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

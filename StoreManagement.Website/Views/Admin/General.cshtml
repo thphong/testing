@@ -1,0 +1,285 @@
+﻿@{
+    ViewBag.Title = "Store Management";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/DataList")
+}
+
+<div ng-controller="RootController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="dashboard-title">
+                    <i class="fa-signal fa"></i>&nbsp;Hoạt động hôm nay
+                </h4>
+            </div>
+            <div class="col-md-3 col-xs-6 ">
+                <div class="col-xs-12 report-box infobox-green">
+                    <div class="infobox-icon">
+                        <i class="fa fa-signal"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title"> <span>Doanh thu </span></div>
+                        <span class="infobox-data-number center">1,720,000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 ">
+                <div class="col-xs-12 report-box infobox-blue">
+                    <div class="infobox-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-subtitle" style="cursor: pointer;" title="Click để xem danh sách đơn hàng">
+                            <span>Số đơn hàng:</span>
+                            <span style="text-decoration: underline !important;">2</span>
+                        </div>
+                        <div class="infobox-subtitle" style="cursor: pointer;" title="Click để xem danh sách hàng hóa">
+                            <span>Số hàng hóa:</span>
+                            <span style="text-decoration: underline !important;">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 ">
+                <div class="col-xs-12 report-box infobox-red">
+                    <div class="infobox-icon">
+                        <i class="fa fa-undo"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title">
+                            <span>Hàng khách trả</span>
+                        </div>
+                        <div class="infobox-data-number text-center">
+                            <span>0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 ">
+                <div class="col-xs-12 report-box infobox-orange">
+                    <div class="infobox-icon">
+                        <i class="fa fa-cloud"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title">
+                            <span>Đơn hàng web</span>
+                        </div>
+                        <div class="infobox-data-number text-center">
+                            <span>0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding: 20px 6px; margin: 20px -18px;">
+            <div class="col-md-4 col-sm-12" style="z-index: 9;">
+                <div class="widget-box bd-blue">
+                    <div class="widget-header infobox-blue">
+                        <h4 class="widget-title">
+                            <i class="fa-signal fa"></i>
+                            Hoạt động
+                        </h4>
+                    </div>
+
+                    <div class="widget-body" style="border: none; min-height: 144px;">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Doanh thu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span style="text-decoration: underline !important;">1,720,000</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Lãi gộp
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span style="text-decoration: underline !important;">620,000</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Số đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách đơn hàng">2</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Doanh thu/đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>860,000</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Hàng khách trả lại
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="widget-box bd-orange">
+                    <div class="widget-header infobox-orange">
+                        <h4 class="widget-title">
+                            <i class="fa-tags fa"></i>
+                            Thông tin kho
+                        </h4>
+                    </div>
+
+                    <div class="widget-body" style="border: none; min-height: 144px;">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Tồn kho lâu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách hàng hóa">15</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Hết hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách hàng hóa">4</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Sắp hết hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>0</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Vượt định mức
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="widget-box bd-green">
+                    <div class="widget-header infobox-green">
+                        <h4 class="widget-title">
+                            <i class="fa-barcode fa"></i>
+                            Thông tin hàng hóa
+                        </h4>
+                    </div>
+                    <div class="widget-body" style="border: none; min-height: 144px;">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Hàng hóa/Chủng loại
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span href="#/product" style="text-decoration: underline !important;">10 / 21</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Chưa làm giá bán
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>0</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Chưa nhập giá mua
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span>0</span>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Hàng chưa phân loại
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <span >0</span>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="widget-box">
+                    <div class="widget-header gray" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #ccc;">
+                        <h4 class="widget-title">
+                            <i class="fa-signal fa"></i>
+                            Biểu đồ doanh số tuần
+                        </h4>
+                    </div>
+                    <div id="chartContainer" class="widget-body" style="border: none; min-height: 155px;">
+                        <div class="widget-main">                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="widget-box">
+                    <div class="widget-header gray" style="border-bottom: 1px solid #ccc;">
+                        <h4 class="widget-title">
+                            <i class="fa-cloud fa"></i>
+                            Thông tin từ web
+                        </h4>
+                    </div>
+                    <div class="widget-body" style="border: none; min-height: 155px">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-12">(Chưa đăng ký website)</div>
+                                <div class="col-xs-6 info">
+                                    Lượng truy cập
+                                </div>
+                                <div class="col-xs-6 data text-right">
+                                    0
+                                </div>
+                                <div class="col-xs-6 info">
+                                    Số trang xem
+                                </div>
+                                <div class="col-xs-6 data text-right">
+                                    0
+                                </div>
+                                <div class="col-xs-6 info">
+                                    Thời gian lưu lại web
+                                </div>
+                                <div class="col-xs-6 data text-right">
+                                    0
+                                </div>
+                                <div class="col-xs-6 info">
+                                    Trang xem nhiều nhất
+                                </div>
+                                <div class="col-xs-6 data text-right">
+                                    N/A
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="widget-box">
+                    <div class="widget-header gray" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #ccc;">
+                        <h4 class="widget-title">
+                            <i class="fa-rss fa"></i>
+                            Tin chuyên ngành
+                        </h4>
+                    </div>
+
+                    <div class="widget-body" style="border: none;min-height: 155px;">
+                        <div class="widget-main" style="min-height: 139px;">
+                            <div class="row text-center bolder" style="margin-top: 40px;">
+                                Dữ liệu đang cập nhật
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
