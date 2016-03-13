@@ -13,7 +13,7 @@
             <span>Ngừng kinh doanh</span>
         </button>
         <button class="btn btn-primary btn-pink" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '0'" ng-click="EnableSellingProduct(ProductForm)">
-            <i class="fa fa-pause white"></i>
+            <i class="fa fa-retweet white"></i>
             <span>Cho phép KD</span>
         </button>
         <button class="btn btn-primary" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '1'" ng-click="EditProductDetail()">
