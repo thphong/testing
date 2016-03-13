@@ -41,7 +41,9 @@ mdlCommon.controller('ProductController',
             AllowMax: "100",
             IsManageAsSerial: "0",
             IsManageAttribute: "0",
-            Description: ""
+            Description: "",
+            ProductGroupName: "",
+            ProducerName: ""
         };
 
         $scope.ResetProductForm = function () {
@@ -61,7 +63,10 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.AllowMax = "100";
             $scope.ProductForm.IsManageAsSerial = "0";
             $scope.ProductForm.IsManageAttribute = "0";
-            $scope.ProductForm.Description = "";
+            $scope.ProductForm.Description = "";            
+            $scope.ProductForm.ProductGroupName = "";
+            $scope.ProductForm.ProducerName = "";
+
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
@@ -70,6 +75,7 @@ mdlCommon.controller('ProductController',
             if (confirm("Bạn có muốn xóa hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
                 if ($scope.ProductFormConfig.DeleteObject(product.ProductId)) {
                     $scope.ReloadGrid('Products');
+                    product.IsActive = "0";
                     ShowSuccessMessage("Hàng hóa được xóa thành công!");
                 }
             }
@@ -77,10 +83,10 @@ mdlCommon.controller('ProductController',
 
         $scope.StopSellingProduct = function (product) {
             if (confirm("Bạn có muốn ngừng kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": 0 });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "0" });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
+                    product.IsSelling = "0";
                     ShowSuccessMessage("Nhưng kinh doanh hàng " + product.ProductCode + " - " + product.ProductName + " thành công!");
                 }
             }
@@ -88,9 +94,10 @@ mdlCommon.controller('ProductController',
 
         $scope.EnableSellingProduct = function (product) {
             if (confirm("Bạn có muốn cho phép kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": 1 });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "1" });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
+                    product.IsSelling = "1";
                     ShowSuccessMessage("Cho phép kinh doanh hàng " + product.ProductCode + " - " + product.ProductName + " thành công!");
                 }
             }
@@ -129,13 +136,24 @@ mdlCommon.controller('ProductController',
             if (FValidation.CheckControls("")) {
                 $scope.ProductFormConfig.SetObject($scope.ProductForm);
                 if ($scope.ProductFormConfig.SaveObject()) {
-                    if (isContinue) {
-                        $scope.ResetProductForm();
+
+                    if ($scope.ProductForm.ProductId != "-1") {
+
+                        $scope.ProductForm.ProductGroupName = $("select[ng-model='ProductForm.ProductGroup'] option:selected").html();
+                        $scope.ProductForm.ProducerName = $("select[ng-model='ProductForm.ProducerId'] option:selected").html();
+
+                        $scope.IsEditingProductDetail = false;
+                        $scope.ReloadGrid('Products');
                     }
                     else {
-                        $scope.ReloadGrid('Products');
-                        $scope.IsEditingProductDetail = false;
-                        $scope.IsShowProductDetail = false;
+                        if (isContinue) {
+                            $scope.ResetProductForm();
+                        }
+                        else {
+                            $scope.ReloadGrid('Products');
+                            $scope.IsEditingProductDetail = false;
+                            $scope.IsShowProductDetail = false;
+                        }
                     }
                     ShowSuccessMessage("Hàng hóa được tạo thành công!");
                 }
@@ -147,37 +165,29 @@ mdlCommon.controller('ProductController',
             $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
             $scope.ProductForm.ProductName = $scope.ProductForm.ProductName + " - Copy";
             $scope.ProductForm.ProductCode = "";
-            $scope.ProductForm.ProductId = -1;
+            $scope.ProductForm.ProductId = "-1";
             $scope.ProductForm.Cost = $filter('currency')($scope.ProductForm.Cost, "", 0);
             $scope.ProductForm.Price = $filter('currency')($scope.ProductForm.Price, "", 0);
+            $scope.ProductForm.ProductGroupName = product.GroupName;
+            $scope.ProductForm.ProducerName = product.ProducerName;
 
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = true;
         }
-        /*
         
-        $scope.ShowCustomerDetail = function (customer) {
+        
+        $scope.ShowProductDetail = function (product) {
 
-            var object = $scope.CustomerFormConfig.GetObject(customer.CustomerCode, 'CustomerCode');
-            $scope.CustomerFormConfig.ConvertFieldsToString(object, $scope.CustomerForm);
-            $scope.IsShowCustomerDetail = true;
-            $scope.ReloadGrid('ListOrders');
+            var object = $scope.ProductFormConfig.GetObject(product.ProductId);
+            $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
+            $scope.ProductForm.ProductGroupName = product.GroupName;
+            $scope.ProductForm.ProducerName = product.ProducerName;
+            $scope.IsShowProductDetail = true;
+            $scope.IsEditingProductDetail = false;
         }
 
-        
 
-        $scope.EditCustomerDetail = function () {
-            $scope.IsEditingCustomerDetail = true;
+        $scope.EditProductDetail = function () {
+            $scope.IsEditingProductDetail = true;
         }
-
-        $scope.SaveCustomerDetail = function () {
-            if (FValidation.CheckControls("")) {
-                $scope.CustomerFormConfig.SetObject($scope.CustomerForm);
-                if ($scope.CustomerFormConfig.SaveObject()) {
-                    ShowSuccessMessage("Khách hàng được sửa thành công!");
-                    $scope.IsEditingCustomerDetail = false;
-                    $scope.ReloadGrid('Customers');
-                }
-            }
-        }*/
     }]);

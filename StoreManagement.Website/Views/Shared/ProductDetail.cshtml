@@ -1,12 +1,28 @@
 ﻿<div class="row" style="padding-top: 5px">
-    <div class="col-md-5 pull-right">
-        <button class="btn btn-primary" ng-click="SaveProductForm(false)">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="ProductForm.ProductId == '-1' || IsEditingProductDetail" ng-click="SaveProductForm(false)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-click="SaveProductForm(true)">
+        <button class="btn btn-primary" ng-if="ProductForm.ProductId == '-1'" ng-click="SaveProductForm(true)">
             <i class="fa fa-save white"></i>
             <span>Lưu và tiếp tục</span>
+        </button>
+        <button class="btn btn-primary btn-grey" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '1'" ng-click="StopSellingProduct(ProductForm)">
+            <i class="fa fa-pause white"></i>
+            <span>Ngừng kinh doanh</span>
+        </button>
+        <button class="btn btn-primary btn-pink" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '0'" ng-click="EnableSellingProduct(ProductForm)">
+            <i class="fa fa-pause white"></i>
+            <span>Cho phép KD</span>
+        </button>
+        <button class="btn btn-primary" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '1'" ng-click="EditProductDetail()">
+            <i class="fa fa-edit white"></i>
+            <span>Sửa</span>
+        </button>
+        <button class="btn btn-danger" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1'" ng-click="DeleteProduct(ProductForm)">
+            <i class="fa fa-trash white"></i>
+            <span>Xóa</span>
         </button>
         <button class="btn btn-default" ng-click="CloseProductDetail()">
             <i class="fa fa-arrow-left"></i>
@@ -25,7 +41,9 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label margin-top-10">Tên hàng hóa</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProductName"> </div>
                 <input class="form-control" ng-model="ProductForm.ProductName"
+                       ng-if="IsEditingProductDetail"
                        placeholder="Nhập tên hàng hóa"
                        check-empty="" check-empty-message="Vui lòng nhập tên hàng hóa."
                        check-length="500" check-length-message="Chiều dài tối ta là {0}." />
@@ -35,63 +53,85 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Số lượng</label>
-
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.Quantity || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Quantity" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1' " check-integer
+                       ng-if="IsEditingProductDetail"
                        check-range="0;100000" check-range-message="Số lượng nằm trong khoảng [0;100000]" />
 
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-1 ">
-                        <input class="form-control" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
-                               ng-true-value="'1'" ng-false-value="'0'" />
+                    <div class="col-md-12 margin-top-10">
+                        <input type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
+                               ng-true-value="'1'" ng-false-value="'0'"
+                               ng-if="IsEditingProductDetail" />
+                        <span ng-if="!IsEditingProductDetail">
+                            <span class="label label-success" ng-if="ProductForm.TrackInventory == '1'">Có</span>
+                            <span class="label label-warning" ng-if="ProductForm.TrackInventory == '0'">Không</span>
+                        </span>
+                        Theo dõi tồn kho
                     </div>
-                    <div class="col-md-11 margin-top-10"> Theo dõi tồn kho?</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-1">
-                        <input class="form-control" type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
-                               ng-true-value="'1'" ng-false-value="'0'" />
+                    <div class="col-md-12 margin-top-10">
+                        <input type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
+                               ng-true-value="'1'" ng-false-value="'0'"
+                               ng-if="IsEditingProductDetail" />
+                        <span ng-if="!IsEditingProductDetail">
+                            <span class="label label-success" ng-if="ProductForm.AllowNegative == '1'">Có</span>
+                            <span class="label label-warning" ng-if="ProductForm.AllowNegative == '0'">Không</span>
+                        </span>
+                        Cho phép bán âm
                     </div>
-                    <div class="col-md-11 margin-top-10"> Cho phép bán âm?</div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá vốn</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Cost | currency:'':0) || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Cost"
+                       ng-if="IsEditingProductDetail"
                        check-currency />
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá bán</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Price | currency:'':0) || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Price"
+                       ng-if="IsEditingProductDetail"
                        check-currency />
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Nhóm hàng</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProductGroupName || 'Chưa chọn nhóm hàng'"> </div>
                 <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                        dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""></select>
+                        dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
+                        ng-if="IsEditingProductDetail"></select>
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Nhà sản xuất</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProducerName || 'Chưa chọn nhà sản xuất'"> </div>
                 <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
-                        dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""></select>
+                        dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
+                        ng-if="IsEditingProductDetail"></select>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Mã hàng hóa</label> <span> (Tối đa 32 kí tự) </span>
+                <div ng-if="!IsEditingProductDetail || ProductForm.ProductId != '-1'" ng-bind="ProductForm.ProductCode"> </div>
                 <input class="form-control" ng-model="ProductForm.ProductCode"
                        placeholder="Hệ thống tự tạo mã nếu để trống (HH000001)"
+                       ng-if="IsEditingProductDetail && ProductForm.ProductId == '-1'"
                        check-length="32" check-length-message="Chiều dài tối ta là {0}."
                        check-custom="CheckProductCodeUnique" check-custom-message="Mã hàng hóa không được trùng mã đã tồn tại." />
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Thuế VAT</label>
-                <select class="form-control" ng-model="ProductForm.VAT">
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.VAT + '%'"> </div>
+                <select class="form-control" ng-model="ProductForm.VAT" ng-if="IsEditingProductDetail">
                     <option value="0">Không tính thuế</option>
                     <option value="0">0%</option>
                     <option value="10">10%</option>
@@ -111,29 +151,42 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Mức tồn kho tối thiểu</label>
-                <input class="form-control text-right" ng-model="ProductForm.AllowMin" check-integer />
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.AllowMin"> </div>
+                <input class="form-control text-right" ng-model="ProductForm.AllowMin" check-integer ng-if="IsEditingProductDetail" />
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Mức tồn kho tối đa</label>
+                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.AllowMax"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.AllowMax" check-integer
+                       ng-if="IsEditingProductDetail"
                        check-range="{{ProductForm.AllowMin}};" check-range-message="Tồn kho tối đa phải lớn hơn hoặc bằng tồn kho tối thiểu." />
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1 ">
-                <input class="form-control" type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
-                       ng-true-value="'1'" ng-false-value="'0'" />
+            <div class="col-md-12 margin-top-10">
+                <input type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
+                       ng-true-value="'1'" ng-false-value="'0'"
+                       ng-if="IsEditingProductDetail" />
+                <span class="margin-top-10" ng-if="!IsEditingProductDetail">
+                    <span class="label label-success" ng-if="ProductForm.IsManageAsSerial == '1'">Có</span>
+                    <span class="label label-warning" ng-if="ProductForm.IsManageAsSerial == '0'">Không</span>
+                </span>
+                Quản lý tồn kho theo serial
             </div>
-            <div class="col-md-11 margin-top-10"> Quản lý tồn kho theo serial</div>
         </div>
         <div class="row">
-            <div class="col-md-1 ">
-                <input class="form-control" type="checkbox" ng-model="ProductForm.IsManageAttribute"
-                       ng-true-value="'1'" ng-false-value="'0'" />
+            <div class="col-md-9 margin-top-10">
+                <input type="checkbox" ng-model="ProductForm.IsManageAttribute"
+                       ng-true-value="'1'" ng-false-value="'0'"
+                       ng-if="IsEditingProductDetail" />
+                <span class="margin-top-10" ng-if="!IsEditingProductDetail">
+                    <span class="label label-success" ng-if="ProductForm.IsManageAttribute == '1'">Có</span>
+                    <span class="label label-warning" ng-if="ProductForm.IsManageAttribute == '0'">Không</span>
+                </span>
+                Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)
             </div>
-            <div class="col-md-8 margin-top-10"> Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...) </div>
             <div class="col-md-3 margin-top-10">
-                <button class="btn btn-primary btn-sm" >
+                <button class="btn btn-primary btn-sm">
                     <i class="fa-list fa"></i>Quản lý thuộc tính
                 </button>
             </div>
@@ -150,14 +203,14 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label margin-top-10">Hình ảnh</label>
-                <input class="form-control" type="file" />
+                <input class="form-control" type="file" ng-disabled="!IsEditingProductDetail" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label margin-top-10">Mô tả</label>
-                <textarea class="form-control" ng-model="ProductForm.Description" > </textarea>
+                <textarea class="form-control" ng-model="ProductForm.Description" ng-disabled="!IsEditingProductDetail"> </textarea>
             </div>
         </div>
-     </div>
+    </div>
 </div>

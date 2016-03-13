@@ -20,6 +20,22 @@
     border-left-color: #F0AD4E;
 }
 
+ .btn-danger
+ {
+     background-color: #d15b47 !important;
+ }
+
+ .btn.btn-grey
+ {
+     background-color: #a0a0a0 !important;
+     border-color: #a0a0a0 !important;
+ }
+
+ .btn.btn-pink {
+    background-color: #d6487e !important;
+    border-color: #d6487e !important;
+}
+
 .bs-callout-1 {
     padding: 10px;
     margin: 0px 10px 5px 40px;
@@ -500,4 +516,9 @@ textarea.form-control {
     border-top: 1px solid #E3E3E3;
     margin: 12px 0;
     border-top-color: rgba(0,0,0,.11);
+}
+
+input[type='checkbox']
+{
+    width: 13px !important;
 }

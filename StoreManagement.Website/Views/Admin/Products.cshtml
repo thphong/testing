@@ -8,9 +8,9 @@
 }
 
 <div ng-controller="ProductController">
-    <div class="container-fluid" ng-if="!IsShowProductDetail">
+    <div class="container-fluid" ng-show="!IsShowProductDetail">
         <div class="row" style="padding-top: 5px">
-            <div class="col-md-5 pull-right">
+            <div class="col-md-5 pull-right text-right"">
                 <button class="btn btn-success btn-primary" ng-click="AddProduct()">
                     <i class="fa fa-plus white"></i>
                     <span>Thêm hàng hóa</span>
@@ -73,7 +73,7 @@
                     <tbody>
                         @*Dataset must have grid id*@
                         <tr ng-repeat="item in DataSet.Products.Data" ng-click="ClickOnItem(item)">
-                            <td> <a href="#" ng-bind="item.ProductName"></a></td>
+                            <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
                             <td ng-bind="item.ProductCode"></td>
                             <td ng-bind="item.Quantity"></td>
                             <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
@@ -118,7 +118,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" ng-if="IsShowProductDetail">
+    <div class="container-fluid" ng-show="IsShowProductDetail">
         @Html.Partial("ProductDetail")
     </div>
 </div>
