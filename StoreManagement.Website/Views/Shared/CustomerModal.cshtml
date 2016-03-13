@@ -77,10 +77,11 @@
                     <div class="form-group col-md-12">
                         <label class="col-sm-4 control-label ">Giới tính </label>
                         <div class="col-sm-7">
-                            <input type="radio" ng-model="CustomerForm.Gender" value="M" />
-                            Nam&nbsp;&nbsp;
-                            <input type="radio" ng-model="CustomerForm.Gender" value="F" />
-                            Nữ
+                            <input id="rdMaleGenderModal" type="radio" ng-model="CustomerForm.Gender" value="M" />
+                            <label class="font-weigth-normal" for="rdMaleGenderModal">Nam</label>
+                            &nbsp;&nbsp;
+                            <input id="rdFemaleGenderModal" type="radio" ng-model="CustomerForm.Gender" value="F" />
+                            <label class="font-weigth-normal" for="rdFemaleGenderModal">Nữ</label>            
                         </div>
                     </div>
                 </div>

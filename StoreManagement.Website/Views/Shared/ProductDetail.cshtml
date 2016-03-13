@@ -62,26 +62,26 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
-                        <input type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
+                        <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
                                ng-true-value="'1'" ng-false-value="'0'"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
                             <span class="label label-success" ng-if="ProductForm.TrackInventory == '1'">Có</span>
                             <span class="label label-warning" ng-if="ProductForm.TrackInventory == '0'">Không</span>
                         </span>
-                        Theo dõi tồn kho
+                        <label class="font-weigth-normal" for="chbTrackInventory">Theo dõi tồn kho</label>                        
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
-                        <input type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
+                        <input id="chbAllowNegative" type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
                                ng-true-value="'1'" ng-false-value="'0'"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
                             <span class="label label-success" ng-if="ProductForm.AllowNegative == '1'">Có</span>
                             <span class="label label-warning" ng-if="ProductForm.AllowNegative == '0'">Không</span>
                         </span>
-                        Cho phép bán âm
+                        <label class="font-weigth-normal" for="chbAllowNegative"> Cho phép bán âm </label>                        
                     </div>
                 </div>
             </div>
@@ -164,26 +164,27 @@
         </div>
         <div class="row">
             <div class="col-md-12 margin-top-10">
-                <input type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
+                <input id="chbIsManageAsSerial" type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
                        ng-true-value="'1'" ng-false-value="'0'"
                        ng-if="IsEditingProductDetail" />
                 <span class="margin-top-10" ng-if="!IsEditingProductDetail">
                     <span class="label label-success" ng-if="ProductForm.IsManageAsSerial == '1'">Có</span>
                     <span class="label label-warning" ng-if="ProductForm.IsManageAsSerial == '0'">Không</span>
                 </span>
-                Quản lý tồn kho theo serial
+                <label class="font-weigth-normal" for="chbIsManageAsSerial"> Quản lý tồn kho theo serial</label>
+                
             </div>
         </div>
         <div class="row">
             <div class="col-md-9 margin-top-10">
-                <input type="checkbox" ng-model="ProductForm.IsManageAttribute"
+                <input id="chbIsManageAttribute" type="checkbox" ng-model="ProductForm.IsManageAttribute"
                        ng-true-value="'1'" ng-false-value="'0'"
                        ng-if="IsEditingProductDetail" />
                 <span class="margin-top-10" ng-if="!IsEditingProductDetail">
                     <span class="label label-success" ng-if="ProductForm.IsManageAttribute == '1'">Có</span>
                     <span class="label label-warning" ng-if="ProductForm.IsManageAttribute == '0'">Không</span>
                 </span>
-                Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)
+                <label class="font-weigth-normal" for="chbIsManageAttribute">Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)</label>                
             </div>
             <div class="col-md-3 margin-top-10">
                 <button class="btn btn-primary btn-sm">

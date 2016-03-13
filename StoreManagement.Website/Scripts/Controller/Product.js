@@ -106,6 +106,7 @@ mdlCommon.controller('ProductController',
         $scope.AddProduct = function () {
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = true;
+            FValidation.ClearAllError();
             $scope.ResetProductForm();
         }
 

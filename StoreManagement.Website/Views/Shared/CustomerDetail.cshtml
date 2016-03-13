@@ -65,10 +65,11 @@
     <div class="form-group col-md-6">
         <label class="col-sm-4 control-label ">Giới tính </label>
         <div class="col-sm-7">
-            <input type="radio" ng-model="CustomerForm.Gender" value="M" ng-disabled="!IsEditingCustomerDetail" />
-            Nam&nbsp;&nbsp;
-            <input type="radio" ng-model="CustomerForm.Gender" value="F" ng-disabled="!IsEditingCustomerDetail" />
-            Nữ
+            <input id="rdMaleGender" type="radio" ng-model="CustomerForm.Gender" value="M" ng-disabled="!IsEditingCustomerDetail" />
+            <label class="font-weigth-normal" for="rdMaleGender">Nam</label>
+            &nbsp;&nbsp;
+            <input id="rdFemaleGender" type="radio" ng-model="CustomerForm.Gender" value="F" ng-disabled="!IsEditingCustomerDetail" />
+            <label class="font-weigth-normal" for="rdFemaleGender">Nữ</label>            
         </div>
     </div>
     <div class="form-group col-md-6">
