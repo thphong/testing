@@ -106,9 +106,15 @@
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Nhóm hàng</label>
                 <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProductGroupName || 'Chưa chọn nhóm hàng'"> </div>
-                <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                        dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
-                        ng-if="IsEditingProductDetail"></select>
+                <div class="width-90">
+                    <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                            dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
+                            ng-if="IsEditingProductDetail"></select>
+                </div>
+                <div class="width-10">
+                    <button class="btn btn-primary" title="Quản lý nhóm hàng" ng-if="IsEditingProductDetail"
+                            data-toggle="modal" data-target="#productGroupModal">...</button>
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Nhà sản xuất</label>

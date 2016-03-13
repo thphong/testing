@@ -191,4 +191,5 @@ mdlCommon.controller('ProductController',
         $scope.EditProductDetail = function () {
             $scope.IsEditingProductDetail = true;
         }
+
     }]);

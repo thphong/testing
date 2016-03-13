@@ -10,7 +10,7 @@
 <div ng-controller="ProductController">
     <div class="container-fluid" ng-show="!IsShowProductDetail">
         <div class="row" style="padding-top: 5px">
-            <div class="col-md-5 pull-right text-right"">
+            <div class="col-md-5 pull-right text-right">
                 <button class="btn btn-success btn-primary" ng-click="AddProduct()">
                     <i class="fa fa-plus white"></i>
                     <span>Thêm hàng hóa</span>
@@ -118,8 +118,10 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" ng-show="IsShowProductDetail">
+    <div class="container-fluid none-display" ng-if="IsShowProductDetail" ng-class="{'active-content' : IsShowProductDetail}">
         @Html.Partial("ProductDetail")
     </div>
 </div>
-
+<div>
+    @Html.Partial("ProductGroupModal")
+</div>

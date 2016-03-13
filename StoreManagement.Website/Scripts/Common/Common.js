@@ -65,6 +65,7 @@ function AjaxSyncWithoutLoading(service, para) {
     //alert($(".tab-pane").length);
     $(".tabbable .nav-tabs li").click(function () {
         var tabForId = $(this).attr("tab-for");
+        alert(tabForId);
         var groupTab = $(".tab-pane#" + tabForId).attr("tab-group");
         $(".tab-pane[tab-group='" + groupTab + "']").removeClass("active");
         $(".tab-pane#" + tabForId).addClass("active");

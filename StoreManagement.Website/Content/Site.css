@@ -495,6 +495,36 @@ textarea.form-control {
     margin-top: 10px !important;
 }
 
+.padding-20 {
+    padding: 20px !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+
+.width-15
+{
+    width: 15% !important;
+}
+
+.width-50
+{
+    width: 50% !important;
+}
+
+.width-10
+{
+    width: 8% !important;
+    display: inline-block;
+}
+
+.width-90
+{
+    width: 88% !important;
+    display: inline-block;
+}
+
 .has-error .control-label {
     color: #333 !important;
 }
@@ -516,4 +546,17 @@ input[type='checkbox'] {
 
 label.font-weigth-normal {
     font-weight: normal !important;
+}
+
+.none-display {
+    display: none;
+}
+
+.active-content {
+    display: block !important;
+}
+
+nav.navbar 
+{
+    background-color: rgb(11, 135, 201);
 }

@@ -80,7 +80,9 @@ namespace StoreManagement.Website
 
             bundles.Add(new ScriptBundle("~/bundles/Product").Include(
                         "~/Scripts/Controller/Product.js"));
-            
+            bundles.Add(new ScriptBundle("~/bundles/ProductGroup").Include(
+                        "~/Scripts/Controller/ProductGroup.js"));
+
         }
     }
 }
