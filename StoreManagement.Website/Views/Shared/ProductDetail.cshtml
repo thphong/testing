@@ -119,10 +119,17 @@
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Nhà sản xuất</label>
                 <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProducerName || 'Chưa chọn nhà sản xuất'"> </div>
-                <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
-                        dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
-                        ng-if="IsEditingProductDetail"></select>
-            </div>
+                <div class="width-90">
+                    <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
+                            dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
+                            ng-if="IsEditingProductDetail"></select>
+                </div>
+                <div class="width-10">
+                    <button class="btn btn-primary" title="Quản lý nhà sản xuất" ng-if="IsEditingProductDetail"
+                            data-toggle="modal" data-target="#producerModal">
+                        ...
+                    </button>
+                </div>
         </div>
         <div class="row">
             <div class="col-md-6">

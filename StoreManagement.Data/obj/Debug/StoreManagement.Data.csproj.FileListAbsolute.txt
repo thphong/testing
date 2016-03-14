@@ -8,3 +8,13 @@ E:\Work\StoreManagement\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer
 E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
 E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb
 E:\Work\StoreManagement\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll.config
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.pdb
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\EntityFramework.dll
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\EntityFramework.xml
+E:\StoreManagement\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\StoreManagement\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache
+E:\StoreManagement\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
+E:\StoreManagement\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb

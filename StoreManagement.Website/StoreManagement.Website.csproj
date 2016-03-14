@@ -311,6 +311,7 @@
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Customer.js" />
+    <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
     <Content Include="Scripts\Controller\ProductGroup.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
@@ -394,6 +395,7 @@
     <Content Include="Views\Shared\CustomerDetail.cshtml" />
     <Content Include="Views\Shared\ProductDetail.cshtml" />
     <Content Include="Views\Shared\ProductGroupModal.cshtml" />
+    <Content Include="Views\Shared\ProducerModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
