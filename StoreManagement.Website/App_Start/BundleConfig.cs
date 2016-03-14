@@ -84,6 +84,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/ProductGroup.js"));
             bundles.Add(new ScriptBundle("~/bundles/Producer").Include(
                         "~/Scripts/Controller/Producer.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Attribute").Include(
+                        "~/Scripts/Controller/Attribute.js"));
         }
     }
 }

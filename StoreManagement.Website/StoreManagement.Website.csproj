@@ -310,6 +310,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
+    <Content Include="Scripts\Controller\Attribute.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
@@ -396,6 +397,7 @@
     <Content Include="Views\Shared\ProductDetail.cshtml" />
     <Content Include="Views\Shared\ProductGroupModal.cshtml" />
     <Content Include="Views\Shared\ProducerModal.cshtml" />
+    <Content Include="Views\Shared\AttributeModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
