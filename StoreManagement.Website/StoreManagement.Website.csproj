@@ -398,6 +398,7 @@
     <Content Include="Views\Shared\ProductGroupModal.cshtml" />
     <Content Include="Views\Shared\ProducerModal.cshtml" />
     <Content Include="Views\Shared\AttributeModal.cshtml" />
+    <Content Include="Views\Shared\ProductPriceHistoryModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
