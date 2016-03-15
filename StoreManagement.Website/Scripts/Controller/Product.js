@@ -43,7 +43,8 @@ mdlCommon.controller('ProductController',
             IsManageAttribute: "0",
             Description: "",
             ProductGroupName: "",
-            ProducerName: ""
+            ProducerName: "",
+            IsCost: 0
         };
 
         $scope.ResetProductForm = function () {
@@ -66,7 +67,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.Description = "";            
             $scope.ProductForm.ProductGroupName = "";
             $scope.ProductForm.ProducerName = "";
-
+            $scope.ProductForm.IsCost = 0;
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
@@ -190,6 +191,11 @@ mdlCommon.controller('ProductController',
 
         $scope.EditProductDetail = function () {
             $scope.IsEditingProductDetail = true;
+        }
+
+        $scope.ShowPriceHistory = function (isCost) {
+            $scope.ProductForm.IsCost = isCost;
+            $scope.ReloadGrid('ProductPriceHistorys');            
         }
 
     }]);
