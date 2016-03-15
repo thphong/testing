@@ -89,6 +89,9 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá vốn</label>
+                <button class="btn btn-primary" title="Xem lịch sử thay đổi giá vốn"
+                        data-toggle="modal" data-target="#productPriceHistoryModal" ng-click="ShowPriceHistory(1)"> <i class="fa-columns fa"></i> </button>
+
                 <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Cost | currency:'':0) || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Cost"
                        ng-if="IsEditingProductDetail"
@@ -96,6 +99,10 @@
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá bán</label>
+                <button class="btn btn-primary" title="Xem lịch sử thay đổi giá bán"
+                        data-toggle="modal" data-target="#productPriceHistoryModal" ng-click="ShowPriceHistory(0)">
+                    <i class="fa-table fa"></i>
+                </button>
                 <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Price | currency:'':0) || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Price"
                        ng-if="IsEditingProductDetail"
