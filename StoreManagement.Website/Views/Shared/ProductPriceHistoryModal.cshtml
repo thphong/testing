@@ -1,0 +1,85 @@
+﻿<!-- Customer Modal -->
+<div id="productPriceHistoryModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title bold">Lịch sử thay đổi giá vốn của hàng hóa '<span ng-bind="ProductForm.ProductName"></span>' </h4>
+            </div>
+
+            <div class="modal-body">
+                <div style="padding: 1px 15px; border: 1px solid #C5D0DC">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 25px">
+                        <div class="col-md-5">
+                            <span grid-filter-for="ProductPriceHistorys" place-holder-message="Nhập mã, tên hàng hóa, người thao tác cần tìm ..."></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tab-content no-border active">
+
+                            <div class="col-md-12 margin-top-10">
+                                <table grid-data="ProductPriceHistorys"
+                                       grid-data-type="table" @*table/storedprocedure*@
+                                       grid-data-action="get" @*get/getall*@
+                                       grid-data-object="T_Trans_ProductPrice_History" @*table name or stored procedure name*@
+                                       grid-filter-condition="({{ProductForm.ProductId}} = [ProductId])
+                                                                and (({{ProductForm.IsCost}} = 0 and [Price] is not null)
+                                                                or ({{ProductForm.IsCost}} = 1 and [Cost] is not null))" @*must have [fieldname] for each colum field*@
+                                       grid-sort-condition="[CreatedDate] ASC" @*must have [fieldname] for each colum field*@
+                                       class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th grid-defined-colum="ProductId.ProductCode"><span>Mã {{ProductForm.ProductId}}</span></th>
+                                            <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
+                                            <th grid-defined-colum="CreatedDate"><span>Thời gian thao tác</span></th>
+                                            <th grid-defined-colum="CreatedBy.UserName"><span>Người thao tác</span></th>
+                                            <th grid-defined-colum="Cost" ng-class="{'none-display': ProductForm.IsCost == 0}"><span>Giá vốn </span></th>
+                                            <th grid-defined-colum="Price"ng-class="{'none-display': ProductForm.IsCost == 1}"><span>Giá bán </span></th>
+                                            <th grid-defined-colum="Description"><span>Diễn giải</span></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in DataSet.ProductPriceHistorys.Data">
+                                            <td ng-bind="item.ProductCode"> </td>
+                                            <td ng-bind="item.ProductName"></td>
+                                            <td ng-bind="item.CreatedDate"></td>
+                                            <td ng-bind="item.UserName"></td>
+                                            <td ng-class="{'none-display': ProductForm.IsCost == 0}"> <span ng-bind="item.Cost | currency:'':0" class="bold"></span> </td>
+                                            <td ng-class="{'none-display': ProductForm.IsCost == 1}"> <span ng-bind="item.Price | currency:'':0" class="bold"></span> </td>
+                                            <td ng-bind="item.Description"></td>
+                                        </tr>
+                                        <tr ng-if="!DataSet.ProductPriceHistorys.HasRecord()">
+                                            @*Edit colspan*@
+                                            <td colspan="6" align="center"> Không có dữ liệu! </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 pull-left">
+                                    <span grid-paging-for="ProductPriceHistorys"></span>
+                                </div>
+
+                                <div class="col-md-4 pull-right text-right">
+                                    <span grid-page-size-for="ProductPriceHistorys"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
