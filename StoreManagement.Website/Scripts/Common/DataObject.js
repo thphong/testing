@@ -57,6 +57,7 @@ function GridViewConfig(gridId) {
     }
 
     this.NormalizeColumName = function (columName) {
+        if (!columName) return "";
         var result = "";
         var isOpen = false;
         var fieldName = "";
