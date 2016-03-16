@@ -89,7 +89,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá vốn</label>
-                <button class="btn btn-primary" title="Xem lịch sử thay đổi giá vốn"
+                <button class="btn btn-primary  btn-tiny" title="Xem lịch sử thay đổi giá vốn" ng-if="ProductForm.ProductId != '-1'"
                         data-toggle="modal" data-target="#productPriceHistoryModal" ng-click="ShowPriceHistory(1)"> <i class="fa-columns fa"></i> </button>
 
                 <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Cost | currency:'':0) || '(Chưa nhập)'"> </div>
@@ -99,7 +99,7 @@
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá bán</label>
-                <button class="btn btn-primary" title="Xem lịch sử thay đổi giá bán"
+                <button class="btn btn-primary btn-tiny" title="Xem lịch sử thay đổi giá bán" ng-if="ProductForm.ProductId != '-1'"
                         data-toggle="modal" data-target="#productPriceHistoryModal" ng-click="ShowPriceHistory(0)">
                     <i class="fa-table fa"></i>
                 </button>
@@ -116,10 +116,11 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
+                            dropdown-condition="[IsActive] = 1 and [IsParent] = 0"
                             ng-if="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">
-                    <button class="btn btn-primary" title="Quản lý nhóm hàng" ng-if="IsEditingProductDetail"
+                    <button class="btn btn-primary btn-sm" title="Quản lý nhóm hàng" ng-if="IsEditingProductDetail"
                             data-toggle="modal" data-target="#productGroupModal">...</button>
                 </div>
             </div>
@@ -129,11 +130,11 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                             dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
-                            dropdown-condition=""
+                            dropdown-condition="[IsActive] = 1"
                             ng-if="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">
-                    <button class="btn btn-primary" title="Quản lý nhà sản xuất" ng-if="IsEditingProductDetail"
+                    <button class="btn btn-primary btn-sm" title="Quản lý nhà sản xuất" ng-if="IsEditingProductDetail"
                             data-toggle="modal" data-target="#producerModal">
                         ...
                     </button>

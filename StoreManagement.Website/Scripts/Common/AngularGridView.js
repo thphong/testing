@@ -238,6 +238,9 @@ mdlCommon.directive('dropdownMasterTable', function () {
         configList.GridDataObject = attributes.dropdownMasterTable;
         configList.GridDefinedColums = valueField + ";" + nameField;
         configList.GridSortCondition = nameField + " ASC";
+        if (attributes.dropdownCondition) {
+            configList.GridFilterCondition = attributes.dropdownCondition;
+        }
 
         var emptyText = attributes.dropdownEmptyText;
         var emptyValue = attributes.dropdownEmptyValue;

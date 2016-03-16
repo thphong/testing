@@ -53,7 +53,7 @@ mdlCommon.controller('CustomerController',
             Email: "",
             Notes: "",
             Birthday: "",
-            IsWholeSale: 0,
+            IsWholeSale: "0",
             Gender: "M",
             IsActive: "1"
         };
@@ -67,7 +67,7 @@ mdlCommon.controller('CustomerController',
             $scope.CustomerForm.Email = "";
             $scope.CustomerForm.Notes = "";
             $scope.CustomerForm.Birthday = "";
-            $scope.CustomerForm.IsWholeSale = 0;
+            $scope.CustomerForm.IsWholeSale = "0";
             $scope.CustomerForm.Gender = "M";
             $scope.CustomerForm.IsActive = "1";
         };
@@ -88,7 +88,7 @@ mdlCommon.controller('CustomerController',
                 if ($scope.CustomerFormConfig.SaveObject()) {
                     $("button[data-dismiss='modal']:visible").click();
 
-                    if ($scope.CustomerForm.IsWholeSale == 0) {
+                    if ($scope.CustomerForm.IsWholeSale == '0') {
                         $scope.ReloadGrid('Customers');
                         ShowSuccessMessage("Khách hàng được tạo thành công!");
                     }

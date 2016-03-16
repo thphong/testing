@@ -560,3 +560,9 @@ nav.navbar
 {
     background-color: rgb(11, 135, 201);
 }
+
+
+button.btn-tiny{
+    padding: 3px 6px;
+    font-size: 10px;
+}
