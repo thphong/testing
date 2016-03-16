@@ -137,7 +137,7 @@
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="ProductGroupForm.ParentId" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                                 dropdown-name-field="GroupName" dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
-                                                dropdown-condition="[IsParent] = 1"
+                                                dropdown-condition="[IsParent] = 1 and [IsActive] = 1"
                                                 check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
                                                 check-under="ProductGroup"></select>
                                     </div>
