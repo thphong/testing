@@ -1,5 +1,6 @@
 ﻿var _CurrentGridId = "";
 var _ListGridIds = [];
+var _ListDropdowns = [];
 var _GridConfigData = {};
 
 
@@ -231,7 +232,12 @@ mdlCommon.directive('dropdownMasterTable', function () {
     var directive = {};
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
-        var configList = new GridViewConfig("");
+
+        var dropdownConfig = new DropdownConfig(element, attributes);
+        _ListDropdowns.push(dropdownConfig);
+        dropdownConfig.BindBody();
+
+        /*var configList = new GridViewConfig("");
         var valueField = attributes.dropdownValueField;
         var nameField = attributes.dropdownNameField;
         configList.GridDataAction = "getall";
@@ -241,6 +247,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
         if (attributes.dropdownCondition) {
             configList.GridFilterCondition = attributes.dropdownCondition;
         }
+        _ListDropdowns.push(configList);
 
         var emptyText = attributes.dropdownEmptyText;
         var emptyValue = attributes.dropdownEmptyValue;
@@ -253,7 +260,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
         var listData = configList.GetListData();
         for (var i = 0 ; i < listData.length ; i++) {
             element.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
-        }
+        }*/
     }
     return directive;
 });

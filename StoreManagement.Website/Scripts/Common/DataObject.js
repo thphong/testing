@@ -107,7 +107,17 @@ function ObjectDataConfig(tableName) {
     }
 
     this.SaveObject = function () {
-        return AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData() + '"}');
+        var result = AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData() + '"}');
+
+        //reload all master dropdown
+        for (var i = 0; i < _ListDropdowns.length; i++) {
+            var config = _ListDropdowns[i];
+            if (config.Attributes.dropdownMasterTable == this.TableName) {
+                config.BindBody();
+            }
+        }
+
+        return result;
     }
 
     //If colum is null, it will get primary key
@@ -119,7 +129,17 @@ function ObjectDataConfig(tableName) {
     //If colum is null, it will get primary key
     this.DeleteObject = function (columValue, columName) {
         if (columName == undefined) columName = "";
-        return AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '"}');
+        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '"}');
+
+        //reload all master dropdown
+        for (var i = 0; i < _ListDropdowns.length; i++) {
+            var config = _ListDropdowns[i];
+            if (config.Attributes.dropdownMasterTable == this.TableName) {
+                config.BindBody();
+            }
+        }
+
+        return result;
     }
 
     this.RemoveSpecialChars = function (str) {
@@ -171,5 +191,41 @@ function GridViewDataSet() {
     this.Sums = {};
     this.HasRecord = function () {
         return this.TotalItems > 0;
+    }
+}
+
+
+//Use for dropdown
+function DropdownConfig(element, attributes) {
+    this.Element = element;
+    this.Attributes = attributes;
+
+    var configList = new GridViewConfig("");
+    var valueField = attributes.dropdownValueField;
+    var nameField = attributes.dropdownNameField;
+    configList.GridDataAction = "getall";
+    configList.GridDataObject = attributes.dropdownMasterTable;
+    configList.GridDefinedColums = valueField + ";" + nameField;
+    configList.GridSortCondition = nameField + " ASC";
+    if (attributes.dropdownCondition) {
+        configList.GridFilterCondition = attributes.dropdownCondition;
+    }
+
+    var emptyText = attributes.dropdownEmptyText;
+    var emptyValue = attributes.dropdownEmptyValue;
+    if (emptyValue == undefined) {
+        emptyValue = 0;
+    }
+
+    this.BindBody = function () {
+        this.Element.html("");
+        if (emptyText) {
+            this.Element.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
+        }
+
+        var listData = configList.GetListData();
+        for (var i = 0 ; i < listData.length ; i++) {
+            this.Element.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
+        }
     }
 }
