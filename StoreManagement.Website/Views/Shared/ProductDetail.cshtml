@@ -116,6 +116,7 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
+                            dropdown-condition="[IsActive] = 1 and [IsParent] = 0"
                             ng-if="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">
@@ -129,7 +130,7 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                             dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
-                            dropdown-condition=""
+                            dropdown-condition="[IsActive] = 1"
                             ng-if="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">

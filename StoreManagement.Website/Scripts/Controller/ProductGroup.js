@@ -3,27 +3,49 @@
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "tab-list";
+        $scope.CurrentTab = "tab-list-product-group";
 
-        $scope.SetCurrentTab = function(tab)
-        {
+        $scope.SetCurrentTab = function (tab) {
             $scope.CurrentTab = tab;
+            if (tab == 'tab-list-product-group' || tab == 'tab-add-product-group') {
+                $scope.IsShowParent = '0';
+            }
+            else {
+                $scope.IsShowParent = '1';
+            }
+
+            if (tab == 'tab-list-product-group' || tab == 'tab-list-parent-group') {
+                $scope.ReloadGrid('ProductGroups');
+            }
+            else {
+                FValidation.ClearAllError();
+                $scope.ResetProductGroupForm();
+            }
+
+
+            $scope.ProductGroupForm.IsParent = $scope.IsShowParent;
         }
+
+        $scope.IsShowParent = '0';
 
         $scope.ProductGroupForm = {
             ProductGroupId: "-1",
             GroupName: "",
-            IsActive: "1"
+            IsActive: "1",
+            IsParent: "0",
+            ParentId: ""
         };
 
         $scope.ResetProductGroupForm = function () {
             $scope.ProductGroupForm.ProductGroupId = "-1";
             $scope.ProductGroupForm.GroupName = "";
-            $scope.ProductGroupForm.IsActive = "1"
+            $scope.ProductGroupForm.IsActive = "1";
+            $scope.ProductGroupForm.IsParent = "0";
+            $scope.ProductGroupForm.ParentId = "";
         };
 
         $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups");
-                
+
         $scope.DeleteProductGroup = function (productGroup) {
             if (confirm("Bạn có muốn xóa nhóm hàng " + productGroup.GroupName + "?")) {
                 if ($scope.ProductGroupFormConfig.DeleteObject(productGroup.ProductGroupId)) {
@@ -34,10 +56,11 @@
         }
 
         $scope.EditProductGroup = function (productGroup) {
+            productGroup.ParentId = String(productGroup.ParentId);
             productGroup.IsEditing = true;
             productGroup.BackupGroupName = productGroup.GroupName;
         }
-        
+
         $scope.UndoProductGroup = function (productGroup) {
             productGroup.IsEditing = false;
             productGroup.GroupName = productGroup.BackupGroupName;
@@ -48,6 +71,7 @@
                 $scope.ProductGroupFormConfig.SetObject(productGroup);
                 if ($scope.ProductGroupFormConfig.SaveObject()) {
                     productGroup.IsEditing = false;
+                    $scope.ReloadGrid('ProductGroups');
                     ShowSuccessMessage("Nhóm hàng hóa được lưu thành công!");
                 }
             }
@@ -61,7 +85,12 @@
                     $scope.ReloadGrid('ProductGroups');
                     $scope.ResetProductGroupForm();
                     if (!isContinue) {
-                        $scope.CurrentTab = "tab-list";
+                        if ($scope.IsShowParent == '0') {
+                            $scope.CurrentTab = "tab-list-product-group";
+                        }
+                        else {
+                            $scope.CurrentTab = "tab-list-parent-group";
+                        }
                     }
                 }
             }
