@@ -218,14 +218,24 @@ function DropdownConfig(element, attributes) {
     }
 
     this.BindBody = function () {
-        this.Element.html("");
+        var model = this.Element.attr("ng-model");
+        var condition = this.Element.attr("dropdown-condition");
+        var jelement = $('select[ng-model="' + model + '"]');
+        if (jelement.length == 0) {
+            jelement = this.Element;            
+        }
+        else if (jelement.length > 1 && condition != undefined)
+        {
+            jelement = $('select[ng-model="' + model + '"][dropdown-condition="' + condition + '"]');
+        }
+        jelement.html("");
         if (emptyText) {
-            this.Element.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
+            jelement.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
         }
 
         var listData = configList.GetListData();
         for (var i = 0 ; i < listData.length ; i++) {
-            this.Element.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
+            jelement.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
         }
     }
 }

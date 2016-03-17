@@ -64,7 +64,14 @@ namespace StoreManagement.Service
                 row = new Dictionary<string, object>();
                 foreach (DataColumn col in dt.Columns)
                 {
-                    row.Add(col.ColumnName, dr[col]);
+                    if(dr[col] == DBNull.Value)
+                    {
+                        row.Add(col.ColumnName, "");
+                    }
+                    else
+                    {
+                        row.Add(col.ColumnName, dr[col]);
+                    }
                 }
                 rows.Add(row);
             }

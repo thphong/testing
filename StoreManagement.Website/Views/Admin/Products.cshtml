@@ -35,12 +35,14 @@
             </div>
             <div class="col-md-2">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                        dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('Products')"></select>
+                        dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('Products')"
+                        dropdown-condition ="[IsActive]  = 1 and [IsParent] = 0"></select>
             </div>
 
             <div class="col-md-2">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
-                        dropdown-name-field="ProducerName" dropdown-empty-text="--Tất cả nhà sản xuất--" ng-change="ReloadGrid('Products')"></select>
+                        dropdown-name-field="ProducerName" dropdown-empty-text="--Tất cả nhà sản xuất--" ng-change="ReloadGrid('Products')"
+                        dropdown-condition ="[IsActive]  = 1"></select>
             </div>
         </div>
         <div class="row">

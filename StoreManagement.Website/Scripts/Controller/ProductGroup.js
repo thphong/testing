@@ -68,7 +68,13 @@
 
         $scope.SaveProductGroup = function (productGroup) {
             if (FValidation.CheckControls("PG" + productGroup.ProductGroupId)) {
+
+                $scope.ProductGroupFormConfig.ConvertFieldsToString(productGroup, productGroup);
+
                 $scope.ProductGroupFormConfig.SetObject(productGroup);
+
+                
+
                 if ($scope.ProductGroupFormConfig.SaveObject()) {
                     productGroup.IsEditing = false;
                     $scope.ReloadGrid('ProductGroups');
