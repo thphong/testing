@@ -43,13 +43,15 @@ namespace StoreManagement.Website
                         "~/Scripts/angular.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                        "~/Scripts/bootstrap.js"));
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap-notify.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/masterpage").Include(
                         "~/Scripts/masterpage.js"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
-                        "~/Content/bootstrap.css"));
+                        "~/Content/bootstrap.css",
+                        "~/Content/bootstrap-notify.css"));
 
             bundles.Add(new StyleBundle("~/Content/sbadmin").Include(
                         "~/Content/sb-admin-2.css",

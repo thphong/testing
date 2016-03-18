@@ -74,17 +74,15 @@ function AjaxSyncWithoutLoading(service, para) {
 
 function ShowErrorMessage(message) 
 {
-    $("#popUpModal .modal-title").html("Lỗi");
-    $("#popUpModal .modal-body p").html(message);
-    $("#popUpModal .modal-header").removeClass("infobox-green").addClass("infobox-red");
-    $("button[data-target='#popUpModal']").click();
+    $('.FNotifications').notify({
+        message: { text: message }, type: 'danger'
+    }).show();
 }
 
 function ShowSuccessMessage(message) {
-    $("#popUpModal .modal-title").html("Thành công");
-    $("#popUpModal .modal-body p").html(message);
-    $("#popUpModal .modal-header").removeClass("infobox-red").addClass("infobox-green");
-    $("button[data-target='#popUpModal']").click();
+    $('.FNotifications').notify({
+        message: { text: message }
+    }).show();
 }
 
 function CheckRangeDate(fromDate, toDate) {
