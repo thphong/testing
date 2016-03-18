@@ -1,12 +1,12 @@
 ﻿mdlCommon.controller('AttributeController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
-        $controller('ctrlPaging', { $scope: $scope });
+        //$controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "tab-list";
+        $scope.CurrentTabAttribute = "tab-list";
 
-        $scope.SetCurrentTab = function (tab) {
-            $scope.CurrentTab = tab;
+        $scope.SetCurrentTabAttribute = function (tab) {
+            $scope.CurrentTabAttribute = tab;
         }
 
         $scope.AttributeForm = {
@@ -60,7 +60,7 @@
                     $scope.ReloadGrid('Attributes');
                     $scope.ResetAttributeForm();
                     if (!isContinue) {
-                        $scope.CurrentTab = "tab-list";
+                        $scope.CurrentTabAttribute = "tab-list";
                     }
                 }
             }

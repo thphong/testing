@@ -1,12 +1,12 @@
 ﻿mdlCommon.controller('ProductGroupController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
-        $controller('ctrlPaging', { $scope: $scope });
+        //$controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "tab-list-product-group";
+        $scope.CurrentTabProductGroup = "tab-list-product-group";
 
-        $scope.SetCurrentTab = function (tab) {
-            $scope.CurrentTab = tab;
+        $scope.SetCurrentTabProductGroup = function (tab) {
+            $scope.CurrentTabProductGroup = tab;
             if (tab == 'tab-list-product-group' || tab == 'tab-add-product-group') {
                 $scope.IsShowParent = '0';
             }
@@ -92,10 +92,10 @@
                     $scope.ResetProductGroupForm();
                     if (!isContinue) {
                         if ($scope.IsShowParent == '0') {
-                            $scope.CurrentTab = "tab-list-product-group";
+                            $scope.CurrentTabProductGroup = "tab-list-product-group";
                         }
                         else {
-                            $scope.CurrentTab = "tab-list-parent-group";
+                            $scope.CurrentTabProductGroup = "tab-list-parent-group";
                         }
                     }
                 }

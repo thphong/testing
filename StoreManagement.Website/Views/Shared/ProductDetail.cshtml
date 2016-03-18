@@ -120,7 +120,7 @@
                             ng-if="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">
-                    <button class="btn btn-primary btn-sm" title="Quản lý nhóm hàng" ng-if="IsEditingProductDetail"
+                    <button class="btn btn-primary btn-sm" title="Quản lý nhóm hàng" ng-if="IsEditingProductDetail" ng-click="ReloadGrid('ProductGroups')"
                             data-toggle="modal" data-target="#productGroupModal">...</button>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="width-10">
                     <button class="btn btn-primary btn-sm" title="Quản lý nhà sản xuất" ng-if="IsEditingProductDetail"
-                            data-toggle="modal" data-target="#producerModal">
+                            data-toggle="modal" data-target="#producerModal" ng-click="ReloadGrid('Producers')">
                         ...
                     </button>
                 </div>
@@ -210,7 +210,7 @@
                 <label class="font-weigth-normal" for="chbIsManageAttribute">Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)</label>                
             </div>
             <div class="col-md-3 margin-top-10">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#attributeModal" ng-if="IsEditingProductDetail" >
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#attributeModal" ng-if="IsEditingProductDetail" ng-click="ReloadGrid('Attributes')" >
                     <i class="fa-list fa"></i>Quản lý thuộc tính
                 </button>
             </div>

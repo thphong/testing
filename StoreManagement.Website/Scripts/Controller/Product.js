@@ -13,6 +13,9 @@ mdlCommon.controller('ProductController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
+        $controller('ProductGroupController', { $scope: $scope });
+        $controller('ProducerController', { $scope: $scope });
+        $controller('AttributeController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             ProductStatus: "1",

@@ -1,7 +1,7 @@
 ﻿
 @Scripts.Render("~/bundles/ProductGroup")
 <!-- Customer Modal -->
-<div id="productGroupModal" class="modal fade " role="dialog" ng-controller="ProductGroupController">
+<div id="productGroupModal" class="modal fade " role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
@@ -14,25 +14,25 @@
                     <div class="row">
                         <div class="tabbable" style="padding-top: 10px">
                             <ul class="nav nav-tabs padding-left-18">
-                                <li ng-click="SetCurrentTab('tab-list-product-group')" ng-class="{'active' : (CurrentTab == 'tab-list-product-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-list-product-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-product-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-list fa"></i>
                                         <span>Danh sách nhóm hàng</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTab('tab-add-product-group')" ng-class="{'active' : (CurrentTab == 'tab-add-product-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-add-product-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-product-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới nhóm hàng</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTab('tab-list-parent-group')" ng-class="{'active' : (CurrentTab == 'tab-list-parent-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-list-parent-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-parent-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-list fa"></i>
                                         <span>Danh sách bộ danh mục</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTab('tab-add-parent-group')" ng-class="{'active' : (CurrentTab == 'tab-add-parent-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-add-parent-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-parent-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới bộ danh mục</span>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="row">
                         <div class="tab-content no-border active">
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTab == 'tab-list-product-group') || (CurrentTab == 'tab-list-parent-group')}">
+                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-product-group') || (CurrentTabProductGroup == 'tab-list-parent-group')}">
                                 <div class="col-md-12 margin-top-10">
                                     <table grid-data="ProductGroups"
                                            grid-data-type="table" @*table/storedprocedure*@
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTab == 'tab-add-product-group') || (CurrentTab == 'tab-add-parent-group')}">
+                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-product-group') || (CurrentTabProductGroup == 'tab-add-parent-group')}">
                                 <div class="row margin-top-10">
                                     <label class="col-md-4 control-label text-right">Tên nhóm hàng </label>
                                     <div class="col-md-8">

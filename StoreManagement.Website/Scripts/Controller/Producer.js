@@ -1,12 +1,12 @@
 ﻿mdlCommon.controller('ProducerController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
-        $controller('ctrlPaging', { $scope: $scope });
+        //$controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "tab-list";
+        $scope.CurrentTabProducer = "tab-list";
 
-        $scope.SetCurrentTab = function (tab) {
-            $scope.CurrentTab = tab;
+        $scope.SetCurrentTabProducer = function (tab) {
+            $scope.CurrentTabProducer = tab;
         }
 
         $scope.ProducerForm = {
@@ -60,7 +60,7 @@
                     $scope.ReloadGrid('Producers');
                     $scope.ResetProducerForm();
                     if (!isContinue) {
-                        $scope.CurrentTab = "tab-list";
+                        $scope.CurrentTabProducer = "tab-list";
                     }
                 }
             }

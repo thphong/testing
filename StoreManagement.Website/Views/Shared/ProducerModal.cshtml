@@ -1,7 +1,7 @@
 ﻿
 @Scripts.Render("~/bundles/Producer")
 <!-- Customer Modal -->
-<div id="producerModal" class="modal fade " role="dialog" ng-controller="ProducerController">
+<div id="producerModal" class="modal fade " role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
@@ -14,13 +14,13 @@
                     <div class="row">
                         <div class="tabbable" style="padding-top: 10px">
                             <ul class="nav nav-tabs padding-left-18">
-                                <li ng-click="SetCurrentTab('tab-list')" ng-class="{'active' : (CurrentTab == 'tab-list')}">
+                                <li ng-click="SetCurrentTabProducer('tab-list')" ng-class="{'active' : (CurrentTabProducer == 'tab-list')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-list fa"></i>
                                         <span>Danh sách nhà sản xuất</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTab('tab-add-new')" ng-class="{'active' : (CurrentTab == 'tab-add-new')}">
+                                <li ng-click="SetCurrentTabProducer('tab-add-new')" ng-class="{'active' : (CurrentTabProducer == 'tab-add-new')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới nhà sản xuất</span>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="tab-content no-border active">
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTab == 'tab-list')}">
+                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProducer == 'tab-list')}">
                                 <div class="col-md-12 margin-top-10">
                                     <table grid-data="Producers"
                                            grid-data-type="table" @*table/storedprocedure*@
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTab == 'tab-add-new')}">
+                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProducer == 'tab-add-new')}">
                                 <div class="row margin-top-10">
                                     <label class="col-md-4 control-label text-right">Tên nhà sản xuất </label>
                                     <div class="col-md-8">
