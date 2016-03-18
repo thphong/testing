@@ -1,15 +1,4 @@
-﻿$(document).ready(function () {
-    $('.notifications').notify({
-        message: { text: 'Aw yeah, It works!' }, type: 'danger'
-    }).show();
-
-    $('.notifications').notify({
-        message: { text: 'Aw yeah, It works!' }, type: 'success'
-    }).show();
-
-});
-
-function CheckProductCodeUnique(value) {
+﻿function CheckProductCodeUnique(value) {
     if (value) {
         var config = new ObjectDataConfig("T_Trans_Products");
         var object = config.GetObject(value, 'ProductCode');

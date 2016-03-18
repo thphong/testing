@@ -1,5 +1,25 @@
 ﻿var mdlCommon = angular.module('mdlCommon', []);
 
+function ShowErrorMessage(message) {
+    if ($('.FNotifications').length == 0) {
+        $("body").append("<div class='FNotifications notifications top-right'></div>");
+    }
+
+    $('.FNotifications').notify({
+        message: { text: message }, type: 'danger'
+    }).show();
+}
+
+function ShowSuccessMessage(message) {
+    if ($('.FNotifications').length == 0) {
+        $("body").append("<div class='FNotifications notifications top-right'></div>");
+    }
+
+    $('.FNotifications').notify({
+        message: { text: message }
+    }).show();
+}
+
 function AjaxAsync(service, para, delegate) {
     $.ajax({
         type: "POST",
@@ -8,6 +28,7 @@ function AjaxAsync(service, para, delegate) {
         contentType: "application/json",
         success: delegate,
         error: function () {
+            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
 }
@@ -33,10 +54,17 @@ function AjaxSync(service, para) {
         beforeSend: ShowLoading,
         complete: HideLoading,
         success: function (data) {
-            result = data;
+            if (typeof (data) == 'string' && data.startsWith("#error:")) {
+                ShowErrorMessage(data);
+                result = null;
+            }
+            else {
+                result = data;
+            }
         },
         error: function () {
             result = null;
+            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
     return result;
@@ -51,11 +79,18 @@ function AjaxSyncWithoutLoading(service, para) {
         data: para,
         contentType: "application/json",
         async: false,
-        success: function (data) {
-            result = data;
+        success: function (data) {            
+            if (typeof (data) == 'string' && data.startsWith("#error:")) {
+                ShowErrorMessage(data);
+                result = null;
+            }
+            else {
+                result = data;
+            }
         },
         error: function () {
             result = null;
+            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
     return result;
@@ -71,19 +106,6 @@ function AjaxSyncWithoutLoading(service, para) {
         $(".tab-pane#" + tabForId).addClass("active");
     })
 })*/
-
-function ShowErrorMessage(message) 
-{
-    $('.FNotifications').notify({
-        message: { text: message }, type: 'danger'
-    }).show();
-}
-
-function ShowSuccessMessage(message) {
-    $('.FNotifications').notify({
-        message: { text: message }
-    }).show();
-}
 
 function CheckRangeDate(fromDate, toDate) {
     var fromDateList = fromDate.split('-');

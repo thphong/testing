@@ -18,59 +18,102 @@ namespace StoreManagement.Website.Controllers
             dataService = _dataService;
         }
 
-        public ActionResult Input()
-        {
-            //var list = dataService.GetDataFromConfiguration("DataList_001", 1, null, "get", new GridViewConfig { StartRow = 1, EndRow = 10 });
-            return View();
-        }
-
         [HttpPost]
         public ActionResult GetDataList(GridViewConfig gridConfig)
         {
-            var list = dataService.GetDataFromConfigurationJsonable(SessionCollection.CurrentUserId, gridConfig);
-            return Json(list);
+            try
+            {
+                var list = dataService.GetDataFromConfigurationJsonable(SessionCollection.CurrentUserId, gridConfig);
+                return Json(list);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         [HttpPost]
         public ActionResult CountDataList(GridViewConfig gridConfig)
         {
-            int result = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
-            return Json(result);
+            try
+            {
+                int result = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         [HttpPost]
         public ActionResult SumDataList(GridViewConfig gridConfig)
         {
-            var result = dataService.SumDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
-            return Json(result);
+            try
+            {
+                var result = dataService.SumDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         [HttpPost]
         public ActionResult SaveObject(string tableName, string data)
         {
-            dataService.SaveObject(SessionCollection.CurrentUserId, tableName, data);
-            return Json(true);
+            try
+            {
+                dataService.SaveObject(SessionCollection.CurrentUserId, tableName, data);
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         [HttpPost]
         public ActionResult GetObject(string tableName, string columName, string columValue)
         {
-            var obj = dataService.GetObject(SessionCollection.CurrentUserId, tableName, columName, columValue);
-            return Json(obj);
+            try
+            {
+                var obj = dataService.GetObject(SessionCollection.CurrentUserId, tableName, columName, columValue);
+                return Json(obj);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         [HttpPost]
         public ActionResult DeleteObject(string tableName, string columName, string columValue)
         {
-            dataService.DeleteObject(SessionCollection.CurrentUserId, tableName, columName, columValue);
-            return Json(true);
+            try
+            {
+                dataService.DeleteObject(SessionCollection.CurrentUserId, tableName, columName, columValue);
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         public ActionResult ExportExcelAjax(GridViewConfig gridConfig)
         {
-            gridConfig.GridDataAction = "getall";
-            SessionCollection.ExportConfig = gridConfig;
-            return Json(true);
+            try
+            {
+                gridConfig.GridDataAction = "getall";
+                SessionCollection.ExportConfig = gridConfig;
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
 
         public ActionResult ExportExcel()
