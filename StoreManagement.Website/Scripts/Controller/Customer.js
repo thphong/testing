@@ -38,6 +38,7 @@ mdlCommon.controller('CustomerController',
                 $scope.CurrentTab = tab;
                 $scope.IsShowCustomerDetail = false;
                 $scope.IsShowSupplierDetail = false;
+                $scope.ReloadGrid(tab);
             }
         }
 

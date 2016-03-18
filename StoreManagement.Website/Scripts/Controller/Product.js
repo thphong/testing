@@ -197,5 +197,4 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.IsCost = isCost;
             $scope.ReloadGrid('ProductPriceHistorys');            
         }
-
     }]);

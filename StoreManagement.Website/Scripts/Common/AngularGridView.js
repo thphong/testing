@@ -11,7 +11,7 @@ mdlCommon.directive('gridPagingFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridPagingFor;
-        element.append('<div ng-init="CalculatedGridPara(\'' + gridId + '\');"></div>'
+        element.append('<div ng-init="InitVisibleGrid(\'' + gridId + '\');"></div>'
             + '<ul class="pagination" ng-if="DataSet.' + gridId + '.TotalItems > 0" style="margin-top: 0px">'
             + '<li ng-class="{disabled: Config.' + gridId + '.CurrentPage == 1}" ng-click="GridChangePageIndex(1,\'' + gridId + '\')" title="Page 1">'
             + '<a href=""> &laquo; </a>'
@@ -420,6 +420,20 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         this.CalculatedGridPara(gridId);
     }
 
+    $scope.InitVisibleGrid = function (gridId) {
+        if ($('table[grid-data="' + gridId + '"]').is(":visible")) {
+            $scope.ReloadGrid(gridId);
+        }
+    }
+
+    $scope.ReloadAllVisibleControls = function () {
+        $('table[grid-data]:visible').each(function () {
+            var gridId = $(this).attr('grid-data');
+            if ($scope.DataSet[gridId] != undefined) {
+                $scope.ReloadGrid(gridId);
+            }
+        });
+    }
 }]);
 
 
