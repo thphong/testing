@@ -11,8 +11,8 @@ mdlCommon.directive('gridPagingFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridPagingFor;
-        element.append('<div ng-init="InitVisibleGrid(\'' + gridId + '\');"></div>'
-            + '<ul class="pagination" ng-if="DataSet.' + gridId + '.TotalItems > 0" style="margin-top: 0px">'
+        element.append(//'<div ng-init="InitVisibleGrid(\'' + gridId + '\');"></div>'
+             '<ul class="pagination" ng-if="DataSet.' + gridId + '.TotalItems > 0" style="margin-top: 0px">'
             + '<li ng-class="{disabled: Config.' + gridId + '.CurrentPage == 1}" ng-click="GridChangePageIndex(1,\'' + gridId + '\')" title="Page 1">'
             + '<a href=""> &laquo; </a>'
             + '</li>'
@@ -131,6 +131,9 @@ mdlCommon.directive('gridData', function () {
             window._ListGridIds.push(window._CurrentGridId);
 
             _GridConfigData[window._CurrentGridId] = new GridViewConfig(window._CurrentGridId);
+
+            element.after('<div ng-init="InitVisibleGrid(\'' + window._CurrentGridId + '\');"></div>');
+
         }
         else {
             alert("Grid with id '" + window._CurrentGridId + "' is duplicted, please change to new id");

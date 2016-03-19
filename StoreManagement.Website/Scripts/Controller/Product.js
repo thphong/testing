@@ -149,6 +149,8 @@ mdlCommon.controller('ProductController',
 
                         $scope.IsEditingProductDetail = false;
                         $scope.ReloadGrid('Products');
+
+                        ShowSuccessMessage("Hàng hóa được sửa thành công!");
                     }
                     else {
                         if (isContinue) {
@@ -159,8 +161,9 @@ mdlCommon.controller('ProductController',
                             $scope.IsEditingProductDetail = false;
                             $scope.IsShowProductDetail = false;
                         }
+
+                        ShowSuccessMessage("Hàng hóa được tạo thành công!");
                     }
-                    ShowSuccessMessage("Hàng hóa được tạo thành công!");
                 }
             }
         }
