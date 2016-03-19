@@ -35,10 +35,16 @@ function AjaxAsync(service, para, delegate) {
 
 function ShowLoading() {
     //$("div#main").showLoading();
+    if ($('button:focus i.fa.loading').length == 0) {
+        $('button:focus i.fa').hide().after('<i class="fa fa-refresh white loading"></i>');
+    }
 }
 
 function HideLoading() {
     //$("div#main").hideLoading();
+    var loading = $('button i.fa.loading');
+    loading.prev().show();
+    loading.remove();
 }
 
 
