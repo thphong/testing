@@ -75,6 +75,20 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveListObject(string tableName, string data)
+        {
+            try
+            {
+                dataService.SaveListObject(SessionCollection.CurrentUserId, tableName, data);
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+        [HttpPost]
         public ActionResult GetObject(string tableName, string columName, string columValue)
         {
             try

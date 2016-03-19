@@ -101,13 +101,18 @@ function ObjectDataConfig(tableName) {
 
     this.TableName = tableName;
     this.ObjectData = {};
+    this.ListObjectData = [];
 
     this.SetObject = function (objectData) {
         this.ObjectData = objectData;
     }
 
+    this.SetListObject = function (listObjectData) {
+        this.ListObjectData = listObjectData;
+    }
+
     this.SaveObject = function () {
-        var result = AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData() + '"}');
+        var result = AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData(this.ObjectData) + '"}');
 
         //reload all master dropdown
         for (var i = 0; i < _ListDropdowns.length; i++) {
@@ -117,6 +122,20 @@ function ObjectDataConfig(tableName) {
             }
         }
 
+        return result;
+    }
+
+    
+    this.SaveListObject = function () {
+        var data = "";
+        for (var i = 0; i < this.ListObjectData.length; i++)
+        {
+            if (data) {
+                data += "<<>>";
+            }
+            data += this.GetCombinedData(this.ListObjectData[i]);
+        }
+        var result = AjaxSync(g_saveListObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + data + '"}');
         return result;
     }
 
@@ -151,15 +170,18 @@ function ObjectDataConfig(tableName) {
         while (str.indexOf(",,") >= 0) {
             str = str.replace(/,,/g, ',');
         }
+        while (str.indexOf("<<>>") >= 0) {
+            str = str.replace(/<<>>/g, '');
+        }
         return str;
     }
 
-    this.GetCombinedData = function () {
+    this.GetCombinedData = function (object) {
 
         var result = "";
 
-        for (var key in this.ObjectData) {
-            var value = this.ObjectData[key];
+        for (var key in object) {
+            var value = object[key];
             if (result) {
                 result += ",,";
             }

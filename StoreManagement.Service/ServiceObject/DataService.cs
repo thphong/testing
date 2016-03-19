@@ -115,6 +115,14 @@ namespace StoreManagement.Service
             dbFactory.GetContext().Database.ExecuteSqlCommand(statement);            
         }
 
+        public void SaveListObject(int userId, string tableName, string objectData)
+        {
+            string statement = string.Format("exec [dbo].[USP_System_Data_BulkUpdate] @TableName = '{0}', @Data = N'{1}', @UserId = {2}"
+                    , tableName, objectData, userId);
+
+            dbFactory.GetContext().Database.ExecuteSqlCommand(statement);
+        }
+
         public Dictionary<string, object> GetObject(int userId, string tableName, string columName, string columValue)
         {
             string statement = string.Format("exec [dbo].[USP_System_Data_Object_Get] @UserId = {0}, @TableName = '{1}', @ColumName = '{2}', @Value = N'{3}'"
