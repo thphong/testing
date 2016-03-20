@@ -22,7 +22,7 @@ namespace StoreManagement.Service
         Dictionary<string, object> SumDataFromConfiguration(int userId, GridViewConfig gridConfig);
 
         Dictionary<string, object> GetObject(int userId, string tableName, string columName, string columValue);
-        void SaveObject(int userId, string tableName, string objectData);
+        int SaveObject(int userId, string tableName, string objectData);
         void SaveListObject(int userId, string tableName, string objectData);
         void DeleteObject(int userId, string tableName, string columName, string columValue);
 

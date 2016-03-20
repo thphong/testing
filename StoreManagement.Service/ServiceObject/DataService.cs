@@ -107,12 +107,14 @@ namespace StoreManagement.Service
         #endregion
 
         #region Object
-        public void SaveObject(int userId, string tableName, string objectData)
+        public int SaveObject(int userId, string tableName, string objectData)
         {
             string statement = string.Format("exec [dbo].[USP_System_Data_Update] @TableName = '{0}', @Data = N'{1}', @UserId = {2}"
                     , tableName, objectData, userId);
-
-            dbFactory.GetContext().Database.ExecuteSqlCommand(statement);            
+            
+            int result = dbFactory.GetContext().Database.SqlQuery<int>
+                    (statement).FirstOrDefault();
+            return result;
         }
 
         public void SaveListObject(int userId, string tableName, string objectData)

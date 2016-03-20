@@ -67,13 +67,14 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.AllowMax = "100";
             $scope.ProductForm.IsManageAsSerial = "0";
             $scope.ProductForm.IsManageAttribute = "0";
-            $scope.ProductForm.Description = "";            
+            $scope.ProductForm.Description = "";
             $scope.ProductForm.ProductGroupName = "";
             $scope.ProductForm.ProducerName = "";
             $scope.ProductForm.IsCost = 0;
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
+        $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute");
 
         $scope.DeleteProduct = function (product) {
             if (confirm("Bạn có muốn xóa hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
@@ -124,8 +125,7 @@ mdlCommon.controller('ProductController',
         }
 
         $scope.ChangeTrackInventory = function () {
-            if ($scope.ProductForm.TrackInventory == '0')
-            {
+            if ($scope.ProductForm.TrackInventory == '0') {
                 $scope.ProductForm.AllowNegative = '0';
             }
         }
@@ -140,8 +140,10 @@ mdlCommon.controller('ProductController',
         $scope.SaveProductForm = function (isContinue) {
             if (FValidation.CheckControls("")) {
                 $scope.ProductFormConfig.SetObject($scope.ProductForm);
-                if ($scope.ProductFormConfig.SaveObject()) {
 
+
+                var productId = $scope.ProductFormConfig.SaveObject();
+                if (productId > 0) {
                     if ($scope.ProductForm.ProductId != "-1") {
 
                         $scope.ProductForm.ProductGroupName = $("select[ng-model='ProductForm.ProductGroup'] option:selected").html();
@@ -153,16 +155,23 @@ mdlCommon.controller('ProductController',
                         ShowSuccessMessage("Hàng hóa được sửa thành công!");
                     }
                     else {
+                        //save product attribute
+                        var len = $scope.DataSet.ProductAttributes.Data.length;
+                        for (var i = 0 ; i < len; i++) {
+                            $scope.DataSet.ProductAttributes.Data[i].ProductId = productId;
+                        }
+                        $scope.ProductAttributeFormConfig.SetListObject($scope.DataSet.ProductAttributes.Data);
+                        $scope.ProductAttributeFormConfig.SaveListObject();
+
                         if (isContinue) {
                             $scope.ResetProductForm();
                         }
                         else {
-                            $scope.ReloadGrid('Products');
                             $scope.IsEditingProductDetail = false;
                             $scope.IsShowProductDetail = false;
                         }
-
                         ShowSuccessMessage("Hàng hóa được tạo thành công!");
+                        $scope.ReloadGrid('Products');
                     }
                 }
             }
@@ -173,17 +182,22 @@ mdlCommon.controller('ProductController',
             $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
             $scope.ProductForm.ProductName = $scope.ProductForm.ProductName + " - Copy";
             $scope.ProductForm.ProductCode = "";
-            $scope.ProductForm.ProductId = "-1";
             $scope.ProductForm.Cost = $filter('currency')($scope.ProductForm.Cost, "", 0);
             $scope.ProductForm.Price = $filter('currency')($scope.ProductForm.Price, "", 0);
             $scope.ProductForm.ProductGroupName = product.GroupName;
             $scope.ProductForm.ProducerName = product.ProducerName;
+            $scope.ReloadGrid('ProductAttributes');
+            var len = $scope.DataSet.ProductAttributes.Data.length;
+            for (var i = 0 ; i < len; i++) {
+                $scope.DataSet.ProductAttributes.Data[i].AttributeId += "";
+            }
+            $scope.ProductForm.ProductId = "-1";
 
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = true;
         }
-        
-        
+
+
         $scope.ShowProductDetail = function (product) {
 
             var object = $scope.ProductFormConfig.GetObject(product.ProductId);
@@ -192,6 +206,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.ProducerName = product.ProducerName;
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = false;
+            $scope.ReloadGrid('ProductAttributes');
         }
 
 
@@ -201,6 +216,29 @@ mdlCommon.controller('ProductController',
 
         $scope.ShowPriceHistory = function (isCost) {
             $scope.ProductForm.IsCost = isCost;
-            $scope.ReloadGrid('ProductPriceHistorys');            
+            $scope.ReloadGrid('ProductPriceHistorys');
         }
+
+
+        //Product Attrubute
+        $scope.InitProductAttribute = function () {
+            $scope.DataSet.ProductAttributes.Data = [{ AttributeId: '', Value: '' }];
+        }
+
+        $scope.AddProductAttribute = function () {
+            $scope.DataSet.ProductAttributes.Data.push({ AttributeId: "", Value: "" });
+        }
+
+        $scope.DeleteProductAttribute = function (item) {
+            if (confirm("Bạn có muốn xóa thuộc tính này?")) {
+                var len = $scope.DataSet.ProductAttributes.Data.length;
+                for (var i = 0; i < len ; i++) {
+                    if (item == $scope.DataSet.ProductAttributes.Data[i]) {
+                        $scope.DataSet.ProductAttributes.Data.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
     }]);

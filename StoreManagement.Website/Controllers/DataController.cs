@@ -65,8 +65,8 @@ namespace StoreManagement.Website.Controllers
         {
             try
             {
-                dataService.SaveObject(SessionCollection.CurrentUserId, tableName, data);
-                return Json(true);
+                int id = dataService.SaveObject(SessionCollection.CurrentUserId, tableName, data);
+                return Json(id);
             }
             catch (Exception ex)
             {
