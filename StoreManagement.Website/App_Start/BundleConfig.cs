@@ -89,6 +89,9 @@ namespace StoreManagement.Website
             bundles.Add(new ScriptBundle("~/bundles/Attribute").Include(
                         "~/Scripts/Controller/Attribute.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Order").Include(
+                        "~/Scripts/Controller/Order.js"));
+
         }
     }
 }

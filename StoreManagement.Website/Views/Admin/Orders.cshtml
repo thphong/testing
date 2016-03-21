@@ -4,46 +4,45 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/DataList")
+    @Scripts.Render("~/bundles/Order")
 }
 
-<div ng-controller="RootController">
+<div ng-controller="OrderController">
     <div class="container-fluid">
         <div class="row" style="padding-top: 5px">
-            <div class="col-md-offset-6 col-md-4 pull-right" >
-                <button class="btn btn-success btn-primary">
-                    <i class="fa fa-shopping-cart white"></i>
-                    <span >Đặt hàng</span>
-                </button>
+            <div class="col-md-offset-6 col-md-4 pull-right text-right" >
                 <button class="btn btn-success btn-primary">
                     <i class="fa fa-desktop white"></i>
                     <span>Bán hàng</span>
                 </button>
-                <span grid-export-import-for="DataList_001"></span>
+                <span grid-export-import-for="Orders" ></span>
             </div>
         </div>
         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-            <div class="col-md-3">
-                <span grid-filter-for="DataList_001"></span>
+            <div class="col-md-5">
+                <span grid-filter-for="Orders" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
             </div>
-            <div class="col-md-3">
-                <select class="form-control input-sm" style="margin-left: 5px; width: 160px;">
-                    <option selected="selected" value="0">Đơn hàng</option>
-                    <option value="1">Đơn hàng đã xóa</option>
-                    <option value="2">Đơn hàng còn nợ</option>
+            <div class="col-md-2">
+                <select class="form-control input-sm" ng-model="AdditionalFilter.OrderType" ng-change="ReloadGrid('Orders')">
+                    <option selected="selected" value="1">Đơn hàng</option>
+                    <option value="2">Đơn hàng đã xóa</option>
+                    <option value="3">Đơn hàng còn nợ</option>
                 </select>
             </div>
-            <div class="col-md-6 pull-right">
+            <div class="col-md-4 pull-right">
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table grid-data="DataList_001"
+                <table grid-data="Orders"
                        grid-data-type="table" @*table/storedprocedure*@
                        grid-data-action="get" @*get/getall*@
                        grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
-                       grid-filter-condition="[IsActive] = {{1}}" @*must have [fieldname] for each colum field*@
+                       grid-filter-condition="([IsActive] = 1 and ({{AdditionalFilter.OrderType}} = 1)
+                                                or ({{AdditionalFilter.OrderType}} = 2 and  [IsActive] = 0)
+                                                or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0))" @*must have [fieldname] for each colum field*@
                        grid-sort-condition="[OrderCode] ASC" @*must have [fieldname] for each colum field*@
+                       grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
                        class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -51,57 +50,60 @@
                             <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                             <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
                             <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
-                            <th grid-defined-colum="Customer.CustomerName, CustomerName"><span>Khách hàng</span></th>
+                            <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
                             <th grid-defined-colum="OrderStatus.StatusName"><span>Trạng thái</span></th>
                             <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                             <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
                             <th></th>
-                            <th></th>
-                            <th style="display:none;" grid-defined-colum="OrderId"></th>
-                            <th style="display:none;" grid-defined-colum="Cashier"></th>
-                            <th style="display:none;" grid-defined-colum="StoreId"></th>
-                            <th style="display:none;" grid-defined-colum="OrderStatus"></th>
-                            <th style="display:none;" grid-defined-colum="Customer"></th>
+                            <th class="none-display" grid-defined-colum="OrderStatus.DisplayClass"></th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @*Dataset must have grid id*@
-                        <tr ng-repeat="item in DataSet.DataList_001.Data" ng-click="ClickOnItem(item)" ng-class="{'curent-record' : (item.OrderId == Form.OrderId)}">
-                            <td ng-bind="item.OrderCode"></td>
+                        <tr ng-repeat="item in DataSet.Orders.Data">
+                            <td > <a href="#" ng-bind="item.OrderCode"></a> </td>
                             <td ng-bind="item.StoreCode"></td>
                             <td ng-bind="item.SoldDate"></td>
                             <td ng-bind="item.CashierName"></td>
                             <td ng-bind="item.CustomerName"></td>
                             <td >
-                                <span class="label label-success" ng-class="{1:'label-warning', 2:'label-success', 3:'label-warning', 4:'label-warning', 5:'label-success',6:'label-success' }[item.OrderStatus]" ng-bind="item.StatusName"></span>
+                                <span class="{{item.DisplayClass}}"  ng-bind="item.StatusName"></span>
                             </td>
-                            <td ><span ng-bind="item.SumMoney" class="bold"></span></td>
-                            <td ng-bind="item.DebtMoney"></td>
+                            <td ><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
+                            <td ng-bind="item.DebtMoney  | currency:'':0"></td>
                             <td>
                                 <a class="grey margin-left-10">
                                     <i class="fa-print fa"></i>
                                 </a>
-                                <a class="red margin-left-10">
+                                <a class="red margin-left-10" ng-click="DeleteOrder(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
                             </td>
-                            <td class="text-center">
-                                <input type="checkbox" />
-                            </td>
                         </tr>
-                        <tr ng-if="!DataSet.DataList_001.HasRecord()">
+                        <tr ng-if="!DataSet.Orders.HasRecord()">
                             @*Edit colspan*@
-                            <td colspan="11" align="center"> No Item Found! </td>
+                            <td colspan="9" align="center"> Không có dữ liệu! </td>
                         </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" align="left">
+                                <div style="float: left;">
+                                    <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
+                                    <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                    <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div class="row">
                     <div class="col-md-9 pull-left">
-                        <span grid-paging-for="DataList_001"></span>
+                        <span grid-paging-for="Orders"></span>
                     </div>
 
                     <div class="col-md-3 pull-right">
-                        <span grid-page-size-for="DataList_001"></span>
+                        <span grid-page-size-for="Orders"></span>
                     </div>
                 </div>
             </div>

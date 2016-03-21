@@ -315,6 +315,7 @@
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
     <Content Include="Scripts\Controller\Customer.js" />
+    <Content Include="Scripts\Controller\Order.js" />
     <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
     <Content Include="Scripts\Controller\ProductGroup.js" />
