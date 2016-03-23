@@ -31,6 +31,7 @@ namespace StoreManagement.Website
 
             //get session
             SessionCollection.CurrentUserId = 1;
+            SessionCollection.CurrentStore = 1;
         }
     }
 }

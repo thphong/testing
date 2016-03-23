@@ -19,8 +19,10 @@
         var g_getObjectUrl = '@Url.Action("GetObject", "Data")';
         var g_deleteObjectUrl = '@Url.Action("DeleteObject", "Data")';
         var g_currentUserId = '@StoreManagement.Website.SessionCollection.CurrentUserId';
+        var g_currentStoreId = '@StoreManagement.Website.SessionCollection.CurrentStore';
         var g_exportExcelAjaxUrl = '@Url.Action("ExportExcelAjax", "Data")';
         var g_exportExcelUrl = '@Url.Action("ExportExcel", "Data")';
+        var g_setStoreIdUrl = '@Url.Action("SetStoreId", "Data")';
     </script>
 
     @Styles.Render("~/Content/css")
@@ -43,7 +45,7 @@
 
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="LoadMenuController">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -74,12 +76,13 @@
             </ul>
             <div class="pull-right text-right margin-top-10 width-15">
                 <div class="col-md-6 white margin-top-10">Cửa hàng</div>
-                <select class="form-control width-50">
-                    <option>Test</option>
-                </select>
+                <select class="form-control width-50" ng-model="CurrentStore" ng-change="SetStoreId()"
+                        dropdown-master-table="T_Master_Stores"
+                        dropdown-value-field="StoreId"
+                        dropdown-name-field="StoreCode"></select>
             </div>
             <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation" ng-controller="LoadMenuController">
+            <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-shortcuts">

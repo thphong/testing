@@ -31,5 +31,18 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["ExportConfig"] = value;
             }
         }
+
+
+        public static int CurrentStore
+        {
+            get
+            {
+                return (int)HttpContext.Current.Session["CurrentStore"];
+            }
+            set
+            {
+                HttpContext.Current.Session["CurrentStore"] = value;
+            }
+        }
     }
 }

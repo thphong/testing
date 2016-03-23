@@ -4,6 +4,8 @@
         $controller('ctrlPaging', { $scope: $scope });
 
 
+        $scope.CurrentStore = g_currentStoreId;
+
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
         configMenuList.GridDataType = "function";
@@ -14,5 +16,10 @@
         configMenuList.EvaluateFieldExpression($interpolate, $scope);
         $scope.ListMenu = configMenuList.GetListData();
         $scope.CurrentUrl = window.location.pathname.toLowerCase();
+
+        $scope.SetStoreId = function () {
+            AjaxSync(g_setStoreIdUrl, '{ "storedId": "' + $scope.CurrentStore + '"}');
+            location.reload();
+        }
 
     }]);

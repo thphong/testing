@@ -103,6 +103,20 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
+        public ActionResult SetStoreId(int storedId)
+        {
+            try
+            {
+                SessionCollection.CurrentStore = storedId;
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+        [HttpPost]
         public ActionResult DeleteObject(string tableName, string columName, string columValue)
         {
             try
