@@ -1,10 +1,17 @@
-﻿mdlCommon.controller('OrderController',
+﻿$(document).ready(function () {
+    $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
+})
+
+
+mdlCommon.controller('OrderController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
 
         $scope.AdditionalFilter = {
-            OrderType: "1"
+            OrderType: "1",
+            StartDate: "",
+            EndDate: ""
         };
 
 

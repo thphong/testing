@@ -506,6 +506,7 @@ textarea.form-control {
 .width-15
 {
     width: 15% !important;
+    display: inline-block !important;
 }
 
 .width-50
@@ -581,3 +582,4 @@ button.btn-tiny{
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(360deg); }
 }
+
