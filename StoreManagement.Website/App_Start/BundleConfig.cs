@@ -46,12 +46,13 @@ namespace StoreManagement.Website
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/bootstrap-notify.js",
                         "~/Scripts/bootstrap-datepicker.js"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/masterpage").Include(
                         "~/Scripts/masterpage.js"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                         "~/Content/bootstrap.css",
+                        "~/Content/bootstrap-notify.css",
                         //"~/Content/bootstrap-datepicker.standalone.css",
                         //"~/Content/bootstrap-datepicker3.standalone.css",
                         //"~/Content/bootstrap-datepicker.css",
@@ -83,6 +84,10 @@ namespace StoreManagement.Website
 
             bundles.Add(new ScriptBundle("~/bundles/Customer").Include(
                         "~/Scripts/Controller/Customer.js"));
+            bundles.Add(new ScriptBundle("~/bundles/CustomerModal").Include(
+                        "~/Scripts/Controller/CustomerModal.js"));
+            bundles.Add(new ScriptBundle("~/bundles/SupplierModal").Include(
+                        "~/Scripts/Controller/SupplierModal.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Product").Include(
                         "~/Scripts/Controller/Product.js"));

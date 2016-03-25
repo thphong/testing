@@ -7,6 +7,7 @@ mdlCommon.controller('OrderController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
+        $controller('CustomerModalController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             OrderType: "1",
@@ -65,38 +66,34 @@ mdlCommon.controller('OrderController',
             }
         }
 
-        /*$scope.IsShowSupplierDetail = false;
-        $scope.IsEditingSupplierDetail = false;
+        $scope.IsShowOrderDetail = false;
+        $scope.IsEditingOrderDetail = false;
 
-        $scope.SupplierForm = {
-            SupplierId: "-1",
-            SupplierCode: "",
-            SupplierName: "",
-            Phone: "",
-            Email: "",
-            Address: "",
-            TaxCode: "",
-            Notes: "",
-            IsActive: "1"
+        $scope.OrderForm = {
+            OrderId: "-1"
         };
 
-        $scope.ResetSupplierForm = function () {
-            $scope.SupplierForm.SupplierId = "-1";
-            $scope.SupplierForm.SupplierCode = "";
-            $scope.SupplierForm.SupplierName = "";
-            $scope.SupplierForm.Phone = "";
-            $scope.SupplierForm.Email = "";
-            $scope.SupplierForm.TaxCode = "";
-            $scope.SupplierForm.Notes = "";
-            $scope.SupplierForm.Address = "";
+        $scope.ResetOrderForm = function () {
+            $scope.OrderForm.OrderId = "-1";
         }
 
-        $scope.InitSupplier = function () {
+        $scope.AddOrder = function () {
+            $scope.IsShowOrderDetail = true;
+            $scope.IsEditingOrderDetail = true;
             FValidation.ClearAllError();
-            $scope.ResetSupplierForm();
+            $scope.ResetOrderForm();
         }
 
+        $scope.CloseOrderDetail = function () {
+            if ($scope.IsEditingOrderDetail && $scope.OrderForm.OrderId != "-1") {
+                $scope.IsEditingOrderDetail = false;
+            }
+            else {
+                $scope.IsShowOrderDetail = false;
+            }
+        }
 
+        /*
         $scope.SaveSupplierForm = function () {
             if (FValidation.CheckControls("")) {
                 $scope.SupplierFormConfig.SetObject($scope.SupplierForm);
@@ -109,29 +106,11 @@ mdlCommon.controller('OrderController',
             }
         }
 
-        $scope.DeleteSupplier = function (supplier) {
-            if (confirm("Bạn có muốn xóa nhà cung cấp " + supplier.SupplierCode + " - " + supplier.SupplierName + "?")) {
-                if ($scope.SupplierFormConfig.DeleteObject(supplier.SupplierCode, "SupplierCode")) {
-                    $scope.ReloadGrid('Suppliers');
-                    ShowSuccessMessage("Nhà cung cấp được xóa thành công!");
-                }
-            }
-        }
-
         $scope.ShowSupplierDetail = function (supplier) {
 
             var object = $scope.SupplierFormConfig.GetObject(supplier.SupplierCode, 'SupplierCode');
             $scope.SupplierFormConfig.ConvertFieldsToString(object, $scope.SupplierForm);
             $scope.IsShowSupplierDetail = true;
-        }
-
-        $scope.CloseSupplierDetail = function () {
-            if ($scope.IsEditingSupplierDetail) {
-                $scope.IsEditingSupplierDetail = false;
-            }
-            else {
-                $scope.IsShowSupplierDetail = false;
-            }
         }
 
         $scope.EditSupplierDetail = function () {

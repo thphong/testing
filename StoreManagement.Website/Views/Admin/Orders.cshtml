@@ -5,13 +5,14 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/Order")
+    @Scripts.Render("~/bundles/CustomerModal")
 }
 
 <div ng-controller="OrderController">
-    <div class="container-fluid">
+    <div class="container-fluid" ng-show="!IsShowOrderDetail">
         <div class="row" style="padding-top: 5px">
             <div class="col-md-offset-6 col-md-4 pull-right text-right">
-                <button class="btn btn-success btn-primary">
+                <button class="btn btn-success btn-primary" ng-click="AddOrder()">
                     <i class="fa fa-desktop white"></i>
                     <span>Bán hàng</span>
                 </button>
@@ -137,4 +138,7 @@
 
     </div>
 
+    <div class="container-fluid none-display" ng-if="IsShowOrderDetail" ng-class="{'active-content' : IsShowOrderDetail}">
+        @Html.Partial("OrderDetail")
+    </div>
 </div>

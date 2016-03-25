@@ -1,0 +1,154 @@
+﻿<div class="row" style="padding-top: 5px">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary">
+            <i class="fa fa-save white"></i>
+            <span>Lưu tạm</span>
+        </button>
+        <button class="btn btn-primary">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary">
+            <i class="fa fa-print white"></i>
+            <span>Lưu và in</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseOrderDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-7">
+        <span>Gridview</span>
+    </div>
+    <div class="col-md-5 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin hóa đơn
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Mã phiếu</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName" disabled="disabled"
+                       placeholder="Hệ thống tự tạo" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Khách hàng</label>
+            </div>
+            <div class="col-md-8">
+                <div class="width-90">
+                    <input class="form-control" ng-model="ProductForm.ProductName"
+                           placeholder="Tìm khách hàng" />
+                </div>
+                <div class="width-10">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customerModal">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Ngày bán</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control datepicker" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Người bán</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Ghi chú</label>
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control" ng-model="ProductForm.ProductName" placeholder="Ghi chú cho đơn hàng"> </textarea>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin thanh toán
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Hình thức</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Tiền hàng</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Giảm giá</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Tổng cộng</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Đã thanh toán</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label margin-top-10">Còn nợ</label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" ng-model="ProductForm.ProductName"
+                       placeholder="Hôm nay" />
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("CustomerModal")
+</div>
