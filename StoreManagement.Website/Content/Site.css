@@ -499,6 +499,12 @@ textarea.form-control {
     padding: 20px !important;
 }
 
+.padding-left-right-5 {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+
 .margin-top-5 {
     margin-top: 5px !important;
 }
@@ -532,9 +538,9 @@ textarea.form-control {
     color: #428bca !important;
 }
 
-.btn.btn-outline.clicked, .btn.btn-outline:hover {
-    border-color: #ffb752 !important;
-}
+    .btn.btn-outline.clicked, .btn.btn-outline:hover {
+        border-color: #ffb752 !important;
+    }
 
 .has-error .control-label {
     color: #333 !important;
@@ -600,4 +606,38 @@ button.btn-tiny {
     to {
         -webkit-transform: rotate(360deg);
     }
+}
+
+.help-button {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0;
+    background-color: #65bcda;
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: default;
+    margin-left: 4px;
+    border-radius: 100%;
+    border: 2px solid #FFF;
+    -webkit-box-shadow: 0 1px 0 1px rgba(0,0,0,.2);
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.2);
+    cursor: pointer;
+}
+
+
+.red-sm-label {
+    color: #dd5a43 !important;
+    font-size: 11px;
+    margin-left: 0px !important;
+    margin-top: 3px !important;
+}
+
+.v-center {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }

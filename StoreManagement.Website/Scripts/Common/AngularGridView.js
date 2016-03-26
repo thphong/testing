@@ -268,6 +268,89 @@ mdlCommon.directive('dropdownMasterTable', function () {
     return directive;
 });
 
+//Control for auto complete
+mdlCommon.directive('autocompleteMasterTable', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+
+        $(element).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var configList = new GridViewConfig("");
+                configList.GridDataAction = "get10";
+                configList.GridDataObject = attributes.autocompleteMasterTable;
+                configList.GridDefinedColums = attributes.autocompleteColumId + ";" + attributes.autocompleteColumName;
+                configList.GridFilterCondition = attributes.autocompleteColumName + " like N''%" + request.term + "%''";
+                if (attributes.autocompleteColumCode)
+                {
+                    configList.GridDefinedColums += ";" + attributes.autocompleteColumCode;
+                    configList.GridSortCondition = attributes.autocompleteColumCode + " ASC";
+                    configList.GridFilterCondition += " or " + attributes.autocompleteColumCode + " like N''%" + request.term + "%''";
+                }
+                else {
+                    configList.GridSortCondition = attributes.autocompleteColumName + " ASC";
+                }
+                if (attributes.autocompleteCondition)
+                {
+                    configList.GridFilterCondition = attributes.autocompleteCondition + " and (" + configList.GridFilterCondition + ")";
+                }
+                if (attributes.autocompleteColumAdditional)
+                {
+                    configList.GridDefinedColums += ";" + attributes.autocompleteColumAdditional;
+                }
+
+                var listData = configList.GetListData();
+                if (listData.length > 0) {
+                    response(listData);
+                }
+                else {
+                    response(["Không tìm thấy kết quả"]);
+                }
+            },
+            focus: function (event, ui) {
+                if (ui.item[attributes.autocompleteColumId]) {
+                    $(element).val(ui.item[attributes.autocompleteColumName]);
+                    $(attributes.autocompleteModelId).val(ui.item[attributes.autocompleteColumId]).change();
+                    if (attributes.autocompleteModelAdditional) {
+                        $(attributes.autocompleteModelAdditional).val(ui.item[attributes.autocompleteColumAdditional]).change();
+                    }
+                }
+                return false;
+            },
+            select: function (event, ui) {
+                if (ui.item[attributes.autocompleteColumId]) {
+                    $(element).val(ui.item[attributes.autocompleteColumName]);
+                    $(attributes.autocompleteModelId).val(ui.item[attributes.autocompleteColumId]).change();
+                    if (attributes.autocompleteModelAdditional) {
+                        $(attributes.autocompleteModelAdditional).val(ui.item[attributes.autocompleteColumAdditional]).change();
+                    }
+                }
+                return false;
+            }
+        })
+        .autocomplete("instance")._renderItem = function (ul, item) {
+            var content;
+            if (item[attributes.autocompleteColumCode])
+            {
+                content = "<a> <b>" + item[attributes.autocompleteColumCode] + " </b><br>" + item[attributes.autocompleteColumName] + "</a>";
+            }
+            else if (item[attributes.autocompleteColumName]) {
+                content = "<a>" + item[attributes.autocompleteColumName] + "</a>";
+            }
+            else {
+                content = "<a>" + item.label + "</a>";
+            }
+            
+            return $("<li>")
+                    .append(content)
+                    .appendTo(ul);
+        };
+        
+    }
+    return directive;
+});
+
 mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, $interpolate) {
     //Global variable
     $scope.CurrentUser = g_currentUserId;
