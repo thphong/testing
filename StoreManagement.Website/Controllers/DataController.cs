@@ -117,11 +117,11 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteObject(string tableName, string columName, string columValue)
+        public ActionResult DeleteObject(string tableName, string columName, string columValue, bool isHardDelete = false)
         {
             try
             {
-                dataService.DeleteObject(SessionCollection.CurrentUserId, tableName, columName, columValue);
+                dataService.DeleteObject(SessionCollection.CurrentUserId, tableName, columName, columValue, isHardDelete);
                 return Json(true);
             }
             catch (Exception ex)

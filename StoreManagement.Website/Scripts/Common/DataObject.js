@@ -114,22 +114,15 @@ function ObjectDataConfig(tableName) {
     this.SaveObject = function () {
         var result = AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData(this.ObjectData) + '"}');
 
-        //reload all master dropdown
-        for (var i = 0; i < _ListDropdowns.length; i++) {
-            var config = _ListDropdowns[i];
-            if (config.Attributes.dropdownMasterTable == this.TableName) {
-                config.BindBody();
-            }
-        }
+        this.ReloadMasterData();
 
         return result;
     }
 
-    
+
     this.SaveListObject = function () {
         var data = "";
-        for (var i = 0; i < this.ListObjectData.length; i++)
-        {
+        for (var i = 0; i < this.ListObjectData.length; i++) {
             if (data) {
                 data += "<<>>";
             }
@@ -150,19 +143,23 @@ function ObjectDataConfig(tableName) {
         if (columName == undefined) columName = "";
         var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '"}');
 
-        //reload all master dropdown
-        for (var i = 0; i < _ListDropdowns.length; i++) {
-            var config = _ListDropdowns[i];
-            if (config.Attributes.dropdownMasterTable == this.TableName) {
-                config.BindBody();
-            }
-        }
+        this.ReloadMasterData();
+
+        return result;
+    }
+
+    //If colum is null, it will get primary key
+    this.HardDeleteObject = function (columValue, columName) {
+        if (columName == undefined) columName = "";
+        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '", isHardDelete: true}');
+
+        this.ReloadMasterData();
 
         return result;
     }
 
     this.RemoveSpecialChars = function (str) {
-        if (!str) return "";
+        if (str == null || str == undefined) return "";
         str = String(str);
         while (str.indexOf("::") >= 0) {
             str = str.replace(/::/g, ':');
@@ -201,6 +198,16 @@ function ObjectDataConfig(tableName) {
                 else {
                     toObject[key] = "";;
                 }
+            }
+        }
+    }
+
+    this.ReloadMasterData = function () {
+        //reload all master dropdown
+        for (var i = 0; i < _ListDropdowns.length; i++) {
+            var config = _ListDropdowns[i];
+            if (config.Attributes.dropdownMasterTable == this.TableName) {
+                config.BindBody();
             }
         }
     }
@@ -244,10 +251,9 @@ function DropdownConfig(element, attributes) {
         var condition = this.Element.attr("dropdown-condition");
         var jelement = $('select[ng-model="' + model + '"]');
         if (jelement.length == 0) {
-            jelement = this.Element;            
+            jelement = this.Element;
         }
-        else if (jelement.length > 1 && condition != undefined)
-        {
+        else if (jelement.length > 1 && condition != undefined) {
             jelement = $('select[ng-model="' + model + '"][dropdown-condition="' + condition + '"]');
         }
         jelement.html("");

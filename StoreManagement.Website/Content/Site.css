@@ -184,6 +184,11 @@ li a.active {
     background-color: #6fb3e0;
 }
 
+.badge-primary
+{
+    background-color: #6fb3e0 !important;
+}
+
 .widget-box.bd-blue {
     border-color: #6fb3e0;
 }
@@ -273,6 +278,10 @@ li a.active {
 
 .blue {
     color: #6fb3e0 !important;
+}
+
+.blue-dark {
+    color: #307ecc !important;
 }
 
 .pink {
@@ -640,4 +649,11 @@ button.btn-tiny {
     display: inline-block;
     vertical-align: middle;
     float: none;
+}
+
+.header-detail {
+    padding: 5px 0px !important;
+    background-color: #f5f5f5;
+    margin-left: -10px !important;
+    margin-right: -50px !important;
 }

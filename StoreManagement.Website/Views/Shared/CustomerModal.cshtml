@@ -14,7 +14,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.CustomerName" placeholder="Nhập tên khách hàng (bắt buộc)" 
                                    check-empty="" check-empty-message="Vui lòng nhập tên khách hàng."
-                                   check-length="300" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="300" check-length-message="Chiều dài tối ta là {0}." 
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>
@@ -24,7 +25,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.CustomerCode" placeholder="Nhập mã khách hàng (tự động sinh nếu để trống)" 
                                    check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                   check-custom="CheckCustomerCodeUnique" check-custom-message="Mã Khách hàng không được trùng mã đã tồn tại."/>
+                                   check-custom="CheckCustomerCodeUnique" check-custom-message="Mã Khách hàng không được trùng mã đã tồn tại."
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>
@@ -33,7 +35,8 @@
                         <label class="col-sm-4 control-label ">Số điện thoại </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.Phone" placeholder="Nhập số điện thoại (không bắt buộc)" 
-                                   check-length="50" check-length-message="Chiều dài tối ta là {0}."/>
+                                   check-length="50" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>
@@ -43,7 +46,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.Email" placeholder="Nhập Email (không bắt buộc)" 
                                    check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                   check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ."/>
+                                   check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ."
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>
@@ -52,7 +56,8 @@
                         <label class="col-sm-4 control-label ">Địa chỉ </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.Address" placeholder="Nhập địa chỉ (không bắt buộc)" 
-                                   check-length="500" check-length-message="Chiều dài tối ta là {0}."/>
+                                   check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>
@@ -61,7 +66,8 @@
                         <label class="col-sm-4 control-label ">Ghi chú </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="CustomerForm.Notes"
-                                   check-length="500" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-customer" />
                         </div>
                     </div>
                 </div>
@@ -69,7 +75,8 @@
                     <div class="form-group col-md-12">
                         <label class="col-sm-4 control-label ">Sinh nhật </label>
                         <div class="col-sm-7">
-                            <input class="form-control" ng-model="CustomerForm.Birthday" placeholder="dd-MM-yyyy" check-custom="CheckDateValid" check-custom-message="Vui lòng nhập ngày hợp lệ dd-MM-yyyy." />
+                            <input class="form-control" ng-model="CustomerForm.Birthday" placeholder="dd-MM-yyyy" check-custom="CheckDateValid" check-custom-message="Vui lòng nhập ngày hợp lệ dd-MM-yyyy." 
+                                   check-under="check-customer"/>
                         </div>
                     </div>
                 </div>

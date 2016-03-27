@@ -10,3 +10,9 @@ E:\StoreManagement\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenX
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.pdb
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenXml.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb

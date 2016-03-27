@@ -1,4 +1,11 @@
-﻿$(document).ready(function () {
+﻿
+function CheckNumOfProduct() {
+    var scope = angular.element(document.getElementById("OrderController")).scope();
+    var len = scope.ListProductsOrder.length;
+    return len > 0;
+}
+
+$(document).ready(function () {
     $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
 
 
@@ -26,7 +33,7 @@
                 scope.$apply(function () {
                     scope.SelectProduct(ui.item);
                 });
-                $("#txtSearchProduct").val("");
+                $("#txtSearchProduct").val("").change();
             }
             return false;
         }
@@ -101,6 +108,7 @@ mdlCommon.controller('OrderController',
 
         $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders");
         $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product");
+        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
 
         $scope.IsShowOrderDetail = false;
         $scope.IsEditingOrderDetail = false;
@@ -108,12 +116,15 @@ mdlCommon.controller('OrderController',
         $scope.OrderForm = {
             OrderId: "-1",
             OrderCode: "",
+            StoreId: "",
             Customer: "",
             CustomerName: "",
             CustomerIsWholeSale: "",
             SoldDate: "",
             Cashier: $scope.CurrentUser,
+            CashierName: "",
             Notes: "",
+            OrderStatus: 1,
             PaymentType: '1',
             Price: '0', //sum before discount
             SumMoney: '0',
@@ -122,18 +133,22 @@ mdlCommon.controller('OrderController',
             TotalDiscount: '0',
             DebtMoney: '0',
             Paid: '0',
-            IsDiscountPercent: '1'
+            IsDiscountPercent: '1',
+            IsActive: '1'
         };
 
         $scope.ResetOrderForm = function () {
             $scope.OrderForm.OrderId = "-1";
             $scope.OrderForm.OrderCode = "";
+            $scope.OrderForm.StoreId = "";
             $scope.OrderForm.Customer = "";
             $scope.OrderForm.CustomerName = "";
             $scope.OrderForm.CustomerIsWholeSale = "";
             $scope.OrderForm.SoldDate = "";
             $scope.OrderForm.Cashier = $scope.CurrentUser;
+            $scope.OrderForm.CashierName = "";
             $scope.OrderForm.Notes = "";
+            $scope.OrderForm.OrderStatus = 1;
             $scope.OrderForm.PaymentType = '1';
             $scope.OrderForm.SumMoney = '0';
             $scope.OrderForm.Price = '0';
@@ -142,7 +157,8 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.TotalDiscount = '0';
             $scope.OrderForm.DebtMoney = '0';
             $scope.OrderForm.Paid = '0';
-            $scope.OrderForm.IsDiscountPercent = '1';    
+            $scope.OrderForm.IsDiscountPercent = '1';
+            $scope.OrderForm.IsActive = '1';
         }
 
         $scope.ListProductsOrder = [];
@@ -154,7 +170,7 @@ mdlCommon.controller('OrderController',
             IsDiscountPercent: '1'
         }
 
-        $scope.ResetDiscountForm = function() {
+        $scope.ResetDiscountForm = function () {
             $scope.DiscountForm.CurrentProduct = {};
             $scope.DiscountForm.IsShowing = false;
             $scope.DiscountForm.Discount = '0';
@@ -166,6 +182,7 @@ mdlCommon.controller('OrderController',
             $scope.IsEditingOrderDetail = true;
             FValidation.ClearAllError();
             $scope.ResetOrderForm();
+            $scope.ListProductsOrder = [];
         }
 
         $scope.CloseOrderDetail = function () {
@@ -200,6 +217,7 @@ mdlCommon.controller('OrderController',
             }
             var item = {
                 Id: "-1",
+                OrderId: '-1',
                 RowNum: $scope.ListProductsOrder.length + 1,
                 ProductId: product.ProductId,
                 ProductCode: product.ProductCode,
@@ -209,8 +227,8 @@ mdlCommon.controller('OrderController',
                 MaxQuantity: product.Quantity,
                 RealPrice: product.Price,
                 AllowNegative: product.AllowNegative,
-                Discount: "0", 
-                IsDiscountPercent : '1'
+                Discount: "0",
+                IsDiscountPercent: '1'
             }
             $scope.ListProductsOrder.push(item);
 
@@ -243,7 +261,7 @@ mdlCommon.controller('OrderController',
             if (confirm("Bạn có muốn xóa sản phẩm '" + product.ProductCode + " - " + product.ProductName + "' trong đơn hàng?")) {
 
                 if (product.Id != "-1") {
-                    $scope.ProductOrderFormConfig.DeleteObject(product.Id);
+                    $scope.ProductOrderFormConfig.HardDeleteObject(product.Id);
                 }
 
                 for (var i = 0 ; i < $scope.ListProductsOrder.length ; i++) {
@@ -254,12 +272,13 @@ mdlCommon.controller('OrderController',
                 }
 
                 ShowSuccessMessage("Sản phẩm được xóa khỏi đơn hàng thành công!");
+
+                $scope.Summarize();
             }
         }
 
         $scope.ShowDiscount = function ($event, product) {
-            if ($scope.DiscountForm.CurrentProduct.ProductId == product.ProductId)
-            {
+            if ($scope.DiscountForm.CurrentProduct.ProductId == product.ProductId) {
                 $scope.DiscountForm.IsShowing = !$scope.DiscountForm.IsShowing;
             }
             else {
@@ -295,8 +314,7 @@ mdlCommon.controller('OrderController',
 
         $scope.ChangeDiscount = function () {
             $scope.DiscountForm.Discount = parseFloat($scope.DiscountForm.Discount);
-            if ($scope.DiscountForm.Discount < 0)
-            {
+            if ($scope.DiscountForm.Discount < 0) {
                 $scope.DiscountForm.Discount = 0
                 ShowErrorMessage("Giảm giá không được âm.");
             }
@@ -308,8 +326,7 @@ mdlCommon.controller('OrderController',
                 $scope.DiscountForm.Discount = $scope.DiscountForm.CurrentProduct.Price;
                 ShowErrorMessage("Giảm tối đa giá trị sản phẩm");
             }
-            else if (!$scope.DiscountForm.Discount)
-            {
+            else if (!$scope.DiscountForm.Discount) {
                 $scope.DiscountForm.Discount = 0;
             }
             $scope.DiscountForm.CurrentProduct.Discount = $scope.DiscountForm.Discount;
@@ -347,50 +364,91 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.SumMoney = $scope.OrderForm.Price - $scope.OrderForm.DiscountAmmount;
             $scope.OrderForm.TotalDiscount = initSum - $scope.OrderForm.SumMoney;
             $scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
-            $scope.OrderForm.DebtMoney = 0;
+            $scope.OrderForm.DebtMoney = '0';
         }
 
-        $scope.ChangePaid = function()
-        {
+        $scope.ChangePaid = function () {
             $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid);
             $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - $scope.OrderForm.Paid;
             if ($scope.OrderForm.DebtMoney < 0) {
-                $scope.OrderForm.DebtMoney = 0;
+                $scope.OrderForm.DebtMoney = '0';
             }
         }
-        /*
-        $scope.SaveSupplierForm = function () {
-            if (FValidation.CheckControls("")) {
-                $scope.SupplierFormConfig.SetObject($scope.SupplierForm);
-                if ($scope.SupplierFormConfig.SaveObject()) {
-                    $("button[data-dismiss='modal']:visible").click();
-                    $scope.ReloadGrid('Suppliers');
-                    ShowSuccessMessage("Nhà cung cấp được tạo thành công!");
 
+        $scope.ReloadListProducts = function () {
+            var len = $scope.ListProductsOrder.length;
+            for (var i = 0 ; i < len; i++) {
+                var product = $scope.ProductFormConfig.GetObject($scope.ListProductsOrder[i].ProductId);
+                $scope.ListProductsOrder[i].Price = product.Price;
+                $scope.ListProductsOrder[i].MaxQuantity = product.Quantity;
+                $scope.ListProductsOrder[i].AllowNegative = product.AllowNegative;
+            }
+        }
+
+        $scope.SaveOrderForm = function (status) {
+            $scope.ReloadListProducts();
+            if (FValidation.CheckControls("check-order")) {
+                $scope.OrderForm.OrderStatus = status;
+                $scope.OrderForm.StoreId = $scope.CurrentStore;
+                $scope.OrderFormConfig.SetObject($scope.OrderForm);
+                var orderId = $scope.OrderFormConfig.SaveObject();
+                if (orderId > 0) {
+
+                    if ($scope.OrderForm.OrderId == '-1') {
+                        var len = $scope.ListProductsOrder.length;
+                        for (var i = 0 ; i < len; i++) {
+                            $scope.ListProductsOrder[i].OrderId = orderId;
+                        }
+                    }
+
+                    $scope.ProductOrderFormConfig.SetListObject($scope.ListProductsOrder);
+                    var result = $scope.ProductOrderFormConfig.SaveListObject();
+
+                    if (result) {
+                        ShowSuccessMessage("Đơn hàng được lưu thành công!");
+                        $scope.ReloadGrid('Orders');
+                        $scope.IsShowOrderDetail = false;
+                    }
+                    else if ($scope.OrderForm.OrderId == '-1') {
+
+                        $scope.OrderFormConfig.HardDeleteObject(orderId);
+                    }
                 }
             }
         }
 
-        $scope.ShowSupplierDetail = function (supplier) {
 
-            var object = $scope.SupplierFormConfig.GetObject(supplier.SupplierCode, 'SupplierCode');
-            $scope.SupplierFormConfig.ConvertFieldsToString(object, $scope.SupplierForm);
-            $scope.IsShowSupplierDetail = true;
-        }
+        $scope.ShowOrderDetail = function (order) {
+            //Load Order form
+            $scope.OrderFormConfig.SetObject($scope.OrderForm);
+            var object = $scope.OrderFormConfig.GetObject(order.OrderId);
+            $scope.OrderFormConfig.ConvertFieldsToString(object, $scope.OrderForm);
+            $scope.OrderForm.CustomerIsWholeSale = order.CustomerIsWholeSale;
+            $scope.OrderForm.CustomerName = order.CustomerName;
+            $scope.OrderForm.CashierName = order.CashierName;
+            $scope.IsShowOrderDetail = true;
 
-        $scope.EditSupplierDetail = function () {
-            $scope.IsEditingSupplierDetail = true;
-        }
+            //Load Product Order
+            $scope.ReloadGrid('ProductsOrder');
+            $scope.ListProductsOrder = $scope.DataSet.ProductsOrder.Data;
 
-        $scope.SaveSupplierDetail = function () {
-            if (FValidation.CheckControls("")) {
-                $scope.SupplierFormConfig.SetObject($scope.SupplierForm);
-                if ($scope.SupplierFormConfig.SaveObject()) {
-                    ShowSuccessMessage("Nhà cung cấp được sửa thành công!");
-                    $scope.IsEditingSupplierDetail = false;
-                    $scope.ReloadGrid('Suppliers');
+            FValidation.ClearAllError();
+
+            var len = $scope.ListProductsOrder.length;
+            for (var i = 0 ; i < len; i++) {
+                var item = $scope.ListProductsOrder[i];
+
+                if (item.IsDiscountPercent == '0') {
+                    item.RealPrice = item.Quantity * (item.Price - item.Discount);
                 }
+                else {
+                    item.RealPrice = item.Quantity * parseInt(item.Price * (100 - item.Discount) / 100);
+                }
+
+                item.RowNum = i + 1;
             }
-        }*/
+
+            $scope.Summarize();
+        }
 
     }]);

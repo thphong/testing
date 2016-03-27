@@ -67,6 +67,8 @@
                        class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th grid-defined-colum="OrderId" class="none-display"></th>
+                            <th grid-defined-colum="Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
                             <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
                             <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                             <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
@@ -82,13 +84,20 @@
                             <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                             <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
                             <th></th>
-                            <th class="none-display" grid-defined-colum="OrderStatus.DisplayClass"></th>
+                            <th grid-defined-colum="OrderStatus.DisplayClass" class="none-display" ></th>
+                            <th grid-defined-colum="Notes" class="none-display"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @*Dataset must have grid id*@
                         <tr ng-repeat="item in DataSet.Orders.Data">
-                            <td> <a href="#" ng-bind="item.OrderCode"></a> </td>
+                            <td>
+                                <a href="#" ng-bind="item.OrderCode" ng-click="ShowOrderDetail(item)"></a>
+                                <span ng-if="item.Notes" title="{{item.Notes}}" class="badge badge-primary"
+                                      data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fa fa-info"></i>
+                                </span>
+                            </td>
                             <td ng-bind="item.StoreCode"></td>
                             <td ng-bind="item.SoldDate"></td>
                             <td ng-bind="item.CashierName"></td>
@@ -138,7 +147,7 @@
 
     </div>
 
-    <div class="container-fluid none-display"  ng-class="{'active-content' : IsShowOrderDetail}">
+    <div class="container-fluid none-display" ng-class="{'active-content' : IsShowOrderDetail}">
         @Html.Partial("OrderDetail")
     </div>
 </div>

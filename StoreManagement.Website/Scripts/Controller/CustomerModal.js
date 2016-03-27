@@ -56,7 +56,7 @@ mdlCommon.controller('CustomerModalController',
         }
 
         $scope.SaveCustomerForm = function () {
-            if (FValidation.CheckControls("")) {
+            if (FValidation.CheckControls("check-customer")) {
                 $scope.CustomerFormConfig.SetObject($scope.CustomerForm);
                 if ($scope.CustomerFormConfig.SaveObject()) {
                     $("button[data-dismiss='modal']:visible").click();
