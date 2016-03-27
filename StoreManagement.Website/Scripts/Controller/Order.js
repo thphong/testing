@@ -111,7 +111,6 @@ mdlCommon.controller('OrderController',
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
 
         $scope.IsShowOrderDetail = false;
-        $scope.IsEditingOrderDetail = false;
 
         $scope.OrderForm = {
             OrderId: "-1",
@@ -179,19 +178,13 @@ mdlCommon.controller('OrderController',
 
         $scope.AddOrder = function () {
             $scope.IsShowOrderDetail = true;
-            $scope.IsEditingOrderDetail = true;
             FValidation.ClearAllError();
             $scope.ResetOrderForm();
             $scope.ListProductsOrder = [];
         }
 
         $scope.CloseOrderDetail = function () {
-            if ($scope.IsEditingOrderDetail && $scope.OrderForm.OrderId != "-1") {
-                $scope.IsEditingOrderDetail = false;
-            }
-            else {
-                $scope.IsShowOrderDetail = false;
-            }
+            $scope.IsShowOrderDetail = false;
         }
 
         $scope.DeleteOrder = function (order) {

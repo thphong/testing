@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Store Management";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/Purchase")
+    @Scripts.Render("~/bundles/SupplierModal")
+}
+
+<div id="PurchaseController" ng-controller="PurchaseController">
+    <div class="container-fluid" ng-show="!IsShowPurchaseDetail">
+        <div class="row" style="padding-top: 5px">
+            <div class="col-md-offset-6 col-md-4 pull-right text-right">
+                <button class="btn btn-success btn-primary" ng-click="AddPurchase()">
+                    <i class="fa fa-desktop white"></i>
+                    <span>Tạo phiếu nhập</span>
+                </button>
+                <span grid-export-import-for="Purchases"></span>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+            <div class="col-md-5">
+                <span grid-filter-for="Purchases" place-holder-message="Nhập mã hóa đơn để tìm kiếm"></span>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control input-sm width-90" ng-model="AdditionalFilter.PurchaseType" ng-change="ReloadGrid('Purchases')">
+                    <option selected="selected" value="1">Phiếu nhập</option>
+                    <option value="2">Phiếu nhập đã xóa</option>
+                    <option value="3">Phiếu nhập còn nợ</option>
+                </select>
+            </div>
+            <div class="col-md-5 text-right">
+                <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.StartDate"
+                       placeholder="Từ ngày" ng-change="ReloadGrid('Purchases')">
+                <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.EndDate"
+                       placeholder="Đến ngày" ng-change="ReloadGrid('Purchases')">
+                <button type="button" class="btn btn-sm btn-outline" ng-class="{1:'clicked'}[RangeDate]" ng-click="SetRangeDate(1)">Tuần</button>
+                <button type="button" class="btn btn-sm btn-outline" ng-class="{2:'clicked'}[RangeDate]" ng-click="SetRangeDate(2)">Tháng</button>
+                <button type="button" class="btn btn-sm btn-outline" ng-class="{3:'clicked'}[RangeDate]" ng-click="SetRangeDate(3)">Quí</button>
+                <button type="button" class="btn btn-sm btn-outline" ng-class="{4:'clicked', 5:'clicked', 6:'clicked'}[RangeDate]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu dropdown-menu-right" ] role="menu">
+                    <li><a href="#" ng-click="SetRangeDate(4)">Tuần trước</a></li>
+                    <li><a href="#" ng-click="SetRangeDate(5)">Tháng trước</a></li>
+                    <li><a href="#" ng-click="SetRangeDate(6)">Quí trước</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table grid-data="Purchases"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="get" @*get/getall*@
+                       grid-data-object="T_Trans_Purchase" @*table name or stored procedure name*@
+                       grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.PurchaseType}} = 1)
+                                                    or ({{AdditionalFilter.PurchaseType}} = 2 and  [IsActive] = 0)
+                                                    or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0))
+                                               and ([StoreId] = {{CurrentStore}})
+                                               and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [StatusId])
+                                               and  (''{{AdditionalFilter.StartDate}}'' = ''''
+                                                    or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [PurchaseDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
+                                               and  (''{{AdditionalFilter.EndDate}}'' = ''''
+                                                    or ''{{AdditionalFilter.EndDate}}'' <> '''' and convert(date, [PurchaseDate]) <= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.EndDate}}'', ''dd-MM-yyyy''))"
+                       @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[PurchaseCode] ASC" @*must have [fieldname] for each colum field*@
+                       grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                       class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="PurchaseId" class="none-display"></th>
+                            <th grid-defined-colum="PurchaseCode"><span>Mã hóa đơn</span></th>
+                            <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
+                            <th grid-defined-colum="StatusId.StatusName">
+                                <span style="display: inline-block">
+                                    <select class="form-control width-90" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
+                                            dropdown-name-field="StatusName" dropdown-empty-text="--Trạng thái--" dropdown-empty-value="0"
+                                            ng-change="ReloadGrid('Purchases')"></select>
+                                </span>
+                            </th>
+                            <th grid-defined-colum="PurchaseDate"><span>Ngày nhập</span></th>
+                            <th grid-defined-colum="Purchaser.UserName, PurchaserName"><span>Người nhập</span></th>                            
+                            <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                            <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                            <th></th>
+                            <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                            <th grid-defined-colum="Notes" class="none-display"></th>
+                            <th grid-defined-colum="IsActive" class="none-display"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*Dataset must have grid id*@
+                        <tr ng-repeat="item in DataSet.Purchases.Data">
+                            <td>
+                                <a href="#" ng-bind="item.PurchaseCode" ng-click="ShowPurchaseDetail(item)"></a>
+                                <span ng-if="item.Notes" title="{{item.Notes}}" class="badge badge-primary"
+                                      data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fa fa-info"></i>
+                                </span>
+                            </td>
+                            <td ng-bind="item.StoreCode"></td>
+                            <td>
+                                <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
+                            </td>
+                            <td ng-bind="item.PurchaseDate"></td>
+                            <td ng-bind="item.PurchaserName"></td>
+                            <td ng-bind="item.Quantity"></td>
+                            <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
+                            <td ng-bind="item.Debt  | currency:'':0"></td>
+                            <td>
+                                <a class="red margin-left-10" ng-if="item.IsActive == 1" ng-click="DeletePurchase(item)">
+                                    <i class="fa-trash fa"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!DataSet.Purchases.HasRecord()">
+                            @*Edit colspan*@
+                            <td colspan="9" align="center"> Không có dữ liệu! </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9" align="left">
+                                <div style="float: left;">
+                                    <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Purchases.TotalItems"></span>
+                                    <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                    <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.Debt | currency:'':0"></span> đ</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="row">
+                    <div class="col-md-9 pull-left">
+                        <span grid-paging-for="Purchases"></span>
+                    </div>
+
+                    <div class="col-md-3 pull-right">
+                        <span grid-page-size-for="Purchases"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid none-display" ng-class="{'active-content' : IsShowPurchaseDetail}">
+        @Html.Partial("PurchaseDetail")
+    </div>
+</div>

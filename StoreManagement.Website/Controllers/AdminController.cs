@@ -43,7 +43,7 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult Warehouses()
+        public ActionResult Purchase()
         {
             return View();
         }

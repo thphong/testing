@@ -1,0 +1,359 @@
+﻿
+<div class="row header-detail">
+    <div class="col-md-6 blue-dark">
+        <h4 class="bold" style="display: inline-block"> Phiếu nhập : </h4>
+        <span ng-bind="PurchaseForm.PurchaseCode"> </span>
+    </div>
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2" ng-click="AddPurchase()">
+            <i class="fa fa-plus white"></i>
+            <span>Tạo đơn hàng</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2">
+            <i class="fa fa-print white"></i>
+            <span>In đơn hàng</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu tạm</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-print white"></i>
+            <span>Lưu và in</span>
+        </button>
+        <button class="btn btn-default" ng-click="ClosePurchaseDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 form-group">
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <input id="txtSearchProduct" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                       check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
+                       check-under="check-purchase"
+                       ng-show="PurchaseForm.StatusId == 1" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th><span>Mã hàng</span></th>
+                            <th style="width: 30%"><span>Tên hàng hóa</span></th>
+                            <th style="width: 20%"><span>Số lượng</span></th>
+                            <th style="width: 15%"><span>Giá bán</span></th>
+                            <th><span>Thành tiền</span></th>
+                            <th ng-if="PurchaseForm.StatusId == 1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ListProductsPurchase">
+                            <td ng-bind="item.RowNum"></td>
+                            <td ng-bind="item.ProductCode"> </td>
+                            <td ng-bind="item.ProductName"></td>
+                            <td>
+                                <div class="col-md-7 padding-left-right-5">
+                                    <span ng-bind="item.Quantity" ng-if="PurchaseForm.StatusId == 2"></span>
+                                    <input ng-if="PurchaseForm.StatusId == 1"
+                                           class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
+                                           check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
+                                           check-range=";{{item.AllowNegative == '0' ? item.MaxQuantity : ''}}" check-range-message="Số lượng vượt quá lượng tồn kho {{item.MaxQuantity}}"
+                                           check-under="check-purchase" />
+                                </div>
+                                <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="PurchaseForm.StatusId == 1">
+                                    <button class="btn btn-primary btn-tiny" style="padding-bottom: 0px" ng-click="ChangeProductQuantity(item, 1)">
+                                        <i class="fa fa-sort-up" style=" font-size: 15px; margin-top: 2px"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="PurchaseForm.StatusId == 1">
+                                    <button class="btn btn-primary btn-tiny" style="padding-top: 0px" ng-click="ChangeProductQuantity(item, -1)">
+                                        <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <span ng-bind="item.Price | currency:'':0"></span>
+                                <span class="help-button pull-right" ng-if="PurchaseForm.StatusId == 1"
+                                      ng-click="ShowDiscount($event, item)">
+                                    <i class="fa fa-gift"></i>
+                                </span>
+                                <div class="red-sm-label row">
+                                    <span ng-if="item.IsDiscountPercent == '1' && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | number : 2"></span>%) </span>
+                                    <span ng-if="item.IsDiscountPercent == '0' && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | currency:'':0"></span> VNĐ)</span>
+                                </div>
+                            </td>
+                            <td><span ng-bind="item.RealPrice | currency:'':0"></span></td>
+                            <td ng-if="PurchaseForm.StatusId == 1">
+                                <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductPurchase(item)">
+                                    <i class="fa-trash fa"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-if="ListProductsPurchase.length == 0">
+                            @*Edit colspan*@
+                            <td colspan="7" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"
+                 style="display: block; width: 350px; left:-1000px" role="tooltip">
+                <div style="top: 50%;" class="arrow"></div>
+                <h3 class="popover-title">Giảm giá</h3>
+                <div class="popover-content">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label> Lượng giảm </label>
+                        </div>
+                        <div class="col-md-7">
+                            <input class="form-control" ng-model="DiscountForm.Discount" ng-change="ChangeDiscount()" />
+                        </div>
+                    </div>
+                    <div class="row margin-top-5">
+                        <div class="col-md-5">
+                            <label> Đơn vị giảm </label>
+                        </div>
+                        <div class="col-md-7">
+                            <input id="rdIsDiscountPercentYes" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="1" ng-change="ChangeDiscount()" />
+                            <label class="font-weigth-normal" for="rdIsDiscountPercentYes">%</label>
+                            &nbsp;&nbsp;
+                            <input id="rdIsDiscountPercentNo" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="0" ng-change="ChangeDiscount()" />
+                            <label class="font-weigth-normal" for="rdIsDiscountPercentNo">VNĐ</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 margin-top-5 text-center">
+                            <button class="btn" ng-click="SetPercentDiscount(5)">5%</button>
+                            <button class="btn" ng-click="SetPercentDiscount(10)">10%</button>
+                            <button class="btn" ng-click="SetPercentDiscount(15)">15%</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10 none-display">
+            <div class="col-md-12">
+                <table grid-data="ProductsPurchase"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="getall" @*get/getall*@
+                       grid-data-object="T_Trans_Purchase_Product" @*table name or stored procedure name*@
+                       grid-filter-condition="[PurchaseId] = {{PurchaseForm.PurchaseId}}" @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="Id"></th>
+                            <th grid-defined-colum="PurchaseId"></th>
+                            <th grid-defined-colum="ProductId"></th>
+                            <th grid-defined-colum="ProductId.ProductCode"></th>
+                            <th grid-defined-colum="ProductId.ProductName"></th>
+                            <th grid-defined-colum="Price"></th>
+                            <th grid-defined-colum="Quantity"></th>
+                            <th grid-defined-colum="Discount"></th>
+                            <th grid-defined-colum="IsDiscountPercent"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin hóa đơn
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4 ">
+                <label class="control-label">Mã phiếu</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.PurchaseCode" ng-if="PurchaseForm.StatusId == 2"></span>
+                <input ng-if="PurchaseForm.StatusId == 1"
+                       class="form-control" ng-model="PurchaseForm.PurchaseCode" disabled="disabled"
+                       placeholder="Hệ thống tự tạo" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Khách hàng</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.CustomerName" ng-if="PurchaseForm.StatusId == 2"></span>
+                <div class="width-90" ng-show="PurchaseForm.StatusId == 1">
+                    <input class="form-control" ng-model="PurchaseForm.CustomerName"
+                           autocomplete-master-table="T_Master_Customers"
+                           autocomplete-colum-id="CustomerId"
+                           autocomplete-colum-code="CustomerCode"
+                           autocomplete-colum-name="CustomerName"
+                           autocomplete-condition="[IsActive] = 1"
+                           autocomplete-model-id="#txtCustomerId"
+                           placeholder="Tìm khách hàng" />
+                    <input id="txtCustomerId" class="none-display" ng-model="PurchaseForm.Customer" />
+                </div>
+                <div class="width-10" ng-if="PurchaseForm.StatusId == 1">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customerModal">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ngày bán</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.PurchaseDate" ng-if="PurchaseForm.StatusId == 2"></span>
+                <input ng-if="PurchaseForm.StatusId == 1"
+                       class="form-control datepicker" ng-model="PurchaseForm.PurchaseDate"
+                       placeholder="Hôm nay" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Người bán</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.PurchaserName" ng-if="PurchaseForm.StatusId == 2"></span>
+                <select class="form-control" ng-if="PurchaseForm.StatusId == 1"
+                        ng-model="PurchaseForm.Cashier" dropdown-master-table="T_Master_User" dropdown-value-field="UserId"
+                        dropdown-name-field="UserName"
+                        dropdown-condition="[IsActive] = 1"></select>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ghi chú</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.Notes" ng-if="PurchaseForm.StatusId == 2"></span>
+                <textarea class="form-control" ng-model="PurchaseForm.Notes" ng-if="PurchaseForm.StatusId == 1"
+                          placeholder="Ghi chú cho đơn hàng"
+                          check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                          check-under="check-purchase"></textarea>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin thanh toán
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Hình thức</label>
+            </div>
+            <div class="col-md-8">
+                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="PurchaseForm.StatusId == 2" />
+                <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
+                &nbsp;&nbsp;
+                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="PurchaseForm.StatusId == 2" />
+                <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
+                &nbsp;&nbsp;
+                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="PurchaseForm.StatusId == 2" />
+                <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Tiền hàng</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.Price | currency:'':0"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Giảm giá</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.DiscountAmmount | currency:'':0"></span>
+                <span class="help-button pull-right" ng-if="PurchaseForm.StatusId == 1"
+                      ng-click="ShowDiscount($event, PurchaseForm)">
+                    <i class="fa fa-gift"></i>
+                </span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Tổng cộng</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.SumMoney | currency:'':0"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Thanh toán</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="PurchaseForm.StatusId == 2"></span>
+                <input class="form-control" ng-if="PurchaseForm.StatusId == 1" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
+            </div>
+        </div>
+        <div class="row  margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Còn nợ</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.Debt | currency:'':0"></span>
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-md-8">
+                    <label class="control-label margin-top-10">Tổng Giảm Giá Cho Đơn Hàng</label>
+                </div>
+                <div class="col-md-4 margin-top-10">
+                    <span ng-bind="PurchaseForm.TotalDiscount | currency:'':0"></span>
+                </div>
+            </div>*@
+    </div>
+
+    @Html.Partial("CustomerModal")
+</div>
+
+<div class="row" style="padding-top: 5px">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2" ng-click="AddPurchase()">
+            <i class="fa fa-plus white"></i>
+            <span>Tạo đơn hàng</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2">
+            <i class="fa fa-print white"></i>
+            <span>In đơn hàng</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu tạm</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-print white"></i>
+            <span>Lưu và in</span>
+        </button>
+        <button class="btn btn-default" ng-click="ClosePurchaseDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>

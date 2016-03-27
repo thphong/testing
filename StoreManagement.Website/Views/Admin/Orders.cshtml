@@ -56,7 +56,7 @@
                                                     or ({{AdditionalFilter.OrderType}} = 2 and  [IsActive] = 0)
                                                     or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0))
                                                and ([StoreId] = {{CurrentStore}})
-                                               and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = OrderStatus)
+                                               and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
                                                and  (''{{AdditionalFilter.StartDate}}'' = ''''
                                                     or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [SoldDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
                                                and  (''{{AdditionalFilter.EndDate}}'' = ''''
@@ -86,6 +86,7 @@
                             <th></th>
                             <th grid-defined-colum="OrderStatus.DisplayClass" class="none-display" ></th>
                             <th grid-defined-colum="Notes" class="none-display"></th>
+                            <th grid-defined-colum="IsActive" class="none-display"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +112,7 @@
                                 <a class="grey margin-left-10">
                                     <i class="fa-print fa"></i>
                                 </a>
-                                <a class="red margin-left-10" ng-click="DeleteOrder(item)">
+                                <a class="red margin-left-10" ng-if="item.IsActive == 1" ng-click="DeleteOrder(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
                             </td>
