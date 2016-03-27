@@ -15,7 +15,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.SupplierName" placeholder="Nhập tên nhà cung cấp (bắt buộc)"
                                    check-empty="" check-empty-message="Vui lòng nhập tên nhà cung cấp."
-                                   check-length="300" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="300" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-supplier" />
                         </div>
                     </div>
                 </div>
@@ -25,7 +26,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.SupplierCode" placeholder="Nhập mã nhà cung cấp (tự động sinh nếu để trống)"
                                    check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                   check-custom="CheckSupplierCodeUnique" check-custom-message="Mã nhà cung cấp không được trùng mã đã tồn tại." />
+                                   check-custom="CheckSupplierCodeUnique" check-custom-message="Mã nhà cung cấp không được trùng mã đã tồn tại."
+                                   check-under="check-supplier" />
                         </div>
                     </div>
                 </div>
@@ -34,7 +36,8 @@
                         <label class="col-sm-4 control-label ">Số điện thoại </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.Phone" placeholder="Nhập số điện thoại (không bắt buộc)"
-                                   check-length="50" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="50" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-supplier" />
                         </div>
                     </div>
                 </div>
@@ -44,7 +47,8 @@
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.Email" placeholder="Nhập Email (không bắt buộc)"
                                    check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                   check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ." />
+                                   check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ."
+                                   check-under="check-supplier" />
                         </div>
                     </div>
                 </div>
@@ -53,7 +57,8 @@
                         <label class="col-sm-4 control-label ">Địa chỉ </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.Address" placeholder="Nhập địa chỉ (không bắt buộc)"
-                                   check-length="500" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="500" check-length-message="Chiều dài tối ta là {0}." 
+                                   check-under="check-supplier"/>
                         </div>
                     </div>
                 </div>
@@ -62,7 +67,8 @@
                         <label class="col-sm-4 control-label ">Mã số thuế </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.TaxCode" 
-                                   check-length="50" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="50" check-length-message="Chiều dài tối ta là {0}." 
+                                   check-under="check-supplier"/>
                         </div>
                     </div>
                 </div>
@@ -71,7 +77,8 @@
                         <label class="col-sm-4 control-label ">Ghi chú </label>
                         <div class="col-sm-7">
                             <input class="form-control" ng-model="SupplierForm.Notes"
-                                   check-length="500" check-length-message="Chiều dài tối ta là {0}." />
+                                   check-length="500" check-length-message="Chiều dài tối ta là {0}." 
+                                   check-under="check-supplier"/>
                         </div>
                     </div>
                 </div>

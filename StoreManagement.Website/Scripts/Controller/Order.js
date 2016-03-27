@@ -131,7 +131,7 @@ mdlCommon.controller('OrderController',
             DiscountAmmount: '0',
             TotalDiscount: '0',
             DebtMoney: '0',
-            Paid: '0',
+            Paid: 0,
             IsDiscountPercent: '1',
             IsActive: '1'
         };
@@ -155,7 +155,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.DiscountAmmount = '0';
             $scope.OrderForm.TotalDiscount = '0';
             $scope.OrderForm.DebtMoney = '0';
-            $scope.OrderForm.Paid = '0';
+            $scope.OrderForm.Paid = 0;
             $scope.OrderForm.IsDiscountPercent = '1';
             $scope.OrderForm.IsActive = '1';
         }
@@ -197,6 +197,7 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.SelectProduct = function (product) {
+            var hasExist = false;
             for (var i = 0 ; i < $scope.ListProductsOrder.length ; i++) {
                 if ($scope.ListProductsOrder[i].ProductId == product.ProductId) {
                     if (product.AllowNegative == '0' && $scope.ListProductsOrder[i].Quantity == $scope.ListProductsOrder[i].MaxQuantity) {
@@ -204,27 +205,35 @@ mdlCommon.controller('OrderController',
                     }
                     else {
                         $scope.ListProductsOrder[i].Quantity++;
+                        if ($scope.ListProductsOrder[i].IsDiscountPercent == '0') {
+                            $scope.ListProductsOrder[i].RealPrice = $scope.ListProductsOrder[i].Quantity * ($scope.ListProductsOrder[i].Price - $scope.ListProductsOrder[i].Discount);
+                        }
+                        else {
+                            $scope.ListProductsOrder[i].RealPrice = $scope.ListProductsOrder[i].Quantity * parseInt($scope.ListProductsOrder[i].Price * (100 - $scope.ListProductsOrder[i].Discount) / 100);
+                        }
                     }
-                    return;
+                    hasExist = true;
+                    break;
                 }
             }
-            var item = {
-                Id: "-1",
-                OrderId: '-1',
-                RowNum: $scope.ListProductsOrder.length + 1,
-                ProductId: product.ProductId,
-                ProductCode: product.ProductCode,
-                ProductName: product.ProductName,
-                Price: product.Price,
-                Quantity: 1,
-                MaxQuantity: product.Quantity,
-                RealPrice: product.Price,
-                AllowNegative: product.AllowNegative,
-                Discount: "0",
-                IsDiscountPercent: '1'
+            if (!hasExist) {
+                var item = {
+                    Id: "-1",
+                    OrderId: '-1',
+                    RowNum: $scope.ListProductsOrder.length + 1,
+                    ProductId: product.ProductId,
+                    ProductCode: product.ProductCode,
+                    ProductName: product.ProductName,
+                    Price: product.Price,
+                    Quantity: 1,
+                    MaxQuantity: product.Quantity,
+                    RealPrice: product.Price,
+                    AllowNegative: product.AllowNegative,
+                    Discount: "0",
+                    IsDiscountPercent: '1'
+                }
+                $scope.ListProductsOrder.push(item);
             }
-            $scope.ListProductsOrder.push(item);
-
             $scope.Summarize();
         }
 
@@ -356,8 +365,8 @@ mdlCommon.controller('OrderController',
             }
             $scope.OrderForm.SumMoney = $scope.OrderForm.Price - $scope.OrderForm.DiscountAmmount;
             $scope.OrderForm.TotalDiscount = initSum - $scope.OrderForm.SumMoney;
-            $scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
-            $scope.OrderForm.DebtMoney = '0';
+            //$scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
+            $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - $scope.OrderForm.Paid;
         }
 
         $scope.ChangePaid = function () {

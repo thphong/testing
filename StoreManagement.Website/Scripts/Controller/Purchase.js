@@ -7,15 +7,15 @@ function CheckNumOfProduct() {
 
 $(document).ready(function () {
     $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
-    
+
     $("#txtSearchProduct").autocomplete({
         minLength: 0,
         source: function (request, response) {
             var configList = new GridViewConfig("");
             configList.GridDataAction = "get10";
             configList.GridDataObject = "T_Trans_Products";
-            configList.GridDefinedColums = "ProductId;ProductCode;ProductName;Quantity;Price;AllowNegative";
-            configList.GridFilterCondition = "IsSelling = 1 and IsActive = 1 and (Quantity > 0 or AllowNegative = 1) and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
+            configList.GridDefinedColums = "ProductId;ProductCode;ProductName;Price;Cost;VAT";
+            configList.GridFilterCondition = "IsSelling = 1 and IsActive = 1 and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
             configList.GridSortCondition = "ProductCode ASC";
 
             var listData = configList.GetListData();
@@ -40,7 +40,7 @@ $(document).ready(function () {
     .autocomplete("instance")._renderItem = function (ul, item) {
         var content;
         if (item.ProductCode) {
-            content = "<a> <b>" + item.ProductName + " </b><br> Mã : " + item.ProductCode + "<br> Giá : " + item.Price + " | Tồn : " + item.Quantity + " </a>";
+            content = "<a> <b>" + item.ProductCode + " </b><br> " + item.ProductName + "</a>";
         }
         else {
             content = "<a>" + item.label + "</a>";
@@ -107,7 +107,6 @@ mdlCommon.controller('PurchaseController',
 
         $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase");
         $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product");
-        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
 
         $scope.IsShowPurchaseDetail = false;
 
@@ -115,22 +114,19 @@ mdlCommon.controller('PurchaseController',
             PurchaseId: "-1",
             PurchaseCode: "",
             StoreId: "",
-            Customer: "",
-            CustomerName: "",
+            SupplierId: "",
+            SupplierName: "",
             PurchaseDate: "",
-            Cashier: $scope.CurrentUser,
+            Purchaser: $scope.CurrentUser,
             PurchaserName: "",
             Notes: "",
             StatusId: 1,
             PaymentType: '1',
-            Price: '0', //sum before discount
+            Price: '0', //sum before tax
             SumMoney: '0',
-            Discount: '0',
-            DiscountAmmount: '0',
-            TotalDiscount: '0',
+            SumTax: '0',
             Debt: '0',
-            Paid: '0',
-            IsDiscountPercent: '1',
+            Paid: 0,
             IsActive: '1'
         };
 
@@ -138,40 +134,23 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.PurchaseId = "-1";
             $scope.PurchaseForm.PurchaseCode = "";
             $scope.PurchaseForm.StoreId = "";
-            $scope.PurchaseForm.Customer = "";
-            $scope.PurchaseForm.CustomerName = "";
+            $scope.PurchaseForm.SupplierId = "";
+            $scope.PurchaseForm.SupplierName = "";
             $scope.PurchaseForm.PurchaseDate = "";
-            $scope.PurchaseForm.Cashier = $scope.CurrentUser;
+            $scope.PurchaseForm.Purchaser = $scope.CurrentUser;
             $scope.PurchaseForm.PurchaserName = "";
             $scope.PurchaseForm.Notes = "";
             $scope.PurchaseForm.StatusId = 1;
             $scope.PurchaseForm.PaymentType = '1';
             $scope.PurchaseForm.SumMoney = '0';
+            $scope.PurchaseForm.SumTax = '0';
             $scope.PurchaseForm.Price = '0';
-            $scope.PurchaseForm.Discount = '0';
-            $scope.PurchaseForm.DiscountAmmount = '0';
-            $scope.PurchaseForm.TotalDiscount = '0';
             $scope.PurchaseForm.Debt = '0';
-            $scope.PurchaseForm.Paid = '0';
-            $scope.PurchaseForm.IsDiscountPercent = '1';
+            $scope.PurchaseForm.Paid = 0;
             $scope.PurchaseForm.IsActive = '1';
         }
 
         $scope.ListProductsPurchase = [];
-
-        $scope.DiscountForm = {
-            CurrentProduct: {},
-            IsShowing: false,
-            Discount: '0',
-            IsDiscountPercent: '1'
-        }
-
-        $scope.ResetDiscountForm = function () {
-            $scope.DiscountForm.CurrentProduct = {};
-            $scope.DiscountForm.IsShowing = false;
-            $scope.DiscountForm.Discount = '0';
-            $scope.DiscountForm.IsDiscountPercent = '1';
-        }
 
         $scope.AddPurchase = function () {
             $scope.IsShowPurchaseDetail = true;
@@ -194,34 +173,31 @@ mdlCommon.controller('PurchaseController',
         }
 
         $scope.SelectProduct = function (product) {
+            var hasExist = false;
             for (var i = 0 ; i < $scope.ListProductsPurchase.length ; i++) {
                 if ($scope.ListProductsPurchase[i].ProductId == product.ProductId) {
-                    if (product.AllowNegative == '0' && $scope.ListProductsPurchase[i].Quantity == $scope.ListProductsPurchase[i].MaxQuantity) {
-                        ShowErrorMessage("Sản phẩm không cho bán âm và còn tồn " + $scope.ListProductsPurchase[i].MaxQuantity + " sản phẩm");
-                    }
-                    else {
-                        $scope.ListProductsPurchase[i].Quantity++;
-                    }
-                    return;
+                    $scope.ListProductsPurchase[i].Quantity++;
+                    $scope.ListProductsPurchase[i].RealCost = $scope.ListProductsPurchase[i].Quantity * $scope.ListProductsPurchase[i].Cost;
+                    hasExist = true;
+                    break;
                 }
             }
-            var item = {
-                Id: "-1",
-                PurchaseId: '-1',
-                RowNum: $scope.ListProductsPurchase.length + 1,
-                ProductId: product.ProductId,
-                ProductCode: product.ProductCode,
-                ProductName: product.ProductName,
-                Price: product.Price,
-                Quantity: 1,
-                MaxQuantity: product.Quantity,
-                RealPrice: product.Price,
-                AllowNegative: product.AllowNegative,
-                Discount: "0",
-                IsDiscountPercent: '1'
+            if (!hasExist) {
+                var item = {
+                    Id: "-1",
+                    PurchaseId: '-1',
+                    RowNum: $scope.ListProductsPurchase.length + 1,
+                    ProductId: product.ProductId,
+                    ProductCode: product.ProductCode,
+                    ProductName: product.ProductName,
+                    Price: product.Price,
+                    Cost: product.Cost,
+                    VAT: product.VAT,
+                    Quantity: 1,
+                    RealCost: product.Cost
+                }
+                $scope.ListProductsPurchase.push(item);
             }
-            $scope.ListProductsPurchase.push(item);
-
             $scope.Summarize();
         }
 
@@ -231,19 +207,18 @@ mdlCommon.controller('PurchaseController',
                 ShowErrorMessage("Số lượng tối thiểu là 1");
                 num = 1;
             }
-            else if (product.AllowNegative == '0' && num > product.MaxQuantity) {
-                ShowErrorMessage("Sản phẩm không cho bán âm và còn tồn " + product.MaxQuantity + " sản phẩm");
-                num = product.MaxQuantity;
-            }
             product.Quantity = num;
             //Recalcualte Real Price
-            if (product.IsDiscountPercent == '0') {
-                product.RealPrice = product.Quantity * (product.Price - product.Discount);
-            }
-            else {
-                product.RealPrice = product.Quantity * parseInt(product.Price * (100 - product.Discount) / 100);
-            }
 
+            product.RealCost = product.Quantity * product.Cost;
+
+            $scope.Summarize();
+        }
+
+
+        $scope.ChangeCost = function (product) {
+            product.Cost = parseInt(product.Cost);
+            product.RealCost = product.Quantity * product.Cost;
             $scope.Summarize();
         }
 
@@ -267,94 +242,18 @@ mdlCommon.controller('PurchaseController',
             }
         }
 
-        $scope.ShowDiscount = function ($event, product) {
-            if ($scope.DiscountForm.CurrentProduct.ProductId == product.ProductId) {
-                $scope.DiscountForm.IsShowing = !$scope.DiscountForm.IsShowing;
-            }
-            else {
-                $scope.DiscountForm.IsShowing = true;
-            };
-            $scope.DiscountForm.CurrentProduct = product;
-            $scope.DiscountForm.Discount = product.Discount;
-            $scope.DiscountForm.IsDiscountPercent = product.IsDiscountPercent;
-
-            if ($scope.DiscountForm.IsShowing) {
-                var position = $($event.currentTarget).position();
-                $("#divDiscount").css('top', $event.pageY - $("#divDiscount").height() - 12);
-                if (product.ProductId) {
-                    //show for specific product
-                    $("#divDiscount").css('left', $event.pageX - $("#divDiscount").width() + 40);
-                }
-                else {
-                    //show for purchase
-                    $("#divDiscount").css('left', $event.pageX - 2 * $("#divDiscount").width() - 5);
-                }
-            }
-            else {
-                $("#divDiscount").css('left', -1000);
-                $scope.ResetDiscountForm();
-            }
-        }
-
-        $scope.SetPercentDiscount = function (percent) {
-            $scope.DiscountForm.Discount = percent;
-            $scope.DiscountForm.IsDiscountPercent = '1';
-            $scope.ChangeDiscount();
-        }
-
-        $scope.ChangeDiscount = function () {
-            $scope.DiscountForm.Discount = parseFloat($scope.DiscountForm.Discount);
-            if ($scope.DiscountForm.Discount < 0) {
-                $scope.DiscountForm.Discount = 0
-                ShowErrorMessage("Giảm giá không được âm.");
-            }
-            else if ($scope.DiscountForm.IsDiscountPercent == '1' && $scope.DiscountForm.Discount > 100) {
-                $scope.DiscountForm.Discount = 100;
-                ShowErrorMessage("Giảm tối đa là 100%.");
-            }
-            else if ($scope.DiscountForm.IsDiscountPercent == '0' && $scope.DiscountForm.Discount > $scope.DiscountForm.CurrentProduct.Price) {
-                $scope.DiscountForm.Discount = $scope.DiscountForm.CurrentProduct.Price;
-                ShowErrorMessage("Giảm tối đa giá trị sản phẩm");
-            }
-            else if (!$scope.DiscountForm.Discount) {
-                $scope.DiscountForm.Discount = 0;
-            }
-            $scope.DiscountForm.CurrentProduct.Discount = $scope.DiscountForm.Discount;
-            $scope.DiscountForm.CurrentProduct.IsDiscountPercent = $scope.DiscountForm.IsDiscountPercent;
-
-            if ($scope.DiscountForm.CurrentProduct.ProductId) {
-                if ($scope.DiscountForm.IsDiscountPercent == '0') {
-                    $scope.DiscountForm.CurrentProduct.RealPrice = $scope.DiscountForm.CurrentProduct.Quantity * ($scope.DiscountForm.CurrentProduct.Price - $scope.DiscountForm.CurrentProduct.Discount);
-                }
-                else {
-                    $scope.DiscountForm.CurrentProduct.RealPrice = $scope.DiscountForm.CurrentProduct.Quantity * parseInt($scope.DiscountForm.CurrentProduct.Price * (100 - $scope.DiscountForm.CurrentProduct.Discount) / 100);
-                }
-            }
-
-            $scope.Summarize();
-        }
-
         $scope.Summarize = function () {
-            var sum = 0;
-            var initSum = 0;
+            var sum = 0, tax = 0;
             for (var i = 0 ; i < $scope.ListProductsPurchase.length ; i++) {
                 var item = $scope.ListProductsPurchase[i];
-                sum += parseInt(item.RealPrice);
-                initSum += item.Quantity * parseInt(item.Price);
+                sum += parseInt(item.RealCost);
+                tax += parseInt(item.RealCost * item.VAT / 100);
             }
             $scope.PurchaseForm.Price = sum;
-
-            if ($scope.PurchaseForm.IsDiscountPercent == '0') {
-                $scope.PurchaseForm.DiscountAmmount = $scope.PurchaseForm.Discount;
-
-            }
-            else {
-                $scope.PurchaseForm.DiscountAmmount = parseInt($scope.PurchaseForm.Price * $scope.PurchaseForm.Discount / 100);
-            }
-            $scope.PurchaseForm.SumMoney = $scope.PurchaseForm.Price - $scope.PurchaseForm.DiscountAmmount;
-            $scope.PurchaseForm.TotalDiscount = initSum - $scope.PurchaseForm.SumMoney;
-            $scope.PurchaseForm.Paid = $scope.PurchaseForm.SumMoney;
-            $scope.PurchaseForm.Debt = '0';
+            $scope.PurchaseForm.SumTax = tax;
+            $scope.PurchaseForm.SumMoney = sum + tax;
+            //$scope.PurchaseForm.Paid = sum + tax;
+            $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
         }
 
         $scope.ChangePaid = function () {
@@ -365,18 +264,7 @@ mdlCommon.controller('PurchaseController',
             }
         }
 
-        $scope.ReloadListProducts = function () {
-            var len = $scope.ListProductsPurchase.length;
-            for (var i = 0 ; i < len; i++) {
-                var product = $scope.ProductFormConfig.GetObject($scope.ListProductsPurchase[i].ProductId);
-                $scope.ListProductsPurchase[i].Price = product.Price;
-                $scope.ListProductsPurchase[i].MaxQuantity = product.Quantity;
-                $scope.ListProductsPurchase[i].AllowNegative = product.AllowNegative;
-            }
-        }
-
         $scope.SavePurchaseForm = function (status) {
-            $scope.ReloadListProducts();
             if (FValidation.CheckControls("check-purchase")) {
                 $scope.PurchaseForm.StatusId = status;
                 $scope.PurchaseForm.StoreId = $scope.CurrentStore;
@@ -400,7 +288,6 @@ mdlCommon.controller('PurchaseController',
                         $scope.IsShowPurchaseDetail = false;
                     }
                     else if ($scope.PurchaseForm.PurchaseId == '-1') {
-
                         $scope.PurchaseFormConfig.HardDeleteObject(purchaseId);
                     }
                 }
@@ -413,7 +300,7 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseFormConfig.SetObject($scope.PurchaseForm);
             var object = $scope.PurchaseFormConfig.GetObject(purchase.PurchaseId);
             $scope.PurchaseFormConfig.ConvertFieldsToString(object, $scope.PurchaseForm);
-            $scope.PurchaseForm.CustomerName = purchase.CustomerName;
+            $scope.PurchaseForm.SupplierName = purchase.SupplierName;
             $scope.PurchaseForm.PurchaserName = purchase.PurchaserName;
             $scope.IsShowPurchaseDetail = true;
 
@@ -427,12 +314,7 @@ mdlCommon.controller('PurchaseController',
             for (var i = 0 ; i < len; i++) {
                 var item = $scope.ListProductsPurchase[i];
 
-                if (item.IsDiscountPercent == '0') {
-                    item.RealPrice = item.Quantity * (item.Price - item.Discount);
-                }
-                else {
-                    item.RealPrice = item.Quantity * parseInt(item.Price * (100 - item.Discount) / 100);
-                }
+                item.RealCost = item.Quantity * item.Cost;
 
                 item.RowNum = i + 1;
             }

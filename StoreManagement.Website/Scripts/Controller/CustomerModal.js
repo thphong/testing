@@ -47,7 +47,6 @@ mdlCommon.controller('CustomerModalController',
 
 
         $scope.CustomerFormConfig = new ObjectDataConfig("T_Master_Customers");
-        $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers");
 
         $scope.SetIsSaleCustomer = function (sale) {
             FValidation.ClearAllError();

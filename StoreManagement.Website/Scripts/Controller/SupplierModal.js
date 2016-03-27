@@ -39,6 +39,8 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.Address = "";
         }
 
+        $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers");
+
         $scope.InitSupplier = function () {
             FValidation.ClearAllError();
             $scope.ResetSupplierForm();
@@ -46,7 +48,7 @@ mdlCommon.controller('SupplierModalController',
 
 
         $scope.SaveSupplierForm = function () {
-            if (FValidation.CheckControls("")) {
+            if (FValidation.CheckControls("check-supplier")) {
                 $scope.SupplierFormConfig.SetObject($scope.SupplierForm);
                 if ($scope.SupplierFormConfig.SaveObject()) {
                     $("button[data-dismiss='modal']:visible").click();
