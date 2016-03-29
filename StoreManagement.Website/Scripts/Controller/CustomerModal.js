@@ -57,18 +57,21 @@ mdlCommon.controller('CustomerModalController',
         $scope.SaveCustomerForm = function () {
             if (FValidation.CheckControls("check-customer")) {
                 $scope.CustomerFormConfig.SetObject($scope.CustomerForm);
-                if ($scope.CustomerFormConfig.SaveObject()) {
+                var customerId = $scope.CustomerFormConfig.SaveObject();
+                if (customerId > 0) {
+                    $scope.CustomerForm.CustomerId = customerId;
                     $("button[data-dismiss='modal']:visible").click();
 
                     if ($scope.CustomerForm.IsWholeSale == '0') {
-                        $scope.ReloadGrid('Customers');
+                        //$scope.ReloadGrid('Customers');
                         ShowSuccessMessage("Khách hàng được tạo thành công!");
                     }
                     else {
-                        $scope.ReloadGrid('SaleCustomers');
+                        //$scope.ReloadGrid('SaleCustomers');
                         ShowSuccessMessage("Khách hàng sỉ được tạo thành công!");
                     }
 
+                    $scope.ExposeFunctionAfterSavingCustomer();
                 }
             }
         }
@@ -118,6 +121,10 @@ mdlCommon.controller('CustomerModalController',
                     $scope.ReloadGrid('Customers');
                 }
             }
+        }
+
+
+        $scope.ExposeFunctionAfterSavingCustomer = function () {
         }
 
     }]);

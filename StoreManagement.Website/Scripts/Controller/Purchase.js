@@ -322,4 +322,9 @@ mdlCommon.controller('PurchaseController',
             $scope.Summarize();
         }
 
+        $scope.ExposeFunctionAfterSavingSupplier = function () {
+            $scope.PurchaseForm.SupplierId = $scope.SupplierForm.SupplierId;
+            $scope.PurchaseForm.SupplierName = $scope.SupplierForm.SupplierName;
+        }
+
     }]);

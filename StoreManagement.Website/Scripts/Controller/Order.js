@@ -453,4 +453,11 @@ mdlCommon.controller('OrderController',
             $scope.Summarize();
         }
 
+
+        $scope.ExposeFunctionAfterSavingCustomer = function () {
+            $scope.OrderForm.Customer = $scope.CustomerForm.CustomerId;
+            $scope.OrderForm.CustomerName = $scope.CustomerForm.CustomerName;
+            $scope.OrderForm.CustomerIsWholeSale = $scope.CustomerForm.IsWholeSale;
+        }
+
     }]);

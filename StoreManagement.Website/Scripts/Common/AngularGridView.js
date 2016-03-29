@@ -417,6 +417,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
     $scope.CalculatedGridPara = function (gridId) {
 
+        if (this.DataSet[gridId] == undefined) return;
+
         this.DataSet[gridId].TotalItems = this.GetNumTotalRecords(gridId);
 
         this.GetNumOfPage(gridId);

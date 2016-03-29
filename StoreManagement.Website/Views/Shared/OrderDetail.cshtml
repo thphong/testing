@@ -209,7 +209,7 @@
                     <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
                 </div>
                 <div class="width-10" ng-if="OrderForm.OrderStatus == 1">
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customerModal">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('0')">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>

@@ -50,11 +50,14 @@ mdlCommon.controller('SupplierModalController',
         $scope.SaveSupplierForm = function () {
             if (FValidation.CheckControls("check-supplier")) {
                 $scope.SupplierFormConfig.SetObject($scope.SupplierForm);
-                if ($scope.SupplierFormConfig.SaveObject()) {
+                var supplierId = $scope.SupplierFormConfig.SaveObject();
+                if (supplierId > 0) {
+                    $scope.SupplierForm.SupplierId = supplierId;
                     $("button[data-dismiss='modal']:visible").click();
                     $scope.ReloadGrid('Suppliers');
                     ShowSuccessMessage("Nhà cung cấp được tạo thành công!");
 
+                    $scope.ExposeFunctionAfterSavingSupplier();
                 }
             }
         }
@@ -97,6 +100,9 @@ mdlCommon.controller('SupplierModalController',
                     $scope.ReloadGrid('Suppliers');
                 }
             }
+        }
+
+        $scope.ExposeFunctionAfterSavingSupplier = function () {
         }
 
     }]);
