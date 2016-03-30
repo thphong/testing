@@ -201,9 +201,6 @@ li a.active {
     border-color: #9abc32;
 }
 
-.infobox-red {
-    background-color: #d53f40;
-}
 
 .widget-box.bd-red {
     border-color: #d53f40;
@@ -211,6 +208,10 @@ li a.active {
 
 .infobox-orange {
     background-color: #e8b110;
+}
+
+.infobox-red {
+    background-color: #d53f40;
 }
 
 .widget-box.bd-orange {
@@ -458,6 +459,11 @@ textarea.form-control {
     background-color: #e8b110 !important;
 }
 
+.summary-head > .infobox-red > .infobox-icon > i {
+    background-color: #d53f40 !important;
+}
+
+
 .infobox-data > .infobox-blue {
     color: #6fb3e0 !important;
 }
@@ -468,6 +474,10 @@ textarea.form-control {
 
 .infobox-data > .infobox-orange {
     color: #e8b110 !important;
+}
+
+.infobox-data > .infobox-red {
+    color: #d53f40 !important;
 }
 
 .infobox-data > .infobox-data-number {

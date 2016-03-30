@@ -54,7 +54,7 @@
                        grid-data-object="T_Trans_Purchase" @*table name or stored procedure name*@
                        grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.PurchaseType}} = 1)
                                                     or ({{AdditionalFilter.PurchaseType}} = 2 and  [IsActive] = 0)
-                                                    or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0))
+                                                    or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0 and [IsActive] = 1))
                                                and ([StoreId] = {{CurrentStore}})
                                                and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [StatusId])
                                                and  (''{{AdditionalFilter.StartDate}}'' = ''''

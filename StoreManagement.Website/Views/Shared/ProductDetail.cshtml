@@ -53,10 +53,10 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Số lượng</label>
-                <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.Quantity || '(Chưa nhập)'"> </div>
-                <input class="form-control text-right" ng-model="ProductForm.Quantity" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1' " check-integer
+                <div ng-bind="ProductForm.Quantity || '(Chưa nhập)'"> </div>
+                @*<input class="form-control text-right" ng-model="ProductForm.Quantity" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1' " check-integer
                        ng-if="IsEditingProductDetail"
-                       check-range="0;100000" check-range-message="Số lượng nằm trong khoảng [0;100000]" />
+                       check-range="0;100000" check-range-message="Số lượng nằm trong khoảng [0;100000]" />*@
 
             </div>
             <div class="col-md-6">

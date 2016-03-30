@@ -4,18 +4,328 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/DataList")
+    @Scripts.Render("~/bundles/Inventory")
 }
 
-<div ng-controller="RootController">
+<div ng-controller="InventoryController">
     <div class="container-fluid">
+
         <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header" style="margin-top: 5px; margin-bottom: 7px; color: #307ECC; font-size: 20px">Tồn kho</h3>
+            <div class="tabbable" style="padding-top: 10px">
+                <ul class="nav nav-tabs padding-left-18">
+                    <li class="active" ng-click="SetCurrentTab('InventoryProduct')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-list-alt fa"></i>
+                            <span>Tồn kho</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('InventoryInOut')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-exchange fa"></i>
+                            <span>Nhập xuất tồn</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('InventoryCheck')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-calendar fa"></i>
+                            <span>Kiểm kê</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.row -->
+        <div class="row">
+            <div class="tab-content no-border active">
+                <div id="tab-customer" class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='InventoryProduct') }">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                        <div class="col-md-5">
+                            <span grid-filter-for="InventoryProduct" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                    dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryProduct')"
+                                    dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
+                                <option value="0">--Tất cả--</option>
+                                <option value="1">Chỉ lấy hàng tồn</option>
+                                <option value="2">Hết hàng</option>
+                                <option value="3">Dưới định mức</option>
+                                <option value="4">Vượt định mức</option>
+                                <option value="5">Tồn kho lâu</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 pull-right text-right">
+                            <span grid-export-import-for="InventoryProduct"></span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group col-md-12">
+                        <div class="summary-head">
+                            <div class="infobox infobox-green">
+                                <div class="infobox-icon">
+                                    <i class="fa-clock-o fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-green">Hôm nay</span>
+                                    <div class="infobox-content">Ngày lập</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-blue">
+                                <div class="infobox-icon">
+                                    <i class="fa-tag fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryProduct.TotalItems"></span>
+                                    <div class="infobox-content">SL tồn kho</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-orange">
+                                <div class="infobox-icon">
+                                    <i class="fa-refresh fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryProduct.Sums.SumCost | currency:'':0"></span>
+                                    <div class="infobox-content">Tổng vốn tồn kho</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-red">
+                                <div class="infobox-icon">
+                                    <i class="fa-shopping-cart fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryProduct.Sums.SumPrice | currency:'':0"></span>
+                                    <div class="infobox-content">Tổng giá trị tồn kho</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table grid-data="InventoryProduct"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="get" @*get/getall*@
+                           grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
+                           grid-filter-condition="[IsActive] = 1 
+                                                and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
+                                                and ({{AdditionalFilter.InventoryProductType}} = 0
+                                                or ({{AdditionalFilter.InventoryProductType}} = 1 and [Quantity] > 0)
+                                                or ({{AdditionalFilter.InventoryProductType}} = 2 and [Quantity] <= 0)
+                                                or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [AllowMin])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [AllowMax])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 5 and [LastBoughtDate] < dateadd(dd, -7, getdate())))" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
+                           grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                <th grid-defined-colum="Quantity"><span>SL</span></th>
+                                <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
+                                <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.InventoryProduct.Data">
+                                <td> <a href="#" ng-bind="item.ProductCode"></a> </td>
+                                <td> <a href="#" ng-bind="item.ProductName"></a></td>
+                                <td ng-bind="item.Quantity"></td>
+                                <td ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
+                                <td ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
+                            </tr>
+                            <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
+                                @*Edit colspan*@
+                                <td colspan="8" align="center"> Không có dữ liệu! </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-9 pull-left">
+                            <span grid-paging-for="InventoryProduct"></span>
+                        </div>
+
+                        <div class="col-md-3 pull-right">
+                            <span grid-page-size-for="InventoryProduct"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="tab-customer-sale" class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryInOut') && !IsShowCustomerDetail}">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                        <div class="col-md-5">
+                            <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control input-sm" style="margin-left: 5px; width: 160px;" ng-model="AdditionalFilter.SaleCustomerType" ng-change="ReloadGrid('InventoryInOut')">
+                                <option selected="selected" value="0">Tất cả</option>
+                                <option value="1">KH từng mua hàng</option>
+                                <option value="2">KH còn nợ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 pull-right text-right">
+                            <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('1')">
+                                <i class="fa fa-plus white"></i>
+                                <span>Tạo KH Sỉ</span>
+                            </button>
+                            <span grid-export-import-for="InventoryInOut"></span>
+                        </div>
+                    </div>
+                    <table grid-data="InventoryInOut"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="get" @*get/getall*@
+                           grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
+                           grid-filter-condition="[IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
+                                                or ({{AdditionalFilter.SaleCustomerType}} = 1 and  [LastTimeVisited] is not null)
+                                                or ({{AdditionalFilter.SaleCustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
+                           grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="CustomerCode"><span>Mã KH</span></th>
+                                <th grid-defined-colum="CustomerName"><span>Tên KH</span></th>
+                                <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
+                                <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
+                                <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
+                                <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.InventoryInOut.Data">
+                                <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerCode"></a> </td>
+                                <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerName"></a></td>
+                                <td ng-bind="item.Phone"></td>
+                                <td ng-bind="item.Address"></td>
+                                <td ng-bind="item.LastTimeVisited"></td>
+                                <td ng-bind="item.SumMoney | currency:'':0"></td>
+                                <td ng-bind="item.Debt | currency:'':0"></td>
+                                <td>
+                                    <a class="red margin-left-10" ng-click="DeleteCustomer(item, 1)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!DataSet.InventoryInOut.HasRecord()">
+                                @*Edit colspan*@
+                                <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="8" align="left">
+                                    <div style="float: left;">
+                                        <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.InventoryInOut.TotalItems"></span>
+                                        <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.InventoryInOut.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                        <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.InventoryInOut.Sums.Debt | currency:'':0"></span> đ</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-9 pull-left">
+                            <span grid-paging-for="InventoryInOut"></span>
+                        </div>
+
+                        <div class="col-md-3 pull-right">
+                            <span grid-page-size-for="InventoryInOut"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && !IsShowSupplierDetail}">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                        <div class="col-md-5">
+                            <span grid-filter-for="InventoryCheck" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ nhà cung cấp"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control input-sm" style="margin-left: 5px; width: 160px;" ng-model="AdditionalFilter.SupplierType" ng-change="ReloadGrid('InventoryCheck')">
+                                <option selected="selected" value="0">Tất cả</option>
+                                <option value="1">NCC từng nhập hàng</option>
+                                <option value="2">Còn nợ NCC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 pull-right text-right">
+                            <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#supplierModal" ng-click="InitSupplier()">
+                                <i class="fa fa-plus white"></i>
+                                <span>Tạo NCC</span>
+                            </button>
+                            <span grid-export-import-for="InventoryCheck"></span>
+                        </div>
+                    </div>
+                    <table grid-data="InventoryCheck"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="get" @*get/getall*@
+                           grid-data-object="T_Master_InventoryCheck" @*table name or stored procedure name*@
+                           grid-filter-condition="[IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
+                                                or ({{AdditionalFilter.SupplierType}} = 1 and  [LastTimeProvided] is not null)
+                                                or ({{AdditionalFilter.SupplierType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[SupplierCode] ASC" @*must have [fieldname] for each colum field*@
+                           grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="SupplierCode"><span>Mã NCC</span></th>
+                                <th grid-defined-colum="SupplierName"><span>Tên NCC</span></th>
+                                <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
+                                <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
+                                <th grid-defined-colum="LastTimeProvided"><span>Lần cuối mua hàng</span></th>
+                                <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.InventoryCheck.Data">
+                                <td> <a href="#" ng-click="ShowSupplierDetail(item)" ng-bind="item.SupplierCode"></a> </td>
+                                <td> <a href="#" ng-click="ShowSupplierDetail(item)" ng-bind="item.SupplierName"></a></td>
+                                <td ng-bind="item.Phone"></td>
+                                <td ng-bind="item.Address"></td>
+                                <td ng-bind="item.LastTimeProvided"></td>
+                                <td ng-bind="item.SumMoney | currency:'':0"></td>
+                                <td ng-bind="item.Debt | currency:'':0"></td>
+                                <td>
+                                    <a class="red margin-left-10" ng-click="DeleteSupplier(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!DataSet.InventoryCheck.HasRecord()">
+                                @*Edit colspan*@
+                                <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="8" align="left">
+                                    <div style="float: left;">
+                                        <span>Số nhà cung cấp: </span><span class="total-highlight" ng-bind="DataSet.InventoryCheck.TotalItems"></span>
+                                        <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.InventoryCheck.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                        <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.InventoryCheck.Sums.Debt | currency:'':0"></span> đ</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-9 pull-left">
+                            <span grid-paging-for="InventoryCheck"></span>
+                        </div>
+
+                        <div class="col-md-3 pull-right">
+                            <span grid-page-size-for="InventoryCheck"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
