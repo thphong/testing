@@ -327,6 +327,7 @@
     <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
     <Content Include="Scripts\Controller\ProductGroup.js" />
+    <Content Include="Scripts\Controller\ProductQuanHistory.js" />
     <Content Include="Scripts\Controller\Purchase.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
@@ -416,6 +417,7 @@
     <Content Include="Views\Shared\ProductPriceHistoryModal.cshtml" />
     <Content Include="Views\Shared\OrderDetail.cshtml" />
     <Content Include="Views\Shared\PurchaseDetail.cshtml" />
+    <Content Include="Views\Shared\ProductQuantityHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,6 +16,7 @@ mdlCommon.controller('ProductController',
         $controller('ProductGroupController', { $scope: $scope });
         $controller('ProducerController', { $scope: $scope });
         $controller('AttributeController', { $scope: $scope });
+        $controller('ProductQuanHistoryController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             ProductStatus: "1",

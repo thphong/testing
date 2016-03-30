@@ -93,6 +93,9 @@ namespace StoreManagement.Website
             bundles.Add(new ScriptBundle("~/bundles/Inventory").Include(
                         "~/Scripts/Controller/Inventory.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ProductQuanHistory").Include(
+                        "~/Scripts/Controller/ProductQuanHistory.js"));
+
         }
     }
 }

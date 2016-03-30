@@ -5,6 +5,7 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/Inventory")
+    @Scripts.Render("~/bundles/ProductQuanHistory")
 }
 
 <div ng-controller="InventoryController">
@@ -70,7 +71,7 @@
                                     <i class="fa-clock-o fa"></i>
                                 </div>
                                 <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-green">Hôm nay</span>
+                                    <span class="infobox-data-number infobox-green" ng-bind="CurrentDate | date:'dd-MM-yyyy'"></span>
                                     <div class="infobox-content">Ngày lập</div>
                                 </div>
                             </div>
@@ -120,6 +121,7 @@
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th grid-defined-colum="ProductId" class="none-display"></th>
                                 <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
                                 <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
                                 <th grid-defined-colum="Quantity"><span>SL</span></th>
@@ -130,11 +132,11 @@
                         <tbody>
                             @*Dataset must have grid id*@
                             <tr ng-repeat="item in DataSet.InventoryProduct.Data">
-                                <td> <a href="#" ng-bind="item.ProductCode"></a> </td>
-                                <td> <a href="#" ng-bind="item.ProductName"></a></td>
-                                <td ng-bind="item.Quantity"></td>
-                                <td ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
-                                <td ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
+                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
+                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
+                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
+                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
+                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
                             </tr>
                             <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
                                 @*Edit colspan*@
@@ -325,8 +327,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
+    @Html.Partial("ProductQuantityHistory")
 </div>
 
