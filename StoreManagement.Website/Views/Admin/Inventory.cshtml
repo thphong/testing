@@ -175,60 +175,83 @@
                             <span grid-export-import-for="InventoryInOut"></span>
                         </div>
                     </div>
+                    <div class="row form-group col-md-12">
+                        <div class="summary-head">
+                            <div class="infobox infobox-green">
+                                <div class="infobox-icon">
+                                    <i class="fa-tag fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-green" ng-bind="DataSet.InventoryInOut.Sums.BeginPeriod"></span>
+                                    <div class="infobox-content">Tổng tồn đầu kỳ</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-blue">
+                                <div class="infobox-icon">
+                                    <i class="fa-arrow-down fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryInOut.Sums.NumIn"></span>
+                                    <div class="infobox-content">Tổng số lượng nhập</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-orange">
+                                <div class="infobox-icon">
+                                    <i class="fa-arrow-up fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryInOut.Sums.NumOut"></span>
+                                    <div class="infobox-content">Tổng số lượng xuất</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-red">
+                                <div class="infobox-icon">
+                                    <i class="fa-refresh fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryInOut.Sums.EndPeriod"></span>
+                                    <div class="infobox-content">Tổng tồn cuối kỳ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table grid-data="InventoryInOut"
-                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-type="function" @*table/function*@
                            grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                           grid-filter-condition="[IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
-                                                or ({{AdditionalFilter.SaleCustomerType}} = 1 and  [LastTimeVisited] is not null)
-                                                or ({{AdditionalFilter.SaleCustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
-                           grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                           grid-data-object="dbo.UFN_Report_Inventory" @*table name or stored procedure name*@
+                           grid-sort-condition="ProductCode ASC" @*must have [fieldname] for each colum field*@
+                           grid-sum-collection="BeginPeriod;NumIn;NumOut;EndPeriod" @*must have [fieldname] for each colum field*@
+                           grid-parameters="dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutStartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutEndDate}}'', ''dd-MM-yyyy'')
+                                            ,{{AdditionalFilter.InventoryInOutProductGroup}}"
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th grid-defined-colum="CustomerCode"><span>Mã KH</span></th>
-                                <th grid-defined-colum="CustomerName"><span>Tên KH</span></th>
-                                <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
-                                <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
-                                <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
-                                <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
-                                <th grid-defined-colum="Debt"><span>Nợ</span></th>
-                                <th></th>
+                                <th grid-defined-colum="ProductId" class="none-display"></th>
+                                <th grid-defined-colum="Quantity" class="none-display"></th>
+                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                <th grid-defined-colum="BeginPeriod"><span>Đầu kỳ</span></th>
+                                <th grid-defined-colum="NumIn"><span>SL nhập</span></th>
+                                <th grid-defined-colum="NumOut"><span>SL xuất</span></th>
+                                <th grid-defined-colum="EndPeriod"><span>Cuối kỳ</span></th>
                             </tr>
                         </thead>
                         <tbody>
                             @*Dataset must have grid id*@
                             <tr ng-repeat="item in DataSet.InventoryInOut.Data">
-                                <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerCode"></a> </td>
-                                <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerName"></a></td>
-                                <td ng-bind="item.Phone"></td>
-                                <td ng-bind="item.Address"></td>
-                                <td ng-bind="item.LastTimeVisited"></td>
-                                <td ng-bind="item.SumMoney | currency:'':0"></td>
-                                <td ng-bind="item.Debt | currency:'':0"></td>
-                                <td>
-                                    <a class="red margin-left-10" ng-click="DeleteCustomer(item, 1)">
-                                        <i class="fa-trash fa"></i>
-                                    </a>
-                                </td>
+                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
+                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
+                                <td ng-bind="item.BeginPeriod"></td>
+                                <td ng-bind="item.NumIn"></td>
+                                <td ng-bind="item.NumOut"></td>
+                                <td ng-bind="item.EndPeriod"></td>
                             </tr>
                             <tr ng-if="!DataSet.InventoryInOut.HasRecord()">
                                 @*Edit colspan*@
-                                <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                                <td colspan="6" align="center"> Không có dữ liệu!  </td>
                             </tr>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="8" align="left">
-                                    <div style="float: left;">
-                                        <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.InventoryInOut.TotalItems"></span>
-                                        <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.InventoryInOut.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                        <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.InventoryInOut.Sums.Debt | currency:'':0"></span> đ</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
                     </table>
                     <div class="row">
                         <div class="col-md-9 pull-left">

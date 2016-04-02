@@ -201,6 +201,16 @@ mdlCommon.directive('gridSumCollection', function () {
     return directive;
 });
 
+mdlCommon.directive('gridParameters', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        _GridConfigData[window._CurrentGridId].GridParametersExpression =
+            _GridConfigData[window._CurrentGridId].NormalizeColumName(attributes.gridParameters);
+    }
+    return directive;
+});
+
 
 mdlCommon.directive('gridDefinedColum', function () {
     var directive = {};
