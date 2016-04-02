@@ -48,7 +48,9 @@ mdlCommon.controller('ProductController',
             Description: "",
             ProductGroupName: "",
             ProducerName: "",
-            IsCost: 0
+            IsCost: 0,
+            LastReferNo: "",
+            LastComment : ""
         };
 
         $scope.ResetProductForm = function () {
@@ -72,6 +74,8 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.ProductGroupName = "";
             $scope.ProductForm.ProducerName = "";
             $scope.ProductForm.IsCost = 0;
+            $scope.ProductForm.LastReferNo = "";
+            $scope.ProductForm.LastComment = "";
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");

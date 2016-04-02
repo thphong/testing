@@ -156,10 +156,10 @@ namespace StoreManagement.Service
             return null;
         }
 
-        public void DeleteObject(int userId, string tableName, string columName, string columValue, bool isHardDelete)
+        public void DeleteObject(int userId, string tableName, int keyValue, bool isHardDelete)
         {
-            string statement = string.Format("exec [dbo].[USP_System_Data_Object_Delete] @UserId = {0}, @TableName = '{1}', @ColumName = '{2}', @Value = N'{3}', @IsHardDelete = '{4}'"
-                    , userId, tableName, columName, columValue, isHardDelete? "1" : "0");
+            string statement = string.Format("exec [dbo].[USP_System_Data_Object_Delete] @UserId = {0}, @TableName = '{1}', @Value = {2}, @IsHardDelete = {3}"
+                    , userId, tableName, keyValue, isHardDelete? "1" : "0");
 
             dbFactory.GetContext().Database.ExecuteSqlCommand(statement);
         }

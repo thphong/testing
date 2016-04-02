@@ -165,7 +165,7 @@ mdlCommon.controller('PurchaseController',
 
         $scope.DeletePurchase = function (purchase) {
             if (confirm("Bạn có muốn xóa đơn hàng " + purchase.PurchaseCode + "?")) {
-                if ($scope.PurchaseFormConfig.DeleteObject(purchase.PurchaseCode, "PurchaseCode")) {
+                if ($scope.PurchaseFormConfig.DeleteObject(purchase.PurchaseId)) {
                     $scope.ReloadGrid('Purchases');
                     ShowSuccessMessage("Đơn hàng được xóa thành công!");
                 }

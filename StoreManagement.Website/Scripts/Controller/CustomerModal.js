@@ -63,11 +63,11 @@ mdlCommon.controller('CustomerModalController',
                     $("button[data-dismiss='modal']:visible").click();
 
                     if ($scope.CustomerForm.IsWholeSale == '0') {
-                        //$scope.ReloadGrid('Customers');
+                        $scope.ReloadGrid('Customers');
                         ShowSuccessMessage("Khách hàng được tạo thành công!");
                     }
                     else {
-                        //$scope.ReloadGrid('SaleCustomers');
+                        $scope.ReloadGrid('SaleCustomers');
                         ShowSuccessMessage("Khách hàng sỉ được tạo thành công!");
                     }
 
@@ -78,7 +78,7 @@ mdlCommon.controller('CustomerModalController',
 
         $scope.DeleteCustomer = function (customer, isSale) {
             if (confirm("Bạn có muốn xóa khách hàng " + customer.CustomerCode + " - " + customer.CustomerName + "?")) {
-                if ($scope.CustomerFormConfig.DeleteObject(customer.CustomerCode, "CustomerCode")) {
+                if ($scope.CustomerFormConfig.DeleteObject(customer.CustomerId)) {
                     if (isSale == 0) {
                         $scope.ReloadGrid('Customers');
                         ShowSuccessMessage("Khách hàng được xóa thành công!");

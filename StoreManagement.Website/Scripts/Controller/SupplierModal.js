@@ -64,7 +64,7 @@ mdlCommon.controller('SupplierModalController',
 
         $scope.DeleteSupplier = function (supplier) {
             if (confirm("Bạn có muốn xóa nhà cung cấp " + supplier.SupplierCode + " - " + supplier.SupplierName + "?")) {
-                if ($scope.SupplierFormConfig.DeleteObject(supplier.SupplierCode, "SupplierCode")) {
+                if ($scope.SupplierFormConfig.DeleteObject(supplier.SupplierId)) {
                     $scope.ReloadGrid('Suppliers');
                     ShowSuccessMessage("Nhà cung cấp được xóa thành công!");
                 }

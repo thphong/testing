@@ -37,7 +37,7 @@
         </div>
         <div class="row">
             <div class="tab-content no-border active">
-                <div id="tab-customer" class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='InventoryProduct') }">
+                <div class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='InventoryProduct') }">
                     <div class="row" style="padding-bottom: 10px; padding-top: 10px">
                         <div class="col-md-5">
                             <span grid-filter-for="InventoryProduct" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
@@ -155,23 +155,23 @@
                     </div>
 
                 </div>
-                <div id="tab-customer-sale" class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryInOut') && !IsShowCustomerDetail}">
+                <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryInOut') && !IsShowCustomerDetail}">
                     <div class="row" style="padding-bottom: 10px; padding-top: 10px">
                         <div class="col-md-5">
-                            <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
+                            <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control input-sm" style="margin-left: 5px; width: 160px;" ng-model="AdditionalFilter.SaleCustomerType" ng-change="ReloadGrid('InventoryInOut')">
-                                <option selected="selected" value="0">Tất cả</option>
-                                <option value="1">KH từng mua hàng</option>
-                                <option value="2">KH còn nợ</option>
-                            </select>
+                            <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutStartDate"
+                                   placeholder="Từ ngày" ng-change="ReloadGrid('InventoryInOut')">
+                            <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutEndDate"
+                                   placeholder="Đến ngày" ng-change="ReloadGrid('InventoryInOut')">
                         </div>
-                        <div class="col-md-4 pull-right text-right">
-                            <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('1')">
-                                <i class="fa fa-plus white"></i>
-                                <span>Tạo KH Sỉ</span>
-                            </button>
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                    dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryInOut')"
+                                    dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                        </div>
+                        <div class="col-md-2 pull-right text-right">
                             <span grid-export-import-for="InventoryInOut"></span>
                         </div>
                     </div>

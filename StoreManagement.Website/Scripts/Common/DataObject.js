@@ -139,9 +139,8 @@ function ObjectDataConfig(tableName) {
     }
 
     //If colum is null, it will get primary key
-    this.DeleteObject = function (columValue, columName) {
-        if (columName == undefined) columName = "";
-        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '"}');
+    this.DeleteObject = function (keyValue) {
+        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", keyValue: ' + keyValue + '}');
 
         this.ReloadMasterData();
 
@@ -149,9 +148,8 @@ function ObjectDataConfig(tableName) {
     }
 
     //If colum is null, it will get primary key
-    this.HardDeleteObject = function (columValue, columName) {
-        if (columName == undefined) columName = "";
-        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", columName : "' + columName + '", columValue: "' + columValue + '", isHardDelete: true}');
+    this.HardDeleteObject = function (keyValue) {
+        var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", keyValue: ' + keyValue + ', isHardDelete: true}');
 
         this.ReloadMasterData();
 

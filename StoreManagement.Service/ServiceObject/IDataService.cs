@@ -24,7 +24,7 @@ namespace StoreManagement.Service
         Dictionary<string, object> GetObject(int userId, string tableName, string columName, string columValue);
         int SaveObject(int userId, string tableName, string objectData);
         void SaveListObject(int userId, string tableName, string objectData);
-        void DeleteObject(int userId, string tableName, string columName, string columValue, bool isHardDelete);
+        void DeleteObject(int userId, string tableName, int keyValue, bool isHardDelete);
 
     }
 }

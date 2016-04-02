@@ -189,7 +189,7 @@ mdlCommon.controller('OrderController',
 
         $scope.DeleteOrder = function (order) {
             if (confirm("Bạn có muốn xóa đơn hàng " + order.OrderCode + "?")) {
-                if ($scope.OrderFormConfig.DeleteObject(order.OrderCode, "OrderCode")) {
+                if ($scope.OrderFormConfig.DeleteObject(order.OrderId)) {
                     $scope.ReloadGrid('Orders');
                     ShowSuccessMessage("Đơn hàng được xóa thành công!");
                 }
