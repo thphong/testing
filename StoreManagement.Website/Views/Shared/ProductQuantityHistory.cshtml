@@ -13,14 +13,26 @@
                         Tổng tồn kho : <span class="bold" ng-bind="ProductQuanHistoryForm.Quantity"></span>
                     </div>
                 </div>
-                <div class="hr"></div>
+
                 <div class="row">
+                    <div class="tabbable" style="padding-top: 10px">
+                        <ul class="nav nav-tabs padding-left-18">
+                            <li ng-repeat="store in ListStores" ng-class="{'active' : SelectedStoreId == store.StoreId}" ng-click="SelectStore(store)">
+                                <a data-toggle="tab">
+                                    <span ng-bind="store.StoreCode"></span>
+                                    <span class="badge badge-primary" ng-bind="store.Quantity"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row margin-top-10">
                     <div class=" col-md-12">
                         <table grid-data="ProductQuanHistory"
                                grid-data-type="table" @*table/storedprocedure*@
                                grid-data-action="get" @*get/getall*@
                                grid-data-object="T_Trans_ProductQuantity_History" @*table name or stored procedure name*@
-                               grid-filter-condition="[ProductId] = {{ProductQuanHistoryForm.ProductId}}" @*must have [fieldname] for each colum field*@
+                               grid-filter-condition="[ProductId] = {{ProductQuanHistoryForm.ProductId}} and [StoreId] = {{SelectedStoreId}}" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[CreatedDate] DESC" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">
                             <thead>

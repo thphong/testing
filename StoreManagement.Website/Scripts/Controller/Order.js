@@ -14,10 +14,10 @@ $(document).ready(function () {
         source: function (request, response) {
             var configList = new GridViewConfig("");
             configList.GridDataAction = "get10";
-            configList.GridDataObject = "T_Trans_Products";
-            configList.GridDefinedColums = "ProductId;ProductCode;ProductName;Quantity;Price;AllowNegative";
-            configList.GridFilterCondition = "IsSelling = 1 and IsActive = 1 and (Quantity > 0 or AllowNegative = 1) and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
-            configList.GridSortCondition = "ProductCode ASC";
+            configList.GridDataObject = "T_Trans_Product_Store";
+            configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Price;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive;#ProductId.AllowNegative";
+            configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (T_Trans_Product_Store.Quantity > 0 or ProductId.AllowNegative = 1) and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
+            configList.GridSortCondition = "ProductId.ProductCode ASC";
 
             var listData = configList.GetListData();
             if (listData.length > 0) {
@@ -379,11 +379,22 @@ mdlCommon.controller('OrderController',
 
         $scope.ReloadListProducts = function () {
             var len = $scope.ListProductsOrder.length;
+
+            var configList = new GridViewConfig("");
+            configList.GridDataAction = "getall";
+            configList.GridDataObject = "T_Trans_Product_Store";
+            configList.GridDefinedColums = "Quantity;AllowNegative";
+
             for (var i = 0 ; i < len; i++) {
-                var product = $scope.ProductFormConfig.GetObject($scope.ListProductsOrder[i].ProductId);
-                $scope.ListProductsOrder[i].Price = product.Price;
-                $scope.ListProductsOrder[i].MaxQuantity = product.Quantity;
-                $scope.ListProductsOrder[i].AllowNegative = product.AllowNegative;
+
+                configList.GridFilterCondition = "ProductId = " + $scope.ListProductsOrder[i].ProductId
+                                                 + " and StoreId = " + $scope.CurrentStore;
+
+                var productStore = configList.GetListData()[0];
+                if (productStore) {
+                    $scope.ListProductsOrder[i].MaxQuantity = productStore.Quantity;
+                    $scope.ListProductsOrder[i].AllowNegative = productStore.AllowNegative;
+                }
             }
         }
 
