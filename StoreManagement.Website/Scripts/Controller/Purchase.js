@@ -185,7 +185,7 @@ mdlCommon.controller('PurchaseController',
             if (!hasExist) {
                 var item = {
                     Id: "-1",
-                    PurchaseId: '-1',
+                    PurchaseId: $scope.PurchaseForm.PurchaseId,
                     RowNum: $scope.ListProductsPurchase.length + 1,
                     ProductId: product.ProductId,
                     ProductCode: product.ProductCode,
@@ -223,7 +223,7 @@ mdlCommon.controller('PurchaseController',
         }
 
         $scope.DeleteProductPurchase = function (product) {
-            if (confirm("Bạn có muốn xóa sản phẩm '" + product.ProductCode + " - " + product.ProductName + "' trong hóa đơn?")) {
+            if (confirm("Bạn có muốn xóa sản phẩm '" + product.ProductCode + " - " + product.ProductName + "' trong phiếu nhập?")) {
 
                 if (product.Id != "-1") {
                     $scope.ProductPurchaseFormConfig.HardDeleteObject(product.Id);

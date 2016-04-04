@@ -219,7 +219,7 @@ mdlCommon.controller('OrderController',
             if (!hasExist) {
                 var item = {
                     Id: "-1",
-                    OrderId: '-1',
+                    OrderId: $scope.OrderForm.OrderId,
                     RowNum: $scope.ListProductsOrder.length + 1,
                     ProductId: product.ProductId,
                     ProductCode: product.ProductCode,
