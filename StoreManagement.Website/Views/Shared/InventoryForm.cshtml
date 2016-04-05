@@ -21,7 +21,7 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                <input class="form-control txtSearchProduct" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn ít nhất một hàng hóa."
                        check-under="check-inventory"
                        ng-show="InventoryForm.StatusId == 1" />
@@ -81,7 +81,7 @@
                         </tr>
                         <tr ng-if="ListProductsInventory.length == 0">
                             @*Edit colspan*@
-                            <td colspan="7" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng </td>
+                            <td colspan="7" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu kiểm kê </td>
                         </tr>
                     </tbody>
                 </table>

@@ -32,6 +32,12 @@
                             <span>Kiểm kê</span>
                         </a>
                     </li>
+                    <li class="" ng-click="SetCurrentTab('InventTrans')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-chain fa"></i>
+                            <span>Chuyển kho</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -342,6 +348,88 @@
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && IsShowInventoryDetail}">
                     @Html.Partial("InventoryForm")
+                </div>
+                <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && !IsShowInventTranDetail}">
+                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                        <div class="col-md-5">
+                            <span grid-filter-for="InventTrans" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventTranStatus" dropdown-master-table="T_Master_InventTranStatus" dropdown-value-field="StatusId"
+                                    dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventTrans')"></select>
+                        </div>
+                        <div class="col-md-4 pull-right text-right">
+                            <button class="btn btn-success btn-primary" ng-click="AddInventTran()">
+                                <i class="fa fa-plus white"></i>
+                                <span>Tạo Phiếu</span>
+                            </button>
+                        </div>
+                    </div>
+                    <table grid-data="InventTrans"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="get" @*get/getall*@
+                           grid-data-object="T_Trans_InventTran" @*table name or stored procedure name*@
+                           grid-filter-condition="[IsActive] = 1 and ([FromStoreId] = {{CurrentStore}} or [ToStoreId] = {{CurrentStore}}) and
+                                                ({{AdditionalFilter.InventTranStatus}} = 0
+                                                or {{AdditionalFilter.InventTranStatus}} = [StatusId])" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[InventTranCode] ASC" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="InventTranId" class="none-display"></th>
+                                <th grid-defined-colum="InventTranCode"><span>Mã phiếu</span></th>
+                                <th grid-defined-colum="FromStoreId.StoreCode,FromStoreCode"><span>Từ cửa hàng</span></th>
+                                <th grid-defined-colum="ToStoreId.StoreCode,ToStoreCode"><span>Sang cửa hàng</span></th>
+                                <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
+                                <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
+                                <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người tạo</span></th>
+                                <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
+                                <th grid-defined-colum="TransferId.UserName, TransferName"><span>Người chuyển</span></th>
+                                <th grid-defined-colum="TransferedDate"><span>Ngày chuyển</span></th>
+                                <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
+                                <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.InventTrans.Data">
+                                <td> <a href="#" ng-bind="item.InventTranCode" ng-click="ShowInventTranDetail(item)"></a> </td>
+                                <td ng-bind="item.FromStoreCode"></td>
+                                <td ng-bind="item.ToStoreCode"></td>
+                                <td ng-bind="item.NumProducts"></td>
+                                <td>
+                                    <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
+                                </td>
+                                <td ng-bind="item.CreatorName"></td>
+                                <td ng-bind="item.CreatedDate"></td>
+                                <td ng-bind="item.TransferName"></td>
+                                <td ng-bind="item.TransferedDate"></td>
+                                <td>
+                                    <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventTran(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!DataSet.InventTrans.HasRecord()">
+                                @*Edit colspan*@
+                                <td colspan="9" align="center"> Không có dữ liệu!  </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-9 pull-left">
+                            <span grid-paging-for="InventTrans"></span>
+                        </div>
+
+                        <div class="col-md-3 pull-right">
+                            <span grid-page-size-for="InventTrans"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && IsShowInventTranDetail}">
+                    @Html.Partial("InventTranForm")
                 </div>
             </div>
         </div>

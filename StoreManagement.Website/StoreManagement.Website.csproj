@@ -419,6 +419,7 @@
     <Content Include="Views\Shared\PurchaseDetail.cshtml" />
     <Content Include="Views\Shared\ProductQuantityHistory.cshtml" />
     <Content Include="Views\Shared\InventoryForm.cshtml" />
+    <Content Include="Views\Shared\InventTranForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
