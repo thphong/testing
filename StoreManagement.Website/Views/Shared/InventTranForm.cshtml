@@ -136,7 +136,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="InventTranForm.ToStoreCode" ng-if="InventTranForm.StatusId == 2"></span>                
-                <select ng-if="InventTranForm.StatusId == 1" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
+                <select ng-show="InventTranForm.StatusId == 1" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                         dropdown-name-field="StoreCode" dropdown-empty-text="--Chọn cửa hàng--" dropdown-empty-value="" 
                         check-empty="" check-empty-message="Vui lòng chọn cửa hàng nhận"
                         ></select>

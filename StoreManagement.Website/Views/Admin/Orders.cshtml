@@ -76,8 +76,8 @@
                             <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
                             <th grid-defined-colum="OrderStatus.StatusName">
                                 <span style="display: inline-block">
-                                    <select class="form-control width-90" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId"
-                                            dropdown-name-field="StatusName" dropdown-empty-text="--Trạng thái--" dropdown-empty-value="0"
+                                    <select class="form-control" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId"
+                                            dropdown-name-field="StatusName" dropdown-empty-text="Trạng thái" dropdown-empty-value="0"
                                             ng-change="ReloadGrid('Orders')"></select>
                                 </span>
                             </th>

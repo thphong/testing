@@ -25,8 +25,17 @@ function AjaxAsync(service, para, delegate) {
         type: "POST",
         url: service,
         data: para,
+        beforeSend: ShowLoading,
+        complete: HideLoading,
         contentType: "application/json",
-        success: delegate,
+        success: function (data) {
+            if (typeof (data) == 'string' && data.startsWith("#error:")) {
+                ShowErrorMessage(data);
+            }
+            else {
+                delegate.call(this, data);
+            }
+        },
         error: function () {
             ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }

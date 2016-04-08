@@ -233,7 +233,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="OrderForm.CashierName" ng-if="OrderForm.OrderStatus == 2"></span>
-                <select class="form-control" ng-if="OrderForm.OrderStatus == 1"
+                <select class="form-control" ng-show="OrderForm.OrderStatus == 1"
                         ng-model="OrderForm.Cashier" dropdown-master-table="T_Master_User" dropdown-value-field="UserId"
                         dropdown-name-field="UserName"
                         dropdown-condition="[IsActive] = 1"></select>

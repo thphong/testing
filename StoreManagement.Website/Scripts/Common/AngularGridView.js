@@ -1,6 +1,6 @@
 ﻿var _CurrentGridId = "";
 var _ListGridIds = [];
-var _ListDropdowns = [];
+var _DropdownConfigs = {};
 var _GridConfigData = {};
 
 
@@ -88,10 +88,10 @@ mdlCommon.directive('checkInteger', function () {
     };
 });
 
-mdlCommon.directive('checkCurrency', ['$filter', function($filter) {
+mdlCommon.directive('checkCurrency', ['$filter', function ($filter) {
     return function (scope, element, attrs) {
         element.bind("change", function (event) {
-            var value = $(this).val().replace(/,/g, '');            
+            var value = $(this).val().replace(/,/g, '');
             value = $filter('currency')(value, "", 0);
             if (value) {
                 $(this).val(value);
@@ -246,11 +246,16 @@ mdlCommon.directive('dropdownMasterTable', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
 
-        var dropdownConfig = new DropdownConfig(element, attributes);
-        _ListDropdowns.push(dropdownConfig);
-        dropdownConfig.BindBody();
+        /*var dropdownConfig = new DropdownConfig(element, attributes);
+        _DropdownConfigs.push(dropdownConfig);
+        dropdownConfig.BindBody();*/
 
-        /*var configList = new GridViewConfig("");
+        var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
+        element.attr("dropdown-id", dropdownId);
+        //alert(dropdownId);
+        element.after('<div ng-init="InitVisibleDropdown(\'' + dropdownId + '\');"></div>');
+
+        var configList = new GridViewConfig(dropdownId);
         var valueField = attributes.dropdownValueField;
         var nameField = attributes.dropdownNameField;
         configList.GridDataAction = "getall";
@@ -258,9 +263,9 @@ mdlCommon.directive('dropdownMasterTable', function () {
         configList.GridDefinedColums = valueField + ";" + nameField;
         configList.GridSortCondition = nameField + " ASC";
         if (attributes.dropdownCondition) {
-            configList.GridFilterCondition = attributes.dropdownCondition;
+            configList.GridFilterConditionExpression = attributes.dropdownCondition;
         }
-        _ListDropdowns.push(configList);
+        _DropdownConfigs[dropdownId] = configList;
 
         var emptyText = attributes.dropdownEmptyText;
         var emptyValue = attributes.dropdownEmptyValue;
@@ -270,10 +275,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
             }
             element.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
         }
-        var listData = configList.GetListData();
-        for (var i = 0 ; i < listData.length ; i++) {
-            element.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
-        }*/
+        element.append(' <option ng-repeat="item in Dropdowns.' + dropdownId + '" value="{{item.' + valueField + '}}" ng-bind="item.' + nameField + '"></option>');
     }
     return directive;
 });
@@ -292,8 +294,7 @@ mdlCommon.directive('autocompleteMasterTable', function () {
                 configList.GridDataObject = attributes.autocompleteMasterTable;
                 configList.GridDefinedColums = attributes.autocompleteColumId + ";" + attributes.autocompleteColumName;
                 configList.GridFilterCondition = attributes.autocompleteColumName + " like N''%" + request.term + "%''";
-                if (attributes.autocompleteColumCode)
-                {
+                if (attributes.autocompleteColumCode) {
                     configList.GridDefinedColums += ";" + attributes.autocompleteColumCode;
                     configList.GridSortCondition = attributes.autocompleteColumCode + " ASC";
                     configList.GridFilterCondition += " or " + attributes.autocompleteColumCode + " like N''%" + request.term + "%''";
@@ -301,12 +302,10 @@ mdlCommon.directive('autocompleteMasterTable', function () {
                 else {
                     configList.GridSortCondition = attributes.autocompleteColumName + " ASC";
                 }
-                if (attributes.autocompleteCondition)
-                {
+                if (attributes.autocompleteCondition) {
                     configList.GridFilterCondition = attributes.autocompleteCondition + " and (" + configList.GridFilterCondition + ")";
                 }
-                if (attributes.autocompleteColumAdditional)
-                {
+                if (attributes.autocompleteColumAdditional) {
                     configList.GridDefinedColums += ";" + attributes.autocompleteColumAdditional;
                 }
 
@@ -341,8 +340,7 @@ mdlCommon.directive('autocompleteMasterTable', function () {
         })
         .autocomplete("instance")._renderItem = function (ul, item) {
             var content;
-            if (item[attributes.autocompleteColumCode])
-            {
+            if (item[attributes.autocompleteColumCode]) {
                 content = "<a> <b>" + item[attributes.autocompleteColumCode] + " </b><br>" + item[attributes.autocompleteColumName] + "</a>";
             }
             else if (item[attributes.autocompleteColumName]) {
@@ -351,12 +349,12 @@ mdlCommon.directive('autocompleteMasterTable', function () {
             else {
                 content = "<a>" + item.label + "</a>";
             }
-            
+
             return $("<li>")
                     .append(content)
                     .appendTo(ul);
         };
-        
+
     }
     return directive;
 });
@@ -378,6 +376,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     /*begin user's input*/
     //Number of record on one Page
     $scope.Config = window._GridConfigData;
+    $scope.ConfigDropdown = window._DropdownConfigs;
     /*end user's input*/
 
     /*begin dataset*/
@@ -385,6 +384,9 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     for (var i = 0; i < window._ListGridIds.length ; i++) {
         $scope.DataSet[window._ListGridIds[i]] = new GridViewDataSet();
     }
+
+    /*config for drop down*/
+    $scope.Dropdowns = {};
 
     /*begin temp para*/
     //Number of page
@@ -448,10 +450,24 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
 
         //Get Data from DB
-        this.DataSet[gridId].Data = this.GetListDataFromDB(gridId);
-        
+        //this.DataSet[gridId].Data = this.GetListDataFromDB(gridId);
+
+        //Evaluate condition before send to execute in DB
+        var config = $scope.Config[gridId];
+        config.EvaluateFieldExpression($interpolate, $scope);
+        //getDataListUrl is defined in global
+        this.DataSet[gridId].Data = config.GetListData();
+
+        /*$scope.GetListDataFromDB = function (gridId) {
+        //Evaluate condition before send to execute in DB
+        var config = $scope.Config[gridId];
+        config.EvaluateFieldExpression($interpolate, $scope);
+        //getDataListUrl is defined in global
+        return config.GetListData();
+        }*/
+
         //Sum Data from DB
-        this.DataSet[gridId].Sums = this.SumListDataFromDB(gridId);
+        this.DataSet[gridId].Sums = config.SumListData();//this.SumListDataFromDB(gridId);
     }
     /*end temp para*/
 
@@ -492,21 +508,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         return result;
     }
 
-    $scope.GetListDataFromDB = function (gridId) {
-        //Evaluate condition before send to execute in DB
-        var config = $scope.Config[gridId];
-        config.EvaluateFieldExpression($interpolate, $scope);
-        //getDataListUrl is defined in global
-        return config.GetListData();
-    }
-
-    $scope.SumListDataFromDB = function (gridId) {
+    /*$scope.SumListDataFromDB = function (gridId) {
         //Evaluate condition before send to execute in DB
         var config = $scope.Config[gridId];
         config.EvaluateFieldExpression($interpolate, $scope);
         //getDataListUrl is defined in global
         return config.SumListData();
-    }
+    }*/
 
     $scope.ExportExcel = function (gridId) {
         //Evaluate condition before send to execute in DB
@@ -514,15 +522,39 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         config.ExportDataToExcel();
     }
 
-    
+
     $scope.ReloadGrid = function (gridId) {
         this.CalculatedGridPara(gridId);
+    }
+
+    $scope.ReloadDropdown = function (dropdownId) {
+        //Evaluate condition before send to execute in DB
+        var config = $scope.ConfigDropdown[dropdownId];
+        if (config) {
+            config.EvaluateFieldExpression($interpolate, $scope);
+            //getDataListUrl is defined in global
+            this.Dropdowns[dropdownId] = config.GetListData();
+        }
     }
 
     $scope.InitVisibleGrid = function (gridId) {
         if ($('table[grid-data="' + gridId + '"]').is(":visible")) {
             $scope.ReloadGrid(gridId);
         }
+    }
+
+    $scope.InitVisibleDropdown = function (dropdownId) {
+        //if ($('select[dropdown-id="' + dropdownId + '"]').is(":visible")) {
+            $scope.ReloadDropdown(dropdownId);
+        //}
+    }
+
+    $scope.ReloadAllVisibleDrodowns = function () {
+        $('select[dropdown-id]:visible').each(function () {
+            var dropdownId = $(this).attr('dropdown-id');
+            alert(dropdownId);
+            $scope.ReloadDropdown(dropdownId);
+        });
     }
 
     $scope.ReloadAllVisibleControls = function () {
@@ -544,24 +576,6 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     };
 }]);*/
 
-
-mdlCommon.controller('ctrlApplyAngular', ['$scope', '$controller', function ($scope, $controller) {
-    $controller('ctrlPaging', { $scope: $scope }); //This works
-
-    //List order by
-    $scope.Config[gridId].OrderBy = "value1";
-
-    //Implement for paging
-    $scope.GetNumTotalRecords = function (gridId) {
-        alert("The function GetNumTotalRecords is not implemented");
-    }
-
-    $scope.GetListDataFromDB = function (gridId) {
-        //$("#BodyContent").showLoading();
-        alert("The function GetListDataFromDB is not implemented");
-        //$("#BodyContent").hideLoading();
-    }
-}]);
 
 
 

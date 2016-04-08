@@ -58,7 +58,7 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult InOutCome()
+        public ActionResult Payment()
         {
             return View();
         }

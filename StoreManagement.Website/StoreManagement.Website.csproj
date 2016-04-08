@@ -322,6 +322,7 @@
     <Content Include="Scripts\Controller\Attribute.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\CustomerModal.js" />
+    <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />
     <Content Include="Scripts\Controller\Order.js" />
     <Content Include="Scripts\Controller\Producer.js" />
@@ -403,7 +404,7 @@
     <Content Include="Views\Admin\Purchase.cshtml" />
     <Content Include="Views\Admin\Inventory.cshtml" />
     <Content Include="Views\Admin\Sales.cshtml" />
-    <Content Include="Views\Admin\InOutCome.cshtml" />
+    <Content Include="Views\Admin\Payment.cshtml" />
     <Content Include="Views\Admin\Profit.cshtml" />
     <Content Include="Views\Admin\Setting.cshtml" />
     <Content Include="Views\Shared\CustomerModal.cshtml" />

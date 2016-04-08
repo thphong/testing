@@ -36,8 +36,16 @@ function GridViewConfig(gridId) {
         return AjaxSync(g_countDataListUrl, '{ gridConfig: ' + JSON.stringify(this) + '}');
     }
 
+    this.CountListDataAsync = function (delegate) {
+        AjaxAsync(g_countDataListUrl, '{ gridConfig: ' + JSON.stringify(this) + '}', delegate);
+    }
+
     this.GetListData = function () {
         return AjaxSync(g_getDataListUrl, '{ gridConfig: ' + JSON.stringify(this) + '}');
+    }
+
+    this.GetListDataAsync = function (delegate) {
+        AjaxAsync(g_getDataListUrl, '{ gridConfig: ' + JSON.stringify(this) + '}', delegate);
     }
 
     this.SumListData = function () {
@@ -202,12 +210,12 @@ function ObjectDataConfig(tableName) {
 
     this.ReloadMasterData = function () {
         //reload all master dropdown
-        for (var i = 0; i < _ListDropdowns.length; i++) {
-            var config = _ListDropdowns[i];
+        /*for (var i = 0; i < _DropdownConfigs.length; i++) {
+            var config = _DropdownConfigs[i];
             if (config.Attributes.dropdownMasterTable == this.TableName) {
                 config.BindBody();
             }
-        }
+        }*/
     }
 }
 
