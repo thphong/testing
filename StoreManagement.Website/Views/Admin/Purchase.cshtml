@@ -31,19 +31,7 @@
                 </select>
             </div>
             <div class="col-md-5 text-right">
-                <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.StartDate"
-                       placeholder="Từ ngày" ng-change="ReloadGrid('Purchases')">
-                <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.EndDate"
-                       placeholder="Đến ngày" ng-change="ReloadGrid('Purchases')">
-                <button type="button" class="btn btn-sm btn-outline" ng-class="{1:'clicked'}[RangeDate]" ng-click="SetRangeDate(1)">Tuần</button>
-                <button type="button" class="btn btn-sm btn-outline" ng-class="{2:'clicked'}[RangeDate]" ng-click="SetRangeDate(2)">Tháng</button>
-                <button type="button" class="btn btn-sm btn-outline" ng-class="{3:'clicked'}[RangeDate]" ng-click="SetRangeDate(3)">Quí</button>
-                <button type="button" class="btn btn-sm btn-outline" ng-class="{4:'clicked', 5:'clicked', 6:'clicked'}[RangeDate]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>
-                <ul class="dropdown-menu dropdown-menu-right" ] role="menu">
-                    <li><a href="#" ng-click="SetRangeDate(4)">Tuần trước</a></li>
-                    <li><a href="#" ng-click="SetRangeDate(5)">Tháng trước</a></li>
-                    <li><a href="#" ng-click="SetRangeDate(6)">Quí trước</a></li>
-                </ul>
+                <span date-range-filter-for="Purchases"></span>
             </div>
         </div>
         <div class="row">
@@ -57,10 +45,10 @@
                                                     or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0 and [IsActive] = 1))
                                                and ([StoreId] = {{CurrentStore}})
                                                and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [StatusId])
-                                               and  (''{{AdditionalFilter.StartDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [PurchaseDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
-                                               and  (''{{AdditionalFilter.EndDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.EndDate}}'' <> '''' and convert(date, [PurchaseDate]) <= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.EndDate}}'', ''dd-MM-yyyy''))"
+                                               and  (''{{FilterStartDate}}'' = ''''
+                                                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [PurchaseDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
+                                               and  (''{{FilterEndDate}}'' = ''''
+                                                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [PurchaseDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))"
                        @*must have [fieldname] for each colum field*@
                        grid-sort-condition="[PurchaseCode] ASC" @*must have [fieldname] for each colum field*@
                        grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@

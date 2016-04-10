@@ -61,50 +61,9 @@ mdlCommon.controller('PurchaseController',
 
         $scope.AdditionalFilter = {
             PurchaseType: "1",
-            StartDate: "",
-            EndDate: "",
             Status: "0"
         };
-
-        $scope.RangeDate = 0;
-        $scope.SetRangeDate = function (option) {
-
-            var curr = new Date(); // get current date
-            var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
-            var last = first + 6; // last day is the first day + 6
-            var y = curr.getFullYear(), m = curr.getMonth();
-            var quarter = Math.floor(curr.getMonth() / 3);
-
-            switch (option) {
-                case 1: //This week
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(curr.setDate(first)));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(curr.setDate(last)));
-                    break;
-                case 2: //This month
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(y, m, 1));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(y, m + 1, 0));
-                    break;
-                case 3: //This quarter
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(y, quarter * 3, 1));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(y, quarter * 3 + 3, 0));
-                    break;
-                case 4: //last week
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(curr.setDate(first - 7)));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(curr.setDate(last - 7)));
-                    break;
-                case 5: //Last month
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(y, m - 1, 1));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(y, m, 0));
-                    break;
-                case 6: //Last quarter
-                    $scope.AdditionalFilter.StartDate = formatDate(new Date(y, (quarter - 1) * 3, 1));
-                    $scope.AdditionalFilter.EndDate = formatDate(new Date(y, quarter * 3, 0));
-                    break;
-            }
-            $scope.RangeDate = option;
-            $scope.ReloadGrid('Purchases');
-        }
-
+        
         $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase");
         $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product");
 

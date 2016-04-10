@@ -359,6 +359,30 @@ mdlCommon.directive('autocompleteMasterTable', function () {
     return directive;
 });
 
+mdlCommon.directive('dateRangeFilterFor', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        var gridId = attributes.dateRangeFilterFor;
+        element.html(
+        ' <input type="text" class="form-control input-sm datepicker width-20" ng-model="FilterStartDate"'
+        + 'placeholder="Từ ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
+        + ' <input type="text" class="form-control input-sm datepicker width-20" ng-model="FilterEndDate"'
+        + 'placeholder="Đến ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')">Tuần</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')">Quí</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{4:\'clicked\', 5:\'clicked\', 6:\'clicked\'}[RangeDateCode]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>'
+        + ' <ul class="dropdown-menu dropdown-menu-right" ] role="menu">'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')">Tuần trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')">Tháng trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
+        + ' </ul>'
+        );
+    }
+    return directive;
+});
+
 mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, $interpolate) {
     //Global variable
     $scope.CurrentUser = g_currentUserId;
@@ -565,6 +589,49 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
             }
         });
     }
+
+    
+    $scope.FilterStartDate = "";
+    $scope.FilterEndDate = "";
+    $scope.RangeDateCode = 0;
+    $scope.SetFilterRangeDate = function (option, gridId) {
+
+        var curr = new Date(); // get current date
+        var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
+        var last = first + 6; // last day is the first day + 6
+        var y = curr.getFullYear(), m = curr.getMonth();
+        var quarter = Math.floor(curr.getMonth() / 3);
+
+        switch (option) {
+            case 1: //This week
+                $scope.FilterStartDate = formatDate(new Date(curr.setDate(first)));
+                $scope.FilterEndDate = formatDate(new Date(curr.setDate(last)));
+                break;
+            case 2: //This month
+                $scope.FilterStartDate = formatDate(new Date(y, m, 1));
+                $scope.FilterEndDate = formatDate(new Date(y, m + 1, 0));
+                break;
+            case 3: //This quarter
+                $scope.FilterStartDate = formatDate(new Date(y, quarter * 3, 1));
+                $scope.FilterEndDate = formatDate(new Date(y, quarter * 3 + 3, 0));
+                break;
+            case 4: //last week
+                $scope.FilterStartDate = formatDate(new Date(curr.setDate(first - 7)));
+                $scope.FilterEndDate = formatDate(new Date(curr.setDate(last - 7)));
+                break;
+            case 5: //Last month
+                $scope.FilterStartDate = formatDate(new Date(y, m - 1, 1));
+                $scope.FilterEndDate = formatDate(new Date(y, m, 0));
+                break;
+            case 6: //Last quarter
+                $scope.FilterStartDate = formatDate(new Date(y, (quarter - 1) * 3, 1));
+                $scope.FilterEndDate = formatDate(new Date(y, quarter * 3, 0));
+                break;
+        }
+        $scope.RangeDateCode = option;
+        $scope.ReloadGrid(gridId);
+    }
+
 }]);
 
 

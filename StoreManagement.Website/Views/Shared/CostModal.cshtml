@@ -1,0 +1,94 @@
+﻿
+<div id="costModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tạo mới chi phí </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Tên chi phí </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="CostForm.CostName" placeholder="Nhập tên chi phí (bắt buộc)"
+                                   check-empty="" check-empty-message="Vui lòng nhập tên chi phí."
+                                   check-length="200" check-length-message="Chiều dài tối ta là {0}."
+                                   check-under="check-cost" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Loại chi phí </label>
+                        <div class="col-sm-7">
+                            <div class="width-90">
+                                <select class="form-control" ng-model="CostForm.CostTypeId" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
+                                        dropdown-name-field="CostTypeName" dropdown-empty-text="--Chọn loại chi phí--" dropdown-empty-value=""
+                                        check-empty="" check-empty-message="Vui lòng chọn loại chi phí."
+                                        dropdown-condition="[IsActive] = 1"
+                                        check-under="check-cost"></select>
+                            </div>
+                            <div class="width-10">
+                                <button class="btn btn-primary btn-sm" title="Quản lý Loại chi phí" ng-click="ReloadGrid('CostTypes')"
+                                        data-toggle="modal" data-target="#costTypeModal">
+                                    ...
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Ngày chi </label>
+                        <div class="col-sm-7">
+                            <input class="form-control datepicker" ng-model="CostForm.PaidDate"
+                                   placeholder="dd-MM-yyyy"
+                                   check-empty="" check-empty-message="Vui lòng nhập ngày chi."
+                                   check-custom="CheckDateValid" check-custom-message="Vui lòng nhập ngày hợp lệ dd-MM-yyyy."
+                                   check-under="check-cost" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Số tiền </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="CostForm.Amount" placeholder="Nhập số tiền (bắt buộc)"
+                                   check-empty="" check-empty-message="Vui lòng nhập số tiền."
+                                   check-range="1;" check-range-message="Vui lòng nhập số tiền là số dương"
+                                   check-integer
+                                   check-under="check-cost" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Ghi chú </label>
+                        <div class="col-sm-7">
+                            <textarea class="form-control" ng-model="CostForm.Notes"
+                                      check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                                      check-under="check-cost"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Trở về
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="SaveCostForm()">
+                    <i class="fa-save fa"></i>
+                    Lưu
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="SaveCostForm()">
+                    <i class="fa-print fa"></i>
+                    Lưu và in
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

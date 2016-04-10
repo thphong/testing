@@ -320,6 +320,7 @@
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
+    <Content Include="Scripts\Controller\CostType.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\CustomerModal.js" />
     <Content Include="Scripts\Controller\Payment.js" />
@@ -421,6 +422,8 @@
     <Content Include="Views\Shared\ProductQuantityHistory.cshtml" />
     <Content Include="Views\Shared\InventoryForm.cshtml" />
     <Content Include="Views\Shared\InventTranForm.cshtml" />
+    <Content Include="Views\Shared\CostModal.cshtml" />
+    <Content Include="Views\Shared\CostTypeModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

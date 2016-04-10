@@ -33,7 +33,7 @@
                 <div class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='Costs') }">
                     <div class="row margin-top-10">
                         <div class="col-md-5 pull-right text-right">
-                            <button class="btn btn-success btn-primary" ng-click="AddOrder()">
+                            <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#costModal" ng-click="AddCost()">
                                 <i class="fa fa-plus white"></i>
                                 <span>Thêm phiếu chi</span>
                             </button>
@@ -50,20 +50,8 @@
                                 <option value="2">Phiếu chi đã xóa</option>
                             </select>
                         </div>
-                        <div class="col-md-5 text-right">
-                            <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.StartDate"
-                                   placeholder="Từ ngày" ng-change="ReloadGrid('Costs')">
-                            <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.EndDate"
-                                   placeholder="Đến ngày" ng-change="ReloadGrid('Costs')">
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{1:'clicked'}[RangeDate]" ng-click="SetRangeDate(1)">Tuần</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{2:'clicked'}[RangeDate]" ng-click="SetRangeDate(2)">Tháng</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{3:'clicked'}[RangeDate]" ng-click="SetRangeDate(3)">Quí</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{4:'clicked', 5:'clicked', 6:'clicked'}[RangeDate]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>
-                            <ul class="dropdown-menu dropdown-menu-right" ] role="menu">
-                                <li><a href="#" ng-click="SetRangeDate(4)">Tuần trước</a></li>
-                                <li><a href="#" ng-click="SetRangeDate(5)">Tháng trước</a></li>
-                                <li><a href="#" ng-click="SetRangeDate(6)">Quí trước</a></li>
-                            </ul>
+                        <div class="col-md-5 text-right" >
+                            <span date-range-filter-for="Costs"></span>
                         </div>
                     </div>
 
@@ -74,10 +62,10 @@
                            grid-filter-condition="([IsActive] = 1 and {{AdditionalFilter.CostType}} = 1
                                                     or [IsActive] = 0 and {{AdditionalFilter.CostType}} = 2)
                                                    and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [CostTypeId])
-                                                   and  (''{{AdditionalFilter.StartDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [PaidDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
-                                                   and  (''{{AdditionalFilter.EndDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.EndDate}}'' <> '''' and convert(date, [PaidDate]) <= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
+                                                   and  (''{{FilterStartDate}}'' = ''''
+                                                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [PaidDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
+                                                   and  (''{{FilterEndDate}}'' = ''''
+                                                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [PaidDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[CostCode] ASC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">
@@ -91,6 +79,7 @@
                                     <span style="display: inline-block">
                                         <select class="form-control" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
                                                 dropdown-name-field="CostTypeName" dropdown-empty-text="Loại chi phí" dropdown-empty-value="0"
+                                                dropdown-condition="[IsActive] = 1"
                                                 ng-change="ReloadGrid('Costs')"></select>
                                     </span>
                                 </th>
@@ -162,20 +151,8 @@
                         <div class="col-md-5">
                             <span grid-filter-for="Payments" place-holder-message="Nhập mã đơn hàng để tìm kiếm"></span>
                         </div>
-                        <div class="col-md-7 text-right">
-                            <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.StartDate"
-                                   placeholder="Từ ngày" ng-change="ReloadGrid('Payments')">
-                            <input type="text" class="form-control input-sm datepicker width-20" ng-model="AdditionalFilter.EndDate"
-                                   placeholder="Đến ngày" ng-change="ReloadGrid('Payments')">
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{1:'clicked'}[RangeDate]" ng-click="SetRangeDate(1)">Tuần</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{2:'clicked'}[RangeDate]" ng-click="SetRangeDate(2)">Tháng</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{3:'clicked'}[RangeDate]" ng-click="SetRangeDate(3)">Quí</button>
-                            <button type="button" class="btn btn-sm btn-outline" ng-class="{4:'clicked', 5:'clicked', 6:'clicked'}[RangeDate]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>
-                            <ul class="dropdown-menu dropdown-menu-right" ] role="menu">
-                                <li><a href="#" ng-click="SetRangeDate(4)">Tuần trước</a></li>
-                                <li><a href="#" ng-click="SetRangeDate(5)">Tháng trước</a></li>
-                                <li><a href="#" ng-click="SetRangeDate(6)">Quí trước</a></li>
-                            </ul>
+                        <div class="col-md-5 col-md-offset-2 text-right">
+                            <span date-range-filter-for="Payments"></span>
                         </div>
                     </div>
 
@@ -185,10 +162,10 @@
                            grid-data-object="T_Trans_Payment" @*table name or stored procedure name*@
                            grid-filter-condition="([IsActive] = 1)
                                                    and ({{AdditionalFilter.PaymentType}} = 0 or {{AdditionalFilter.PaymentType}} = [OrderId.PaymentType])
-                                                   and  (''{{AdditionalFilter.StartDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
-                                                   and  (''{{AdditionalFilter.EndDate}}'' = ''''
-                                                    or ''{{AdditionalFilter.EndDate}}'' <> '''' and convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
+                                                   and  (''{{FilterStartDate}}'' = ''''
+                                                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
+                                                   and  (''{{FilterEndDate}}'' = ''''
+                                                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[PaymentId] DESC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">
@@ -262,5 +239,7 @@
             </div>
         </div>
     </div>
+    @Html.Partial("CostModal")
+    @Html.Partial("CostTypeModal")
 </div>
 
