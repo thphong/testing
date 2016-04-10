@@ -129,6 +129,11 @@
 .c3-tooltip td.value {
   text-align: right; }
 
+line.c3-xgrid-focus
+{
+    display: none;
+}
+
 /*-- Area --*/
 .c3-area {
   stroke-width: 0;

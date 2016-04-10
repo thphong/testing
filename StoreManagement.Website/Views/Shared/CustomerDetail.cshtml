@@ -149,7 +149,7 @@
             <th><span>STT</span></th>
             <th grid-defined-colum="OrderCode"><span>Mã hóa đơn</span></th>
             <th grid-defined-colum="OrderStatus.StatusName"><span>Loại đơn hàng</span></th>
-            <th grid-defined-colum="CreatedDate"><span>Ngày mua</span></th>
+            <th grid-defined-colum="SoldDate"><span>Ngày mua</span></th>
             <th grid-defined-colum="NumOfProduct"><span>SL hàng hóa</span></th>
             <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
             <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
@@ -162,7 +162,7 @@
             <td ng-bind="item.RowNum"></td>
             <td ng-bind="item.OrderCode"></td>
             <td> <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span> </td>
-            <td ng-bind="item.CreatedDate"></td>
+            <td ng-bind="item.SoldDate"></td>
             <td ng-bind="item.NumOfProduct"></td>
             <td ng-bind="item.SumMoney | currency:'':0"></td>
             <td ng-bind="item.DebtMoney | currency:'':0"></td>
