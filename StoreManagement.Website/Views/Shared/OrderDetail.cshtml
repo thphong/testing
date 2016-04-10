@@ -37,10 +37,10 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct"  class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                <input id="txtSearchProduct" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
-                       check-under="check-order" 
-                       ng-show="OrderForm.OrderStatus == 1"/>
+                       check-under="check-order"
+                       ng-show="OrderForm.OrderStatus == 1" />
             </div>
         </div>
         <div class="row margin-top-10">
@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 <span ng-bind="item.Price | currency:'':0"></span>
-                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1" 
+                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1"
                                       ng-click="ShowDiscount($event, item)">
                                     <i class="fa fa-gift"></i>
                                 </span>
@@ -149,8 +149,7 @@
                        grid-data-action="getall" @*get/getall*@
                        grid-data-object="T_Trans_Order_Product" @*table name or stored procedure name*@
                        grid-filter-condition="[OrderId] = {{OrderForm.OrderId}}" @*must have [fieldname] for each colum field*@
-                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@
-                       >
+                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
                     <thead>
                         <tr>
                             <th grid-defined-colum="Id"></th>
@@ -246,7 +245,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="OrderForm.Notes" ng-if="OrderForm.OrderStatus == 2"></span>
-                <textarea class="form-control" ng-model="OrderForm.Notes" ng-if="OrderForm.OrderStatus == 1" 
+                <textarea class="form-control" ng-model="OrderForm.Notes" ng-if="OrderForm.OrderStatus == 1"
                           placeholder="Ghi chú cho đơn hàng"
                           check-length="500" check-length-message="Chiều dài tối ta là {0}."
                           check-under="check-order"></textarea>
@@ -268,10 +267,10 @@
                 <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="OrderForm.OrderStatus == 2" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="OrderForm.OrderStatus == 2"/>
+                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="OrderForm.OrderStatus == 2" />
                 <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="OrderForm.OrderStatus == 2"/>
+                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="OrderForm.OrderStatus == 2" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
             </div>
         </div>
@@ -288,8 +287,8 @@
                 <label class="control-label">Giảm giá</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.DiscountAmmount | currency:'':0"></span>                
-                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1" 
+                <span ng-bind="OrderForm.DiscountAmmount | currency:'':0"></span>
+                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1"
                       ng-click="ShowDiscount($event, OrderForm)">
                     <i class="fa fa-gift"></i>
                 </span>
@@ -308,8 +307,23 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="OrderForm.OrderStatus == 2"></span>
                 <input class="form-control" ng-if="OrderForm.OrderStatus == 1" ng-model="OrderForm.Paid" ng-change="ChangePaid()" />
+                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt"></span>                
+                <input class="form-control" ng-if="OrderForm.OrderStatus == 2 && OrderForm.IsEditingPaidForDebt" 
+                       ng-model="OrderForm.PaidForDebt" 
+                       check-under="check-order"
+                       check-empty="" check-empty-message="Vui lòng nhập số tiền." 
+                       check-range="0;" check-range-message="Vui lòng thanh toán số dương."/>
+                <button class="btn btn-warning" ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && !OrderForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
+                    <i class="fa fa-dollar"> </i>
+                    Thanh toán nợ
+                </button>
+                <button class="btn btn-primary btn-sm margin-top-5" ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
+                    <i class="fa fa-check"> </i>
+                </button>
+                <button class="btn btn-default btn-sm margin-top-5"  ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                    <i class="fa fa-close"> </i>
+                </button>
             </div>
         </div>
         <div class="row  margin-top-10">

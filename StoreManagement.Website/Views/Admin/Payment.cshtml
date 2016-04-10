@@ -189,7 +189,7 @@
                                                     or ''{{AdditionalFilter.StartDate}}'' <> '''' and convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.StartDate}}'', ''dd-MM-yyyy''))
                                                    and  (''{{AdditionalFilter.EndDate}}'' = ''''
                                                     or ''{{AdditionalFilter.EndDate}}'' <> '''' and convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{AdditionalFilter.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[PaymentId] ASC" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[PaymentId] DESC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">
                         <thead>
@@ -241,8 +241,8 @@
                             <tr>
                                 <td colspan="7" align="left">
                                     <div style="float: left;">
-                                        <span>Số phiếu chi: </span><span class="total-highlight" ng-bind="DataSet.Payments.TotalItems"></span>
-                                        <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Payments.Sums.Amount | currency:'':0"></span> đ</span>
+                                        <span>Số phiếu thu: </span><span class="total-highlight" ng-bind="DataSet.Payments.TotalItems"></span>
+                                        <span>Tổng thu: </span> <span class="total-highlight"><span ng-bind="DataSet.Payments.Sums.Amount | currency:'':0"></span> đ</span>
                                     </div>
                                 </td>
                             </tr>

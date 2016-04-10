@@ -133,7 +133,9 @@ mdlCommon.controller('OrderController',
             DebtMoney: '0',
             Paid: 0,
             IsDiscountPercent: '1',
-            IsActive: '1'
+            IsActive: '1',
+            PaidForDebt: 0,
+            IsEditingPaidForDebt : false
         };
 
         $scope.ResetOrderForm = function () {
@@ -158,6 +160,8 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.Paid = 0;
             $scope.OrderForm.IsDiscountPercent = '1';
             $scope.OrderForm.IsActive = '1';
+            $scope.OrderForm.PaidForDebt = 0;
+            $scope.OrderForm.IsEditingPaidForDebt = false;
         }
 
         $scope.ListProductsOrder = [];
@@ -433,7 +437,8 @@ mdlCommon.controller('OrderController',
 
         $scope.ShowOrderDetail = function (order) {
             //Load Order form
-            $scope.OrderFormConfig.SetObject($scope.OrderForm);
+            //$scope.OrderFormConfig.SetObject($scope.OrderForm);
+            $scope.ResetOrderForm();
             var object = $scope.OrderFormConfig.GetObject(order.OrderId);
             $scope.OrderFormConfig.ConvertFieldsToString(object, $scope.OrderForm);
             $scope.OrderForm.CustomerIsWholeSale = order.CustomerIsWholeSale;
@@ -469,6 +474,47 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.Customer = $scope.CustomerForm.CustomerId;
             $scope.OrderForm.CustomerName = $scope.CustomerForm.CustomerName;
             $scope.OrderForm.CustomerIsWholeSale = $scope.CustomerForm.IsWholeSale;
+        }
+
+        //Paid for Debt
+        $scope.PaymentForm = {
+            OrderId: "",
+            Amount: "",
+            IsActive: "1"
+        }
+
+        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment");
+
+        $scope.EditPaidForDebt = function () {
+            $scope.OrderForm.PaidForDebt = $scope.OrderForm.DebtMoney;
+            $scope.OrderForm.IsEditingPaidForDebt = true;
+        }
+
+        $scope.CancelPaidForDebt = function () {
+            $scope.OrderForm.IsEditingPaidForDebt = false;
+        }
+
+        $scope.SavePaidForDebt = function () {
+            $scope.OrderForm.PaidForDebt = parseInt($scope.OrderForm.PaidForDebt);
+            if ($scope.OrderForm.PaidForDebt > $scope.OrderForm.DebtMoney) {
+                ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
+            }
+            else {                
+                if (FValidation.CheckControls("check-order")) {
+                    $scope.OrderForm.DebtMoney = parseInt($scope.OrderForm.DebtMoney) - $scope.OrderForm.PaidForDebt;
+                    $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid) + $scope.OrderForm.PaidForDebt;
+
+                    $scope.PaymentForm.OrderId = $scope.OrderForm.OrderId;
+                    $scope.PaymentForm.Amount = $scope.OrderForm.PaidForDebt;
+
+                    $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
+                    if ($scope.PaymentFormConfig.SaveObject() > 0)
+                    {
+                        ShowSuccessMessage("Thanh toán nợ thành công.");
+                        $scope.OrderForm.IsEditingPaidForDebt = false;
+                    }
+                }
+            }
         }
 
     }]);
