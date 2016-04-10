@@ -333,6 +333,7 @@
     <Content Include="Scripts\Controller\ProductGroup.js" />
     <Content Include="Scripts\Controller\ProductQuanHistory.js" />
     <Content Include="Scripts\Controller\Purchase.js" />
+    <Content Include="Scripts\Controller\Revenue.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
@@ -407,7 +408,7 @@
     <Content Include="Views\Admin\Customers.cshtml" />
     <Content Include="Views\Admin\Purchase.cshtml" />
     <Content Include="Views\Admin\Inventory.cshtml" />
-    <Content Include="Views\Admin\Sales.cshtml" />
+    <Content Include="Views\Admin\Revenue.cshtml" />
     <Content Include="Views\Admin\Payment.cshtml" />
     <Content Include="Views\Admin\Profit.cshtml" />
     <Content Include="Views\Admin\Setting.cshtml" />

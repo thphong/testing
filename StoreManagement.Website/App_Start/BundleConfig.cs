@@ -59,6 +59,13 @@ namespace StoreManagement.Website
             bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
                         "~/Content/font-awesome.css"));
 
+            bundles.Add(new StyleBundle("~/Content/C3Chart").Include(
+                        "~/Content/c3.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/C3Chart").Include(
+                            "~/Scripts/d3.js",
+                            "~/Scripts/c3.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/Common/Common.js",
                         "~/Scripts/Common/DataObject.js",
@@ -96,6 +103,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/Payment.js"));
             bundles.Add(new ScriptBundle("~/bundles/CostType").Include(
                         "~/Scripts/Controller/CostType.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Revenue").Include(
+                        "~/Scripts/Controller/Revenue.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ProductQuanHistory").Include(
                         "~/Scripts/Controller/ProductQuanHistory.js"));

@@ -72,8 +72,8 @@ mdlCommon.controller('InventoryController',
             InventoryProductType: "0",
 
             InventoryInOutProductGroup: "0",
-            InventoryInOutStartDate: "",
-            InventoryInOutEndDate: "",
+            InventoryInOutStartDate: formatDate(new Date()),
+            InventoryInOutEndDate: formatDate(new Date()),
 
             InventoryStatus: "0",
 

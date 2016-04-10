@@ -53,7 +53,7 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult Sales()
+        public ActionResult Revenue()
         {
             return View();
         }

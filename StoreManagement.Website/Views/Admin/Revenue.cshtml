@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Store Management";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/Revenue")
+}
+
+<div ng-controller="RevenueController">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="tabbable" style="padding-top: 10px">
+                <ul class="nav nav-tabs padding-left-18">
+                    <li class="active" ng-click="SetCurrentTab('ReportBySeller')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-user fa"></i>
+                            <span>Theo người bán</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('ReportByStore')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-shopping-cart fa"></i>
+                            <span>Theo cửa hàng</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="tab-content no-border active">
+                <div class="tab-pane col-md-12 active">
+
+                    <div class="row margin-top-10">
+                        <div class="col-md-5">
+                            <span date-range-filter-for="ReportBySeller"></span>
+                        </div>
+                        <div class="col-md-7">
+                            <span grid-export-import-for="ReportBySeller"></span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group col-md-12 margin-top-10">
+                        <div class="summary-head">
+                            <div class="infobox infobox-green">
+                                <div class="infobox-icon">
+                                    <i class="fa-signal fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-green" ng-bind="DataSet.ReportBySeller.Sums.Revenue | currency:'':0"></span>
+                                    <div class="infobox-content">Doanh thu</div>
+                                </div>
+                            </div>
+                            <div class="infobox infobox-orange">
+                                <div class="infobox-icon">
+                                    <i class="fa-shopping-cart fa"></i>
+                                </div>
+                                <div class="infobox-data">
+                                    <span class="infobox-data-number infobox-orange" ng-bind="DataSet.ReportBySeller.Sums.NumOrders"></span>
+                                    <div class="infobox-content">Số đơn hàng</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='ReportBySeller') }">
+                    <div class="row col-md-12">
+                        <div id="chartReportBySeller"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <table grid-data="ReportBySeller"
+                               grid-data-type="function" @*table/storedprocedure*@
+                               grid-data-action="getall" @*get/getall*@
+                               grid-data-object="dbo.UFN_Report_Revenue_By_Seller" @*table name or stored procedure name*@
+                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')
+                                            ,{{CurrentStore}}"
+                               grid-sort-condition="UserName ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="Revenue;NumOrders" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="UserId" class="none-display"></th>
+                                    <th grid-defined-colum="CashierName"><span>Người bán</span></th>
+                                    <th grid-defined-colum="Revenue"><span>Doanh thu</span></th>
+                                    <th grid-defined-colum="NumOrders"><span>Số đơn hàng</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.ReportBySeller.Data">
+                                    <td ng-bind="item.CashierName"></td>
+                                    <td ng-bind="item.Revenue | currency:'':0"></td>
+                                    <td ng-bind="item.NumOrders"></td>
+                                </tr>
+                                <tr ng-if="!DataSet.ReportBySeller.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="3" align="center"> Không có dữ liệu! </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
