@@ -234,6 +234,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\c3.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\FValidation.css" />
@@ -317,6 +318,7 @@
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\c3.js" />
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
@@ -332,6 +334,7 @@
     <Content Include="Scripts\Controller\ProductQuanHistory.js" />
     <Content Include="Scripts\Controller\Purchase.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
+    <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
     <Content Include="Scripts\DataService\DataList.js" />
     <Content Include="Scripts\Common\AngularGridView.js" />
