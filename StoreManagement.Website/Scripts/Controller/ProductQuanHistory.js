@@ -1,7 +1,22 @@
-﻿
+﻿$(document).ready(function () {
+    $('#productQuanHisModal').on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownProductQuanHistoryModal(false);
+        });
+    });
+});
+
 mdlCommon.controller('ProductQuanHistoryController',
 ['$scope', '$filter', '$interpolate', '$controller',
     function ($scope, $filter, $interpolate, $controller) {
+
+        $scope.IsShownProductQuanHistoryModal = false;
+
+        $scope.SetShownProductQuanHistoryModal = function (isShown) {
+            $scope.IsShownProductQuanHistoryModal = isShown;
+        }
 
         $scope.ProductQuanHistoryForm = {
             ProductId: "-1",
@@ -30,6 +45,7 @@ mdlCommon.controller('ProductQuanHistoryController',
         }
 
         $scope.ShowProductQuanHistory = function (product) {
+            $scope.SetShownProductQuanHistoryModal(true);
             $scope.SetProductQuanHistoryForm(product);
 
             $scope.ConfigStoreList.GridFilterCondition = $interpolate($scope.ConfigStoreList.GridFilterConditionExpression)($scope);
@@ -38,9 +54,8 @@ mdlCommon.controller('ProductQuanHistoryController',
                 $scope.SelectedStoreId = $scope.ListStores[0].StoreId;
             }
 
-            $scope.ReloadGrid('ProductQuanHistory');
-
-            $("#productQuanHisModal").modal();
+            //$scope.ReloadGrid('ProductQuanHistory');
+            $("#productQuanHisModal").modal('show');
         }
 
         $scope.SelectStore = function (store) {

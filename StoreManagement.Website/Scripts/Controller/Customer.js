@@ -18,7 +18,7 @@
                 $scope.CurrentTab = tab;
                 $scope.IsShowCustomerDetail = false;
                 $scope.IsShowSupplierDetail = false;
-                $scope.ReloadGrid(tab);
+                //$scope.ReloadGrid(tab);
             }
         }
 

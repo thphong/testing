@@ -1,9 +1,30 @@
-﻿mdlCommon.controller('AttributeController',
+﻿$(document).ready(function () {
+    $('#attributeModal').on('show.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownAttributeModal(true);
+        });
+    }).on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownAttributeModal(false);
+        });
+    });
+});
+
+mdlCommon.controller('AttributeController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         //$controller('ctrlPaging', { $scope: $scope });
 
         $scope.CurrentTabAttribute = "tab-list";
+        $scope.IsShownAttributeModal = false;
+
+        $scope.SetShownAttributeModal = function (isShown) {
+            $scope.IsShownAttributeModal = isShown;
+        }
 
         $scope.SetCurrentTabAttribute = function (tab) {
             $scope.CurrentTabAttribute = tab;

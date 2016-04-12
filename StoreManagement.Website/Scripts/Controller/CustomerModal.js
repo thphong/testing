@@ -92,11 +92,10 @@ mdlCommon.controller('CustomerModalController',
         }
 
         $scope.ShowCustomerDetail = function (customer) {
-
             var object = $scope.CustomerFormConfig.GetObject(customer.CustomerCode, 'CustomerCode');
             $scope.CustomerFormConfig.ConvertFieldsToString(object, $scope.CustomerForm);
             $scope.IsShowCustomerDetail = true;
-            $scope.ReloadGrid('ListOrders');
+            //$scope.ReloadGrid('ListOrders');
         }
 
         $scope.CloseCustomerDetail = function () {
@@ -118,11 +117,10 @@ mdlCommon.controller('CustomerModalController',
                 if ($scope.CustomerFormConfig.SaveObject()) {
                     ShowSuccessMessage("Khách hàng được sửa thành công!");
                     $scope.IsEditingCustomerDetail = false;
-                    $scope.ReloadGrid('Customers');
+                    //$scope.ReloadGrid('Customers');
                 }
             }
         }
-
 
         $scope.ExposeFunctionAfterSavingCustomer = function () {
         }

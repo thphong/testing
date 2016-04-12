@@ -252,7 +252,6 @@ mdlCommon.directive('dropdownMasterTable', function () {
 
         var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
         element.attr("dropdown-id", dropdownId);
-        //alert(dropdownId);
         element.after('<div ng-init="InitVisibleDropdown(\'' + dropdownId + '\');"></div>');
 
         var configList = new GridViewConfig(dropdownId);
@@ -548,6 +547,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
 
     $scope.ReloadGrid = function (gridId) {
+        alert(gridId);
         this.CalculatedGridPara(gridId);
     }
 
@@ -562,15 +562,17 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     }
 
     $scope.InitVisibleGrid = function (gridId) {
-        if ($('table[grid-data="' + gridId + '"]').is(":visible")) {
-            $scope.ReloadGrid(gridId);
-        }
+        //if ($('table[grid-data="' + gridId + '"]').is(":visible")) {
+        $scope.ReloadGrid(gridId);
+        //}
     }
 
     $scope.InitVisibleDropdown = function (dropdownId) {
         //if ($('select[dropdown-id="' + dropdownId + '"]').is(":visible")) {
+        if (!this.Dropdowns[dropdownId]) {
+            alert(dropdownId);
             $scope.ReloadDropdown(dropdownId);
-        //}
+        }
     }
 
     $scope.ReloadAllVisibleDrodowns = function () {
@@ -590,11 +592,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         });
     }
 
-    
+
     $scope.FilterStartDate = "";
     $scope.FilterEndDate = "";
     $scope.RangeDateCode = 0;
     $scope.SetFilterRangeDate = function (option, gridId) {
+
+        if (option == $scope.RangeDateCode) return;
 
         var curr = new Date(); // get current date
         var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week

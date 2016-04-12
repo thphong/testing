@@ -9,6 +9,16 @@
     return true;
 }
 
+$(document).ready(function () {
+    $('#productPriceHistoryModal').on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownPriceHisModal(false);
+        });
+    });
+});
+
 mdlCommon.controller('ProductController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
@@ -28,6 +38,7 @@ mdlCommon.controller('ProductController',
         $scope.IsEditingProductDetail = false;
 
         $scope.ProductForm = {
+            OldProductId: "-1",
             ProductId: "-1",
             ProductCode: "",
             ProductName: "",
@@ -54,6 +65,7 @@ mdlCommon.controller('ProductController',
         };
 
         $scope.ResetProductForm = function () {
+            $scope.ProductForm.OldProductId = "-1";
             $scope.ProductForm.ProductId = "-1";
             $scope.ProductForm.ProductCode = "";
             $scope.ProductForm.ProductName = "";
@@ -80,6 +92,11 @@ mdlCommon.controller('ProductController',
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
         $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute");
+
+        $scope.IsShownPriceHisModal = false;
+        $scope.SetShownPriceHisModal = function (isShown) {
+            $scope.IsShownPriceHisModal = isShown;
+        }
 
         $scope.DeleteProduct = function (product) {
             if (confirm("Bạn có muốn xóa hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
@@ -155,7 +172,7 @@ mdlCommon.controller('ProductController',
                         $scope.ProductForm.ProducerName = $("select[ng-model='ProductForm.ProducerId'] option:selected").html();
 
                         $scope.IsEditingProductDetail = false;
-                        $scope.ReloadGrid('Products');
+                        //$scope.ReloadGrid('Products');
 
                         ShowSuccessMessage("Hàng hóa được sửa thành công!");
                     }
@@ -176,7 +193,7 @@ mdlCommon.controller('ProductController',
                             $scope.IsShowProductDetail = false;
                         }
                         ShowSuccessMessage("Hàng hóa được tạo thành công!");
-                        $scope.ReloadGrid('Products');
+                        //$scope.ReloadGrid('Products');
                     }
                 }
             }
@@ -191,11 +208,12 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.Price = $filter('currency')($scope.ProductForm.Price, "", 0);
             $scope.ProductForm.ProductGroupName = product.GroupName;
             $scope.ProductForm.ProducerName = product.ProducerName;
-            $scope.ReloadGrid('ProductAttributes');
+            //$scope.ReloadGrid('ProductAttributes');
             var len = $scope.DataSet.ProductAttributes.Data.length;
             for (var i = 0 ; i < len; i++) {
                 $scope.DataSet.ProductAttributes.Data[i].AttributeId += "";
             }
+            $scope.ProductForm.OldProductId = $scope.ProductForm.ProductId;
             $scope.ProductForm.ProductId = "-1";
 
             $scope.IsShowProductDetail = true;
@@ -204,14 +222,14 @@ mdlCommon.controller('ProductController',
 
 
         $scope.ShowProductDetail = function (product) {
-
+            $scope.ResetProductForm();
             var object = $scope.ProductFormConfig.GetObject(product.ProductId);
             $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
             $scope.ProductForm.ProductGroupName = product.GroupName;
             $scope.ProductForm.ProducerName = product.ProducerName;
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = false;
-            $scope.ReloadGrid('ProductAttributes');
+            //$scope.ReloadGrid('ProductAttributes');
         }
 
 
@@ -221,7 +239,9 @@ mdlCommon.controller('ProductController',
 
         $scope.ShowPriceHistory = function (isCost) {
             $scope.ProductForm.IsCost = isCost;
-            $scope.ReloadGrid('ProductPriceHistorys');
+            $scope.SetShownPriceHisModal(true);
+            $("#productPriceHistoryModal").modal('show');
+            //$scope.ReloadGrid('ProductPriceHistorys');
         }
 
 
