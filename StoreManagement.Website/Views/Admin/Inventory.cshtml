@@ -44,77 +44,77 @@
         <div class="row">
             <div class="tab-content no-border active">
                 <div class="tab-pane col-md-12 active" ng-class="{active : (CurrentTab =='InventoryProduct') }">
-                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                        <div class="col-md-5">
-                            <span grid-filter-for="InventoryProduct" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
-                        </div>
+                    <div ng-if="CurrentTab =='InventoryProduct'">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                            <div class="col-md-5">
+                                <span grid-filter-for="InventoryProduct" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
+                            </div>
 
-                        <div class="col-md-2">
-                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                                    dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryProduct')"
-                                    dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
-                        </div>
-                        <div class="col-md-2">
-                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
-                                <option value="0">--Tất cả--</option>
-                                <option value="1">Chỉ lấy hàng tồn</option>
-                                <option value="2">Hết hàng</option>
-                                <option value="3">Dưới định mức</option>
-                                <option value="4">Vượt định mức</option>
-                                <option value="5">Tồn kho lâu</option>
-                            </select>
-                        </div>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                        dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryProduct')"
+                                        dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
+                                    <option value="0">--Tất cả--</option>
+                                    <option value="1">Chỉ lấy hàng tồn</option>
+                                    <option value="2">Hết hàng</option>
+                                    <option value="3">Dưới định mức</option>
+                                    <option value="4">Vượt định mức</option>
+                                    <option value="5">Tồn kho lâu</option>
+                                </select>
+                            </div>
 
-                        <div class="col-md-3 pull-right text-right">
-                            <span grid-export-import-for="InventoryProduct"></span>
-                        </div>
-                    </div>
-
-                    <div class="row form-group col-md-12">
-                        <div class="summary-head">
-                            <div class="infobox infobox-green">
-                                <div class="infobox-icon">
-                                    <i class="fa-clock-o fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-green" ng-bind="CurrentDate | date:'dd-MM-yyyy'"></span>
-                                    <div class="infobox-content">Ngày lập</div>
-                                </div>
-                            </div>
-                            <div class="infobox infobox-blue">
-                                <div class="infobox-icon">
-                                    <i class="fa-tag fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryProduct.TotalItems"></span>
-                                    <div class="infobox-content">SL tồn kho</div>
-                                </div>
-                            </div>
-                            <div class="infobox infobox-orange">
-                                <div class="infobox-icon">
-                                    <i class="fa-refresh fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryProduct.Sums.SumCost | currency:'':0"></span>
-                                    <div class="infobox-content">Tổng vốn tồn kho</div>
-                                </div>
-                            </div>
-                            <div class="infobox infobox-red">
-                                <div class="infobox-icon">
-                                    <i class="fa-shopping-cart fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryProduct.Sums.SumPrice | currency:'':0"></span>
-                                    <div class="infobox-content">Tổng giá trị tồn kho</div>
-                                </div>
+                            <div class="col-md-3 pull-right text-right">
+                                <span grid-export-import-for="InventoryProduct"></span>
                             </div>
                         </div>
-                    </div>
-                    <table grid-data="InventoryProduct"
-                           grid-data-type="table" @*table/storedprocedure*@
-                           grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
-                           grid-filter-condition="[IsActive] = 1
+                        <div class="row form-group col-md-12">
+                            <div class="summary-head">
+                                <div class="infobox infobox-green">
+                                    <div class="infobox-icon">
+                                        <i class="fa-clock-o fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-green" ng-bind="CurrentDate | date:'dd-MM-yyyy'"></span>
+                                        <div class="infobox-content">Ngày lập</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-blue">
+                                    <div class="infobox-icon">
+                                        <i class="fa-tag fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryProduct.TotalItems"></span>
+                                        <div class="infobox-content">SL tồn kho</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-orange">
+                                    <div class="infobox-icon">
+                                        <i class="fa-refresh fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryProduct.Sums.SumCost | currency:'':0"></span>
+                                        <div class="infobox-content">Tổng vốn tồn kho</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-red">
+                                    <div class="infobox-icon">
+                                        <i class="fa-shopping-cart fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryProduct.Sums.SumPrice | currency:'':0"></span>
+                                        <div class="infobox-content">Tổng giá trị tồn kho</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table grid-data="InventoryProduct"
+                               grid-data-type="table" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
+                               grid-filter-condition="[IsActive] = 1
                                                 and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
                                                 and ({{AdditionalFilter.InventoryProductType}} = 0
                                                 or ({{AdditionalFilter.InventoryProductType}} = 1 and [Quantity] > 0)
@@ -122,314 +122,324 @@
                                                 or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [AllowMin])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [AllowMax])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 5 and [LastBoughtDate] < dateadd(dd, -7, getdate())))" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
-                           grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
-                           class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th grid-defined-colum="ProductId" class="none-display"></th>
-                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
-                                <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
-                                <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
-                                <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.InventoryProduct.Data">
-                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
-                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
-                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
-                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
-                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
-                            </tr>
-                            <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
-                                @*Edit colspan*@
-                                <td colspan="8" align="center"> Không có dữ liệu! </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-9 pull-left">
-                            <span grid-paging-for="InventoryProduct"></span>
-                        </div>
+                               grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="ProductId" class="none-display"></th>
+                                    <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                    <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                    <th grid-defined-colum="Quantity"><span>SL</span></th>
+                                    <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
+                                    <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.InventoryProduct.Data">
+                                    <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
+                                    <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
+                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
+                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
+                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
+                                </tr>
+                                <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-9 pull-left">
+                                <span grid-paging-for="InventoryProduct"></span>
+                            </div>
 
-                        <div class="col-md-3 pull-right">
-                            <span grid-page-size-for="InventoryProduct"></span>
+                            <div class="col-md-3 pull-right">
+                                <span grid-page-size-for="InventoryProduct"></span>
+                            </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryInOut')}">
-                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                        <div class="col-md-5">
-                            <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutStartDate"
-                                   placeholder="Từ ngày" ng-change="ReloadGrid('InventoryInOut')">
-                            <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutEndDate"
-                                   placeholder="Đến ngày" ng-change="ReloadGrid('InventoryInOut')">
-                        </div>
-                        <div class="col-md-2">
-                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                                    dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryInOut')"
-                                    dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
-                        </div>
-                        <div class="col-md-2 pull-right text-right">
-                            <span grid-export-import-for="InventoryInOut"></span>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="summary-head">
-                            <div class="infobox infobox-green">
-                                <div class="infobox-icon">
-                                    <i class="fa-tag fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-green" ng-bind="DataSet.InventoryInOut.Sums.BeginPeriod"></span>
-                                    <div class="infobox-content">Tổng tồn đầu kỳ</div>
-                                </div>
+                    <div ng-if="CurrentTab =='InventoryInOut'">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                            <div class="col-md-5">
+                                <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
                             </div>
-                            <div class="infobox infobox-blue">
-                                <div class="infobox-icon">
-                                    <i class="fa-arrow-down fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryInOut.Sums.NumIn"></span>
-                                    <div class="infobox-content">Tổng số lượng nhập</div>
-                                </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutStartDate"
+                                       placeholder="Từ ngày" ng-change="ReloadGrid('InventoryInOut')">
+                                <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutEndDate"
+                                       placeholder="Đến ngày" ng-change="ReloadGrid('InventoryInOut')">
                             </div>
-                            <div class="infobox infobox-orange">
-                                <div class="infobox-icon">
-                                    <i class="fa-arrow-up fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryInOut.Sums.NumOut"></span>
-                                    <div class="infobox-content">Tổng số lượng xuất</div>
-                                </div>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                        dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryInOut')"
+                                        dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
                             </div>
-                            <div class="infobox infobox-red">
-                                <div class="infobox-icon">
-                                    <i class="fa-refresh fa"></i>
-                                </div>
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryInOut.Sums.EndPeriod"></span>
-                                    <div class="infobox-content">Tổng tồn cuối kỳ</div>
-                                </div>
+                            <div class="col-md-2 pull-right text-right">
+                                <span grid-export-import-for="InventoryInOut"></span>
                             </div>
                         </div>
-                    </div>
-                    <table grid-data="InventoryInOut"
-                           grid-data-type="function" @*table/function*@
-                           grid-data-action="get" @*get/getall*@
-                           grid-data-object="dbo.UFN_Report_Inventory" @*table name or stored procedure name*@
-                           grid-sort-condition="ProductCode ASC" @*must have [fieldname] for each colum field*@
-                           grid-sum-collection="BeginPeriod;NumIn;NumOut;EndPeriod" @*must have [fieldname] for each colum field*@
-                           grid-parameters="dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutStartDate}}'', ''dd-MM-yyyy'')
+                        <div class="row form-group col-md-12">
+                            <div class="summary-head">
+                                <div class="infobox infobox-green">
+                                    <div class="infobox-icon">
+                                        <i class="fa-tag fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-green" ng-bind="DataSet.InventoryInOut.Sums.BeginPeriod"></span>
+                                        <div class="infobox-content">Tổng tồn đầu kỳ</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-blue">
+                                    <div class="infobox-icon">
+                                        <i class="fa-arrow-down fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-blue" ng-bind="DataSet.InventoryInOut.Sums.NumIn"></span>
+                                        <div class="infobox-content">Tổng số lượng nhập</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-orange">
+                                    <div class="infobox-icon">
+                                        <i class="fa-arrow-up fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryInOut.Sums.NumOut"></span>
+                                        <div class="infobox-content">Tổng số lượng xuất</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-red">
+                                    <div class="infobox-icon">
+                                        <i class="fa-refresh fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.InventoryInOut.Sums.EndPeriod"></span>
+                                        <div class="infobox-content">Tổng tồn cuối kỳ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table grid-data="InventoryInOut"
+                               grid-data-type="function" @*table/function*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="dbo.UFN_Report_Inventory" @*table name or stored procedure name*@
+                               grid-sort-condition="ProductCode ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="BeginPeriod;NumIn;NumOut;EndPeriod" @*must have [fieldname] for each colum field*@
+                               grid-parameters="dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutStartDate}}'', ''dd-MM-yyyy'')
                                             ,dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutEndDate}}'', ''dd-MM-yyyy'')
                                             ,{{AdditionalFilter.InventoryInOutProductGroup}}"
-                           class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th grid-defined-colum="ProductId" class="none-display"></th>
-                                <th grid-defined-colum="Quantity" class="none-display"></th>
-                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
-                                <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
-                                <th grid-defined-colum="BeginPeriod"><span>Đầu kỳ</span></th>
-                                <th grid-defined-colum="NumIn"><span>SL nhập</span></th>
-                                <th grid-defined-colum="NumOut"><span>SL xuất</span></th>
-                                <th grid-defined-colum="EndPeriod"><span>Cuối kỳ</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.InventoryInOut.Data">
-                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
-                                <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
-                                <td ng-bind="item.BeginPeriod"></td>
-                                <td ng-bind="item.NumIn"></td>
-                                <td ng-bind="item.NumOut"></td>
-                                <td ng-bind="item.EndPeriod"></td>
-                            </tr>
-                            <tr ng-if="!DataSet.InventoryInOut.HasRecord()">
-                                @*Edit colspan*@
-                                <td colspan="6" align="center"> Không có dữ liệu!  </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-9 pull-left">
-                            <span grid-paging-for="InventoryInOut"></span>
-                        </div>
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="ProductId" class="none-display"></th>
+                                    <th grid-defined-colum="Quantity" class="none-display"></th>
+                                    <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                    <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                    <th grid-defined-colum="BeginPeriod"><span>Đầu kỳ</span></th>
+                                    <th grid-defined-colum="NumIn"><span>SL nhập</span></th>
+                                    <th grid-defined-colum="NumOut"><span>SL xuất</span></th>
+                                    <th grid-defined-colum="EndPeriod"><span>Cuối kỳ</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.InventoryInOut.Data">
+                                    <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
+                                    <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
+                                    <td ng-bind="item.BeginPeriod"></td>
+                                    <td ng-bind="item.NumIn"></td>
+                                    <td ng-bind="item.NumOut"></td>
+                                    <td ng-bind="item.EndPeriod"></td>
+                                </tr>
+                                <tr ng-if="!DataSet.InventoryInOut.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="6" align="center"> Không có dữ liệu!  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-9 pull-left">
+                                <span grid-paging-for="InventoryInOut"></span>
+                            </div>
 
-                        <div class="col-md-3 pull-right">
-                            <span grid-page-size-for="InventoryInOut"></span>
+                            <div class="col-md-3 pull-right">
+                                <span grid-page-size-for="InventoryInOut"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && !IsShowInventoryDetail}">
-                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                        <div class="col-md-5">
-                            <span grid-filter-for="InventoryCheck" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
-                        </div>
+                    <div ng-if="(CurrentTab =='InventoryCheck') && !IsShowInventoryDetail">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                            <div class="col-md-5">
+                                <span grid-filter-for="InventoryCheck" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
+                            </div>
 
-                        <div class="col-md-2">
-                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryStatus" dropdown-master-table="T_Master_InventoryStatus" dropdown-value-field="StatusId"
-                                    dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventoryCheck')"></select>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryStatus" dropdown-master-table="T_Master_InventoryStatus" dropdown-value-field="StatusId"
+                                        dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventoryCheck')"></select>
+                            </div>
+                            <div class="col-md-4 pull-right text-right">
+                                <button class="btn btn-success btn-primary" ng-click="AddInventory()">
+                                    <i class="fa fa-plus white"></i>
+                                    <span>Tạo Phiếu</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-4 pull-right text-right">
-                            <button class="btn btn-success btn-primary" ng-click="AddInventory()">
-                                <i class="fa fa-plus white"></i>
-                                <span>Tạo Phiếu</span>
-                            </button>
-                        </div>
-                    </div>
-                    <table grid-data="InventoryCheck"
-                           grid-data-type="table" @*table/storedprocedure*@
-                           grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_Inventory" @*table name or stored procedure name*@
-                           grid-filter-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}} and
+                        <table grid-data="InventoryCheck"
+                               grid-data-type="table" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="T_Trans_Inventory" @*table name or stored procedure name*@
+                               grid-filter-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}} and
                                                 ({{AdditionalFilter.InventoryStatus}} = 0
                                                 or {{AdditionalFilter.InventoryStatus}} = [StatusId])" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[InventoryCode] ASC" @*must have [fieldname] for each colum field*@
-                           class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th grid-defined-colum="InventoryId" class="none-display"></th>
-                                <th grid-defined-colum="InventoryCode"><span>Mã phiếu</span></th>
-                                <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
-                                <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
-                                <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người tạo</span></th>
-                                <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
-                                <th grid-defined-colum="BalancerId.UserName, BalancerName"><span>Người cân bằng</span></th>
-                                <th grid-defined-colum="BalancedDate"><span>Ngày cân bằng</span></th>
-                                <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
-                                <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.InventoryCheck.Data">
-                                <td> <a href="#" ng-bind="item.InventoryCode" ng-click="ShowInventoryDetail(item)"></a> </td>
-                                <td ng-bind="item.NumProducts"></td>
-                                <td>
-                                    <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
-                                </td>
-                                <td ng-bind="item.CreatorName"></td>
-                                <td ng-bind="item.CreatedDate"></td>
-                                <td ng-bind="item.BalancerName"></td>
-                                <td ng-bind="item.BalancedDate"></td>
-                                <td ng-bind="item.StoreCode"></td>
-                                <td>
-                                    <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventory(item)">
-                                        <i class="fa-trash fa"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr ng-if="!DataSet.InventoryCheck.HasRecord()">
-                                @*Edit colspan*@
-                                <td colspan="9" align="center"> Không có dữ liệu!  </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-9 pull-left">
-                            <span grid-paging-for="InventoryCheck"></span>
-                        </div>
+                               grid-sort-condition="[InventoryCode] ASC" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="InventoryId" class="none-display"></th>
+                                    <th grid-defined-colum="InventoryCode"><span>Mã phiếu</span></th>
+                                    <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
+                                    <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
+                                    <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người tạo</span></th>
+                                    <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
+                                    <th grid-defined-colum="BalancerId.UserName, BalancerName"><span>Người cân bằng</span></th>
+                                    <th grid-defined-colum="BalancedDate"><span>Ngày cân bằng</span></th>
+                                    <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
+                                    <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
+                                    <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.InventoryCheck.Data">
+                                    <td> <a href="#" ng-bind="item.InventoryCode" ng-click="ShowInventoryDetail(item)"></a> </td>
+                                    <td ng-bind="item.NumProducts"></td>
+                                    <td>
+                                        <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
+                                    </td>
+                                    <td ng-bind="item.CreatorName"></td>
+                                    <td ng-bind="item.CreatedDate"></td>
+                                    <td ng-bind="item.BalancerName"></td>
+                                    <td ng-bind="item.BalancedDate"></td>
+                                    <td ng-bind="item.StoreCode"></td>
+                                    <td>
+                                        <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventory(item)">
+                                            <i class="fa-trash fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!DataSet.InventoryCheck.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="9" align="center"> Không có dữ liệu!  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-9 pull-left">
+                                <span grid-paging-for="InventoryCheck"></span>
+                            </div>
 
-                        <div class="col-md-3 pull-right">
-                            <span grid-page-size-for="InventoryCheck"></span>
+                            <div class="col-md-3 pull-right">
+                                <span grid-page-size-for="InventoryCheck"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && IsShowInventoryDetail}">
-                    @Html.Partial("InventoryForm")
+                    <div ng-if="(CurrentTab =='InventoryCheck') && IsShowInventoryDetail">
+                        @Html.Partial("InventoryForm")
+                    </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && !IsShowInventTranDetail}">
-                    <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                        <div class="col-md-5">
-                            <span grid-filter-for="InventTrans" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
-                        </div>
+                    <div ng-if="(CurrentTab =='InventTrans') && !IsShowInventTranDetail">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                            <div class="col-md-5">
+                                <span grid-filter-for="InventTrans" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
+                            </div>
 
-                        <div class="col-md-2">
-                            <select class="form-control input-sm" ng-model="AdditionalFilter.InventTranStatus" dropdown-master-table="T_Master_InventTranStatus" dropdown-value-field="StatusId"
-                                    dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventTrans')"></select>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventTranStatus" dropdown-master-table="T_Master_InventTranStatus" dropdown-value-field="StatusId"
+                                        dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventTrans')"></select>
+                            </div>
+                            <div class="col-md-4 pull-right text-right">
+                                <button class="btn btn-success btn-primary" ng-click="AddInventTran()">
+                                    <i class="fa fa-plus white"></i>
+                                    <span>Tạo Phiếu</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-4 pull-right text-right">
-                            <button class="btn btn-success btn-primary" ng-click="AddInventTran()">
-                                <i class="fa fa-plus white"></i>
-                                <span>Tạo Phiếu</span>
-                            </button>
-                        </div>
-                    </div>
-                    <table grid-data="InventTrans"
-                           grid-data-type="table" @*table/storedprocedure*@
-                           grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_InventTran" @*table name or stored procedure name*@
-                           grid-filter-condition="[IsActive] = 1 and ([FromStoreId] = {{CurrentStore}} or [ToStoreId] = {{CurrentStore}}) and
+                        <table grid-data="InventTrans"
+                               grid-data-type="table" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="T_Trans_InventTran" @*table name or stored procedure name*@
+                               grid-filter-condition="[IsActive] = 1 and ([FromStoreId] = {{CurrentStore}} or [ToStoreId] = {{CurrentStore}}) and
                                                 ({{AdditionalFilter.InventTranStatus}} = 0
                                                 or {{AdditionalFilter.InventTranStatus}} = [StatusId])" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[InventTranCode] ASC" @*must have [fieldname] for each colum field*@
-                           class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th grid-defined-colum="InventTranId" class="none-display"></th>
-                                <th grid-defined-colum="InventTranCode"><span>Mã phiếu</span></th>
-                                <th grid-defined-colum="FromStoreId.StoreCode,FromStoreCode"><span>Từ CH</span></th>
-                                <th grid-defined-colum="ToStoreId.StoreCode,ToStoreCode"><span>Sang CH</span></th>
-                                <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
-                                <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
-                                <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người tạo</span></th>
-                                <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
-                                <th grid-defined-colum="TransferId.UserName, TransferName"><span>Người chuyển</span></th>
-                                <th grid-defined-colum="TransferedDate"><span>Ngày chuyển</span></th>
-                                <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
-                                <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.InventTrans.Data">
-                                <td> <a href="#" ng-bind="item.InventTranCode" ng-click="ShowInventTranDetail(item)"></a> </td>
-                                <td ng-bind="item.FromStoreCode"></td>
-                                <td ng-bind="item.ToStoreCode"></td>
-                                <td ng-bind="item.NumProducts"></td>
-                                <td>
-                                    <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
-                                </td>
-                                <td ng-bind="item.CreatorName"></td>
-                                <td ng-bind="item.CreatedDate"></td>
-                                <td ng-bind="item.TransferName"></td>
-                                <td ng-bind="item.TransferedDate"></td>
-                                <td>
-                                    <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventTran(item)">
-                                        <i class="fa-trash fa"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr ng-if="!DataSet.InventTrans.HasRecord()">
-                                @*Edit colspan*@
-                                <td colspan="9" align="center"> Không có dữ liệu!  </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-9 pull-left">
-                            <span grid-paging-for="InventTrans"></span>
-                        </div>
+                               grid-sort-condition="[InventTranCode] ASC" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="InventTranId" class="none-display"></th>
+                                    <th grid-defined-colum="InventTranCode"><span>Mã phiếu</span></th>
+                                    <th grid-defined-colum="FromStoreId.StoreCode,FromStoreCode"><span>Từ CH</span></th>
+                                    <th grid-defined-colum="ToStoreId.StoreCode,ToStoreCode"><span>Sang CH</span></th>
+                                    <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
+                                    <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
+                                    <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người tạo</span></th>
+                                    <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
+                                    <th grid-defined-colum="TransferId.UserName, TransferName"><span>Người chuyển</span></th>
+                                    <th grid-defined-colum="TransferedDate"><span>Ngày chuyển</span></th>
+                                    <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
+                                    <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.InventTrans.Data">
+                                    <td> <a href="#" ng-bind="item.InventTranCode" ng-click="ShowInventTranDetail(item)"></a> </td>
+                                    <td ng-bind="item.FromStoreCode"></td>
+                                    <td ng-bind="item.ToStoreCode"></td>
+                                    <td ng-bind="item.NumProducts"></td>
+                                    <td>
+                                        <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
+                                    </td>
+                                    <td ng-bind="item.CreatorName"></td>
+                                    <td ng-bind="item.CreatedDate"></td>
+                                    <td ng-bind="item.TransferName"></td>
+                                    <td ng-bind="item.TransferedDate"></td>
+                                    <td>
+                                        <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventTran(item)">
+                                            <i class="fa-trash fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!DataSet.InventTrans.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="9" align="center"> Không có dữ liệu!  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-9 pull-left">
+                                <span grid-paging-for="InventTrans"></span>
+                            </div>
 
-                        <div class="col-md-3 pull-right">
-                            <span grid-page-size-for="InventTrans"></span>
+                            <div class="col-md-3 pull-right">
+                                <span grid-page-size-for="InventTrans"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && IsShowInventTranDetail}">
-                    @Html.Partial("InventTranForm")
+                    <div ng-if="(CurrentTab =='InventTrans') && IsShowInventTranDetail">
+                        @Html.Partial("InventTranForm")
+                    </div>
                 </div>
             </div>
         </div>

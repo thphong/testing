@@ -37,7 +37,8 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts()"
+                       class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho phiếu nhập."
                        check-under="check-purchase"
                        ng-show="PurchaseForm.StatusId == 1" />
@@ -137,6 +138,7 @@
                 </table>
             </div>
         </div>
+        <div ng-init="InitListProducts()"> </div>
     </div>
     <div class="col-md-4 form-group">
         <div class="row margin-top-10">

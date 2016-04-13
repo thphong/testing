@@ -19,7 +19,7 @@ mdlCommon.controller('InventoryController',
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
-                $scope.ReloadGrid(tab);
+                //$scope.ReloadGrid(tab);
             }
         }
 

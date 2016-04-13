@@ -358,15 +358,24 @@ mdlCommon.directive('autocompleteMasterTable', function () {
     return directive;
 });
 
+mdlCommon.directive('datePicker', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        $(element).datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
+    }
+    return directive;
+});
+
 mdlCommon.directive('dateRangeFilterFor', function () {
     var directive = {};
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.dateRangeFilterFor;
         element.html(
-        ' <input type="text" class="form-control input-sm datepicker width-20" ng-model="FilterStartDate"'
+        ' <input type="text" class="form-control input-sm date-picker width-20" ng-model="FilterStartDate"'
         + 'placeholder="Từ ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
-        + ' <input type="text" class="form-control input-sm datepicker width-20" ng-model="FilterEndDate"'
+        + ' <input type="text" class="form-control input-sm date-picker width-20" ng-model="FilterEndDate"'
         + 'placeholder="Đến ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')">Tuần</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
@@ -547,7 +556,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
 
     $scope.ReloadGrid = function (gridId) {
-        alert(gridId);
+        //alert('grid ' + gridId);
         this.CalculatedGridPara(gridId);
     }
 
@@ -570,7 +579,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     $scope.InitVisibleDropdown = function (dropdownId) {
         //if ($('select[dropdown-id="' + dropdownId + '"]').is(":visible")) {
         if (!this.Dropdowns[dropdownId]) {
-            alert(dropdownId);
+            //alert('dropdown ' + dropdownId);
             $scope.ReloadDropdown(dropdownId);
         }
     }
@@ -578,7 +587,6 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     $scope.ReloadAllVisibleDrodowns = function () {
         $('select[dropdown-id]:visible').each(function () {
             var dropdownId = $(this).attr('dropdown-id');
-            alert(dropdownId);
             $scope.ReloadDropdown(dropdownId);
         });
     }

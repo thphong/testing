@@ -37,7 +37,8 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts()"
+                       class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
                        ng-show="OrderForm.OrderStatus == 1" />
@@ -164,6 +165,7 @@
                         </tr>
                     </thead>
                 </table>
+                <div ng-init="InitListProducts()"></div>
             </div>
         </div>
     </div>
@@ -221,7 +223,7 @@
             <div class="col-md-8">
                 <span ng-bind="OrderForm.SoldDate" ng-if="OrderForm.OrderStatus == 2"></span>
                 <input ng-if="OrderForm.OrderStatus == 1"
-                       class="form-control datepicker" ng-model="OrderForm.SoldDate"
+                       class="form-control" date-picker ng-model="OrderForm.SoldDate"
                        placeholder="Hôm nay" />
 
             </div>

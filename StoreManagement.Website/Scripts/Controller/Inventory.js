@@ -14,49 +14,6 @@ function CheckNumOfProductTran() {
 $(document).ready(function () {
     $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
 
-    $(".txtSearchProduct").each(function () {
-        $(this).autocomplete({
-            minLength: 0,
-            source: function (request, response) {
-                var configList = new GridViewConfig("");
-                configList.GridDataAction = "get10";
-                configList.GridDataObject = "T_Trans_Product_Store";
-                configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;#ProductId.IsSelling;#ProductId.IsActive";
-                configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
-                configList.GridSortCondition = "ProductCode ASC";
-
-                var listData = configList.GetListData();
-                if (listData.length > 0) {
-                    response(listData);
-                }
-                else {
-                    response(["Không tìm thấy kết quả"]);
-                }
-            },
-            select: function (event, ui) {
-                if (ui.item.ProductCode) {
-                    var scope = angular.element(document.getElementById("InventoryController")).scope();
-                    scope.$apply(function () {
-                        scope.SelectProduct(ui.item);
-                    });
-                    $(".txtSearchProduct").val("").change();
-                }
-                return false;
-            }
-        })
-        .autocomplete("instance")._renderItem = function (ul, item) {
-            var content;
-            if (item.ProductCode) {
-                content = "<a> <b>" + item.ProductCode + " </b><br> " + item.ProductName + "</a>";
-            }
-            else {
-                content = "<a>" + item.label + "</a>";
-            }
-            return $("<li>")
-                    .append(content)
-                    .appendTo(ul);
-        };
-    });
 
 });
 
@@ -82,13 +39,57 @@ mdlCommon.controller('InventoryController',
 
         $scope.CurrentTab = "InventoryProduct";
         $scope.CurrentDate = new Date();
-        
+
 
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
-                $scope.ReloadGrid(tab);
+                //$scope.ReloadGrid(tab);
             }
+        }
+
+        $scope.InitListAutoCompleteProducts = function () {
+            $("#txtSearchProduct").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var configList = new GridViewConfig("");
+                    configList.GridDataAction = "get10";
+                    configList.GridDataObject = "T_Trans_Product_Store";
+                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;#ProductId.IsSelling;#ProductId.IsActive";
+                    configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
+                    configList.GridSortCondition = "ProductCode ASC";
+
+                    var listData = configList.GetListData();
+                    if (listData.length > 0) {
+                        response(listData);
+                    }
+                    else {
+                        response(["Không tìm thấy kết quả"]);
+                    }
+                },
+                select: function (event, ui) {
+                    if (ui.item.ProductCode) {
+                        var scope = angular.element(document.getElementById("InventoryController")).scope();
+                        scope.$apply(function () {
+                            scope.SelectProduct(ui.item);
+                        });
+                        $("#txtSearchProduct").val("").change();
+                    }
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                var content;
+                if (item.ProductCode) {
+                    content = "<a> <b>" + item.ProductCode + " </b><br> " + item.ProductName + "</a>";
+                }
+                else {
+                    content = "<a>" + item.label + "</a>";
+                }
+                return $("<li>")
+                        .append(content)
+                        .appendTo(ul);
+            };
         }
 
         $scope.InventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory");
@@ -358,7 +359,7 @@ mdlCommon.controller('InventoryController',
 
                     if (result) {
                         ShowSuccessMessage("Phiếu kiểm kê được lưu thành công!");
-                        $scope.ReloadGrid('InventoryCheck');
+                        //$scope.ReloadGrid('InventoryCheck');
                         $scope.IsShowInventoryDetail = false;
                     }
                     else if ($scope.InventoryForm.InventoryId == '-1') {
@@ -386,7 +387,7 @@ mdlCommon.controller('InventoryController',
 
                     if (result) {
                         ShowSuccessMessage("Phiếu chuyển kho được lưu thành công!");
-                        $scope.ReloadGrid('InventTrans');
+                        //$scope.ReloadGrid('InventTrans');
                         $scope.IsShowInventTranDetail = false;
                     }
                     else if ($scope.InventTranForm.InventTranId == '-1') {
@@ -406,10 +407,12 @@ mdlCommon.controller('InventoryController',
             $scope.IsShowInventoryDetail = true;
 
             //Load Product Inventory
-            $scope.ReloadGrid('ProductsInventory');
-            $scope.ListProductsInventory = $scope.DataSet.ProductsInventory.Data;
+            //$scope.ReloadGrid('ProductsInventory');
+            //FValidation.ClearAllError();
+        }
 
-            FValidation.ClearAllError();
+        $scope.InitListProducts = function () {
+            $scope.ListProductsInventory = $scope.DataSet.ProductsInventory.Data;
 
             var len = $scope.ListProductsInventory.length;
             for (var i = 0 ; i < len; i++) {
@@ -423,7 +426,6 @@ mdlCommon.controller('InventoryController',
             $scope.SummarizeInventory();
         }
 
-
         $scope.ShowInventTranDetail = function (tran) {
             //Load Inventory form
             $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
@@ -436,10 +438,13 @@ mdlCommon.controller('InventoryController',
             $scope.IsShowInventTranDetail = true;
 
             //Load Product InventTran
-            $scope.ReloadGrid('ProductsInventTran');
-            $scope.ListProductsInventTran = $scope.DataSet.ProductsInventTran.Data;
+            //$scope.ReloadGrid('ProductsInventTran');
+            //FValidation.ClearAllError();
+        }
 
-            FValidation.ClearAllError();
+        $scope.InitListProductsTran = function()
+        {
+            $scope.ListProductsInventTran = $scope.DataSet.ProductsInventTran.Data;
 
             var len = $scope.ListProductsInventTran.length;
             for (var i = 0 ; i < len; i++) {

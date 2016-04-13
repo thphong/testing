@@ -5,55 +5,6 @@ function CheckNumOfProduct() {
     return len > 0;
 }
 
-$(document).ready(function () {
-    $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
-
-
-    $("#txtSearchProduct").autocomplete({
-        minLength: 0,
-        source: function (request, response) {
-            var configList = new GridViewConfig("");
-            configList.GridDataAction = "get10";
-            configList.GridDataObject = "T_Trans_Product_Store";
-            configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Price;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive;#ProductId.AllowNegative";
-            configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (T_Trans_Product_Store.Quantity > 0 or ProductId.AllowNegative = 1) and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
-            configList.GridSortCondition = "ProductId.ProductCode ASC";
-
-            var listData = configList.GetListData();
-            if (listData.length > 0) {
-                response(listData);
-            }
-            else {
-                response(["Không tìm thấy kết quả"]);
-            }
-        },
-        select: function (event, ui) {
-            if (ui.item.ProductCode) {
-                var scope = angular.element(document.getElementById("OrderController")).scope();
-                scope.$apply(function () {
-                    scope.SelectProduct(ui.item);
-                });
-                $("#txtSearchProduct").val("").change();
-            }
-            return false;
-        }
-    })
-    .autocomplete("instance")._renderItem = function (ul, item) {
-        var content;
-        if (item.ProductCode) {
-            content = "<a> <b>" + item.ProductName + " </b><br> Mã : " + item.ProductCode + "<br> Giá : " + item.Price + " | Tồn : " + item.Quantity + " </a>";
-        }
-        else {
-            content = "<a>" + item.label + "</a>";
-        }
-        return $("<li>")
-                .append(content)
-                .appendTo(ul);
-    };
-
-})
-
-
 mdlCommon.controller('OrderController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
@@ -94,7 +45,7 @@ mdlCommon.controller('OrderController',
             IsDiscountPercent: '1',
             IsActive: '1',
             PaidForDebt: 0,
-            IsEditingPaidForDebt : false
+            IsEditingPaidForDebt: false
         };
 
         $scope.ResetOrderForm = function () {
@@ -148,6 +99,50 @@ mdlCommon.controller('OrderController',
 
         $scope.CloseOrderDetail = function () {
             $scope.IsShowOrderDetail = false;
+        }
+
+        $scope.InitListAutoCompleteProducts = function () {
+            $("#txtSearchProduct").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var configList = new GridViewConfig("");
+                    configList.GridDataAction = "get10";
+                    configList.GridDataObject = "T_Trans_Product_Store";
+                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Price;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive;#ProductId.AllowNegative";
+                    configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (T_Trans_Product_Store.Quantity > 0 or ProductId.AllowNegative = 1) and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
+                    configList.GridSortCondition = "ProductId.ProductCode ASC";
+
+                    var listData = configList.GetListData();
+                    if (listData.length > 0) {
+                        response(listData);
+                    }
+                    else {
+                        response(["Không tìm thấy kết quả"]);
+                    }
+                },
+                select: function (event, ui) {
+                    if (ui.item.ProductCode) {
+                        var scope = angular.element(document.getElementById("OrderController")).scope();
+                        scope.$apply(function () {
+                            scope.SelectProduct(ui.item);
+                        })
+                        $("#txtSearchProduct").val("").change();
+                    }
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                var content;
+                if (item.ProductCode) {
+                    content = "<a> <b>" + item.ProductName + " </b><br> Mã : " + item.ProductCode + "<br> Giá : " + item.Price + " | Tồn : " + item.Quantity + " </a>";
+                }
+                else {
+                    content = "<a>" + item.label + "</a>";
+                }
+                return $("<li>")
+                        .append(content)
+                        .appendTo(ul);
+            };
         }
 
         $scope.DeleteOrder = function (order) {
@@ -382,7 +377,7 @@ mdlCommon.controller('OrderController',
 
                     if (result) {
                         ShowSuccessMessage("Đơn hàng được lưu thành công!");
-                        $scope.ReloadGrid('Orders');
+                        //$scope.ReloadGrid('Orders');
                         $scope.IsShowOrderDetail = false;
                     }
                     else if ($scope.OrderForm.OrderId == '-1') {
@@ -405,12 +400,11 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.CashierName = order.CashierName;
             $scope.IsShowOrderDetail = true;
 
-            //Load Product Order
-            $scope.ReloadGrid('ProductsOrder');
+            //FValidation.ClearAllError();
+        }
+
+        $scope.InitListProducts = function () {
             $scope.ListProductsOrder = $scope.DataSet.ProductsOrder.Data;
-
-            FValidation.ClearAllError();
-
             var len = $scope.ListProductsOrder.length;
             for (var i = 0 ; i < len; i++) {
                 var item = $scope.ListProductsOrder[i];
@@ -427,7 +421,6 @@ mdlCommon.controller('OrderController',
 
             $scope.Summarize();
         }
-
 
         $scope.ExposeFunctionAfterSavingCustomer = function () {
             $scope.OrderForm.Customer = $scope.CustomerForm.CustomerId;
@@ -458,7 +451,7 @@ mdlCommon.controller('OrderController',
             if ($scope.OrderForm.PaidForDebt > $scope.OrderForm.DebtMoney) {
                 ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
             }
-            else {                
+            else {
                 if (FValidation.CheckControls("check-order")) {
                     $scope.OrderForm.DebtMoney = parseInt($scope.OrderForm.DebtMoney) - $scope.OrderForm.PaidForDebt;
                     $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid) + $scope.OrderForm.PaidForDebt;
@@ -467,8 +460,7 @@ mdlCommon.controller('OrderController',
                     $scope.PaymentForm.Amount = $scope.OrderForm.PaidForDebt;
 
                     $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
-                    if ($scope.PaymentFormConfig.SaveObject() > 0)
-                    {
+                    if ($scope.PaymentFormConfig.SaveObject() > 0) {
                         ShowSuccessMessage("Thanh toán nợ thành công.");
                         $scope.OrderForm.IsEditingPaidForDebt = false;
                     }

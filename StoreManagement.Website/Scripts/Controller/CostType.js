@@ -1,9 +1,30 @@
-﻿mdlCommon.controller('CostTypeController',
+﻿$(document).ready(function () {
+    $('#costTypeModal').on('show.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownCostTypeModal(true);
+        });
+    }).on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownCostTypeModal(false);
+        });
+    });
+});
+
+mdlCommon.controller('CostTypeController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         //$controller('ctrlPaging', { $scope: $scope });
 
         $scope.CurrentTabCostType = "tab-list";
+        $scope.IsShownCostTypeModal = false;
+
+        $scope.SetShownCostTypeModal = function (isShown) {
+            $scope.IsShownCostTypeModal = isShown;
+        }
 
         $scope.SetCurrentTabCostType = function (tab) {
             $scope.CurrentTabCostType = tab;
@@ -59,7 +80,7 @@
                 $scope.CostTypeFormConfig.SetObject($scope.CostTypeForm);
                 if ($scope.CostTypeFormConfig.SaveObject()) {
                     ShowSuccessMessage("Loại chi phí được tạo thành công!");
-                    $scope.ReloadGrid('CostTypes');
+                    //$scope.ReloadGrid('CostTypes');
                     $scope.ResetCostTypeForm();
                     if (!isContinue) {
                         $scope.CurrentTabCostType = "tab-list";
