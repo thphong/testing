@@ -10,15 +10,16 @@ mdlCommon.controller('OrderController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('CustomerModalController', { $scope: $scope });
+        $controller('ProductListController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             OrderType: "1",
             Status: "0"
         };
 
-        $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders");
-        $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product");
-        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
+        $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders", $scope);
+        $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product", $scope);
+        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
 
         $scope.IsShowOrderDetail = false;
 
@@ -101,49 +102,6 @@ mdlCommon.controller('OrderController',
             $scope.IsShowOrderDetail = false;
         }
 
-        $scope.InitListAutoCompleteProducts = function () {
-            $("#txtSearchProduct").autocomplete({
-                minLength: 0,
-                source: function (request, response) {
-                    var configList = new GridViewConfig("");
-                    configList.GridDataAction = "get10";
-                    configList.GridDataObject = "T_Trans_Product_Store";
-                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Price;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive;#ProductId.AllowNegative";
-                    configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (T_Trans_Product_Store.Quantity > 0 or ProductId.AllowNegative = 1) and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
-                    configList.GridSortCondition = "ProductId.ProductCode ASC";
-
-                    var listData = configList.GetListData();
-                    if (listData.length > 0) {
-                        response(listData);
-                    }
-                    else {
-                        response(["Không tìm thấy kết quả"]);
-                    }
-                },
-                select: function (event, ui) {
-                    if (ui.item.ProductCode) {
-                        var scope = angular.element(document.getElementById("OrderController")).scope();
-                        scope.$apply(function () {
-                            scope.SelectProduct(ui.item);
-                        })
-                        $("#txtSearchProduct").val("").change();
-                    }
-                    return false;
-                }
-            })
-            .autocomplete("instance")._renderItem = function (ul, item) {
-                var content;
-                if (item.ProductCode) {
-                    content = "<a> <b>" + item.ProductName + " </b><br> Mã : " + item.ProductCode + "<br> Giá : " + item.Price + " | Tồn : " + item.Quantity + " </a>";
-                }
-                else {
-                    content = "<a>" + item.label + "</a>";
-                }
-                return $("<li>")
-                        .append(content)
-                        .appendTo(ul);
-            };
-        }
 
         $scope.DeleteOrder = function (order) {
             if (confirm("Bạn có muốn xóa đơn hàng " + order.OrderCode + "?")) {
@@ -155,6 +113,11 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.SelectProduct = function (product) {
+            if (product.AllowNegative == '0' && product.Quantity <= 0)
+            {
+                ShowErrorMessage("Sản phẩm không cho bán âm và không còn sản phẩm trong kho.");
+                return;
+            }
             var hasExist = false;
             for (var i = 0 ; i < $scope.ListProductsOrder.length ; i++) {
                 if ($scope.ListProductsOrder[i].ProductId == product.ProductId) {
@@ -435,7 +398,7 @@ mdlCommon.controller('OrderController',
             IsActive: "1"
         }
 
-        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment");
+        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
 
         $scope.EditPaidForDebt = function () {
             $scope.OrderForm.PaidForDebt = $scope.OrderForm.DebtMoney;

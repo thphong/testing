@@ -1,6 +1,6 @@
 ﻿function CheckSupplierCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Master_Suppliers");
+        var config = new ObjectDataConfig("T_Master_Suppliers", null);
         var object = config.GetObject(value, 'SupplierCode');
         if (object) {
             return false;
@@ -39,7 +39,7 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.Address = "";
         }
 
-        $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers");
+        $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers", $scope);
 
         $scope.InitSupplier = function () {
             FValidation.ClearAllError();

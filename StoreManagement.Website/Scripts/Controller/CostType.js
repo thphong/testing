@@ -44,7 +44,7 @@ mdlCommon.controller('CostTypeController',
             $scope.CostTypeForm.IsActive = "1"
         };
 
-        $scope.CostTypeFormConfig = new ObjectDataConfig("T_Master_CostTypes");
+        $scope.CostTypeFormConfig = new ObjectDataConfig("T_Master_CostTypes", $scope);
 
         $scope.DeleteCostType = function (costType) {
             if (confirm("Bạn có muốn xóa loại chi phí " + costType.CostTypeName + "?")) {

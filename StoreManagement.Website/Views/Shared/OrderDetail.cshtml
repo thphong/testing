@@ -37,7 +37,7 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts()"
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct')"
                        class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
@@ -62,7 +62,12 @@
                         <tr ng-repeat="item in ListProductsOrder">
                             <td ng-bind="item.RowNum"></td>
                             <td ng-bind="item.ProductCode"> </td>
-                            <td ng-bind="item.ProductName"></td>
+                            <td >
+                                <span ng-bind="item.ProductName"></span>
+                                <div class="red-sm-label row">
+                                    (Còn tồn <span ng-bind="item.MaxQuantity"></span>)
+                                </div>
+                            </td>
                             <td>
                                 <div class="col-md-7 padding-left-right-5">
                                     <span ng-bind="item.Quantity" ng-if="OrderForm.OrderStatus == 2"></span>

@@ -60,12 +60,12 @@ mdlCommon.controller('ProductGroupController',
             $scope.ProductGroupForm.ParentId = "";
         };
 
-        $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups");
+        $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups", $scope);
 
-        $scope.DeleteProductGroup = function (productGroup) {
+        $scope.DeleteProductGroup = function (productGroup, isParent) {
             if (confirm("Bạn có muốn xóa '" + productGroup.GroupName + "'?")) {
                 if ($scope.ProductGroupFormConfig.DeleteObject(productGroup.ProductGroupId)) {
-                    if (productGroup.IsParent == '0') {
+                    if (!isParent) {
                         $scope.ReloadGrid('ProductGroups');
                         ShowSuccessMessage("Nhóm hàng được xóa thành công!");
                     }

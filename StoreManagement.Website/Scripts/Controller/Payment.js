@@ -23,8 +23,8 @@ mdlCommon.controller('InventoryController',
             }
         }
 
-        $scope.CostFormConfig = new ObjectDataConfig("T_Trans_Cost");
-        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment");
+        $scope.CostFormConfig = new ObjectDataConfig("T_Trans_Cost", $scope);
+        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
 
         $scope.DeleteCost = function (cost)
         {

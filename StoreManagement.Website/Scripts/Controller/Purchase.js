@@ -15,14 +15,15 @@ mdlCommon.controller('PurchaseController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('SupplierModalController', { $scope: $scope });
+        $controller('ProductListController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             PurchaseType: "1",
             Status: "0"
         };
         
-        $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase");
-        $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product");
+        $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase", $scope);
+        $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product", $scope);
 
         $scope.IsShowPurchaseDetail = false;
 
@@ -77,51 +78,6 @@ mdlCommon.controller('PurchaseController',
 
         $scope.ClosePurchaseDetail = function () {
             $scope.IsShowPurchaseDetail = false;
-        }
-
-        $scope.InitListAutoCompleteProducts = function () {
-            $("#txtSearchProduct").autocomplete({
-                minLength: 0,
-                source: function (request, response) {
-                    var configList = new GridViewConfig("");
-                    configList.GridDataAction = "get10";
-                    configList.GridDataObject = "T_Trans_Products";
-                    configList.GridDefinedColums = "ProductId;ProductCode;ProductName;Price;Cost;VAT";
-                    configList.GridFilterCondition = "IsSelling = 1 and IsActive = 1 and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
-                    configList.GridSortCondition = "ProductCode ASC";
-
-                    var listData = configList.GetListData();
-                    if (listData.length > 0) {
-                        response(listData);
-                    }
-                    else {
-                        response(["Không tìm thấy kết quả"]);
-                    }
-                },
-                select: function (event, ui) {
-                    if (ui.item.ProductCode) {
-                        var scope = angular.element(document.getElementById("PurchaseController")).scope();
-                        scope.$apply(function () {
-                            scope.SelectProduct(ui.item);
-                        });
-                        $("#txtSearchProduct").val("").change();
-                    }
-                    return false;
-                }
-            })
-            .autocomplete("instance")._renderItem = function (ul, item) {
-                var content;
-                if (item.ProductCode) {
-                    content = "<a> <b>" + item.ProductCode + " </b><br> " + item.ProductName + "</a>";
-                }
-                else {
-                    content = "<a>" + item.label + "</a>";
-                }
-                return $("<li>")
-                        .append(content)
-                        .appendTo(ul);
-            };
-
         }
 
         $scope.DeletePurchase = function (purchase) {

@@ -584,11 +584,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         }
     }
 
-    $scope.ReloadAllVisibleDrodowns = function () {
-        $('select[dropdown-id]:visible').each(function () {
-            var dropdownId = $(this).attr('dropdown-id');
-            $scope.ReloadDropdown(dropdownId);
-        });
+    $scope.ReloadMasterDrodowns = function (tableName) {
+        for (var key in this.ConfigDropdown) {
+            if (this.ConfigDropdown[key].GridDataObject == tableName)
+            {
+                $scope.ReloadDropdown(key);
+            }
+        }
     }
 
     $scope.ReloadAllVisibleControls = function () {

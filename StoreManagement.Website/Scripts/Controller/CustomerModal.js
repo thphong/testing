@@ -1,6 +1,6 @@
 ﻿function CheckCustomerCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Master_Customers");
+        var config = new ObjectDataConfig("T_Master_Customers", null);
         var object = config.GetObject(value, 'CustomerCode');
         if (object) {
             return false;
@@ -46,7 +46,7 @@ mdlCommon.controller('CustomerModalController',
         };
 
 
-        $scope.CustomerFormConfig = new ObjectDataConfig("T_Master_Customers");
+        $scope.CustomerFormConfig = new ObjectDataConfig("T_Master_Customers", $scope);
 
         $scope.SetIsSaleCustomer = function (sale) {
             FValidation.ClearAllError();

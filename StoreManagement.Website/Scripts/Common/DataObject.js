@@ -105,11 +105,12 @@ function GridViewConfig(gridId) {
 }
 
 //User for single object
-function ObjectDataConfig(tableName) {
+function ObjectDataConfig(tableName, $scope) {
 
     this.TableName = tableName;
     this.ObjectData = {};
     this.ListObjectData = [];
+    this.$scope = $scope;
 
     this.SetObject = function (objectData) {
         this.ObjectData = objectData;
@@ -122,7 +123,7 @@ function ObjectDataConfig(tableName) {
     this.SaveObject = function () {
         var result = AjaxSync(g_saveObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData(this.ObjectData) + '"}');
 
-        this.ReloadMasterData();
+        this.ReloadMasterData(this.TableName);
 
         return result;
     }
@@ -150,7 +151,7 @@ function ObjectDataConfig(tableName) {
     this.DeleteObject = function (keyValue) {
         var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", keyValue: ' + keyValue + '}');
 
-        this.ReloadMasterData();
+        this.ReloadMasterData(this.TableName);
 
         return result;
     }
@@ -159,7 +160,7 @@ function ObjectDataConfig(tableName) {
     this.HardDeleteObject = function (keyValue) {
         var result = AjaxSync(g_deleteObjectUrl, '{ tableName: "' + this.TableName + '", keyValue: ' + keyValue + ', isHardDelete: true}');
 
-        this.ReloadMasterData();
+        this.ReloadMasterData(this.TableName);
 
         return result;
     }
@@ -208,14 +209,8 @@ function ObjectDataConfig(tableName) {
         }
     }
 
-    this.ReloadMasterData = function () {
-        //reload all master dropdown
-        /*for (var i = 0; i < _DropdownConfigs.length; i++) {
-            var config = _DropdownConfigs[i];
-            if (config.Attributes.dropdownMasterTable == this.TableName) {
-                config.BindBody();
-            }
-        }*/
+    this.ReloadMasterData = function (tableName) {
+        this.$scope.ReloadMasterDrodowns(tableName);
     }
 }
 
@@ -231,7 +226,7 @@ function GridViewDataSet() {
 
 
 //Use for dropdown
-function DropdownConfig(element, attributes) {
+/*function DropdownConfig(element, attributes) {
     this.Element = element;
     this.Attributes = attributes;
 
@@ -272,4 +267,4 @@ function DropdownConfig(element, attributes) {
             jelement.append(' <option value="' + listData[i][valueField] + '"> ' + listData[i][nameField] + '</option>');
         }
     }
-}
+}*/

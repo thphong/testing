@@ -90,7 +90,7 @@
                                                             <i class="fa-edit fa"></i>
                                                         </a>
                                                         <a class="red margin-left-10" title="Xóa nhóm hàng"
-                                                           ng-click="DeleteProductGroup(item)" ng-if="!item.IsEditing">
+                                                           ng-click="DeleteProductGroup(item, false)" ng-if="!item.IsEditing">
                                                             <i class="fa-trash fa"></i>
                                                         </a>
                                                         <a class="blue margin-left-10" title="Lưu nhóm hàng"
@@ -98,7 +98,7 @@
                                                             <i class="fa-save fa"></i>
                                                         </a>
 
-                                                        <a class="blue margin-left-10" title="Xóa nhóm hàng"
+                                                        <a class="blue margin-left-10" title="Hủy chỉnh sửa"
                                                            ng-click="UndoProductGroup(item)" ng-if="item.IsEditing">
                                                             <i class="fa-undo fa"></i>
                                                         </a>
@@ -153,20 +153,20 @@
                                                                check-under="PG{{item.ProductGroupId}}" />
                                                     </td>
                                                     <td>
-                                                        <a class="blue margin-left-10" title="Cập nhật nhóm hàng"
+                                                        <a class="blue margin-left-10" title="Cập nhật bộ danh mục"
                                                            ng-click="EditProductGroup(item)" ng-if="!item.IsEditing">
                                                             <i class="fa-edit fa"></i>
                                                         </a>
-                                                        <a class="red margin-left-10" title="Xóa nhóm hàng"
-                                                           ng-click="DeleteProductGroup(item)" ng-if="!item.IsEditing">
+                                                        <a class="red margin-left-10" title="Xóa bộ danh mục"
+                                                           ng-click="DeleteProductGroup(item, true)" ng-if="!item.IsEditing">
                                                             <i class="fa-trash fa"></i>
                                                         </a>
-                                                        <a class="blue margin-left-10" title="Lưu nhóm hàng"
+                                                        <a class="blue margin-left-10" title="Lưu bộ danh mục"
                                                            ng-click="SaveProductGroup(item)" ng-if="item.IsEditing">
                                                             <i class="fa-save fa"></i>
                                                         </a>
 
-                                                        <a class="blue margin-left-10" title="Xóa nhóm hàng"
+                                                        <a class="blue margin-left-10" title="Hủy chỉnh sửa"
                                                            ng-click="UndoProductGroup(item)" ng-if="item.IsEditing">
                                                             <i class="fa-undo fa"></i>
                                                         </a>

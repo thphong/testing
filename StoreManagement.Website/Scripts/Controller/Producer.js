@@ -42,7 +42,7 @@ mdlCommon.controller('ProducerController',
             $scope.ProducerForm.IsActive = "1"
         };
 
-        $scope.ProducerFormConfig = new ObjectDataConfig("T_Master_Producers");
+        $scope.ProducerFormConfig = new ObjectDataConfig("T_Master_Producers", $scope);
 
         $scope.DeleteProducer = function (producer) {
             if (confirm("Bạn có muốn xóa nhà sản xuất " + producer.ProducerName + "?")) {

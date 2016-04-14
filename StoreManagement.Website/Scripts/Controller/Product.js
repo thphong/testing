@@ -1,6 +1,6 @@
 ﻿function CheckProductCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Trans_Products");
+        var config = new ObjectDataConfig("T_Trans_Products", null);
         var object = config.GetObject(value, 'ProductCode');
         if (object) {
             return false;
@@ -90,8 +90,8 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.LastComment = "";
         };
 
-        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products");
-        $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute");
+        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
+        $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute", $scope);
 
         $scope.IsShownPriceHisModal = false;
         $scope.SetShownPriceHisModal = function (isShown) {

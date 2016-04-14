@@ -23,6 +23,7 @@ mdlCommon.controller('InventoryController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('ProductQuanHistoryController', { $scope: $scope });
+        $controller('ProductListController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             InventoryProductGroup: "0",
@@ -48,54 +49,10 @@ mdlCommon.controller('InventoryController',
             }
         }
 
-        $scope.InitListAutoCompleteProducts = function () {
-            $("#txtSearchProduct").autocomplete({
-                minLength: 0,
-                source: function (request, response) {
-                    var configList = new GridViewConfig("");
-                    configList.GridDataAction = "get10";
-                    configList.GridDataObject = "T_Trans_Product_Store";
-                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;#ProductId.IsSelling;#ProductId.IsActive";
-                    configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
-                    configList.GridSortCondition = "ProductCode ASC";
-
-                    var listData = configList.GetListData();
-                    if (listData.length > 0) {
-                        response(listData);
-                    }
-                    else {
-                        response(["Không tìm thấy kết quả"]);
-                    }
-                },
-                select: function (event, ui) {
-                    if (ui.item.ProductCode) {
-                        var scope = angular.element(document.getElementById("InventoryController")).scope();
-                        scope.$apply(function () {
-                            scope.SelectProduct(ui.item);
-                        });
-                        $("#txtSearchProduct").val("").change();
-                    }
-                    return false;
-                }
-            })
-            .autocomplete("instance")._renderItem = function (ul, item) {
-                var content;
-                if (item.ProductCode) {
-                    content = "<a> <b>" + item.ProductCode + " </b><br> " + item.ProductName + "</a>";
-                }
-                else {
-                    content = "<a>" + item.label + "</a>";
-                }
-                return $("<li>")
-                        .append(content)
-                        .appendTo(ul);
-            };
-        }
-
-        $scope.InventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory");
-        $scope.ProductInventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory_Product");
-        $scope.InventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran");
-        $scope.ProductInventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran_Product");
+        $scope.InventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory", $scope);
+        $scope.ProductInventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory_Product", $scope);
+        $scope.InventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran", $scope);
+        $scope.ProductInventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran_Product", $scope);
         $scope.IsShowInventoryDetail = false;
         $scope.IsShowInventTranDetail = false;
         $scope.ListProductsInventory = [];
