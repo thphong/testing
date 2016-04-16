@@ -10,14 +10,6 @@ function CheckNumOfProductTran() {
     return len > 0;
 }
 
-
-$(document).ready(function () {
-    $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
-
-
-});
-
-
 mdlCommon.controller('InventoryController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
@@ -30,8 +22,6 @@ mdlCommon.controller('InventoryController',
             InventoryProductType: "0",
 
             InventoryInOutProductGroup: "0",
-            InventoryInOutStartDate: formatDate(new Date()),
-            InventoryInOutEndDate: formatDate(new Date()),
 
             InventoryStatus: "0",
 

@@ -190,8 +190,8 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="PurchaseForm.PurchaseDate" ng-if="PurchaseForm.StatusId == 2"></span>
-                <input ng-if="PurchaseForm.StatusId == 1"
-                       class="form-control datepicker" ng-model="PurchaseForm.PurchaseDate"
+                <input ng-show="PurchaseForm.StatusId == 1"
+                       class="form-control" date-picker ng-model="PurchaseForm.PurchaseDate"
                        placeholder="Hôm nay" />
 
             </div>

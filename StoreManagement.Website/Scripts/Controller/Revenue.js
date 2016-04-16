@@ -15,9 +15,7 @@ mdlCommon.controller('RevenueController',
                 $scope.CurrentTab = tab;
             }
         }
-
-        $scope.SetFilterRangeDate(2);
-
+        
         $scope.SelectedUserId = -1;
         $scope.SelectedStoreId = -1;
         $scope.Filter = {

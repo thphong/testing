@@ -159,7 +159,7 @@ mdlCommon.directive('gridData', function () {
 
             _GridConfigData[window._CurrentGridId] = new GridViewConfig(window._CurrentGridId);
 
-            element.after('<div ng-init="InitVisibleGrid(\'' + window._CurrentGridId + '\');"></div>');
+            element.after('<span ng-init="InitVisibleGrid(\'' + window._CurrentGridId + '\');"></span>');
 
         }
         else {
@@ -279,7 +279,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
 
         var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
         element.attr("dropdown-id", dropdownId);
-        element.after('<div ng-init="InitVisibleDropdown(\'' + dropdownId + '\');"></div>');
+        element.after('<span ng-init="InitVisibleDropdown(\'' + dropdownId + '\');"></span>');
 
         var configList = new GridViewConfig(dropdownId);
         var valueField = attributes.dropdownValueField;
@@ -389,7 +389,20 @@ mdlCommon.directive('datePicker', function () {
     var directive = {};
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
-        $(element).datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
+        var datepickerId = "datepicker" + parseInt(Math.random() * 1000000);
+        element.attr("date-picker-id", datepickerId);
+        element.after('<span ng-init="InitDatePicker(\'' + datepickerId + '\');"></span>');
+    }
+    return directive;
+});
+
+mdlCommon.directive('datePickerFor', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        var datepickerId = "datepicker" + parseInt(Math.random() * 1000000);
+        element.attr("date-picker-id", datepickerId);
+        element.after('<span ng-init="InitDatePickerFor(\'' + datepickerId + '\',\'' + attributes.datePickerFor + '\');"></span>');
     }
     return directive;
 });
@@ -400,10 +413,10 @@ mdlCommon.directive('dateRangeFilterFor', function () {
     directive.compile = function (element, attributes) {
         var gridId = attributes.dateRangeFilterFor;
         element.html(
-        ' <input type="text" class="form-control input-sm date-picker width-20" ng-model="FilterStartDate"'
-        + 'placeholder="Từ ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
-        + ' <input type="text" class="form-control input-sm date-picker width-20" ng-model="FilterEndDate"'
-        + 'placeholder="Đến ngày" ng-change="ReloadGrid(\'' + gridId + '\')">'
+        ' <input type="text" class="form-control input-sm width-20" readonly date-picker-for="' + gridId + '" ng-model="FilterRangeDate.StartDate"'
+        + 'placeholder="Từ ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
+        + ' <input type="text" class="form-control input-sm width-20" readonly date-picker-for="' + gridId + '" ng-model="FilterRangeDate.EndDate"'
+        + 'placeholder="Đến ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')">Tuần</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')">Quí</button>'
@@ -414,6 +427,10 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
         + ' </ul>'
         );
+        if (attributes.dateRangeInitCode)
+        {
+            element.append("<span ng-init=\"SetFilterRangeDate(" + attributes.dateRangeInitCode + ",'')\"></span>");
+        }
     }
     return directive;
 });
@@ -487,25 +504,24 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     }
 
     $scope.CalculatedGridPara = function (gridId) {
+        if ($scope.DataSet[gridId] == undefined) return;
+        
+        $scope.DataSet[gridId].TotalItems = $scope.GetNumTotalRecords(gridId);
 
-        if (this.DataSet[gridId] == undefined) return;
-
-        this.DataSet[gridId].TotalItems = this.GetNumTotalRecords(gridId);
-
-        this.GetNumOfPage(gridId);
-        this.GetStartIndex(gridId);
-        this.GetEndIndex(gridId);
-        this.GetListPageIndex(gridId);
-        if (this.Config[gridId].CurrentPage > this.Config[gridId].EndIndex) {
+        $scope.GetNumOfPage(gridId);
+        $scope.GetStartIndex(gridId);
+        $scope.GetEndIndex(gridId);
+        $scope.GetListPageIndex(gridId);
+        if ($scope.Config[gridId].CurrentPage > $scope.Config[gridId].EndIndex) {
             //fix issue: load empty data
-            this.Config[gridId].CurrentPage = (this.Config[gridId].EndIndex != 0 ? this.Config[gridId].EndIndex : 1);
+            $scope.Config[gridId].CurrentPage = ($scope.Config[gridId].EndIndex != 0 ? $scope.Config[gridId].EndIndex : 1);
         }
-        else if (this.Config[gridId].CurrentPage < 1) {
-            this.Config[gridId].CurrentPage = 1;
+        else if ($scope.Config[gridId].CurrentPage < 1) {
+            $scope.Config[gridId].CurrentPage = 1;
         }
 
-        this.Config[gridId].StartRow = (this.Config[gridId].CurrentPage - 1) * this.Config[gridId].NumOfItemOnPage + 1;
-        this.Config[gridId].EndRow = this.Config[gridId].CurrentPage * this.Config[gridId].NumOfItemOnPage;
+        $scope.Config[gridId].StartRow = ($scope.Config[gridId].CurrentPage - 1) * $scope.Config[gridId].NumOfItemOnPage + 1;
+        $scope.Config[gridId].EndRow = $scope.Config[gridId].CurrentPage * $scope.Config[gridId].NumOfItemOnPage;
 
 
         //Get Data from DB
@@ -515,7 +531,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         var config = $scope.Config[gridId];
         config.EvaluateFieldExpression($interpolate, $scope);
         //getDataListUrl is defined in global
-        this.DataSet[gridId].Data = config.GetListData();
+        $scope.DataSet[gridId].Data = config.GetListData();
 
         /*$scope.GetListDataFromDB = function (gridId) {
         //Evaluate condition before send to execute in DB
@@ -526,7 +542,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         }*/
 
         //Sum Data from DB
-        this.DataSet[gridId].Sums = config.SumListData();//this.SumListDataFromDB(gridId);
+        $scope.DataSet[gridId].Sums = config.SumListData();//this.SumListDataFromDB(gridId);
     }
     /*end temp para*/
 
@@ -583,8 +599,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
 
     $scope.ReloadGrid = function (gridId) {
-        //alert('grid ' + gridId);
-        this.CalculatedGridPara(gridId);
+        $scope.CalculatedGridPara(gridId);
     }
 
     $scope.ReloadDropdown = function (dropdownId) {
@@ -613,8 +628,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
     $scope.ReloadMasterDrodowns = function (tableName) {
         for (var key in this.ConfigDropdown) {
-            if (this.ConfigDropdown[key].GridDataObject == tableName)
-            {
+            if (this.ConfigDropdown[key].GridDataObject == tableName) {
                 $scope.ReloadDropdown(key);
             }
         }
@@ -629,13 +643,18 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         });
     }
 
-
-    $scope.FilterStartDate = "";
-    $scope.FilterEndDate = "";
+    $scope.FilterRangeDate = {
+        StartDate : "",
+        EndDate: ""
+    };
     $scope.RangeDateCode = 0;
+    $scope.ChangeFilterRangeDate = function (gridId) {
+        if ($scope.FilterRangeDate.StartDate && $scope.FilterRangeDate.EndDate)
+        {
+            $scope.ReloadGrid(gridId);
+        }
+    }
     $scope.SetFilterRangeDate = function (option, gridId) {
-
-        if (option == $scope.RangeDateCode) return;
 
         var curr = new Date(); // get current date
         var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
@@ -645,34 +664,50 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
         switch (option) {
             case 1: //This week
-                $scope.FilterStartDate = formatDate(new Date(curr.setDate(first)));
-                $scope.FilterEndDate = formatDate(new Date(curr.setDate(last)));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first)));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last)));
                 break;
             case 2: //This month
-                $scope.FilterStartDate = formatDate(new Date(y, m, 1));
-                $scope.FilterEndDate = formatDate(new Date(y, m + 1, 0));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(y, m, 1));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(y, m + 1, 0));
                 break;
             case 3: //This quarter
-                $scope.FilterStartDate = formatDate(new Date(y, quarter * 3, 1));
-                $scope.FilterEndDate = formatDate(new Date(y, quarter * 3 + 3, 0));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(y, quarter * 3, 1));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(y, quarter * 3 + 3, 0));
                 break;
             case 4: //last week
-                $scope.FilterStartDate = formatDate(new Date(curr.setDate(first - 7)));
-                $scope.FilterEndDate = formatDate(new Date(curr.setDate(last - 7)));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first - 7)));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last - 7)));
                 break;
             case 5: //Last month
-                $scope.FilterStartDate = formatDate(new Date(y, m - 1, 1));
-                $scope.FilterEndDate = formatDate(new Date(y, m, 0));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(y, m - 1, 1));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(y, m, 0));
                 break;
             case 6: //Last quarter
-                $scope.FilterStartDate = formatDate(new Date(y, (quarter - 1) * 3, 1));
-                $scope.FilterEndDate = formatDate(new Date(y, quarter * 3, 0));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date(y, (quarter - 1) * 3, 1));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(y, quarter * 3, 0));
                 break;
         }
         $scope.RangeDateCode = option;
+        $("input[date-picker-for][ng-model='FilterRangeDate.StartDate']").datepicker("setDate", $scope.FilterRangeDate.StartDate);
+        $("input[date-picker-for][ng-model='FilterRangeDate.EndDate']").datepicker("setDate", $scope.FilterRangeDate.EndDate);
         $scope.ReloadGrid(gridId);
     }
 
+    $scope.InitDatePicker = function(datepickerId)
+    {
+        $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
+    }
+
+    $scope.InitDatePickerFor = function (datepickerId, gridId) {
+        $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ })
+        .on('hide', function (e) {
+            var scope = angular.element($(this).parents("[ng-controller]")[0]).scope();
+            scope.$apply(function () {
+                scope.ReloadGrid(gridId);
+            })
+        });
+    }
 }]);
 
 

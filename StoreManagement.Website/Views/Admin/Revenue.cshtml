@@ -47,7 +47,7 @@
                     <div ng-if="CurrentTab =='ReportBySeller'">
                         <div class="row margin-top-30">
                             <div class="col-md-5">
-                                <span date-range-filter-for="ReportBySeller"></span>
+                                <span date-range-filter-for="ReportBySeller" date-range-init-code="2"></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
@@ -95,8 +95,8 @@
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@
                                grid-data-object="dbo.UFN_Report_Revenue_By_Seller" @*table name or stored procedure name*@
-                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
-                                            ,dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')
+                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
                                             ,{{Filter.CurrentStore}}"
                                grid-sort-condition="UserName ASC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="Revenue;NumOrders" @*must have [fieldname] for each colum field*@
@@ -133,8 +133,8 @@
                                                    grid-filter-condition="[IsActive] = 1 and [OrderStatus.IsFinish] = 1
                                                                            and ({{CurrentStore}} = 0 or [StoreId] = {{CurrentStore}})
                                                                            and [Cashier] = {{SelectedUserId}}
-                                                                           and convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
-                                                                           and dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')" @*must have [fieldname] for each colum field*@
+                                                                           and convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                                           and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')" @*must have [fieldname] for each colum field*@
                                                    grid-sort-condition="[OrderId] ASC" @*must have [fieldname] for each colum field*@
                                                    class="table table-striped table-bordered">
                                                 <thead>
@@ -184,7 +184,7 @@
                     <div ng-if="CurrentTab =='ReportByStore'">
                         <div class="row margin-top-30">
                             <div class="col-md-5">
-                                <span date-range-filter-for="ReportByStore"></span>
+                                <span date-range-filter-for="ReportByStore" date-range-init-code="2"></span>
                             </div>
                             <div class="col-md-7">
                                 <span grid-export-import-for="ReportByStore"></span>
@@ -224,8 +224,8 @@
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@
                                grid-data-object="dbo.UFN_Report_Revenue_By_Store" @*table name or stored procedure name*@
-                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
-                                            ,dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')"
+                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')"
                                grid-sort-condition="UserName ASC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="Revenue;NumOrders" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">
@@ -260,8 +260,8 @@
                                                    grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
                                                    grid-filter-condition="[IsActive] = 1 and [OrderStatus.IsFinish] = 1
                                                                            and [StoreId] = {{SelectedStoreId}}
-                                                                           and convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
-                                                                           and dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')" @*must have [fieldname] for each colum field*@
+                                                                           and convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                                           and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')" @*must have [fieldname] for each colum field*@
                                                    grid-sort-condition="[OrderId] ASC" @*must have [fieldname] for each colum field*@
                                                    class="table table-striped table-bordered">
                                                 <thead>
@@ -427,7 +427,7 @@
                                 <span grid-filter-for="ReportByProduct" place-holder-message="Nhập mã hoặc tên hàng hóa để tìm kiếm"></span>
                             </div>
                             <div class="col-md-5">
-                                <span date-range-filter-for="ReportByProduct"></span>
+                                <span date-range-filter-for="ReportByProduct" date-range-init-code="2"></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
@@ -445,9 +445,10 @@
                                    grid-data-type="function" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="dbo.UFN_Report_Revenue_By_Product" @*table name or stored procedure name*@
-                                   grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy'')
-                                            ,dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy'')
+                                   grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
                                             ,{{Filter.CurrentStore}}"
+                                   grid-sort-condition="[Quantity] DESC" @*must have [fieldname] for each colum field*@
                                    grid-sum-collection="" @*must have [fieldname] for each colum field*@
                                    class="table table-striped table-bordered">
                                 <thead>

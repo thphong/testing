@@ -165,14 +165,11 @@
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryInOut')}">
                     <div ng-if="CurrentTab =='InventoryInOut'">
                         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutStartDate"
-                                       placeholder="Từ ngày" ng-change="ReloadGrid('InventoryInOut')">
-                                <input type="text" class="form-control input-sm datepicker width-45" ng-model="AdditionalFilter.InventoryInOutEndDate"
-                                       placeholder="Đến ngày" ng-change="ReloadGrid('InventoryInOut')">
+                            <div class="col-md-4 text-right">
+                                <span date-range-filter-for="InventoryInOut" date-range-init-code="2"></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
@@ -229,8 +226,8 @@
                                grid-data-object="dbo.UFN_Report_Inventory" @*table name or stored procedure name*@
                                grid-sort-condition="ProductCode ASC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="BeginPeriod;NumIn;NumOut;EndPeriod" @*must have [fieldname] for each colum field*@
-                               grid-parameters="dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutStartDate}}'', ''dd-MM-yyyy'')
-                                            ,dbo.UFN_System_GetDateTime(''{{AdditionalFilter.InventoryInOutEndDate}}'', ''dd-MM-yyyy'')
+                               grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                            ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
                                             ,{{AdditionalFilter.InventoryInOutProductGroup}}"
                                class="table table-striped table-bordered">
                             <thead>

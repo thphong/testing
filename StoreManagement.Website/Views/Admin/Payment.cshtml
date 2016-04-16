@@ -52,7 +52,7 @@
                                 </select>
                             </div>
                             <div class="col-md-5 text-right">
-                                <span date-range-filter-for="Costs"></span>
+                                <span date-range-filter-for="Costs" date-range-init-code="2"></span>
                             </div>
                         </div>
                         <table grid-data="Costs"
@@ -62,10 +62,8 @@
                                grid-filter-condition="([IsActive] = 1 and {{AdditionalFilter.CostType}} = 1
                                                     or [IsActive] = 0 and {{AdditionalFilter.CostType}} = 2)
                                                    and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [CostTypeId])
-                                                   and  (''{{FilterStartDate}}'' = ''''
-                                                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [PaidDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
-                                                   and  (''{{FilterEndDate}}'' = ''''
-                                                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [PaidDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
+                                                   and  (convert(date, [PaidDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
+                                                   and  (convert(date, [PaidDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[CostCode] ASC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">
@@ -153,7 +151,7 @@
                                 <span grid-filter-for="Payments" place-holder-message="Nhập mã đơn hàng để tìm kiếm"></span>
                             </div>
                             <div class="col-md-5 col-md-offset-2 text-right">
-                                <span date-range-filter-for="Payments"></span>
+                                <span date-range-filter-for="Payments" date-range-init-code="2"></span>
                             </div>
                         </div>
                         <table grid-data="Payments"
@@ -162,10 +160,8 @@
                                grid-data-object="T_Trans_Payment" @*table name or stored procedure name*@
                                grid-filter-condition="([IsActive] = 1)
                                                    and ({{AdditionalFilter.PaymentType}} = 0 or {{AdditionalFilter.PaymentType}} = [OrderId.PaymentType])
-                                                   and  (''{{FilterStartDate}}'' = ''''
-                                                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
-                                                   and  (''{{FilterEndDate}}'' = ''''
-                                                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
+                                                   and  (convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
+                                                   and  (convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[PaymentId] DESC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">

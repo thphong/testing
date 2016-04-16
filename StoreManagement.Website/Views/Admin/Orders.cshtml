@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="col-md-5 text-right">
-                    <span date-range-filter-for="Orders"></span>
+                    <span date-range-filter-for="Orders" date-range-init-code="2"></span>
                 </div>
             </div>
             <div class="row">
@@ -47,10 +47,8 @@
                     or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1))
                     and ([StoreId] = {{CurrentStore}})
                     and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
-                    and  (''{{FilterStartDate}}'' = ''''
-                    or ''{{FilterStartDate}}'' <> '''' and convert(date, [SoldDate]) >= dbo.UFN_System_GetDateTime(''{{FilterStartDate}}'', ''dd-MM-yyyy''))
-                    and  (''{{FilterEndDate}}'' = ''''
-                    or ''{{FilterEndDate}}'' <> '''' and convert(date, [SoldDate]) <= dbo.UFN_System_GetDateTime(''{{FilterEndDate}}'', ''dd-MM-yyyy''))"
+                    and  (convert(date, [SoldDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
+                    and  (convert(date, [SoldDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[OrderCode] ASC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@

@@ -1,8 +1,4 @@
-﻿$(document).ready(function () {
-    $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
-});
-
-mdlCommon.controller('InventoryController',
+﻿mdlCommon.controller('InventoryController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
@@ -19,7 +15,6 @@ mdlCommon.controller('InventoryController',
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
-                //$scope.ReloadGrid(tab);
             }
         }
 

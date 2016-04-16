@@ -5,11 +5,6 @@ function CheckNumOfProduct() {
     return len > 0;
 }
 
-$(document).ready(function () {
-    $('input.datepicker').datepicker({ format: 'dd-mm-yyyy'/*, startDate: '23-03-2016'*/ });
-})
-
-
 mdlCommon.controller('PurchaseController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
