@@ -312,74 +312,9 @@ mdlCommon.directive('autocompleteMasterTable', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
 
-        $(element).autocomplete({
-            minLength: 0,
-            source: function (request, response) {
-                var configList = new GridViewConfig("");
-                configList.GridDataAction = "get10";
-                configList.GridDataObject = attributes.autocompleteMasterTable;
-                configList.GridDefinedColums = attributes.autocompleteColumId + ";" + attributes.autocompleteColumName;
-                configList.GridFilterCondition = attributes.autocompleteColumName + " like N''%" + request.term + "%''";
-                if (attributes.autocompleteColumCode) {
-                    configList.GridDefinedColums += ";" + attributes.autocompleteColumCode;
-                    configList.GridSortCondition = attributes.autocompleteColumCode + " ASC";
-                    configList.GridFilterCondition += " or " + attributes.autocompleteColumCode + " like N''%" + request.term + "%''";
-                }
-                else {
-                    configList.GridSortCondition = attributes.autocompleteColumName + " ASC";
-                }
-                if (attributes.autocompleteCondition) {
-                    configList.GridFilterCondition = attributes.autocompleteCondition + " and (" + configList.GridFilterCondition + ")";
-                }
-                if (attributes.autocompleteColumAdditional) {
-                    configList.GridDefinedColums += ";" + attributes.autocompleteColumAdditional;
-                }
-
-                var listData = configList.GetListData();
-                if (listData.length > 0) {
-                    response(listData);
-                }
-                else {
-                    response(["Không tìm thấy kết quả"]);
-                }
-            },
-            focus: function (event, ui) {
-                if (ui.item[attributes.autocompleteColumId]) {
-                    $(element).val(ui.item[attributes.autocompleteColumName]);
-                    $(attributes.autocompleteModelId).val(ui.item[attributes.autocompleteColumId]).change();
-                    if (attributes.autocompleteModelAdditional) {
-                        $(attributes.autocompleteModelAdditional).val(ui.item[attributes.autocompleteColumAdditional]).change();
-                    }
-                }
-                return false;
-            },
-            select: function (event, ui) {
-                if (ui.item[attributes.autocompleteColumId]) {
-                    $(element).val(ui.item[attributes.autocompleteColumName]);
-                    $(attributes.autocompleteModelId).val(ui.item[attributes.autocompleteColumId]).change();
-                    if (attributes.autocompleteModelAdditional) {
-                        $(attributes.autocompleteModelAdditional).val(ui.item[attributes.autocompleteColumAdditional]).change();
-                    }
-                }
-                return false;
-            }
-        })
-        .autocomplete("instance")._renderItem = function (ul, item) {
-            var content;
-            if (item[attributes.autocompleteColumCode]) {
-                content = "<a> <b>" + item[attributes.autocompleteColumCode] + " </b><br>" + item[attributes.autocompleteColumName] + "</a>";
-            }
-            else if (item[attributes.autocompleteColumName]) {
-                content = "<a>" + item[attributes.autocompleteColumName] + "</a>";
-            }
-            else {
-                content = "<a>" + item.label + "</a>";
-            }
-
-            return $("<li>")
-                    .append(content)
-                    .appendTo(ul);
-        };
+        var autocompleteId = "autocompleteId" + parseInt(Math.random() * 1000000);
+        element.attr("autocomplete-id", autocompleteId);
+        element.after('<span ng-init="InitAutoComplete(\'' + autocompleteId + '\');"></span>');
 
     }
     return directive;
@@ -692,6 +627,78 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         $("input[date-picker-for][ng-model='FilterRangeDate.StartDate']").datepicker("setDate", $scope.FilterRangeDate.StartDate);
         $("input[date-picker-for][ng-model='FilterRangeDate.EndDate']").datepicker("setDate", $scope.FilterRangeDate.EndDate);
         $scope.ReloadGrid(gridId);
+    }
+
+    $scope.InitAutoComplete = function (autocompleteId) {
+        var element = $('input[autocomplete-id="' + autocompleteId + '"]');
+        element.autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var configList = new GridViewConfig("");
+                configList.GridDataAction = "get10";
+                configList.GridDataObject = element.attr("autocomplete-master-table");
+                configList.GridDefinedColums = element.attr("autocomplete-colum-id") + ";" + element.attr("autocomplete-colum-name");
+                configList.GridFilterCondition = element.attr("autocomplete-colum-name") + " like N''%" + request.term + "%''";
+                if (element.attr("autocomplete-colum-code")) {
+                    configList.GridDefinedColums += ";" + element.attr("autocomplete-colum-code");
+                    configList.GridSortCondition = element.attr("autocomplete-colum-code") + " ASC";
+                    configList.GridFilterCondition += " or " + element.attr("autocomplete-colum-code") + " like N''%" + request.term + "%''";
+                }
+                else {
+                    configList.GridSortCondition = element.attr("autocomplete-colum-name") + " ASC";
+                }
+                if (element.attr("autocomplete-condition")) {
+                    configList.GridFilterCondition = element.attr("autocomplete-condition") + " and (" + configList.GridFilterCondition + ")";
+                }
+                if (element.attr("autocomplete-colum-additional")) {
+                    configList.GridDefinedColums += ";" + element.attr("autocomplete-colum-additional");
+                }
+
+                var listData = configList.GetListData();
+                if (listData.length > 0) {
+                    response(listData);
+                }
+                else {
+                    response(["Không tìm thấy kết quả"]);
+                }
+            },
+            focus: function (event, ui) {
+                if (ui.item[element.attr("autocomplete-colum-id")]) {
+                    $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
+                    $(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
+                    if (element.attr("autocomplete-model-additional")) {
+                        $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
+                    }
+                }
+                return false;
+            },
+            select: function (event, ui) {
+                if (ui.item[element.attr("autocomplete-colum-id")]) {
+                    $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
+                    $(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
+                    if (element.attr("autocomplete-model-additional")) {
+                        $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
+                    }
+                }
+                return false;
+            }
+        })
+        .autocomplete("instance")._renderItem = function (ul, item) {
+            var content;
+            if (item[element.attr("autocomplete-colum-code")]) {
+                content = "<a> <b>" + item[element.attr("autocomplete-colum-code")] + " </b><br>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+            }
+            else if (item[element.attr("autocomplete-colum-name")]) {
+                content = "<a>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+            }
+            else {
+                content = "<a>" + item.label + "</a>";
+            }
+
+            return $("<li>")
+                    .append(content)
+                    .appendTo(ul);
+        };
     }
 
     $scope.InitDatePicker = function(datepickerId)

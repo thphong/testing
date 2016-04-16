@@ -685,3 +685,8 @@ button.btn-tiny {
 .text-v-middle{
     vertical-align: middle !important;
 }
+
+.form-control[readonly][date-picker-for]
+{
+    background-color: #fff !important;
+}
