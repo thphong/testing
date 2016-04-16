@@ -11,7 +11,7 @@ mdlCommon.directive('gridPagingFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridPagingFor;
-        element.append(//'<div ng-init="InitVisibleGrid(\'' + gridId + '\');"></div>'
+        element.append(
              '<ul class="pagination" ng-if="DataSet.' + gridId + '.TotalItems > 0" style="margin-top: 0px">'
             + '<li ng-class="{disabled: Config.' + gridId + '.CurrentPage == 1}" ng-click="GridChangePageIndex(1,\'' + gridId + '\')" title="Page 1">'
             + '<a href=""> &laquo; </a>'
@@ -29,6 +29,33 @@ mdlCommon.directive('gridPagingFor', function () {
             + ' <a href=""> &raquo; </a>'
             + '</li>'
             + '</ul>');
+    }
+    return directive;
+});
+
+mdlCommon.directive('monthControl', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        var gridId = attributes.gridPagingFor;
+        for (var i = 1; i <= 12; i++) {
+            element.append('<option value="' + i + '">Tháng ' + i + '</option>');
+        }
+    }
+    return directive;
+});
+
+
+mdlCommon.directive('yearControl', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        var minYear = parseInt(attributes.yearControl);
+        var currentYear = (new Date()).getFullYear();
+        for (var i = minYear ; i <= 0 ; i++) {
+
+            element.append('<option value="' + (i + currentYear) + '">' + (i + currentYear) + '</option>');
+        }
     }
     return directive;
 });

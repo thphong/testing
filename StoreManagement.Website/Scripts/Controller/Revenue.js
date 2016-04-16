@@ -8,7 +8,6 @@ mdlCommon.controller('RevenueController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
 
-
         $scope.CurrentTab = "ReportBySeller";
 
         $scope.SetCurrentTab = function (tab) {
@@ -21,6 +20,11 @@ mdlCommon.controller('RevenueController',
 
         $scope.SelectedUserId = -1;
         $scope.SelectedStoreId = -1;
+        $scope.Filter = {
+            SelectedMonth: ((new Date()).getMonth() + 1).toString(),
+            SelectedYear: (new Date()).getFullYear().toString(),
+            CurrentStore: "0"
+        };
 
         $scope.SelectUserId = function (user) {
             if ($scope.SelectedUserId == user.UserId) {
@@ -40,80 +44,70 @@ mdlCommon.controller('RevenueController',
             }
         }
 
-        $scope.BindBarChart = function (content, listName) {
-            c3.generate({
-                bindto: '#chartReportBySeller',
-                data: {
-                    columns: content,
-                    type: "bar",
-                    groups: [listName]
-                },
-                axis: {
-                    x: {
-                        label: 'Người bán',
-                        type: 'category', // this needed to load string x value
-                        categories: listName
-                    },
-                    y: {
-                        label: 'Doanh thu'
-                    }
-                },
-                bar: {
-                    width: {
-                        ratio: listName.length < 10 ? listName.length / 10 : 0.9  // this makes bar width 50% of length between ticks
-                    }
-                },
-                tooltip: {
-                    contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                        var name, value;
-                        for (var i = 0 ; i < d.length; i++) {
-                            if (d[i].value > 0) {
-                                name = d[i].name;
-                                value = $filter('currency')(d[i].value, "", 0);
-                                break;
-                            }
-                        }
-                        return '<table class="c3-tooltip"><tbody><tr><th>' + name + '</th></tr><tr><td class="value">' + value + '</td></tr></tbody></table>';
-                    }
-                },
-                legend: {
-                    show: false
+        $scope.BarChartBySeller = null;
+        $scope.BindBarChartBySeller = function (content, listName) {
+            setTimeout(function () {
+                if ($scope.BarChartBySeller == null) {
+                    $scope.BarChartBySeller = c3.generate({
+                        bindto: '#chartReportBySeller',
+                        data: { x: 'x', columns: [], type: "bar" },
+                        axis: {
+                            x: { label: 'Người bán', type: 'category' } /*this needed to load string x value*/
+                            , y: { label: 'Doanh thu' }
+                        },
+                        bar: { width: { ratio: 0.5 } },
+                        legend: { show: false }
+                    });
                 }
-            });
-        }
 
-        $scope.BindPieChart = function (content) {
-            c3.generate({
-                bindto: '#chartReportByStore',
-                data: {
-                    columns: content,
-                    type: "pie"
-                },
-                legend: {
-                    position: "right"
+                if (listName.length > 1) {
+                    $scope.BarChartBySeller.load({
+                        columns: [listName, content]
+                    });
                 }
-            });
+                else {
+                    $scope.BarChartBySeller.unload();
+                }
+            }, 10);
         }
 
         $scope.$watch('DataSet.ReportBySeller.Data', function (newVal, oldVal) {
             var listData = newVal;
-            var listName = [];
-            var content = [];
+            var listName = ['x'];
+            var content = ['Doanh thu'];
             for (var i = 0; i < listData.length; i++) {
-                content[i] = [listData[i].CashierName];
+                content.push(listData[i].Revenue);
                 listName.push(listData[i].CashierName);
-                for (var j = 0; j < listData.length; j++) {
-                    if (i != j) {
-                        content[i].push(0);
-                    }
-                    else {
-                        content[i].push(listData[i].Revenue);
-                    }
-                }
             }
-            $scope.BindBarChart(content, listName);
+            $scope.BindBarChartBySeller(content, listName);
 
         }, false);
+
+        $scope.PieChartByStore = null;
+        $scope.BindPieChart = function (content) {
+            setTimeout(function () {
+                if ($scope.PieChartByStore == null) {
+                    $scope.PieChartByStore = c3.generate({
+                        bindto: '#chartReportByStore',
+                        data: {
+                            columns: [],
+                            type: "pie"
+                        },
+                        legend: {
+                            position: "right"
+                        }
+                    });
+                }
+                if (content.length > 0) {
+                    $scope.PieChartByStore.load({
+                        columns: content
+                    });
+                }
+                else {
+                    $scope.PieChartByStore.unload();
+                }
+            }, 10);
+        }
 
         $scope.$watch('DataSet.ReportByStore.Data', function (newVal, oldVal) {
             var listData = newVal;
@@ -125,4 +119,110 @@ mdlCommon.controller('RevenueController',
 
         }, false);
 
+        $scope.BarChartByMonth = null;
+        $scope.BindBarChartByMonth = function (revenue, order, listName) {
+            setTimeout(function () {
+                if ($scope.BarChartByMonth == null) {
+                    $scope.BarChartByMonth = c3.generate({
+                        bindto: '#chartReportByMonth',
+                        data: { x: 'x', columns: [], types: { 'Doanh thu': 'bar', 'Đơn hàng': 'spline' }, axes: { 'Đơn hàng': 'y2' } },
+                        axis: {
+                            x: {
+                                label: 'Ngày', type: 'category', tick: {
+                                    rotate: 90,
+                                    multiline: false
+                                }
+                            } /*this needed to load string x value*/
+                            , y: {
+                                label: 'Doanh thu'
+                            }
+                            , y2: {
+                                show: true,
+                                label: 'Đơn hàng',
+                                tick: {
+                                    format: d3.format('d')
+                                }
+                            }
+                        },
+                        bar: { width: { ratio: 0.5 } },
+                        legend: { show: false }
+                    });
+                }
+
+                if (listName.length > 1) {
+                    $scope.BarChartByMonth.load({
+                        columns: [listName, revenue, order]
+                    });
+                }
+                else {
+                    $scope.BarChartByMonth.unload();
+                }
+            }, 10);
+        }
+
+        $scope.$watch('DataSet.ReportByMonth.Data', function (newVal, oldVal) {
+            var listData = newVal;
+            var listName = ['x'];
+            var revenue = ['Doanh thu'];
+            var order = ['Đơn hàng'];
+            for (var i = 0; i < listData.length; i++) {
+                revenue.push(listData[i].Revenue);
+                order.push(listData[i].NumOrders);
+                listName.push(listData[i].Day);
+            }
+            $scope.BindBarChartByMonth(revenue, order, listName);
+
+        }, false);
+
+        $scope.BarChartByYear = null;
+        $scope.BindBarChartByYear = function (revenue, order, listName) {
+            setTimeout(function () {
+                if ($scope.BarChartByYear == null) {
+                    $scope.BarChartByYear = c3.generate({
+                        bindto: '#chartReportByYear',
+                        data: { x: 'x', columns: [], types: { 'Doanh thu': 'bar', 'Đơn hàng': 'spline' }, axes: { 'Đơn hàng': 'y2' }},
+                        axis: {
+                            x: {
+                                label: 'Tháng', type: 'category'
+                            } /*this needed to load string x value*/
+                            , y: {
+                                label: 'Doanh thu'
+                            }
+                            , y2: {
+                                show: true,
+                                label: 'Đơn hàng',
+                                tick: {
+                                    format: d3.format('d')
+                                }
+                            }
+                        },
+                        bar: { width: { ratio: 0.5 } },
+                        legend: { show: false }
+                    });
+                }
+
+                if (listName.length > 1) {
+                    $scope.BarChartByYear.load({
+                        columns: [listName, revenue, order]
+                    });
+                }
+                else {
+                    $scope.BarChartByYear.unload();
+                }
+            }, 10);
+        }
+
+        $scope.$watch('DataSet.ReportByYear.Data', function (newVal, oldVal) {
+            var listData = newVal;
+            var listName = ['x'];
+            var revenue = ['Doanh thu'];
+            var order = ['Đơn hàng'];
+            for (var i = 0; i < listData.length; i++) {
+                revenue.push(listData[i].Revenue);
+                order.push(listData[i].NumOrders);
+                listName.push(listData[i].Month);
+            }
+            $scope.BindBarChartByYear(revenue, order, listName);
+
+        }, false);
     }]);
