@@ -395,7 +395,8 @@ mdlCommon.controller('OrderController',
         $scope.PaymentForm = {
             OrderId: "",
             Amount: "",
-            IsActive: "1"
+            IsActive: "1",
+            PaymentType: 1
         }
 
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
@@ -421,6 +422,7 @@ mdlCommon.controller('OrderController',
 
                     $scope.PaymentForm.OrderId = $scope.OrderForm.OrderId;
                     $scope.PaymentForm.Amount = $scope.OrderForm.PaidForDebt;
+                    $scope.PaymentForm.PaymentType = $scope.OrderForm.PaymentType;
 
                     $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
                     if ($scope.PaymentFormConfig.SaveObject() > 0) {

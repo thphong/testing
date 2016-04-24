@@ -213,7 +213,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ReactionController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -235,6 +234,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\c3.css" />
+    <Content Include="Content\fileinput.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\FValidation.css" />
@@ -319,6 +319,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\c3.js" />
+    <Content Include="Scripts\canvas-to-blob.js" />
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
@@ -344,6 +345,7 @@
     <Content Include="Scripts\Common\Common.js" />
     <Content Include="Scripts\Common\FValidationScript.js" />
     <Content Include="Scripts\Common\jquery.showLoading.min.js" />
+    <Content Include="Scripts\fileinput.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
@@ -429,6 +431,7 @@
     <Content Include="Views\Shared\InventTranForm.cshtml" />
     <Content Include="Views\Shared\CostModal.cshtml" />
     <Content Include="Views\Shared\CostTypeModal.cshtml" />
+    <Content Include="Views\Shared\ReceiveHistoryModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

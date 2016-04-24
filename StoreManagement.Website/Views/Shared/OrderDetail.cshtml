@@ -227,7 +227,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="OrderForm.SoldDate" ng-if="OrderForm.OrderStatus == 2"></span>
-                <input ng-if="OrderForm.OrderStatus == 1"
+                <input ng-show="OrderForm.OrderStatus == 1"
                        class="form-control" date-picker ng-model="OrderForm.SoldDate"
                        placeholder="Hôm nay" />
 
@@ -271,13 +271,13 @@
                 <label class="control-label">Hình thức</label>
             </div>
             <div class="col-md-8">
-                <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="OrderForm.OrderStatus == 2" />
+                <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="OrderForm.OrderStatus == 2" />
+                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="OrderForm.OrderStatus == 2" />
+                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
             </div>
         </div>

@@ -9,9 +9,11 @@ namespace StoreManagement.Website.Controllers
 {
     public class BaseController : Controller
     {
-        public BaseController ()
+        protected IDataService dataService;
+
+        public BaseController (IDataService _dataService)
         {
-            
+            dataService = _dataService;
         }
     }
 }

@@ -7,7 +7,7 @@
     @Scripts.Render("~/bundles/Payment")
 }
 
-<div id="InventoryController" ng-controller="InventoryController">
+<div id="InventoryController" ng-controller="PaymentController">
     <div class="container-fluid">
 
         <div class="row">
@@ -22,7 +22,13 @@
                     <li class="" ng-click="SetCurrentTab('Payments')">
                         <a data-toggle="tab">
                             <i class="blue fa-sign-in fa"></i>
-                            <span>Thu tiền</span>
+                            <span>Thu tiền bán hàng</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('CollectMoneys')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-money fa"></i>
+                            <span>Nhận tiền</span>
                         </a>
                     </li>
                 </ul>
@@ -232,10 +238,92 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='CollectMoneys') }">
+                    <div ng-if="CurrentTab =='CollectMoneys'">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                            <div class="col-md-5">
+                                <span grid-filter-for="CollectMoneys" place-holder-message="Nhập tên nhân viên để tìm kiếm"></span>
+                            </div>
+                            <div class="col-md-7 text-right">
+                                <span grid-export-import-for="CollectMoneys"></span>
+                            </div>
+                        </div>
+                        <table grid-data="CollectMoneys"
+                               grid-data-type="function" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="dbo.UFN_Report_Payment_Cashier" @*table name or stored procedure name*@
+                               grid-parameters="{{CurrentStore}}"
+                               grid-sort-condition="Pending DESC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="Cashier" class="none-display"></th>
+                                    <th grid-defined-colum="StoreId" class="none-display"></th>
+                                    <th grid-defined-colum="CashierName"><span>Người bán</span></th>
+                                    <th grid-defined-colum="Payment"><span>Tổng tiền</span></th>
+                                    <th grid-defined-colum="Receivement"><span>Đã nhận</span></th>
+                                    <th grid-defined-colum="Pending"><span>Chưa nhận</span></th>
+                                    <th><span>Số tiền nhận</span></th>
+                                    <th><span>Nhận tiền</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.CollectMoneys.Data">
+                                    <td >
+                                        <a href="#" ng-click="ShowReceiveHistory(item)" ng-bind="item.CashierName"></a>
+                                    </td>
+                                    <td ng-bind="item.Payment | currency:'':0"></td>
+                                    <td ng-bind="item.Receivement | currency:'':0"></td>
+                                    <td ng-bind="item.Pending | currency:'':0"></td>
+                                    <td>
+                                        <input ng-readonly="!item.IsEditing" class="form-control" 
+                                               @*check-currency*@ ng-model="item.Amount"
+                                               check-empty=""
+                                               check-empty-message="Vui lòng nhập số tiền."
+                                               check-under="receive{{item.Cashier}}"
+                                               check-range="1;{{item.Pending}}"
+                                               check-range-message="Vui lòng nhập số dương và không vượt quá {{item.Pending}}." />
+                                    </td>
+                                    <td>
+                                        <a ng-if="!item.IsEditing" class="blue margin-left-10" 
+                                           title="Nhận tiền" ng-click="item.IsEditing = true;">
+                                            <i class="fa-edit fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditing" class="blue margin-left-10" 
+                                           title="Lưu" ng-click="Receivement(item)">
+                                            <i class="fa-save fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditing" class="blue margin-left-10" 
+                                           title="Hủy" ng-click="item.IsEditing = false;">
+                                            <i class="fa-undo fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!DataSet.CollectMoneys.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="6" align="center"> Không có dữ liệu! </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-9 pull-left">
+                                <span grid-paging-for="CollectMoneys"></span>
+                            </div>
+
+                            <div class="col-md-3 pull-right">
+                                <span grid-page-size-for="CollectMoneys"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     @Html.Partial("CostModal")
     @Html.Partial("CostTypeModal")
+    @Html.Partial("ReceiveHistoryModal")    
 </div>
 

@@ -229,13 +229,13 @@
                 <label class="control-label">Hình thức</label>
             </div>
             <div class="col-md-8">
-                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="PurchaseForm.StatusId == 2" />
+                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="PurchaseForm.StatusId == 2" />
+                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="PurchaseForm.StatusId == 2" />
+                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
             </div>
         </div>
@@ -270,6 +270,21 @@
             <div class="col-md-8">
                 <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="PurchaseForm.StatusId == 2"></span>
                 <input class="form-control" ng-if="PurchaseForm.StatusId == 1" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
+                <input class="form-control" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.IsEditingPaidForDebt"
+                       ng-model="PurchaseForm.PaidForDebt"
+                       check-under="check-purchase"
+                       check-empty="" check-empty-message="Vui lòng nhập số tiền."
+                       check-range="0;" check-range-message="Vui lòng thanh toán số dương." />
+                <button class="btn btn-warning" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && !PurchaseForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
+                    <i class="fa fa-dollar"> </i>
+                    Thanh toán nợ
+                </button>
+                <button class="btn btn-primary btn-sm margin-top-5" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
+                    <i class="fa fa-check"> </i>
+                </button>
+                <button class="btn btn-default btn-sm margin-top-5" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                    <i class="fa fa-close"> </i>
+                </button>
             </div>
         </div>
         <div class="row  margin-top-10">

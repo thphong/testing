@@ -9,11 +9,9 @@ namespace StoreManagement.Website.Controllers
 {
     public class HomeController : BaseController
     {
-        IDataService dataService;
-
-        public HomeController(IDataService _dataService)
+        
+        public HomeController(IDataService _dataService) : base(_dataService)
         {
-            dataService = _dataService;
         }
 
         public ActionResult Index()

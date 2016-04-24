@@ -9,11 +9,9 @@ namespace StoreManagement.Website.Controllers
 {
     public class AdminController : BaseController
     {
-        public IDataService dataService;
-
-        public AdminController (IDataService _dataService)
+        
+        public AdminController (IDataService _dataService) : base (_dataService)
         {
-            dataService = _dataService;
         }
 
         // GET: Admin

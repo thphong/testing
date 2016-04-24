@@ -117,14 +117,18 @@ mdlCommon.directive('checkInteger', function () {
 
 mdlCommon.directive('checkCurrency', ['$filter', function ($filter) {
     return function (scope, element, attrs) {
-        element.bind("change", function (event) {
-            var value = $(this).val().replace(/,/g, '');
-            value = $filter('currency')(value, "", 0);
-            if (value) {
-                $(this).val(value);
+        element.bind("keydown", function (event) {
+            var key = String.fromCharCode(event.keyCode);
+            if (key >= '0' && key <= '9') {
+                var value = $(this).val().replace(/,/g, '') + key;
+                value = $filter('currency')(value, "", 0);
+                if (value) {
+                    $(this).val(value);
+                }
             }
-            else {
-                $(this).val(0);
+            if (event.keyCode != 37 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 40
+                && event.keyCode != 32 && event.keyCode != 46) {
+                event.preventDefault();
             }
         });
     };
@@ -362,8 +366,7 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
         + ' </ul>'
         );
-        if (attributes.dateRangeInitCode)
-        {
+        if (attributes.dateRangeInitCode) {
             element.append("<span ng-init=\"SetFilterRangeDate(" + attributes.dateRangeInitCode + ",'')\"></span>");
         }
     }
@@ -440,7 +443,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
     $scope.CalculatedGridPara = function (gridId) {
         if ($scope.DataSet[gridId] == undefined) return;
-        
+
         $scope.DataSet[gridId].TotalItems = $scope.GetNumTotalRecords(gridId);
 
         $scope.GetNumOfPage(gridId);
@@ -579,13 +582,12 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     }
 
     $scope.FilterRangeDate = {
-        StartDate : "",
+        StartDate: "",
         EndDate: ""
     };
     $scope.RangeDateCode = 0;
     $scope.ChangeFilterRangeDate = function (gridId) {
-        if ($scope.FilterRangeDate.StartDate && $scope.FilterRangeDate.EndDate)
-        {
+        if ($scope.FilterRangeDate.StartDate && $scope.FilterRangeDate.EndDate) {
             $scope.ReloadGrid(gridId);
         }
     }
@@ -701,8 +703,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         };
     }
 
-    $scope.InitDatePicker = function(datepickerId)
-    {
+    $scope.InitDatePicker = function (datepickerId) {
         $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
     }
 

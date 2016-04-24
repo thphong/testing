@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StoreManagement.Common;
+using System.Configuration;
+using System.IO;
 
 namespace StoreManagement.Website.Controllers
 {
@@ -150,5 +152,36 @@ namespace StoreManagement.Website.Controllers
             return File(Common.Export.ExportExcel.ExportToCSVFileOpenXML(data), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", SessionCollection.ExportConfig.GridId + ".xlsx");
         }
 
+        [HttpPost]
+        public ActionResult SaveProductImage(string productId)
+        {
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+                    string path = Server.MapPath(ConfigurationManager.AppSettings["ProductImagePath"] + productId + ".png");
+                    file.SaveAs(path);
+                }
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+        
+        public ActionResult GetProductImage(string productId)
+        {
+            try
+            {
+                return File(ConfigurationManager.AppSettings["ProductImagePath"] + productId + ".png", "image/png");
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
     }
 }

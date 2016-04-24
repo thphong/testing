@@ -62,9 +62,16 @@ namespace StoreManagement.Website
             bundles.Add(new StyleBundle("~/Content/C3Chart").Include(
                         "~/Content/c3.css"));
 
+            bundles.Add(new StyleBundle("~/Content/FileInput").Include(
+                        "~/Content/fileinput.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/C3Chart").Include(
                             "~/Scripts/d3.js",
                             "~/Scripts/c3.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/FileInput").Include(
+                            "~/Scripts/canvas-to-blob.js",
+                            "~/Scripts/fileinput.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/Common/Common.js",

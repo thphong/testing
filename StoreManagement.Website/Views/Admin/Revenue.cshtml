@@ -131,7 +131,7 @@
                                                    grid-data-action="get" @*get/getall*@
                                                    grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
                                                    grid-filter-condition="[IsActive] = 1 and [OrderStatus.IsFinish] = 1
-                                                                           and ({{CurrentStore}} = 0 or [StoreId] = {{CurrentStore}})
+                                                                           and ({{Filter.CurrentStore}} = 0 or [StoreId] = {{Filter.CurrentStore}})
                                                                            and [Cashier] = {{SelectedUserId}}
                                                                            and convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
                                                                            and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')" @*must have [fieldname] for each colum field*@

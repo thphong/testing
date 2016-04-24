@@ -61,7 +61,7 @@ mdlCommon.controller('ProductController',
             ProducerName: "",
             IsCost: 0,
             LastReferNo: "",
-            LastComment : ""
+            LastComment: ""
         };
 
         $scope.ResetProductForm = function () {
@@ -160,6 +160,7 @@ mdlCommon.controller('ProductController',
         }
 
         $scope.SaveProductForm = function (isContinue) {
+            
             if (FValidation.CheckControls("")) {
                 $scope.ProductFormConfig.SetObject($scope.ProductForm);
 
@@ -195,6 +196,23 @@ mdlCommon.controller('ProductController',
                         ShowSuccessMessage("Hàng hóa được tạo thành công!");
                         //$scope.ReloadGrid('Products');
                     }
+
+                    //Save file
+                    var formData = new FormData();
+                    formData.append('file', $('#fileImage')[0].files[0]);
+                    formData.append('productId', productId);
+
+                    $.ajax({
+                        url: g_saveProductImageUrl,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        success: function (data) {
+                            var att = $("#imgProduct").attr("src")
+                            $("#imgProduct").removeAttr("src").attr("src", att + "&timestamp=" + (new Date().getTime()));
+                        }
+                    });
                 }
             }
         }
@@ -265,5 +283,13 @@ mdlCommon.controller('ProductController',
                 }
             }
         }
+
+        $scope.$watch('IsShowProductDetail', function (newVal, oldVal) {
+            if (newVal) {
+                setTimeout(function () {
+                    $("#fileImage").fileinput();
+                }, 100);
+            }
+        }, false);
 
     }]);

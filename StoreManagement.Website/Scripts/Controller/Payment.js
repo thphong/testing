@@ -1,4 +1,14 @@
-﻿mdlCommon.controller('InventoryController',
+﻿$(document).ready(function () {
+    $('#receiveHistoryModal').on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownReceiveHistoryModal(false);
+        });
+    });
+});
+
+mdlCommon.controller('PaymentController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
@@ -11,7 +21,12 @@
         };
 
         $scope.CurrentTab = "Costs";
+        $scope.SelectedCashier;
+        $scope.IsShownReceiveHistoryModal = false;
 
+        $scope.SetShownReceiveHistoryModal = function (isShown) {
+            $scope.IsShownReceiveHistoryModal = isShown;
+        }
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
@@ -20,6 +35,7 @@
 
         $scope.CostFormConfig = new ObjectDataConfig("T_Trans_Cost", $scope);
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
+        $scope.ReceivementConfig = new ObjectDataConfig("T_Trans_Receivement", $scope);
 
         $scope.DeleteCost = function (cost)
         {
@@ -73,6 +89,22 @@
                     $("button[data-dismiss='modal']:visible").click();
                 }
             }
+        }
+
+        $scope.Receivement = function (receive) {
+            if (FValidation.CheckControls("receive" + receive.Cashier)) {
+                $scope.ReceivementConfig.SetObject(receive);
+                if ($scope.ReceivementConfig.SaveObject() > 0) {
+                    ShowSuccessMessage("Đã lưu phiếu nhận tiền thành công!");
+                    $scope.ReloadGrid('CollectMoneys');
+                }
+            }
+        }
+
+        $scope.ShowReceiveHistory = function (receive) {
+            $scope.SelectedCashier = receive;
+            $scope.SetShownReceiveHistoryModal(true);
+            $("#receiveHistoryModal").modal('show');
         }
 
     }]);
