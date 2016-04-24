@@ -62,6 +62,7 @@ mdlCommon.controller('PaymentController',
             PaidDate: formatDate(new Date()),
             Amount: "",
             Notes: "",
+            StoreId: $scope.CurrentStore,
             IsActive: 1
         };
 
@@ -72,6 +73,7 @@ mdlCommon.controller('PaymentController',
             $scope.CostForm.Amount = "";
             $scope.CostForm.Notes = "";
             $scope.CostForm.IsActive = 1;
+            $scope.CostForm.StoreId = $scope.CurrentStore;
         };
 
         $scope.AddCost = function()

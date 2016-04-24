@@ -33,13 +33,13 @@ namespace StoreManagement.Service
             
             if(gridConfig.GridDataType == GridViewConfig.FunctionType)
             {
-                statement = string.Format("exec [dbo].[USP_System_Data_Function_Get] @FunctionName = '{0}', @Parameter = N'{1}', @TextFilter = N'{2}', @Action = '{3}', @StartRow = {4}, @EndRow = {5}, @GlobalOrder = '{6}', @GlobalOrderDirection = {7}, @ColumSum = '{8}'"
-                    , gridConfig.GridDataObject, gridConfig.GridParameters, gridConfig.FilterByValue, gridConfig.GridDataAction, gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection, gridConfig.GridSumColums);
+                statement = string.Format("exec [dbo].[USP_System_Data_Function_Get] @UserId ={0}, @FunctionName = '{1}', @Parameter = N'{2}', @TextFilter = N'{3}', @Action = '{4}', @StartRow = {5}, @EndRow = {6}, @GlobalOrder = '{7}', @GlobalOrderDirection = {8}, @ColumSum = '{9}'"
+                    ,userId, gridConfig.GridDataObject, gridConfig.GridParameters, gridConfig.FilterByValue, gridConfig.GridDataAction, gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection, gridConfig.GridSumColums);
             }
             else
             {
-                statement = string.Format("exec [dbo].[USP_System_Data_List_Get] @TableName = '{0}', @Colums = '{1}', @Condition = N'{2}', @OrderColums = '{3}', @TextFilter = N'{4}', @Action = '{5}', @StartRow = {6}, @EndRow = {7}, @GlobalOrder = '{8}', @GlobalOrderDirection = {9}, @ColumSum = '{10}'"
-                    , gridConfig.GridDataObject, gridConfig.GridDefinedColums, gridConfig.GridFilterCondition, gridConfig.GridSortCondition, gridConfig.FilterByValue, gridConfig.GridDataAction, gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection, gridConfig.GridSumColums);
+                statement = string.Format("exec [dbo].[USP_System_Data_List_Get] @UserId ={0}, @TableName = '{1}', @Colums = '{2}', @Condition = N'{3}', @OrderColums = '{4}', @TextFilter = N'{5}', @Action = '{6}', @StartRow = {7}, @EndRow = {8}, @GlobalOrder = '{9}', @GlobalOrderDirection = {10}, @ColumSum = '{11}'"
+                    ,userId, gridConfig.GridDataObject, gridConfig.GridDefinedColums, gridConfig.GridFilterCondition, gridConfig.GridSortCondition, gridConfig.FilterByValue, gridConfig.GridDataAction, gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection, gridConfig.GridSumColums);
             }
 
             DataSet retVal = new DataSet();
@@ -84,13 +84,13 @@ namespace StoreManagement.Service
 
             if(gridConfig.GridDataType == GridViewConfig.FunctionType)
             {
-                statement = string.Format("exec [dbo].[USP_System_Data_Function_Get] @FunctionName = '{0}', @Parameter = N'{1}', @TextFilter = N'{2}', @Action = '{3}', @StartRow = {4}, @EndRow = {5}, @GlobalOrder = '{6}', @GlobalOrderDirection = {7}"
-                    , gridConfig.GridDataObject, gridConfig.GridParameters, gridConfig.FilterByValue, "count", gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection);
+                statement = string.Format("exec [dbo].[USP_System_Data_Function_Get] @UserId ={0}, @FunctionName = '{1}', @Parameter = N'{2}', @TextFilter = N'{3}', @Action = '{4}', @StartRow = {5}, @EndRow = {6}, @GlobalOrder = '{7}', @GlobalOrderDirection = {8}"
+                    , userId, gridConfig.GridDataObject, gridConfig.GridParameters, gridConfig.FilterByValue, "count", gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection);
             }
             else
             {
-                statement = string.Format("exec [dbo].[USP_System_Data_List_Get] @TableName = '{0}', @Colums = '{1}', @Condition = N'{2}', @OrderColums = '{3}', @TextFilter = N'{4}', @Action = '{5}', @StartRow = {6}, @EndRow = {7}, @GlobalOrder = '{8}', @GlobalOrderDirection = {9}"
-                    , gridConfig.GridDataObject, gridConfig.GridDefinedColums, gridConfig.GridFilterCondition, gridConfig.GridSortCondition, gridConfig.FilterByValue, "count", gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection);
+                statement = string.Format("exec [dbo].[USP_System_Data_List_Get] @UserId ={0}, @TableName = '{1}', @Colums = '{2}', @Condition = N'{3}', @OrderColums = '{4}', @TextFilter = N'{5}', @Action = '{6}', @StartRow = {7}, @EndRow = {8}, @GlobalOrder = '{9}', @GlobalOrderDirection = {10}"
+                    , userId, gridConfig.GridDataObject, gridConfig.GridDefinedColums, gridConfig.GridFilterCondition, gridConfig.GridSortCondition, gridConfig.FilterByValue, "count", gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection);
             }
 
             int result = dbFactory.GetContext().Database.SqlQuery<int>

@@ -396,7 +396,8 @@ mdlCommon.controller('OrderController',
             OrderId: "",
             Amount: "",
             IsActive: "1",
-            PaymentType: 1
+            PaymentType: 1,
+            StoreId: $scope.CurrentStore
         }
 
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);

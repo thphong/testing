@@ -68,6 +68,7 @@
                                grid-filter-condition="([IsActive] = 1 and {{AdditionalFilter.CostType}} = 1
                                                     or [IsActive] = 0 and {{AdditionalFilter.CostType}} = 2)
                                                    and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [CostTypeId])
+                                                   and {{CurrentStore}} = [StoreId]
                                                    and  (convert(date, [PaidDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
                                                    and  (convert(date, [PaidDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[CostCode] ASC" @*must have [fieldname] for each colum field*@
@@ -166,6 +167,7 @@
                                grid-data-object="T_Trans_Payment" @*table name or stored procedure name*@
                                grid-filter-condition="([IsActive] = 1)
                                                    and ({{AdditionalFilter.PaymentType}} = 0 or {{AdditionalFilter.PaymentType}} = [OrderId.PaymentType])
+                                                   and {{CurrentStore}} = [StoreId]
                                                    and  (convert(date, [CreatedDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
                                                    and  (convert(date, [CreatedDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[PaymentId] DESC" @*must have [fieldname] for each colum field*@
