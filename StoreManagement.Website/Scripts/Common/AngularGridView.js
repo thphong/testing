@@ -293,7 +293,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
         configList.GridDefinedColums = valueField + ";" + nameField;
         configList.GridSortCondition = nameField + " ASC";
         if (attributes.dropdownCondition) {
-            configList.GridFilterConditionExpression = attributes.dropdownCondition;
+            configList.GridFilterConditionExpression = configList.NormalizeColumName(attributes.dropdownCondition);            
         }
         _DropdownConfigs[dropdownId] = configList;
 

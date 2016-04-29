@@ -329,7 +329,7 @@
                                     <td ng-bind="item.BalancedDate"></td>
                                     <td ng-bind="item.StoreCode"></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventory(item)">
+                                        <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteInventory(item)">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
@@ -415,7 +415,7 @@
                                     <td ng-bind="item.TransferName"></td>
                                     <td ng-bind="item.TransferedDate"></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-if="item.IsFinish == '0'" ng-click="DeleteInventTran(item)">
+                                        <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteInventTran(item)">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>

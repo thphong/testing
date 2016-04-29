@@ -1,11 +1,11 @@
 ﻿
 <div class="row margin-top-10">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="InventoryForm.StatusId == 1" ng-click="SaveInventoryForm(1)">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="InventoryForm.StatusId == 1" ng-click="SaveInventoryForm(2)">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(2)">
             <i class="fa fa-check white"></i>
             <span>Cân bằng</span>
         </button>
@@ -25,7 +25,7 @@
                        placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn ít nhất một hàng hóa."
                        check-under="check-inventory"
-                       ng-show="InventoryForm.StatusId == 1" />
+                       ng-show="InventoryForm._CanUpdate" />
             </div>
         </div>
         <div class="row margin-top-10">
@@ -39,7 +39,7 @@
                             <th><span>Tồn thực tế</span></th>
                             <th><span>Chênh lệch</span></th>
                             <th><span>Diễn giải</span></th>
-                            <th ng-if="InventoryForm.StatusId == 1"></th>
+                            <th ng-if="InventoryForm._CanUpdate"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +53,8 @@
                                 <span ng-bind="item.Quantity" class="bold"></span>
                             </td>
                             <td class="text-center text-v-middle">
-                                <span ng-if="InventoryForm.StatusId == 2" ng-bind="item.RealQuantity"></span>
-                                <input ng-if="InventoryForm.StatusId == 1"
+                                <span ng-if="!InventoryForm._CanUpdate" ng-bind="item.RealQuantity"></span>
+                                <input ng-if="InventoryForm._CanUpdate"
                                        class="form-control" ng-model="item.RealQuantity"
                                        check-empty="" check-empty-message="Vui lòng nhập tồn thực tế"
                                        ng-change="ChangeQuantity(item)"
@@ -66,15 +66,15 @@
                                        ng-bind="item.Diff"></span>
                             </td>
                             <td >
-                                <span ng-if="InventoryForm.StatusId == 2" ng-bind="item.Notes"></span>
-                                <textarea ng-if="InventoryForm.StatusId == 1"
+                                <span ng-if="!InventoryForm._CanUpdate" ng-bind="item.Notes"></span>
+                                <textarea ng-if="InventoryForm._CanUpdate"
                                        class="form-control" ng-model="item.Notes"
                                        placeholder="Nguyên nhân điều chỉnh"
                                        check-empty="" check-empty-message="Vui lòng nhập nguyên nhân điều chỉnh"
                                        ng-disabled="!item.Diff"
                                        check-under="check-inventory" > </textarea>
                             </td>
-                            <td ng-if="InventoryForm.StatusId == 1" class="text-center text-v-middle">
+                            <td ng-if="InventoryForm._CanUpdate" class="text-center text-v-middle">
                                 <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductInventory(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
@@ -126,8 +126,8 @@
                 <label class="control-label">Mã phiếu</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="InventoryForm.InventoryCode" ng-if="InventoryForm.StatusId == 2"></span>
-                <input ng-if="InventoryForm.StatusId == 1"
+                <span ng-bind="InventoryForm.InventoryCode" ng-if="!InventoryForm._CanUpdate"></span>
+                <input ng-if="InventoryForm._CanUpdate"
                        class="form-control" ng-model="InventoryForm.InventoryCode" disabled="disabled"
                        placeholder="Hệ thống tự tạo" />
 
@@ -170,8 +170,8 @@
                 <label class="control-label">Ghi chú</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="InventoryForm.Notes" ng-if="InventoryForm.StatusId == 2"></span>
-                <textarea class="form-control" ng-model="InventoryForm.Notes" ng-if="InventoryForm.StatusId == 1"
+                <span ng-bind="InventoryForm.Notes" ng-if="!InventoryForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="InventoryForm.Notes" ng-if="InventoryForm._CanUpdate"
                           placeholder="Ghi chú cho phiếu"
                           check-length="500" check-length-message="Chiều dài tối ta là {0}."
                           check-under="check-inventory"></textarea>
@@ -222,11 +222,11 @@
 
 <div class="row margin-top-5">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="InventoryForm.StatusId == 1" ng-click="SaveInventoryForm(1)">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="InventoryForm.StatusId == 1" ng-click="SaveInventoryForm(2)">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(2)">
             <i class="fa fa-check white"></i>
             <span>Cân bằng</span>
         </button>

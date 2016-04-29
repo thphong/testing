@@ -49,7 +49,7 @@ mdlCommon.controller('InventoryController',
         $scope.ListProductsInventTran = [];
 
         $scope.InventoryForm = {
-            InventoryId: "-1",
+            InventoryId: -1,
             InventoryCode: "",
             BalancedDate: "",
             BalancerName: "",
@@ -61,11 +61,13 @@ mdlCommon.controller('InventoryController',
             NumProducts: 0,
             NumDiffs: 0,
             NumMore: 0,
-            NumLess: 0
+            NumLess: 0,
+            _CanUpdate: true,
+            _CanDelete: true
         }
 
         $scope.ResetInventoryForm = function () {
-            $scope.InventoryForm.InventoryId = "-1";
+            $scope.InventoryForm.InventoryId = -1;
             $scope.InventoryForm.InventoryCode = "";
             $scope.InventoryForm.BalancedDate = "";
             $scope.InventoryForm.BalancerName = "";
@@ -78,6 +80,8 @@ mdlCommon.controller('InventoryController',
             $scope.InventoryForm.NumDiffs = 0;
             $scope.InventoryForm.NumMore = 0;
             $scope.InventoryForm.NumLess = 0;
+            $scope.InventoryForm._CanUpdate = true;
+            $scope.InventoryForm._CanDelete = true;
         }
 
         $scope.InventTranForm = {
@@ -94,7 +98,9 @@ mdlCommon.controller('InventoryController',
             Notes: "",
             StatusId: 1,
             IsActive: 1,
-            NumProducts: 0
+            NumProducts: 0,
+            _CanUpdate: true,
+            _CanDelete: true
         }
 
         $scope.ResetInventTranForm = function () {
@@ -110,6 +116,8 @@ mdlCommon.controller('InventoryController',
             $scope.InventTranForm.StatusId = 1;
             $scope.InventTranForm.IsActive = 1;
             $scope.InventTranForm.NumProducts = 0;
+            $scope.InventTranForm._CanUpdate = true;
+            $scope.InventTranForm._CanDelete = true;
         }
 
         $scope.AddInventory = function () {
@@ -351,6 +359,8 @@ mdlCommon.controller('InventoryController',
             $scope.InventoryFormConfig.CopyFields(object, $scope.InventoryForm);
             $scope.InventoryForm.BalancerName = inventory.BalancerName;
             $scope.InventoryForm.CreatorName = inventory.CreatorName;
+            $scope.InventoryForm._CanUpdate = inventory._CanUpdate;
+            $scope.InventoryForm._CanDelete = inventory._CanDelete;
             $scope.IsShowInventoryDetail = true;
 
             //Load Product Inventory
@@ -382,6 +392,8 @@ mdlCommon.controller('InventoryController',
             $scope.InventTranForm.CreatorName = tran.CreatorName;
             $scope.InventTranForm.FromStoreCode = tran.FromStoreCode;
             $scope.InventTranForm.ToStoreCode = tran.ToStoreCode;
+            $scope.InventTranForm._CanUpdate = tran._CanUpdate;
+            $scope.InventTranForm._CanDelete = tran._CanDelete;
             $scope.IsShowInventTranDetail = true;
 
             //Load Product InventTran
