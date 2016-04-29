@@ -72,6 +72,7 @@
                                 <th><span>Thẻ kho</span></th>
                                 <th><span>Hình</span></th>
                                 <th></th>
+                                <th grid-defined-colum="IsSelling" class="none-display"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,13 +94,13 @@
                                     <a class="blue margin-left-10" title="Copy hàng hóa" ng-click="CopyProduct(item)">
                                         <i class="fa-copy fa"></i>
                                     </a>
-                                    <a class="pink margin-left-10" title="Ngừng kinh doanh hàng hóa" ng-click="StopSellingProduct(item)" ng-if="AdditionalFilter.ProductStatus == 1">
+                                    <a class="pink margin-left-10" title="Ngừng kinh doanh hàng hóa" ng-click="StopSellingProduct(item)" ng-if="item._CanUpdate && item.IsSelling == 1">
                                         <i class="fa-pause fa"></i>
                                     </a>
-                                    <a class="pink margin-left-10" title="Cho phép kinh doanh hàng hóa" ng-click="EnableSellingProduct(item)" ng-if="AdditionalFilter.ProductStatus == 2">
+                                    <a class="pink margin-left-10" title="Cho phép kinh doanh hàng hóa" ng-click="EnableSellingProduct(item)" ng-if="item._CanUpdate && item.IsSelling == 0">
                                         <i class="fa-retweet fa"></i>
                                     </a>
-                                    <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProduct(item)" ng-if="AdditionalFilter.ProductStatus != 3">
+                                    <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProduct(item)" ng-if="item._CanDelete">
                                         <i class="fa-trash fa"></i>
                                     </a>
                                 </td>

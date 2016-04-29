@@ -1,26 +1,26 @@
 ﻿<div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="ProductForm.ProductId == '-1' || IsEditingProductDetail" ng-click="SaveProductForm(false)">
+        <button class="btn btn-primary" ng-if="(ProductForm.ProductId == -1 || IsEditingProductDetail) && ProductForm._CanUpdate" ng-click="SaveProductForm(false)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="ProductForm.ProductId == '-1'" ng-click="SaveProductForm(true)">
+        <button class="btn btn-primary" ng-if="ProductForm.ProductId == -1" ng-click="SaveProductForm(true)">
             <i class="fa fa-save white"></i>
             <span>Lưu và tiếp tục</span>
         </button>
-        <button class="btn btn-primary btn-grey" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '1'" ng-click="StopSellingProduct(ProductForm)">
+        <button class="btn btn-primary btn-grey" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="StopSellingProduct(ProductForm)">
             <i class="fa fa-pause white"></i>
             <span>Ngừng kinh doanh</span>
         </button>
-        <button class="btn btn-primary btn-pink" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '0'" ng-click="EnableSellingProduct(ProductForm)">
+        <button class="btn btn-primary btn-pink" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 0 && ProductForm._CanUpdate" ng-click="EnableSellingProduct(ProductForm)">
             <i class="fa fa-retweet white"></i>
             <span>Cho phép KD</span>
         </button>
-        <button class="btn btn-primary" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1' && ProductForm.IsSelling == '1'" ng-click="EditProductDetail()">
+        <button class="btn btn-primary" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="EditProductDetail()">
             <i class="fa fa-edit white"></i>
             <span>Sửa</span>
         </button>
-        <button class="btn btn-danger" ng-if="ProductForm.ProductId != '-1' && !IsEditingProductDetail && ProductForm.IsActive == '1'" ng-click="DeleteProduct(ProductForm)">
+        <button class="btn btn-danger" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm._CanDelete" ng-click="DeleteProduct(ProductForm)">
             <i class="fa fa-trash white"></i>
             <span>Xóa</span>
         </button>
@@ -62,12 +62,12 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
-                        <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == '1'"
-                               ng-true-value="'1'" ng-false-value="'0'"
+                        <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == 1"
+                               ng-true-value="1" ng-false-value="0"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
-                            <span class="label label-success" ng-if="ProductForm.TrackInventory == '1'">Có</span>
-                            <span class="label label-warning" ng-if="ProductForm.TrackInventory == '0'">Không</span>
+                            <span class="label label-success" ng-if="ProductForm.TrackInventory == 1">Có</span>
+                            <span class="label label-warning" ng-if="ProductForm.TrackInventory == 0">Không</span>
                         </span>
                         <label class="font-weigth-normal" for="chbTrackInventory">Theo dõi tồn kho</label>
                     </div>
@@ -75,11 +75,11 @@
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
                         <input id="chbAllowNegative" type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
-                               ng-true-value="'1'" ng-false-value="'0'"
+                               ng-true-value="1" ng-false-value="0"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
-                            <span class="label label-success" ng-if="ProductForm.AllowNegative == '1'">Có</span>
-                            <span class="label label-warning" ng-if="ProductForm.AllowNegative == '0'">Không</span>
+                            <span class="label label-success" ng-if="ProductForm.AllowNegative == 1">Có</span>
+                            <span class="label label-warning" ng-if="ProductForm.AllowNegative == 0">Không</span>
                         </span>
                         <label class="font-weigth-normal" for="chbAllowNegative"> Cho phép bán âm </label>
                     </div>
@@ -192,11 +192,11 @@
         <div class="row">
             <div class="col-md-12 margin-top-10">
                 <input id="chbIsManageAsSerial" type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
-                       ng-true-value="'1'" ng-false-value="'0'"
+                       ng-true-value="1" ng-false-value="0"
                        ng-if="IsEditingProductDetail" />
                 <span class="margin-top-10" ng-if="!IsEditingProductDetail">
-                    <span class="label label-success" ng-if="ProductForm.IsManageAsSerial == '1'">Có</span>
-                    <span class="label label-warning" ng-if="ProductForm.IsManageAsSerial == '0'">Không</span>
+                    <span class="label label-success" ng-if="ProductForm.IsManageAsSerial == 1">Có</span>
+                    <span class="label label-warning" ng-if="ProductForm.IsManageAsSerial == 0">Không</span>
                 </span>
                 <label class="font-weigth-normal" for="chbIsManageAsSerial"> Quản lý tồn kho theo serial</label>
 
@@ -205,12 +205,12 @@
         <div class="row">
             <div class="col-md-9 margin-top-10">
                 <input id="chbIsManageAttribute" type="checkbox" ng-model="ProductForm.IsManageAttribute" ng-click="InitProductAttribute()"
-                       ng-true-value="'1'" ng-false-value="'0'"
+                       ng-true-value="1" ng-false-value="0"
                        ng-if="IsEditingProductDetail"
-                       ng-disabled="ProductForm.ProductId != '-1'" />
+                       ng-disabled="ProductForm.ProductId != -1" />
                 <span class="margin-top-10" ng-if="!IsEditingProductDetail">
-                    <span class="label label-success" ng-if="ProductForm.IsManageAttribute == '1'">Có</span>
-                    <span class="label label-warning" ng-if="ProductForm.IsManageAttribute == '0'">Không</span>
+                    <span class="label label-success" ng-if="ProductForm.IsManageAttribute == 1">Có</span>
+                    <span class="label label-warning" ng-if="ProductForm.IsManageAttribute == 0">Không</span>
                 </span>
                 <label class="font-weigth-normal" for="chbIsManageAttribute">Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)</label>
             </div>
@@ -221,7 +221,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 margin-top-10" ng-if="ProductForm.IsManageAttribute == '1'">
+            <div class="col-md-12 margin-top-10" ng-if="ProductForm.IsManageAttribute == 1">
                 <table grid-data="ProductAttributes"
                        grid-data-type="table" @*table/storedprocedure*@
                        grid-data-action="getall" @*get/getall*@
@@ -234,15 +234,15 @@
                             <th grid-defined-colum="AttributeId" class="none-display"></th>
                             <th grid-defined-colum="AttributeId.AttributeName">Thuộc tính</th>
                             <th grid-defined-colum="Value" style="width: 70%"><span>Giá trị</span></th>
-                            <th ng-if="ProductForm.ProductId == '-1'"></th>
+                            <th ng-if="ProductForm.ProductId == -1"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @*Dataset must have grid id*@
                         <tr ng-repeat="item in DataSet.ProductAttributes.Data">
                             <td>
-                                <span ng-if="ProductForm.ProductId != '-1'" ng-bind="item.AttributeName"></span>
-                                <select class="form-control" ng-show="ProductForm.ProductId == '-1'"
+                                <span ng-if="ProductForm.ProductId != -1" ng-bind="item.AttributeName"></span>
+                                <select class="form-control" ng-show="ProductForm.ProductId == -1"
                                         ng-init="item.AttributeId = item.AttributeId + ''"
                                         ng-model="item.AttributeId" dropdown-master-table="T_Master_Attibutes" dropdown-value-field="AttributeId"
                                         dropdown-name-field="AttributeName" dropdown-empty-text="--Chọn thuộc tính--" dropdown-empty-value=""
@@ -250,19 +250,19 @@
                                         check-empty="" check-empty-message="Vui lòng chọn thuộc tính."></select>
                             </td>
                             <td>
-                                <span ng-if="ProductForm.ProductId != '-1'" ng-bind="item.Value"></span>
-                                <input ng-if="ProductForm.ProductId == '-1'" class="form-control" ng-model="item.Value"
+                                <span ng-if="ProductForm.ProductId != -1" ng-bind="item.Value"></span>
+                                <input ng-if="ProductForm.ProductId == -1" class="form-control" ng-model="item.Value"
                                        check-empty="" check-empty-message="Vui lòng nhập giá trị thuộc tính."
                                        check-length="200" check-length-message="Chiều dài tối đa là {0}." />
                             </td>
-                            <td ng-if="ProductForm.ProductId == '-1'">
+                            <td ng-if="ProductForm.ProductId == -1">
                                 <a class="red margin-left-10" title="Xóa thuộc tính"
                                    ng-click="DeleteProductAttribute(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
                             </td>
                         </tr>
-                        <tr ng-if="ProductForm.ProductId == '-1'">
+                        <tr ng-if="ProductForm.ProductId == -1">
                             <td colspan="3"> <button class="btn btn-primary btn-tiny" ng-click="AddProductAttribute()"> <i class="fa fa-plus"></i> </button> </td>
                         </tr>
                     </tbody>

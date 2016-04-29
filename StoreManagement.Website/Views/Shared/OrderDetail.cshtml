@@ -74,7 +74,7 @@
                                     <input ng-if="OrderForm._CanUpdate"
                                            class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
                                            check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
-                                           check-range=";{{item.AllowNegative == '0' ? item.MaxQuantity : ''}}" check-range-message="Số lượng vượt quá lượng tồn kho {{item.MaxQuantity}}"
+                                           check-range=";{{item.AllowNegative == 0 ? item.MaxQuantity : ''}}" check-range-message="Số lượng vượt quá lượng tồn kho {{item.MaxQuantity}}"
                                            check-under="check-order" />
                                 </div>
                                 <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="OrderForm._CanUpdate">
@@ -90,13 +90,13 @@
                             </td>
                             <td>
                                 <span ng-bind="item.Price | currency:'':0"></span>
-                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm._CanUpdate"
+                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == 1 && OrderForm._CanUpdate"
                                       ng-click="ShowDiscount($event, item)">
                                     <i class="fa fa-gift"></i>
                                 </span>
                                 <div class="red-sm-label row">
-                                    <span ng-if="item.IsDiscountPercent == '1' && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | number : 2"></span>%) </span>
-                                    <span ng-if="item.IsDiscountPercent == '0' && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | currency:'':0"></span> VNĐ)</span>
+                                    <span ng-if="item.IsDiscountPercent == 1 && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | number : 2"></span>%) </span>
+                                    <span ng-if="item.IsDiscountPercent == 0 && item.Discount > 0"> (Giảm giá <span ng-bind="item.Discount | currency:'':0"></span> VNĐ)</span>
                                 </div>
                             </td>
                             <td><span ng-bind="item.RealPrice | currency:'':0"></span></td>
@@ -295,7 +295,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="OrderForm.DiscountAmmount | currency:'':0"></span>
-                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm._CanUpdate"
+                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == 1 && OrderForm._CanUpdate"
                       ng-click="ShowDiscount($event, OrderForm)">
                     <i class="fa fa-gift"></i>
                 </span>

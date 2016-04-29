@@ -24,7 +24,7 @@ mdlCommon.controller('OrderController',
         $scope.IsShowOrderDetail = false;
 
         $scope.OrderForm = {
-            OrderId: "-1",
+            OrderId: -1,
             OrderCode: "",
             StoreId: "",
             Customer: "",
@@ -35,16 +35,16 @@ mdlCommon.controller('OrderController',
             CashierName: "",
             Notes: "",
             OrderStatus: 1,
-            PaymentType: '1',
-            Price: '0', //sum before discount
-            SumMoney: '0',
-            Discount: '0',
-            DiscountAmmount: '0',
-            TotalDiscount: '0',
-            DebtMoney: '0',
+            PaymentType: 1,
+            Price: 0, //sum before discount
+            SumMoney: 0,
+            Discount: 0,
+            DiscountAmmount: 0,
+            TotalDiscount: 0,
+            DebtMoney: 0,
             Paid: 0,
-            IsDiscountPercent: '1',
-            IsActive: '1',
+            IsDiscountPercent: 1,
+            IsActive: 1,
             PaidForDebt: 0,
             IsEditingPaidForDebt: false,
             _CanUpdate: true,
@@ -52,7 +52,7 @@ mdlCommon.controller('OrderController',
         };
 
         $scope.ResetOrderForm = function () {
-            $scope.OrderForm.OrderId = "-1";
+            $scope.OrderForm.OrderId = -1;
             $scope.OrderForm.OrderCode = "";
             $scope.OrderForm.StoreId = "";
             $scope.OrderForm.Customer = "";
@@ -63,16 +63,16 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.CashierName = "";
             $scope.OrderForm.Notes = "";
             $scope.OrderForm.OrderStatus = 1;
-            $scope.OrderForm.PaymentType = '1';
-            $scope.OrderForm.SumMoney = '0';
-            $scope.OrderForm.Price = '0';
-            $scope.OrderForm.Discount = '0';
-            $scope.OrderForm.DiscountAmmount = '0';
-            $scope.OrderForm.TotalDiscount = '0';
-            $scope.OrderForm.DebtMoney = '0';
+            $scope.OrderForm.PaymentType = 1;
+            $scope.OrderForm.SumMoney = 0;
+            $scope.OrderForm.Price = 0;
+            $scope.OrderForm.Discount = 0;
+            $scope.OrderForm.DiscountAmmount = 0;
+            $scope.OrderForm.TotalDiscount = 0;
+            $scope.OrderForm.DebtMoney = 0;
             $scope.OrderForm.Paid = 0;
-            $scope.OrderForm.IsDiscountPercent = '1';
-            $scope.OrderForm.IsActive = '1';
+            $scope.OrderForm.IsDiscountPercent = 1;
+            $scope.OrderForm.IsActive = 1;
             $scope.OrderForm.PaidForDebt = 0;
             $scope.OrderForm.IsEditingPaidForDebt = false;
             $scope.OrderForm._CanUpdate = true;
@@ -84,15 +84,15 @@ mdlCommon.controller('OrderController',
         $scope.DiscountForm = {
             CurrentProduct: {},
             IsShowing: false,
-            Discount: '0',
-            IsDiscountPercent: '1'
+            Discount: 0,
+            IsDiscountPercent: 1
         }
 
         $scope.ResetDiscountForm = function () {
             $scope.DiscountForm.CurrentProduct = {};
             $scope.DiscountForm.IsShowing = false;
-            $scope.DiscountForm.Discount = '0';
-            $scope.DiscountForm.IsDiscountPercent = '1';
+            $scope.DiscountForm.Discount = 0;
+            $scope.DiscountForm.IsDiscountPercent = 1;
         }
 
         $scope.AddOrder = function () {
@@ -143,7 +143,7 @@ mdlCommon.controller('OrderController',
             }
             if (!hasExist) {
                 var item = {
-                    Id: "-1",
+                    Id: -1,
                     OrderId: $scope.OrderForm.OrderId,
                     RowNum: $scope.ListProductsOrder.length + 1,
                     ProductId: product.ProductId,
@@ -154,8 +154,8 @@ mdlCommon.controller('OrderController',
                     MaxQuantity: product.Quantity,
                     RealPrice: product.Price,
                     AllowNegative: product.AllowNegative,
-                    Discount: "0",
-                    IsDiscountPercent: '1'
+                    Discount: 0,
+                    IsDiscountPercent: 1
                 }
                 $scope.ListProductsOrder.push(item);
             }
@@ -168,13 +168,13 @@ mdlCommon.controller('OrderController',
                 ShowErrorMessage("Số lượng tối thiểu là 1");
                 num = 1;
             }
-            else if (product.AllowNegative == '0' && num > product.MaxQuantity) {
+            else if (product.AllowNegative == 0 && num > product.MaxQuantity) {
                 ShowErrorMessage("Sản phẩm không cho bán âm và còn tồn " + product.MaxQuantity + " sản phẩm");
                 num = product.MaxQuantity;
             }
             product.Quantity = num;
             //Recalcualte Real Price
-            if (product.IsDiscountPercent == '0') {
+            if (product.IsDiscountPercent == 0) {
                 product.RealPrice = product.Quantity * (product.Price - product.Discount);
             }
             else {
@@ -187,7 +187,7 @@ mdlCommon.controller('OrderController',
         $scope.DeleteProductOrder = function (product) {
             if (confirm("Bạn có muốn xóa sản phẩm '" + product.ProductCode + " - " + product.ProductName + "' trong đơn hàng?")) {
 
-                if (product.Id != "-1") {
+                if (product.Id != -1) {
                     $scope.ProductOrderFormConfig.HardDeleteObject(product.Id);
                 }
 
@@ -235,7 +235,7 @@ mdlCommon.controller('OrderController',
 
         $scope.SetPercentDiscount = function (percent) {
             $scope.DiscountForm.Discount = percent;
-            $scope.DiscountForm.IsDiscountPercent = '1';
+            $scope.DiscountForm.IsDiscountPercent = 1;
             $scope.ChangeDiscount();
         }
 
@@ -245,11 +245,11 @@ mdlCommon.controller('OrderController',
                 $scope.DiscountForm.Discount = 0
                 ShowErrorMessage("Giảm giá không được âm.");
             }
-            else if ($scope.DiscountForm.IsDiscountPercent == '1' && $scope.DiscountForm.Discount > 100) {
+            else if ($scope.DiscountForm.IsDiscountPercent == 1 && $scope.DiscountForm.Discount > 100) {
                 $scope.DiscountForm.Discount = 100;
                 ShowErrorMessage("Giảm tối đa là 100%.");
             }
-            else if ($scope.DiscountForm.IsDiscountPercent == '0' && $scope.DiscountForm.Discount > $scope.DiscountForm.CurrentProduct.Price) {
+            else if ($scope.DiscountForm.IsDiscountPercent == 0 && $scope.DiscountForm.Discount > $scope.DiscountForm.CurrentProduct.Price) {
                 $scope.DiscountForm.Discount = $scope.DiscountForm.CurrentProduct.Price;
                 ShowErrorMessage("Giảm tối đa giá trị sản phẩm");
             }
@@ -260,7 +260,7 @@ mdlCommon.controller('OrderController',
             $scope.DiscountForm.CurrentProduct.IsDiscountPercent = $scope.DiscountForm.IsDiscountPercent;
 
             if ($scope.DiscountForm.CurrentProduct.ProductId) {
-                if ($scope.DiscountForm.IsDiscountPercent == '0') {
+                if ($scope.DiscountForm.IsDiscountPercent == 0) {
                     $scope.DiscountForm.CurrentProduct.RealPrice = $scope.DiscountForm.CurrentProduct.Quantity * ($scope.DiscountForm.CurrentProduct.Price - $scope.DiscountForm.CurrentProduct.Discount);
                 }
                 else {
@@ -281,7 +281,7 @@ mdlCommon.controller('OrderController',
             }
             $scope.OrderForm.Price = sum;
 
-            if ($scope.OrderForm.IsDiscountPercent == '0') {
+            if ($scope.OrderForm.IsDiscountPercent == 0) {
                 $scope.OrderForm.DiscountAmmount = $scope.OrderForm.Discount;
 
             }
@@ -298,7 +298,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid);
             $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - $scope.OrderForm.Paid;
             if ($scope.OrderForm.DebtMoney < 0) {
-                $scope.OrderForm.DebtMoney = '0';
+                $scope.OrderForm.DebtMoney = 0;
             }
         }
 
@@ -332,7 +332,7 @@ mdlCommon.controller('OrderController',
                 var orderId = $scope.OrderFormConfig.SaveObject();
                 if (orderId > 0) {
 
-                    if ($scope.OrderForm.OrderId == '-1') {
+                    if ($scope.OrderForm.OrderId == -1) {
                         var len = $scope.ListProductsOrder.length;
                         for (var i = 0 ; i < len; i++) {
                             $scope.ListProductsOrder[i].OrderId = orderId;
@@ -347,7 +347,7 @@ mdlCommon.controller('OrderController',
                         //$scope.ReloadGrid('Orders');
                         $scope.IsShowOrderDetail = false;
                     }
-                    else if ($scope.OrderForm.OrderId == '-1') {
+                    else if ($scope.OrderForm.OrderId == -1) {
 
                         $scope.OrderFormConfig.HardDeleteObject(orderId);
                     }
@@ -378,7 +378,7 @@ mdlCommon.controller('OrderController',
             for (var i = 0 ; i < len; i++) {
                 var item = $scope.ListProductsOrder[i];
 
-                if (item.IsDiscountPercent == '0') {
+                if (item.IsDiscountPercent == 0) {
                     item.RealPrice = item.Quantity * (item.Price - item.Discount);
                 }
                 else {
@@ -401,7 +401,7 @@ mdlCommon.controller('OrderController',
         $scope.PaymentForm = {
             OrderId: "",
             Amount: "",
-            IsActive: "1",
+            IsActive: 1,
             PaymentType: 1,
             StoreId: $scope.CurrentStore
         }
