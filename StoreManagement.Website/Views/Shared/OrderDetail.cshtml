@@ -5,23 +5,23 @@
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 2" ng-click="AddOrder()">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 2">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
@@ -41,7 +41,7 @@
                        class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
-                       ng-show="OrderForm.OrderStatus == 1" />
+                       ng-show="OrderForm._CanUpdate" />
             </div>
         </div>
         <div class="row margin-top-10">
@@ -55,7 +55,7 @@
                             <th style="width: 20%"><span>Số lượng</span></th>
                             <th style="width: 15%"><span>Giá bán</span></th>
                             <th><span>Thành tiền</span></th>
-                            <th ng-if="OrderForm.OrderStatus == 1"></th>
+                            <th ng-if="OrderForm._CanUpdate"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,19 +70,19 @@
                             </td>
                             <td>
                                 <div class="col-md-7 padding-left-right-5">
-                                    <span ng-bind="item.Quantity" ng-if="OrderForm.OrderStatus == 2"></span>
-                                    <input ng-if="OrderForm.OrderStatus == 1"
+                                    <span ng-bind="item.Quantity" ng-if="!OrderForm._CanUpdate"></span>
+                                    <input ng-if="OrderForm._CanUpdate"
                                            class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
                                            check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
                                            check-range=";{{item.AllowNegative == '0' ? item.MaxQuantity : ''}}" check-range-message="Số lượng vượt quá lượng tồn kho {{item.MaxQuantity}}"
                                            check-under="check-order" />
                                 </div>
-                                <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="OrderForm.OrderStatus == 1">
+                                <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="OrderForm._CanUpdate">
                                     <button class="btn btn-primary btn-tiny" style="padding-bottom: 0px" ng-click="ChangeProductQuantity(item, 1)">
                                         <i class="fa fa-sort-up" style=" font-size: 15px; margin-top: 2px"></i>
                                     </button>
                                 </div>
-                                <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="OrderForm.OrderStatus == 1">
+                                <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="OrderForm._CanUpdate">
                                     <button class="btn btn-primary btn-tiny" style="padding-top: 0px" ng-click="ChangeProductQuantity(item, -1)">
                                         <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
                                     </button>
@@ -90,7 +90,7 @@
                             </td>
                             <td>
                                 <span ng-bind="item.Price | currency:'':0"></span>
-                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1"
+                                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm._CanUpdate"
                                       ng-click="ShowDiscount($event, item)">
                                     <i class="fa fa-gift"></i>
                                 </span>
@@ -100,7 +100,7 @@
                                 </div>
                             </td>
                             <td><span ng-bind="item.RealPrice | currency:'':0"></span></td>
-                            <td ng-if="OrderForm.OrderStatus == 1">
+                            <td ng-if="OrderForm._CanUpdate">
                                 <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductOrder(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
@@ -187,8 +187,8 @@
                 <label class="control-label">Mã phiếu</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.OrderCode" ng-if="OrderForm.OrderStatus == 2"></span>
-                <input ng-if="OrderForm.OrderStatus == 1"
+                <span ng-bind="OrderForm.OrderCode" ng-if="!OrderForm._CanUpdate"></span>
+                <input ng-if="OrderForm._CanUpdate"
                        class="form-control" ng-model="OrderForm.OrderCode" disabled="disabled"
                        placeholder="Hệ thống tự tạo" />
 
@@ -199,8 +199,8 @@
                 <label class="control-label">Khách hàng</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.CustomerName" ng-if="OrderForm.OrderStatus == 2"></span>
-                <div class="width-90" ng-show="OrderForm.OrderStatus == 1">
+                <span ng-bind="OrderForm.CustomerName" ng-if="!OrderForm._CanUpdate"></span>
+                <div class="width-90" ng-show="OrderForm._CanUpdate">
                     <input class="form-control" ng-model="OrderForm.CustomerName"
                            autocomplete-master-table="T_Master_Customers"
                            autocomplete-colum-id="CustomerId"
@@ -214,7 +214,7 @@
                     <input id="txtCustomerId" class="none-display" ng-model="OrderForm.Customer" />
                     <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
                 </div>
-                <div class="width-10" ng-if="OrderForm.OrderStatus == 1">
+                <div class="width-10" ng-if="OrderForm._CanUpdate">
                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('0')">
                         <i class="fa fa-plus"></i>
                     </button>
@@ -226,8 +226,8 @@
                 <label class="control-label">Ngày bán</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.SoldDate" ng-if="OrderForm.OrderStatus == 2"></span>
-                <input ng-show="OrderForm.OrderStatus == 1"
+                <span ng-bind="OrderForm.SoldDate" ng-if="!OrderForm._CanUpdate"></span>
+                <input ng-show="OrderForm._CanUpdate"
                        class="form-control" date-picker ng-model="OrderForm.SoldDate"
                        placeholder="Hôm nay" />
 
@@ -238,8 +238,8 @@
                 <label class="control-label">Người bán</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.CashierName" ng-if="OrderForm.OrderStatus == 2"></span>
-                <select class="form-control" ng-show="OrderForm.OrderStatus == 1"
+                <span ng-bind="OrderForm.CashierName" ng-if="!OrderForm._CanUpdate"></span>
+                <select class="form-control" ng-show="OrderForm._CanUpdate"
                         ng-model="OrderForm.Cashier" dropdown-master-table="T_Master_User" dropdown-value-field="UserId"
                         dropdown-name-field="UserName"
                         dropdown-condition="[IsActive] = 1"></select>
@@ -251,8 +251,8 @@
                 <label class="control-label">Ghi chú</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.Notes" ng-if="OrderForm.OrderStatus == 2"></span>
-                <textarea class="form-control" ng-model="OrderForm.Notes" ng-if="OrderForm.OrderStatus == 1"
+                <span ng-bind="OrderForm.Notes" ng-if="!OrderForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="OrderForm.Notes" ng-if="OrderForm._CanUpdate"
                           placeholder="Ghi chú cho đơn hàng"
                           check-length="500" check-length-message="Chiều dài tối ta là {0}."
                           check-under="check-order"></textarea>
@@ -271,13 +271,13 @@
                 <label class="control-label">Hình thức</label>
             </div>
             <div class="col-md-8">
-                <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
             </div>
         </div>
@@ -295,7 +295,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="OrderForm.DiscountAmmount | currency:'':0"></span>
-                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm.OrderStatus == 1"
+                <span class="help-button pull-right" ng-if="OrderForm.CustomerIsWholeSale == '1' && OrderForm._CanUpdate"
                       ng-click="ShowDiscount($event, OrderForm)">
                     <i class="fa fa-gift"></i>
                 </span>
@@ -314,21 +314,21 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8">
-                <input class="form-control" ng-if="OrderForm.OrderStatus == 1" ng-model="OrderForm.Paid" ng-change="ChangePaid()" />
-                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="OrderForm.OrderStatus == 2 && !OrderForm.IsEditingPaidForDebt"></span>                
-                <input class="form-control" ng-if="OrderForm.OrderStatus == 2 && OrderForm.IsEditingPaidForDebt" 
+                <input class="form-control" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" />
+                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>                
+                <input class="form-control" ng-if="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt" 
                        ng-model="OrderForm.PaidForDebt" 
                        check-under="check-order"
                        check-empty="" check-empty-message="Vui lòng nhập số tiền." 
                        check-range="0;" check-range-message="Vui lòng thanh toán số dương."/>
-                <button class="btn btn-warning" ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && !OrderForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
+                <button class="btn btn-warning" ng-if="!OrderForm._CanUpdate && OrderForm.IsActive == 1 && OrderForm.DebtMoney > 0 && !OrderForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
                     <i class="fa fa-dollar"> </i>
                     Thanh toán nợ
                 </button>
-                <button class="btn btn-primary btn-sm margin-top-5" ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
+                <button class="btn btn-primary btn-sm margin-top-5" ng-if="!OrderForm._CanUpdate && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
                     <i class="fa fa-check"> </i>
                 </button>
-                <button class="btn btn-default btn-sm margin-top-5"  ng-if="OrderForm.OrderStatus == 2 && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                <button class="btn btn-default btn-sm margin-top-5"  ng-if="!OrderForm._CanUpdate && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
                     <i class="fa fa-close"> </i>
                 </button>
             </div>
@@ -356,23 +356,23 @@
 
 <div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 2" ng-click="AddOrder()">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 2">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm.OrderStatus == 1" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>

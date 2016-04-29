@@ -46,7 +46,9 @@ mdlCommon.controller('OrderController',
             IsDiscountPercent: '1',
             IsActive: '1',
             PaidForDebt: 0,
-            IsEditingPaidForDebt: false
+            IsEditingPaidForDebt: false,
+            _CanUpdate: true,
+            _CanDelete : true
         };
 
         $scope.ResetOrderForm = function () {
@@ -73,6 +75,8 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.IsActive = '1';
             $scope.OrderForm.PaidForDebt = 0;
             $scope.OrderForm.IsEditingPaidForDebt = false;
+            $scope.OrderForm._CanUpdate = true;
+            $scope.OrderForm._CanDelete = true;
         }
 
         $scope.ListProductsOrder = [];
@@ -361,6 +365,8 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.CustomerIsWholeSale = order.CustomerIsWholeSale;
             $scope.OrderForm.CustomerName = order.CustomerName;
             $scope.OrderForm.CashierName = order.CashierName;
+            $scope.OrderForm._CanUpdate = order._CanUpdate;
+            $scope.OrderForm._CanDelete = order._CanDelete;
             $scope.IsShowOrderDetail = true;
 
             //FValidation.ClearAllError();

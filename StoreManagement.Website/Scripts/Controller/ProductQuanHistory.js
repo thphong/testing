@@ -35,13 +35,12 @@ mdlCommon.controller('ProductQuanHistoryController',
         $scope.ConfigStoreList.GridSortCondition = "StoreId.StoreCode ASC";
 
         $scope.ListStores = [];
-        $scope.SelectedStoreId = "";
+        $scope.SelectedStoreId = $scope.CurrentStore;
 
         $scope.SetProductQuanHistoryForm = function (product) {
             $scope.ProductQuanHistoryForm.ProductId = product.ProductId;
             $scope.ProductQuanHistoryForm.ProductCode = product.ProductCode;
             $scope.ProductQuanHistoryForm.ProductName = product.ProductName;
-            $scope.ProductQuanHistoryForm.Quantity = product.Quantity;
         }
 
         $scope.ShowProductQuanHistory = function (product) {
@@ -50,9 +49,14 @@ mdlCommon.controller('ProductQuanHistoryController',
 
             $scope.ConfigStoreList.GridFilterCondition = $interpolate($scope.ConfigStoreList.GridFilterConditionExpression)($scope);
             $scope.ListStores = $scope.ConfigStoreList.GetListData();
-            if ($scope.ListStores.length > 0) {
-                $scope.SelectedStoreId = $scope.ListStores[0].StoreId;
+            
+            var quantity = 0;
+            for (var i = 0 ; i < $scope.ListStores.length; i++)
+            {
+                quantity += $scope.ListStores[i].Quantity;
             }
+
+            $scope.ProductQuanHistoryForm.Quantity = quantity;
 
             //$scope.ReloadGrid('ProductQuanHistory');
             $("#productQuanHisModal").modal('show');

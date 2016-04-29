@@ -100,7 +100,7 @@
                                     <a class="grey margin-left-10">
                                         <i class="fa-print fa"></i>
                                     </a>
-                                    <a class="red margin-left-10" ng-if="item.IsActive == 1" ng-click="DeleteOrder(item)">
+                                    <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteOrder(item)">
                                         <i class="fa-trash fa"></i>
                                     </a>
                                 </td>

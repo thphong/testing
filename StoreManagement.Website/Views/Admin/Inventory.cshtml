@@ -114,26 +114,28 @@
                         <table grid-data="InventoryProduct"
                                grid-data-type="table" @*table/storedprocedure*@
                                grid-data-action="get" @*get/getall*@
-                               grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
-                               grid-filter-condition="[IsActive] = 1
-                                                and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
+                               grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
+                               grid-filter-condition="[ProductId.IsActive] = 1
+                                                and [ProductId.IsSelling] = 1
+                                                and [StoreId] = {{CurrentStore}}
+                                                and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
                                                 and ({{AdditionalFilter.InventoryProductType}} = 0
                                                 or ({{AdditionalFilter.InventoryProductType}} = 1 and [Quantity] > 0)
                                                 or ({{AdditionalFilter.InventoryProductType}} = 2 and [Quantity] <= 0)
-                                                or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [AllowMin])
-                                                or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [AllowMax])
-                                                or ({{AdditionalFilter.InventoryProductType}} = 5 and [LastBoughtDate] < dateadd(dd, -7, getdate())))" @*must have [fieldname] for each colum field*@
-                               grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
-                               grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
+                                                or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [ProductId.AllowMin])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [ProductId.AllowMax])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 5 and [ProductId.LastBoughtDate] < dateadd(dd, -7, getdate())))" @*must have [fieldname] for each colum field*@
+                               grid-sort-condition="[ProductId.ProductCode] ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="[ProductId.Cost]*[Quantity],SumCost;[ProductId.Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th grid-defined-colum="ProductId" class="none-display"></th>
-                                    <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
-                                    <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                    <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
+                                    <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
                                     <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                    <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
-                                    <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
+                                    <th grid-defined-colum="ProductId.Cost"><span>Vốn tồn kho</span></th>
+                                    <th grid-defined-colum="ProductId.Price"><span>Giá trị tồn</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -228,7 +230,8 @@
                                grid-sum-collection="BeginPeriod;NumIn;NumOut;EndPeriod" @*must have [fieldname] for each colum field*@
                                grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
                                             ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
-                                            ,{{AdditionalFilter.InventoryInOutProductGroup}}"
+                                            ,{{AdditionalFilter.InventoryInOutProductGroup}}
+                                            ,{{CurrentStore}}"
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
