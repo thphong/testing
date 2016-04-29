@@ -91,7 +91,7 @@ mdlCommon.controller('ProductGroupController',
         $scope.SaveProductGroup = function (productGroup) {
             if (FValidation.CheckControls("PG" + productGroup.ProductGroupId)) {
 
-                $scope.ProductGroupFormConfig.ConvertFieldsToString(productGroup, productGroup);
+                $scope.ProductGroupFormConfig.CopyFields(productGroup, productGroup);
 
                 $scope.ProductGroupFormConfig.SetObject(productGroup);
 

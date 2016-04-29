@@ -223,7 +223,7 @@ mdlCommon.controller('ProductController',
 
         $scope.CopyProduct = function (product) {
             var object = $scope.ProductFormConfig.GetObject(product.ProductId);
-            $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
+            $scope.ProductFormConfig.CopyFields(object, $scope.ProductForm);
             $scope.ProductForm.ProductName = $scope.ProductForm.ProductName + " - Copy";
             $scope.ProductForm.ProductCode = "";
             $scope.ProductForm.Cost = $filter('currency')($scope.ProductForm.Cost, "", 0);
@@ -246,7 +246,7 @@ mdlCommon.controller('ProductController',
         $scope.ShowProductDetail = function (product) {
             $scope.ResetProductForm();
             var object = $scope.ProductFormConfig.GetObject(product.ProductId);
-            $scope.ProductFormConfig.ConvertFieldsToString(object, $scope.ProductForm);
+            $scope.ProductFormConfig.CopyFields(object, $scope.ProductForm);
             $scope.ProductForm.ProductGroupName = product.GroupName;
             $scope.ProductForm.ProducerName = product.ProducerName;
             $scope.ProductForm._CanUpdate = product._CanUpdate;

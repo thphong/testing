@@ -215,7 +215,7 @@ mdlCommon.controller('PurchaseController',
             //Load purchase form
             $scope.PurchaseFormConfig.SetObject($scope.PurchaseForm);
             var object = $scope.PurchaseFormConfig.GetObject(purchase.PurchaseId);
-            $scope.PurchaseFormConfig.ConvertFieldsToString(object, $scope.PurchaseForm);
+            $scope.PurchaseFormConfig.CopyFields(object, $scope.PurchaseForm);
             $scope.PurchaseForm.SupplierName = purchase.SupplierName;
             $scope.PurchaseForm.PurchaserName = purchase.PurchaserName;
             $scope.IsShowPurchaseDetail = true;

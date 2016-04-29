@@ -348,7 +348,7 @@ mdlCommon.controller('InventoryController',
             //Load Inventory form
             $scope.InventoryFormConfig.SetObject($scope.InventoryForm);
             var object = $scope.InventoryFormConfig.GetObject(inventory.InventoryId);
-            $scope.InventoryFormConfig.ConvertFieldsToString(object, $scope.InventoryForm);
+            $scope.InventoryFormConfig.CopyFields(object, $scope.InventoryForm);
             $scope.InventoryForm.BalancerName = inventory.BalancerName;
             $scope.InventoryForm.CreatorName = inventory.CreatorName;
             $scope.IsShowInventoryDetail = true;
@@ -377,7 +377,7 @@ mdlCommon.controller('InventoryController',
             //Load Inventory form
             $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
             var object = $scope.InventTranFormConfig.GetObject(tran.InventTranId);
-            $scope.InventTranFormConfig.ConvertFieldsToString(object, $scope.InventTranForm);
+            $scope.InventTranFormConfig.CopyFields(object, $scope.InventTranForm);
             $scope.InventTranForm.TransferName = tran.TransferName;
             $scope.InventTranForm.CreatorName = tran.CreatorName;
             $scope.InventTranForm.FromStoreCode = tran.FromStoreCode;

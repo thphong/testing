@@ -26,7 +26,7 @@
         }
 
         $scope.ClickOnItem = function (item) {
-            $scope.FormConfig.ConvertFieldsToString(item, $scope.Form);
+            $scope.FormConfig.CopyFields(item, $scope.Form);
         }
 
         $scope.ResetForm = function () {

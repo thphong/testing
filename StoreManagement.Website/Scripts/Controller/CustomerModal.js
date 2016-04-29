@@ -93,7 +93,7 @@ mdlCommon.controller('CustomerModalController',
 
         $scope.ShowCustomerDetail = function (customer) {
             var object = $scope.CustomerFormConfig.GetObject(customer.CustomerCode, 'CustomerCode');
-            $scope.CustomerFormConfig.ConvertFieldsToString(object, $scope.CustomerForm);
+            $scope.CustomerFormConfig.CopyFields(object, $scope.CustomerForm);
             $scope.IsShowCustomerDetail = true;
             //$scope.ReloadGrid('ListOrders');
         }

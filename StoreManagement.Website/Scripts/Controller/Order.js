@@ -361,7 +361,7 @@ mdlCommon.controller('OrderController',
             //$scope.OrderFormConfig.SetObject($scope.OrderForm);
             $scope.ResetOrderForm();
             var object = $scope.OrderFormConfig.GetObject(order.OrderId);
-            $scope.OrderFormConfig.ConvertFieldsToString(object, $scope.OrderForm);
+            $scope.OrderFormConfig.CopyFields(object, $scope.OrderForm);
             $scope.OrderForm.CustomerIsWholeSale = order.CustomerIsWholeSale;
             $scope.OrderForm.CustomerName = order.CustomerName;
             $scope.OrderForm.CashierName = order.CashierName;

@@ -74,7 +74,7 @@ mdlCommon.controller('SupplierModalController',
         $scope.ShowSupplierDetail = function (supplier) {
 
             var object = $scope.SupplierFormConfig.GetObject(supplier.SupplierCode, 'SupplierCode');
-            $scope.SupplierFormConfig.ConvertFieldsToString(object, $scope.SupplierForm);
+            $scope.SupplierFormConfig.CopyFields(object, $scope.SupplierForm);
             $scope.IsShowSupplierDetail = true;
         }
 

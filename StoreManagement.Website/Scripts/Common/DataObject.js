@@ -195,15 +195,15 @@ function ObjectDataConfig(tableName, $scope) {
         return result;
     }
 
-    this.ConvertFieldsToString = function (fromObject, toObject) {
+    this.CopyFields = function (fromObject, toObject) {
         for (var key in fromObject) {
             var value = fromObject[key];
             if (toObject[key] != undefined) {
                 if (value != null && value != undefined) {
-                    toObject[key] = String(value);
+                    toObject[key] = value;
                 }
                 else {
-                    toObject[key] = "";;
+                    toObject[key] = "";
                 }
             }
         }
