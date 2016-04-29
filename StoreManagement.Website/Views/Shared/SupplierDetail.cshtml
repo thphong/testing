@@ -5,12 +5,12 @@
     </div>
     <div class="col-md-3 pull-right text-right" style="padding: 20px 0Px">
 
-        <button class="btn btn-primary" ng-if="IsEditingSupplierDetail" ng-click="SaveSupplierDetail()">
+        <button class="btn btn-primary" ng-if="IsEditingSupplierDetail && SupplierForm._CanUpdate" ng-click="SaveSupplierDetail()">
             <i class="fa fa-save white"></i>
             <span>Lưu</span>
         </button>
 
-        <button class="btn btn-primary" ng-if="!IsEditingSupplierDetail" ng-click="EditSupplierDetail()">
+        <button class="btn btn-primary" ng-if="!IsEditingSupplierDetail && SupplierForm._CanUpdate" ng-click="EditSupplierDetail()">
             <i class="fa fa-edit white"></i>
             <span>Sửa</span>
         </button>

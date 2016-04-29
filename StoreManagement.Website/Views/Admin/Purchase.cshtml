@@ -47,8 +47,9 @@
                                                     or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0 and [IsActive] = 1))
                                                and ([StoreId] = {{CurrentStore}})
                                                and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [StatusId])
-                                               and  (convert(date, [PurchaseDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
-                                               and  (convert(date, [PurchaseDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"
+                                               and  (convert(date, [PurchaseDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                                                  and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
+                                                      or [PurchaseDate] is null)"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[PurchaseCode] ASC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
@@ -97,7 +98,7 @@
                                 <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
                                 <td ng-bind="item.Debt  | currency:'':0"></td>
                                 <td>
-                                    <a class="red margin-left-10" ng-if="item.IsActive == 1" ng-click="DeletePurchase(item)">
+                                    <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeletePurchase(item)">
                                         <i class="fa-trash fa"></i>
                                     </a>
                                 </td>

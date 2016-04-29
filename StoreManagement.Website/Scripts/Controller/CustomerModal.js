@@ -18,7 +18,7 @@ mdlCommon.controller('CustomerModalController',
         $scope.IsEditingCustomerDetail = false;
 
         $scope.CustomerForm = {
-            CustomerId: "-1",
+            CustomerId: -1,
             CustomerCode: "",
             CustomerName: "",
             Phone: "",
@@ -26,13 +26,15 @@ mdlCommon.controller('CustomerModalController',
             Email: "",
             Notes: "",
             Birthday: "",
-            IsWholeSale: "0",
+            IsWholeSale: 0,
             Gender: "M",
-            IsActive: "1"
+            IsActive: 1,
+            _CanUpdate: true,
+            _CanDelete : true
         };
 
         $scope.ResetCustomerForm = function () {
-            $scope.CustomerForm.CustomerId = "-1";
+            $scope.CustomerForm.CustomerId = -1;
             $scope.CustomerForm.CustomerCode = "";
             $scope.CustomerForm.CustomerName = "";
             $scope.CustomerForm.Phone = "";
@@ -40,9 +42,11 @@ mdlCommon.controller('CustomerModalController',
             $scope.CustomerForm.Email = "";
             $scope.CustomerForm.Notes = "";
             $scope.CustomerForm.Birthday = "";
-            $scope.CustomerForm.IsWholeSale = "0";
+            $scope.CustomerForm.IsWholeSale = 0;
             $scope.CustomerForm.Gender = "M";
-            $scope.CustomerForm.IsActive = "1";
+            $scope.CustomerForm.IsActive = 1;
+            $scope.CustomerForm._CanUpdate = 1;
+            $scope.CustomerForm._CanDelete = 1;
         };
 
 
@@ -62,7 +66,7 @@ mdlCommon.controller('CustomerModalController',
                     $scope.CustomerForm.CustomerId = customerId;
                     $("button[data-dismiss='modal']:visible").click();
 
-                    if ($scope.CustomerForm.IsWholeSale == '0') {
+                    if ($scope.CustomerForm.IsWholeSale == 0) {
                         $scope.ReloadGrid('Customers');
                         ShowSuccessMessage("Khách hàng được tạo thành công!");
                     }
@@ -95,6 +99,8 @@ mdlCommon.controller('CustomerModalController',
             var object = $scope.CustomerFormConfig.GetObject(customer.CustomerCode, 'CustomerCode');
             $scope.CustomerFormConfig.CopyFields(object, $scope.CustomerForm);
             $scope.IsShowCustomerDetail = true;
+            $scope.CustomerForm._CanUpdate = customer._CanUpdate;
+            $scope.CustomerForm._CanDelete = customer._CanDelete;
             //$scope.ReloadGrid('ListOrders');
         }
 

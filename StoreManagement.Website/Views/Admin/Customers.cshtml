@@ -94,7 +94,7 @@
                                     <td ng-bind="item.SumMoney | currency:'':0"></td>
                                     <td ng-bind="item.Debt | currency:'':0"></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-click="DeleteCustomer(item, 0)">
+                                        <a class="red margin-left-10" ng-click="DeleteCustomer(item, 0)" ng-if="item._CanDelete">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
@@ -183,7 +183,7 @@
                                     <td ng-bind="item.SumMoney | currency:'':0"></td>
                                     <td ng-bind="item.Debt | currency:'':0"></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-click="DeleteCustomer(item, 1)">
+                                        <a class="red margin-left-10" ng-click="DeleteCustomer(item, 1)" ng-if="item._CanDelete">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
@@ -276,12 +276,12 @@
                                     <td ng-bind="item.SumMoney | currency:'':0"></td>
                                     <td ng-bind="item.Debt | currency:'':0"></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-click="DeleteSupplier(item)">
+                                        <a class="red margin-left-10" ng-click="DeleteSupplier(item)" ng-if="item._CanDelete">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                <tr ng-if="!DataSet.Suppliers.HasRecord()">
+                                <tr ng-if="!DataSet.Suppliers.HasRecord()"> 
                                     @*Edit colspan*@
                                     <td colspan="8" align="center"> Không có dữ liệu!  </td>
                                 </tr>

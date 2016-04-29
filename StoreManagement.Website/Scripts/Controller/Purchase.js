@@ -23,9 +23,9 @@ mdlCommon.controller('PurchaseController',
         $scope.IsShowPurchaseDetail = false;
 
         $scope.PurchaseForm = {
-            PurchaseId: "-1",
+            PurchaseId: -1,
             PurchaseCode: "",
-            StoreId: "",
+            StoreId: $scope.CurrentStore,
             SupplierId: "",
             SupplierName: "",
             PurchaseDate: "",
@@ -33,21 +33,23 @@ mdlCommon.controller('PurchaseController',
             PurchaserName: "",
             Notes: "",
             StatusId: 1,
-            PaymentType: '1',
-            Price: '0', //sum before tax
-            SumMoney: '0',
-            SumTax: '0',
-            Debt: '0',
+            PaymentType: 1,
+            Price: 0, //sum before tax
+            SumMoney: 0,
+            SumTax: 0,
+            Debt: 0,
             PaidForDebt: 0,
             IsEditingPaidForDebt: false,
             Paid: 0,
-            IsActive: '1'
+            IsActive: 1,
+            _CanUpdate: true,
+            _CanDelete: true
         };
 
         $scope.ResetPurchaseForm = function () {
-            $scope.PurchaseForm.PurchaseId = "-1";
+            $scope.PurchaseForm.PurchaseId = -1;
             $scope.PurchaseForm.PurchaseCode = "";
-            $scope.PurchaseForm.StoreId = "";
+            $scope.PurchaseForm.StoreId = $scope.CurrentStore;
             $scope.PurchaseForm.SupplierId = "";
             $scope.PurchaseForm.SupplierName = "";
             $scope.PurchaseForm.PurchaseDate = "";
@@ -55,15 +57,17 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.PurchaserName = "";
             $scope.PurchaseForm.Notes = "";
             $scope.PurchaseForm.StatusId = 1;
-            $scope.PurchaseForm.PaymentType = '1';
-            $scope.PurchaseForm.SumMoney = '0';
-            $scope.PurchaseForm.SumTax = '0';
-            $scope.PurchaseForm.Price = '0';
-            $scope.PurchaseForm.Debt = '0';
+            $scope.PurchaseForm.PaymentType = 1;
+            $scope.PurchaseForm.SumMoney = 0;
+            $scope.PurchaseForm.SumTax = 0;
+            $scope.PurchaseForm.Price = 0;
+            $scope.PurchaseForm.Debt = 0;
             $scope.PurchaseForm.Paid = 0;
-            $scope.PurchaseForm.IsActive = '1';            
+            $scope.PurchaseForm.IsActive = 1;            
             $scope.PurchaseForm.PaidForDebt = 0;
             $scope.PurchaseForm.IsEditingPaidForDebt = false;
+            $scope.PurchaseForm._CanUpdate = true;
+            $scope.PurchaseForm._CanDelete = true;
         }
 
         $scope.ListProductsPurchase = [];
@@ -100,7 +104,7 @@ mdlCommon.controller('PurchaseController',
             }
             if (!hasExist) {
                 var item = {
-                    Id: "-1",
+                    Id: -1,
                     PurchaseId: $scope.PurchaseForm.PurchaseId,
                     RowNum: $scope.ListProductsPurchase.length + 1,
                     ProductId: product.ProductId,
@@ -141,7 +145,7 @@ mdlCommon.controller('PurchaseController',
         $scope.DeleteProductPurchase = function (product) {
             if (confirm("Bạn có muốn xóa sản phẩm '" + product.ProductCode + " - " + product.ProductName + "' trong phiếu nhập?")) {
 
-                if (product.Id != "-1") {
+                if (product.Id != -1) {
                     $scope.ProductPurchaseFormConfig.HardDeleteObject(product.Id);
                 }
 
@@ -176,7 +180,7 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.Paid = parseInt($scope.PurchaseForm.Paid);
             $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
             if ($scope.PurchaseForm.Debt < 0) {
-                $scope.PurchaseForm.Debt = '0';
+                $scope.PurchaseForm.Debt = 0;
             }
         }
 
@@ -188,7 +192,7 @@ mdlCommon.controller('PurchaseController',
                 var purchaseId = $scope.PurchaseFormConfig.SaveObject();
                 if (purchaseId > 0) {
 
-                    if ($scope.PurchaseForm.PurchaseId == '-1') {
+                    if ($scope.PurchaseForm.PurchaseId == -1) {
                         var len = $scope.ListProductsPurchase.length;
                         for (var i = 0 ; i < len; i++) {
                             $scope.ListProductsPurchase[i].PurchaseId = purchaseId;
@@ -203,7 +207,7 @@ mdlCommon.controller('PurchaseController',
                         //$scope.ReloadGrid('Purchases');
                         $scope.IsShowPurchaseDetail = false;
                     }
-                    else if ($scope.PurchaseForm.PurchaseId == '-1') {
+                    else if ($scope.PurchaseForm.PurchaseId == -1) {
                         $scope.PurchaseFormConfig.HardDeleteObject(purchaseId);
                     }
                 }
@@ -219,7 +223,8 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.SupplierName = purchase.SupplierName;
             $scope.PurchaseForm.PurchaserName = purchase.PurchaserName;
             $scope.IsShowPurchaseDetail = true;
-
+            $scope.PurchaseForm._CanUpdate = purchase._CanUpdate;
+            $scope.PurchaseForm._CanDelete = purchase._CanDelete;
             //Load Product purchase
             //$scope.ReloadGrid('ProductsPurchase');
             //FValidation.ClearAllError();
@@ -249,7 +254,7 @@ mdlCommon.controller('PurchaseController',
         $scope.PaymentForm = {
             PurchaseId: "",
             Amount: "",
-            IsActive: "1",
+            IsActive: 1,
             PaymentType: 1,
             StoreId: $scope.CurrentStore
         }

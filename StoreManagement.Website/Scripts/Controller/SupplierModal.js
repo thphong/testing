@@ -17,7 +17,7 @@ mdlCommon.controller('SupplierModalController',
         $scope.IsEditingSupplierDetail = false;
 
         $scope.SupplierForm = {
-            SupplierId: "-1",
+            SupplierId: -1,
             SupplierCode: "",
             SupplierName: "",
             Phone: "",
@@ -25,11 +25,13 @@ mdlCommon.controller('SupplierModalController',
             Address: "",
             TaxCode: "",
             Notes: "",
-            IsActive: "1"
+            IsActive: 1,
+            _CanUpdate: true,
+            _CanDelete : true
         };
 
         $scope.ResetSupplierForm = function () {
-            $scope.SupplierForm.SupplierId = "-1";
+            $scope.SupplierForm.SupplierId = -1;
             $scope.SupplierForm.SupplierCode = "";
             $scope.SupplierForm.SupplierName = "";
             $scope.SupplierForm.Phone = "";
@@ -37,6 +39,8 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.TaxCode = "";
             $scope.SupplierForm.Notes = "";
             $scope.SupplierForm.Address = "";
+            $scope.SupplierForm._CanUpdate = true;
+            $scope.SupplierForm._CanDelete = true;
         }
 
         $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers", $scope);
@@ -75,6 +79,8 @@ mdlCommon.controller('SupplierModalController',
 
             var object = $scope.SupplierFormConfig.GetObject(supplier.SupplierCode, 'SupplierCode');
             $scope.SupplierFormConfig.CopyFields(object, $scope.SupplierForm);
+            $scope.SupplierForm._CanUpdate = supplier._CanUpdate;
+            $scope.SupplierForm._CanDelete = supplier._CanDelete;
             $scope.IsShowSupplierDetail = true;
         }
 

@@ -5,23 +5,23 @@
         <span ng-bind="PurchaseForm.PurchaseCode"> </span>
     </div>
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2" ng-click="AddPurchase()">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(1)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
@@ -41,7 +41,7 @@
                        class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho phiếu nhập."
                        check-under="check-purchase"
-                       ng-show="PurchaseForm.StatusId == 1" />
+                       ng-show="PurchaseForm._CanUpdate" />
             </div>
         </div>
         <div class="row margin-top-10">
@@ -55,7 +55,7 @@
                             <th><span>Giá vốn</span></th>
                             <th><span>Thành tiền</span></th>
                             <th><span>Giá bán</span></th>
-                            <th ng-if="PurchaseForm.StatusId == 1"></th>
+                            <th ng-if="PurchaseForm._CanUpdate"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,26 +67,26 @@
                             </td>
                             <td>
                                 <div class="col-md-7 padding-left-right-5">
-                                    <span ng-bind="item.Quantity" ng-if="PurchaseForm.StatusId == 2"></span>
+                                    <span ng-bind="item.Quantity" ng-if="!PurchaseForm._CanUpdate"></span>
                                     <input ng-if="PurchaseForm.StatusId == 1"
                                            class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
                                            check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
                                            check-under="check-purchase" />
                                 </div>
-                                <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="PurchaseForm.StatusId == 1">
+                                <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="PurchaseForm._CanUpdate">
                                     <button class="btn btn-primary btn-tiny" style="padding-bottom: 0px" ng-click="ChangeProductQuantity(item, 1)">
                                         <i class="fa fa-sort-up" style=" font-size: 15px; margin-top: 2px"></i>
                                     </button>
                                 </div>
-                                <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="PurchaseForm.StatusId == 1">
+                                <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="PurchaseForm._CanUpdate">
                                     <button class="btn btn-primary btn-tiny" style="padding-top: 0px" ng-click="ChangeProductQuantity(item, -1)">
                                         <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <span ng-if="PurchaseForm.StatusId == 2" ng-bind="item.Cost | currency:'':0"></span>
-                                <input ng-if="PurchaseForm.StatusId == 1"
+                                <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Cost | currency:'':0"></span>
+                                <input ng-if="PurchaseForm._CanUpdate"
                                        class="form-control" ng-model="item.Cost" 
                                        check-empty="" check-empty-message="Vui lòng nhập giá vốn cho sản phẩm."
                                        ng-change="ChangeCost(item)"
@@ -94,13 +94,13 @@
                             </td>
                             <td><span ng-bind="item.RealCost | currency:'':0"></span></td>
                             <td>
-                                <span ng-if="PurchaseForm.StatusId == 2" ng-bind="item.Price | currency:'':0"></span>
-                                <input ng-if="PurchaseForm.StatusId == 1"
+                                <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Price | currency:'':0"></span>
+                                <input ng-if="PurchaseForm._CanUpdate"
                                        class="form-control" ng-model="item.Price"
                                        check-empty="" check-empty-message="Vui lòng nhập giá bán cho sản phẩm."
                                        check-under="check-purchase" />
                             </td>
-                            <td ng-if="PurchaseForm.StatusId == 1">
+                            <td ng-if="PurchaseForm._CanUpdate">
                                 <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductPurchase(item)">
                                     <i class="fa-trash fa"></i>
                                 </a>
@@ -153,8 +153,8 @@
                 <label class="control-label">Mã hóa đơn</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="PurchaseForm.PurchaseCode" ng-if="PurchaseForm.StatusId == 2"></span>
-                <input ng-if="PurchaseForm.StatusId == 1"
+                <span ng-bind="PurchaseForm.PurchaseCode" ng-if="!PurchaseForm._CanUpdate"></span>
+                <input ng-if="PurchaseForm._CanUpdate"
                        class="form-control" ng-model="PurchaseForm.PurchaseCode" disabled="disabled"
                        placeholder="Hệ thống tự tạo" />
 
@@ -165,8 +165,8 @@
                 <label class="control-label">Nhà cung cấp</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="PurchaseForm.SupplierName" ng-if="PurchaseForm.StatusId == 2"></span>
-                <div class="width-90" ng-show="PurchaseForm.StatusId == 1">
+                <span ng-bind="PurchaseForm.SupplierName" ng-if="!PurchaseForm._CanUpdate"></span>
+                <div class="width-90" ng-show="PurchaseForm._CanUpdate">
                     <input class="form-control" ng-model="PurchaseForm.SupplierName"
                            autocomplete-master-table="T_Master_Suppliers"
                            autocomplete-colum-id="SupplierId"
@@ -177,7 +177,7 @@
                            placeholder="Tìm nhà cung cấp" />
                     <input id="txtSupplierId" class="none-display" ng-model="PurchaseForm.SupplierId" />
                 </div>
-                <div class="width-10" ng-if="PurchaseForm.StatusId == 1">
+                <div class="width-10" ng-if="PurchaseForm._CanUpdate">
                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#supplierModal" ng-click="InitSupplier()">
                         <i class="fa fa-plus"></i>
                     </button>
@@ -189,8 +189,8 @@
                 <label class="control-label">Ngày nhập</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="PurchaseForm.PurchaseDate" ng-if="PurchaseForm.StatusId == 2"></span>
-                <input ng-show="PurchaseForm.StatusId == 1"
+                <span ng-bind="PurchaseForm.PurchaseDate" ng-if="!PurchaseForm._CanUpdate"></span>
+                <input ng-show="PurchaseForm._CanUpdate"
                        class="form-control" date-picker ng-model="PurchaseForm.PurchaseDate"
                        placeholder="Hôm nay" />
 
@@ -209,8 +209,8 @@
                 <label class="control-label">Ghi chú</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="PurchaseForm.Notes" ng-if="PurchaseForm.StatusId == 2"></span>
-                <textarea class="form-control" ng-model="PurchaseForm.Notes" ng-if="PurchaseForm.StatusId == 1"
+                <span ng-bind="PurchaseForm.Notes" ng-if="!PurchaseForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="PurchaseForm.Notes" ng-if="PurchaseForm._CanUpdate"
                           placeholder="Ghi chú cho hóa đơn"
                           check-length="500" check-length-message="Chiều dài tối ta là {0}."
                           check-under="check-purchase"></textarea>
@@ -229,13 +229,13 @@
                 <label class="control-label">Hình thức</label>
             </div>
             <div class="col-md-8">
-                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
                 &nbsp;&nbsp;
-                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="PurchaseForm.StatusId == 2 && !PurchaseForm.IsEditingPaidForDebt" />
+                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
                 <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
             </div>
         </div>
@@ -269,20 +269,20 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="PurchaseForm.StatusId == 2"></span>
-                <input class="form-control" ng-if="PurchaseForm.StatusId == 1" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
-                <input class="form-control" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.IsEditingPaidForDebt"
+                <input class="form-control" ng-if="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
+                <input class="form-control" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
                        ng-model="PurchaseForm.PaidForDebt"
                        check-under="check-purchase"
                        check-empty="" check-empty-message="Vui lòng nhập số tiền."
                        check-range="0;" check-range-message="Vui lòng thanh toán số dương." />
-                <button class="btn btn-warning" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && !PurchaseForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
+                <button class="btn btn-warning" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.IsActive == 1 && PurchaseForm.Debt > 0 && !PurchaseForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
                     <i class="fa fa-dollar"> </i>
                     Thanh toán nợ
                 </button>
-                <button class="btn btn-primary btn-sm margin-top-5" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
+                <button class="btn btn-primary btn-sm margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
                     <i class="fa fa-check"> </i>
                 </button>
-                <button class="btn btn-default btn-sm margin-top-5" ng-if="PurchaseForm.StatusId == 2 && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                <button class="btn btn-default btn-sm margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
                     <i class="fa fa-close"> </i>
                 </button>
             </div>
@@ -302,23 +302,23 @@
 
 <div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2" ng-click="AddPurchase()">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 2">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(1)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm.StatusId == 1" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
