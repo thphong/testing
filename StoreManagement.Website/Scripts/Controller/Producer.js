@@ -43,6 +43,7 @@ mdlCommon.controller('ProducerController',
         };
 
         $scope.ProducerFormConfig = new ObjectDataConfig("T_Master_Producers", $scope);
+        $scope.ProducerFormConfig.CheckCanCreateObject();
 
         $scope.DeleteProducer = function (producer) {
             if (confirm("Bạn có muốn xóa nhà sản xuất " + producer.ProducerName + "?")) {

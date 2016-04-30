@@ -61,6 +61,7 @@ mdlCommon.controller('ProductGroupController',
         };
 
         $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups", $scope);
+        $scope.ProductGroupFormConfig.CheckCanCreateObject();
 
         $scope.DeleteProductGroup = function (productGroup, isParent) {
             if (confirm("Bạn có muốn xóa '" + productGroup.GroupName + "'?")) {

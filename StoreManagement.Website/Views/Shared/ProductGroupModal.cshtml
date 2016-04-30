@@ -20,7 +20,9 @@
                                         <span>Danh sách nhóm hàng</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTabProductGroup('tab-add-product-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-product-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-add-product-group')" 
+                                    ng-if="ProductGroupFormConfig._CanCreate"
+                                    ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-product-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới nhóm hàng</span>
@@ -32,7 +34,9 @@
                                         <span>Danh sách bộ danh mục</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTabProductGroup('tab-add-parent-group')" ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-parent-group')}">
+                                <li ng-click="SetCurrentTabProductGroup('tab-add-parent-group')" 
+                                    ng-if="ProductGroupFormConfig._CanCreate"
+                                    ng-class="{'active' : (CurrentTabProductGroup == 'tab-add-parent-group')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới bộ danh mục</span>
@@ -86,15 +90,15 @@
                                                     </td>
                                                     <td>
                                                         <a class="blue margin-left-10" title="Cập nhật nhóm hàng"
-                                                           ng-click="EditProductGroup(item)" ng-if="!item.IsEditing">
+                                                           ng-click="EditProductGroup(item)" ng-if="!item.IsEditing && item._CanUpdate">
                                                             <i class="fa-edit fa"></i>
                                                         </a>
                                                         <a class="red margin-left-10" title="Xóa nhóm hàng"
-                                                           ng-click="DeleteProductGroup(item, false)" ng-if="!item.IsEditing">
+                                                           ng-click="DeleteProductGroup(item, false)" ng-if="!item.IsEditing && item._CanDelete">
                                                             <i class="fa-trash fa"></i>
                                                         </a>
                                                         <a class="blue margin-left-10" title="Lưu nhóm hàng"
-                                                           ng-click="SaveProductGroup(item)" ng-if="item.IsEditing">
+                                                           ng-click="SaveProductGroup(item)" ng-if="item.IsEditing && item._CanUpdate">
                                                             <i class="fa-save fa"></i>
                                                         </a>
 
@@ -154,15 +158,15 @@
                                                     </td>
                                                     <td>
                                                         <a class="blue margin-left-10" title="Cập nhật bộ danh mục"
-                                                           ng-click="EditProductGroup(item)" ng-if="!item.IsEditing">
+                                                           ng-click="EditProductGroup(item)" ng-if="!item.IsEditing && item._CanUpdate">
                                                             <i class="fa-edit fa"></i>
                                                         </a>
                                                         <a class="red margin-left-10" title="Xóa bộ danh mục"
-                                                           ng-click="DeleteProductGroup(item, true)" ng-if="!item.IsEditing">
+                                                           ng-click="DeleteProductGroup(item, true)" ng-if="!item.IsEditing && item._CanDelete">
                                                             <i class="fa-trash fa"></i>
                                                         </a>
                                                         <a class="blue margin-left-10" title="Lưu bộ danh mục"
-                                                           ng-click="SaveProductGroup(item)" ng-if="item.IsEditing">
+                                                           ng-click="SaveProductGroup(item)" ng-if="item.IsEditing && item._CanUpdate">
                                                             <i class="fa-save fa"></i>
                                                         </a>
 

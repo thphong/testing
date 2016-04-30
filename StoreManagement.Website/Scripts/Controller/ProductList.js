@@ -23,7 +23,7 @@ mdlCommon.controller('ProductListController',
                     }
                 },
                 focus: function (event, ui) {
-                    $(elementId).val(ui.item.ProductCode + " - " + ui.item.ProductName);
+                    $(elementId).val(ui.item.ProductCode);
                     return false;
                 },
                 select: function (event, ui) {
