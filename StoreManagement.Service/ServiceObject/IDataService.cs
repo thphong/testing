@@ -10,12 +10,6 @@ namespace StoreManagement.Service
 {
     public interface IDataService
     {
-        /*IQueryable<T_Chemical> GetAllChemicals();
-        //DataTable ExecStoredProc();
-        void Insert(T_Chemical chemical);
-        void Update(T_Chemical chemical);
-        T_Chemical Get(int key);*/
-
         DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig);
         IList<Dictionary<string, object>> GetDataFromConfigurationJsonable(int userId, GridViewConfig gridConfig);
         int CountDataFromConfiguration(int userId, GridViewConfig gridConfig);
@@ -25,6 +19,6 @@ namespace StoreManagement.Service
         int SaveObject(int userId, string tableName, string objectData);
         void SaveListObject(int userId, string tableName, string objectData);
         void DeleteObject(int userId, string tableName, int keyValue, bool isHardDelete);
-
+        bool CheckCanCreate(int userId, string tableName);
     }
 }

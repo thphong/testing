@@ -44,6 +44,7 @@ mdlCommon.controller('SupplierModalController',
         }
 
         $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers", $scope);
+        $scope.SupplierFormConfig.CheckCanCreateObject();
 
         $scope.InitSupplier = function () {
             FValidation.ClearAllError();

@@ -43,6 +43,10 @@ mdlCommon.controller('InventoryController',
         $scope.ProductInventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory_Product", $scope);
         $scope.InventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran", $scope);
         $scope.ProductInventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran_Product", $scope);
+
+        $scope.InventoryFormConfig.CheckCanCreateObject();
+        $scope.InventTranFormConfig.CheckCanCreateObject();
+
         $scope.IsShowInventoryDetail = false;
         $scope.IsShowInventTranDetail = false;
         $scope.ListProductsInventory = [];

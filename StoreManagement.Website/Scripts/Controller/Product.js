@@ -97,6 +97,8 @@ mdlCommon.controller('ProductController',
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
         $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute", $scope);
 
+        $scope.ProductFormConfig.CheckCanCreateObject();
+
         $scope.IsShownPriceHisModal = false;
         $scope.SetShownPriceHisModal = function (isShown) {
             $scope.IsShownPriceHisModal = isShown;

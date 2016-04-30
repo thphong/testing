@@ -132,6 +132,19 @@ namespace StoreManagement.Website.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CheckCanCreate(string tableName)
+        {
+            try
+            {
+                return Json(dataService.CheckCanCreate(SessionCollection.CurrentUserId, tableName));
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
         public ActionResult ExportExcelAjax(GridViewConfig gridConfig)
         {
             try

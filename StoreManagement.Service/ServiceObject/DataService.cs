@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using StoreManagement.Data;
-using SharpRepository.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Core.EntityClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using System.Data.SqlClient;
 
 namespace StoreManagement.Service
@@ -22,7 +16,6 @@ namespace StoreManagement.Service
         public DataService(IDatabaseFactory _dbFactory)
         {
             this.dbFactory = _dbFactory;
-            //chemRep = this.dbFactory.GetRepository<T_Chemical>();
         }
         #endregion
 
@@ -164,5 +157,15 @@ namespace StoreManagement.Service
             dbFactory.GetContext().Database.ExecuteSqlCommand(statement);
         }
         #endregion
+
+        public bool CheckCanCreate(int userId, string tableName)
+        {
+            string statement = string.Format("select [dbo].[UFN_System_Check_Role_Object] ( {0}, '{1}', '{2}')",
+                    userId, tableName, "update");
+
+            bool result = dbFactory.GetContext().Database.SqlQuery<bool>
+                    (statement).FirstOrDefault();
+            return result;
+        }
     }
 }

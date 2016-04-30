@@ -37,6 +37,9 @@ mdlCommon.controller('PaymentController',
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
         $scope.ReceivementConfig = new ObjectDataConfig("T_Trans_Receivement", $scope);
 
+        $scope.CostFormConfig.CheckCanCreateObject();
+        $scope.ReceivementConfig.CheckCanCreateObject();
+
         $scope.DeleteCost = function (cost)
         {
             if (confirm("Bạn có muốn xóa phiếu chi phí " + cost.CostCode + "?")) {

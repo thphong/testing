@@ -284,7 +284,8 @@
                                         dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventoryCheck')"></select>
                             </div>
                             <div class="col-md-4 pull-right text-right">
-                                <button class="btn btn-success btn-primary" ng-click="AddInventory()">
+                                <button class="btn btn-success btn-primary" ng-click="AddInventory()"
+                                        ng-if="InventoryFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo Phiếu</span>
                                 </button>
@@ -368,7 +369,8 @@
                                         dropdown-name-field="StatusName" dropdown-empty-text="--Tất cả--" ng-change="ReloadGrid('InventTrans')"></select>
                             </div>
                             <div class="col-md-4 pull-right text-right">
-                                <button class="btn btn-success btn-primary" ng-click="AddInventTran()">
+                                <button class="btn btn-success btn-primary" ng-click="AddInventTran()"
+                                        ng-if="InventTranFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo Phiếu</span>
                                 </button>

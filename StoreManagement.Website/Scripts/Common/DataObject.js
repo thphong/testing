@@ -111,6 +111,7 @@ function ObjectDataConfig(tableName, $scope) {
     this.ObjectData = {};
     this.ListObjectData = [];
     this.$scope = $scope;
+    this._CanCreate = false;
 
     this.SetObject = function (objectData) {
         this.ObjectData = objectData;
@@ -164,6 +165,16 @@ function ObjectDataConfig(tableName, $scope) {
 
         return result;
     }
+
+    this.CheckCanCreateObject = function () {
+
+        var thisObject = this;
+        AjaxAsync(g_checkCanCreateObjectUrl, '{ tableName: "' + this.TableName + '"}', function (result) {
+            thisObject._CanCreate = result;
+        });
+    }
+
+    //this.CheckCanCreateObject();
 
     this.RemoveSpecialChars = function (str) {
         if (str == null || str == undefined) return "";

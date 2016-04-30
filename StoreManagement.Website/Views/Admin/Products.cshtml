@@ -12,8 +12,8 @@
     <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowProductDetail}">
         <div ng-if="!IsShowProductDetail">
             <div class="row" style="padding-top: 5px">
-                <div class="col-md-5 pull-right text-right">
-                    <button class="btn btn-success btn-primary" ng-click="AddProduct()">
+                <div class="col-md-5 pull-right text-right" >
+                    <button class="btn btn-success btn-primary" ng-if="ProductFormConfig._CanCreate" ng-click="AddProduct()">
                         <i class="fa fa-plus white"></i>
                         <span>Thêm hàng hóa</span>
                     </button>

@@ -5,7 +5,7 @@
         <span ng-bind="PurchaseForm.PurchaseCode"> </span>
     </div>
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="AddPurchase()">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
@@ -302,7 +302,7 @@
 
 <div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="AddPurchase()">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>

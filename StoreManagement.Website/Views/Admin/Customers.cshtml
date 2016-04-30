@@ -52,7 +52,9 @@
                                 </select>
                             </div>
                             <div class="col-md-4 pull-right text-right">
-                                <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('0')">
+                                <button class="btn btn-success btn-primary" data-toggle="modal" 
+                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
+                                        ng-if="CustomerFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo KH</span>
                                 </button>
@@ -142,7 +144,9 @@
                                 </select>
                             </div>
                             <div class="col-md-4 pull-right text-right">
-                                <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#customerModal" ng-click="SetIsSaleCustomer('1')">
+                                <button class="btn btn-success btn-primary" data-toggle="modal" 
+                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('1')"
+                                        ng-if="CustomerFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo KH Sỉ</span>
                                 </button>
@@ -235,7 +239,9 @@
                                 </select>
                             </div>
                             <div class="col-md-4 pull-right text-right">
-                                <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#supplierModal" ng-click="InitSupplier()">
+                                <button class="btn btn-success btn-primary" data-toggle="modal" 
+                                        data-target="#supplierModal" ng-click="InitSupplier()"
+                                        ng-if="SupplierFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo NCC</span>
                                 </button>

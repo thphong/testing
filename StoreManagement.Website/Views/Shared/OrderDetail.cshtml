@@ -5,7 +5,7 @@
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="AddOrder()">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
@@ -356,7 +356,7 @@
 
 <div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="AddOrder()">
+        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>

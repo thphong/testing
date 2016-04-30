@@ -20,6 +20,9 @@ mdlCommon.controller('OrderController',
         $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders", $scope);
         $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product", $scope);
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
+        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
+
+        $scope.OrderFormConfig.CheckCanCreateObject();
 
         $scope.IsShowOrderDetail = false;
 
@@ -405,8 +408,6 @@ mdlCommon.controller('OrderController',
             PaymentType: 1,
             StoreId: $scope.CurrentStore
         }
-
-        $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
 
         $scope.EditPaidForDebt = function () {
             $scope.OrderForm.PaidForDebt = $scope.OrderForm.DebtMoney;

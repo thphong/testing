@@ -40,7 +40,9 @@
                     <div ng-if="CurrentTab =='Costs'">
                         <div class="row margin-top-10">
                             <div class="col-md-5 pull-right text-right">
-                                <button class="btn btn-success btn-primary" data-toggle="modal" data-target="#costModal" ng-click="AddCost()">
+                                <button class="btn btn-success btn-primary" data-toggle="modal" 
+                                        data-target="#costModal" ng-click="AddCost()"
+                                        ng-if="CostFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Thêm phiếu chi</span>
                                 </button>
@@ -114,7 +116,7 @@
                                         <a class="grey margin-left-10">
                                             <i class="fa-print fa"></i>
                                         </a>
-                                        <a class="red margin-left-10" ng-if="item.IsActive == 1" ng-click="DeleteCost(item)">
+                                        <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteCost(item)">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
@@ -208,7 +210,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a class="red margin-left-10" ng-click="DeletePayment(item)">
+                                        <a class="red margin-left-10" ng-click="DeletePayment(item)" ng-if="item._CanDelete">
                                             <i class="fa-trash fa"></i>
                                         </a>
                                     </td>
@@ -289,11 +291,11 @@
                                                check-range-message="Vui lòng nhập số dương và không vượt quá {{item.Pending}}." />
                                     </td>
                                     <td>
-                                        <a ng-if="!item.IsEditing" class="blue margin-left-10" 
+                                        <a ng-if="!item.IsEditing && ReceivementConfig._CanCreate" class="blue margin-left-10" 
                                            title="Nhận tiền" ng-click="item.IsEditing = true;">
                                             <i class="fa-edit fa"></i>
                                         </a>
-                                        <a ng-if="item.IsEditing" class="blue margin-left-10" 
+                                        <a ng-if="item.IsEditing && ReceivementConfig._CanCreate" class="blue margin-left-10" 
                                            title="Lưu" ng-click="Receivement(item)">
                                             <i class="fa-save fa"></i>
                                         </a>

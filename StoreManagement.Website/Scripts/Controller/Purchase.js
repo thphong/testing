@@ -19,6 +19,7 @@ mdlCommon.controller('PurchaseController',
         
         $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase", $scope);
         $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product", $scope);
+        $scope.PurchaseFormConfig.CheckCanCreateObject();
 
         $scope.IsShowPurchaseDetail = false;
 

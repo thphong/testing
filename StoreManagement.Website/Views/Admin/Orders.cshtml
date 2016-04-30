@@ -14,7 +14,7 @@
         <div ng-if="!IsShowOrderDetail">
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-offset-6 col-md-4 pull-right text-right">
-                    <button class="btn btn-success btn-primary" ng-click="AddOrder()">
+                    <button class="btn btn-success btn-primary" ng-click="AddOrder()" ng-if="OrderFormConfig._CanCreate">
                         <i class="fa fa-desktop white"></i>
                         <span>Bán hàng</span>
                     </button>

@@ -14,7 +14,8 @@
         <div ng-if="!IsShowPurchaseDetail">
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-offset-6 col-md-4 pull-right text-right">
-                    <button class="btn btn-success btn-primary" ng-click="AddPurchase()">
+                    <button class="btn btn-success btn-primary" ng-click="AddPurchase()"
+                            ng-if="PurchaseFormConfig._CanCreate">
                         <i class="fa fa-desktop white"></i>
                         <span>Tạo phiếu nhập</span>
                     </button>
