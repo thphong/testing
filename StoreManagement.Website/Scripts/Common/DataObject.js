@@ -170,7 +170,9 @@ function ObjectDataConfig(tableName, $scope) {
 
         var thisObject = this;
         AjaxAsync(g_checkCanCreateObjectUrl, '{ tableName: "' + this.TableName + '"}', function (result) {
-            thisObject._CanCreate = result;
+            thisObject.$scope.$applyAsync(function () {
+                thisObject._CanCreate = result;
+            });
         });
     }
 
