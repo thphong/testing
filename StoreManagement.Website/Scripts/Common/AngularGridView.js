@@ -463,24 +463,21 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
 
         //Get Data from DB
-        //this.DataSet[gridId].Data = this.GetListDataFromDB(gridId);
-
         //Evaluate condition before send to execute in DB
         var config = $scope.Config[gridId];
         config.EvaluateFieldExpression($interpolate, $scope);
         //getDataListUrl is defined in global
         $scope.DataSet[gridId].Data = config.GetListData();
 
-        /*$scope.GetListDataFromDB = function (gridId) {
-        //Evaluate condition before send to execute in DB
-        var config = $scope.Config[gridId];
-        config.EvaluateFieldExpression($interpolate, $scope);
-        //getDataListUrl is defined in global
-        return config.GetListData();
-        }*/
+        //config.GetListDataAsync(function (result) {
+        //    $scope.$applyAsync(function () {
+        //        $scope.DataSet[gridId].Data = result;
+        //    });
+        //});
 
         //Sum Data from DB
-        $scope.DataSet[gridId].Sums = config.SumListData();//this.SumListDataFromDB(gridId);
+        $scope.DataSet[gridId].Sums = config.SumListData();
+
     }
     /*end temp para*/
 
@@ -546,7 +543,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         if (config) {
             config.EvaluateFieldExpression($interpolate, $scope);
             //getDataListUrl is defined in global
-            this.Dropdowns[dropdownId] = config.GetListData();
+            //$scope.Dropdowns[dropdownId] = config.GetListData();
+
+            config.GetListDataAsync(function (result) {
+                $scope.$applyAsync(function () {
+                    $scope.Dropdowns[dropdownId] = result;
+                });
+            });
         }
     }
 

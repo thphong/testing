@@ -64,7 +64,7 @@
                             <td ng-bind="item.ProductCode"> </td>
                             <td >
                                 <span ng-bind="item.ProductName"></span>
-                                <div class="red-sm-label row">
+                                <div class="red-sm-label row" ng-if="item.MaxQuantity != undefined">
                                     (Còn tồn <span ng-bind="item.MaxQuantity"></span>)
                                 </div>
                             </td>

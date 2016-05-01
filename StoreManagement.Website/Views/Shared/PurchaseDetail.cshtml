@@ -178,7 +178,9 @@
                     <input id="txtSupplierId" class="none-display" ng-model="PurchaseForm.SupplierId" />
                 </div>
                 <div class="width-10" ng-if="PurchaseForm._CanUpdate">
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#supplierModal" ng-click="InitSupplier()">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" 
+                            data-target="#supplierModal" ng-click="InitSupplier()"
+                            ng-if="SupplierFormConfig._CanCreate">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
@@ -196,7 +198,7 @@
 
             </div>
         </div>
-        <div class="row margin-top-10"  ng-if="PurchaseForm.PurchaserName">
+        <div class="row margin-top-10" ng-if="PurchaseForm.PurchaserName">
             <div class="col-md-4">
                 <label class="control-label">Người nhập</label>
             </div>

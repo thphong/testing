@@ -61,7 +61,7 @@ function GridViewConfig(gridId) {
         AjaxAsync(g_exportExcelAjaxUrl, '{ gridConfig: ' + JSON.stringify(this) + '}',
             function () {
                 window.location = g_exportExcelUrl;
-            });
+        });
     }
 
     this.NormalizeColumName = function (columName) {
