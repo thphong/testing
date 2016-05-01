@@ -45,6 +45,7 @@ mdlCommon.controller('OrderController',
             DiscountAmmount: 0,
             TotalDiscount: 0,
             DebtMoney: 0,
+            OrginalMoney: 0,
             Paid: 0,
             IsDiscountPercent: 1,
             IsActive: 1,
@@ -133,6 +134,9 @@ mdlCommon.controller('OrderController',
                     }
                     else {
                         $scope.ListProductsOrder[i].Quantity++;
+                        $scope.ListProductsOrder[i].Cost = product.Cost;
+                        $scope.ListProductsOrder[i].Price = product.Price;
+                        $scope.ListProductsOrder[i].MaxQuantity = product.Quantity;
                         if ($scope.ListProductsOrder[i].IsDiscountPercent == '0') {
                             $scope.ListProductsOrder[i].RealPrice = $scope.ListProductsOrder[i].Quantity * ($scope.ListProductsOrder[i].Price - $scope.ListProductsOrder[i].Discount);
                         }
@@ -153,6 +157,7 @@ mdlCommon.controller('OrderController',
                     ProductCode: product.ProductCode,
                     ProductName: product.ProductName,
                     Price: product.Price,
+                    Cost: product.Cost,
                     Quantity: 1,
                     MaxQuantity: product.Quantity,
                     RealPrice: product.Price,

@@ -334,6 +334,7 @@
     <Content Include="Scripts\Controller\ProductGroup.js" />
     <Content Include="Scripts\Controller\ProductList.js" />
     <Content Include="Scripts\Controller\ProductQuanHistory.js" />
+    <Content Include="Scripts\Controller\Profit.js" />
     <Content Include="Scripts\Controller\Purchase.js" />
     <Content Include="Scripts\Controller\Revenue.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />

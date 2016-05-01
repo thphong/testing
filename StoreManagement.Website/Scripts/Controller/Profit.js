@@ -1,24 +1,65 @@
-﻿mdlCommon.controller('RevenueController',
+﻿mdlCommon.controller('ProfitController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "ReportBySeller";
+        $scope.CurrentTab = "ReportByTime";
 
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
             }
         }
-        
-        $scope.SelectedUserId = -1;
-        $scope.SelectedStoreId = -1;
+
         $scope.Filter = {
-            SelectedMonth: ((new Date()).getMonth() + 1).toString(),
-            SelectedYear: (new Date()).getFullYear().toString(),
+            ReportGroupBy: "d",
             CurrentStore: "0"
         };
 
+        $scope.BarChartByTime = null;
+        $scope.BindBarChartByTime = function (cost, profit, listName) {
+            setTimeout(function () {
+                if ($scope.BarChartByTime == null) {
+                    $scope.BarChartByTime = c3.generate({
+                        bindto: '#chartReportByTime',
+                        data: { x: 'x', columns: [], type: "bar" },
+                        axis: {
+                            x: { label: 'Thời gian', type: 'category' } //this needed to load string x value
+                            , y: { label: 'Doanh thu' }
+                        },
+                        bar: { width: { ratio: 0.5 } },
+                        legend: { show: false }
+                    });
+                }
+
+                if (listName.length > 1) {
+                    $scope.BarChartByTime.load({
+                        columns: [listName, cost, profit]
+                    });
+                }
+                else {
+                    $scope.BarChartByTime.unload();
+                }
+            }, 10);
+        }
+
+        $scope.$watch('DataSet.ReportByTime.Data', function (newVal, oldVal) {
+            var listData = newVal;
+            var listName = ['x'];
+            var cost = ['Vốn'];
+            var profit = ['Lãi'];
+            for (var i = 0; i < listData.length; i++) {
+                cost.push(listData[i].Cost);
+                profit.push(listData[i].Profit);
+                listName.push(listData[i].GroupBy);
+            }
+            $scope.BindBarChartByTime(cost, profit, listName);
+
+        }, false);
+
+        /*$scope.SelectedUserId = -1;
+        $scope.SelectedStoreId = -1;
+        
         $scope.SelectUserId = function (user) {
             if ($scope.SelectedUserId == user.UserId) {
                 $scope.SelectedUserId = -1;
@@ -37,51 +78,12 @@
             }
         }
 
-        $scope.BarChartBySeller = null;
-        $scope.BindBarChartBySeller = function (content, listName) {
-            setTimeout(function () {
-                if ($scope.BarChartBySeller == null) {
-                    $scope.BarChartBySeller = c3.generate({
-                        bindto: '#chartReportBySeller',
-                        data: { x: 'x', columns: [], type: "bar" },
-                        axis: {
-                            x: { label: 'Người bán', type: 'category' } /*this needed to load string x value*/
-                            , y: { label: 'Doanh thu' }
-                        },
-                        bar: { width: { ratio: 0.5 } },
-                        legend: { show: false }
-                    });
-                }
-
-                if (listName.length > 1) {
-                    $scope.BarChartBySeller.load({
-                        columns: [listName, content]
-                    });
-                }
-                else {
-                    $scope.BarChartBySeller.unload();
-                }
-            }, 10);
-        }
-
-        $scope.$watch('DataSet.ReportBySeller.Data', function (newVal, oldVal) {
-            var listData = newVal;
-            var listName = ['x'];
-            var content = ['Doanh thu'];
-            for (var i = 0; i < listData.length; i++) {
-                content.push(listData[i].Revenue);
-                listName.push(listData[i].CashierName);
-            }
-            $scope.BindBarChartBySeller(content, listName);
-
-        }, false);
-
         $scope.PieChartByStore = null;
         $scope.BindPieChart = function (content) {
             setTimeout(function () {
                 if ($scope.PieChartByStore == null) {
                     $scope.PieChartByStore = c3.generate({
-                        bindto: '#chartReportByStore',
+                        bindto: '#chartReportByProduct',
                         data: {
                             columns: [],
                             type: "pie"
@@ -125,7 +127,7 @@
                                     rotate: 90,
                                     multiline: false
                                 }
-                            } /*this needed to load string x value*/
+                            } //this needed to load string x value
                             , y: {
                                 label: 'Doanh thu'
                             }
@@ -173,11 +175,11 @@
                 if ($scope.BarChartByYear == null) {
                     $scope.BarChartByYear = c3.generate({
                         bindto: '#chartReportByYear',
-                        data: { x: 'x', columns: [], types: { 'Doanh thu': 'bar', 'Đơn hàng': 'spline' }, axes: { 'Đơn hàng': 'y2' }},
+                        data: { x: 'x', columns: [], types: { 'Doanh thu': 'bar', 'Đơn hàng': 'spline' }, axes: { 'Đơn hàng': 'y2' } },
                         axis: {
                             x: {
                                 label: 'Tháng', type: 'category'
-                            } /*this needed to load string x value*/
+                            } //this needed to load string x value
                             , y: {
                                 label: 'Doanh thu'
                             }
@@ -217,5 +219,5 @@
             }
             $scope.BindBarChartByYear(revenue, order, listName);
 
-        }, false);
+        }, false);*/
     }]);

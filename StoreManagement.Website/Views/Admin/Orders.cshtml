@@ -47,8 +47,9 @@
                     or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1))
                     and ([StoreId] = {{CurrentStore}})
                     and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
-                    and  (convert(date, [SoldDate]) >= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''))
-                    and  (convert(date, [SoldDate]) <= dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"
+                    and  ([SoldDate] is null or
+                           convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                    and  dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[OrderCode] ASC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
