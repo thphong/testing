@@ -216,3 +216,16 @@ function formatDate(date) {
 
     return [day, month, year].join('-');
 }
+
+function convertDate(value) {
+    if (!value) return null;
+    var index = value.split('-');
+    if (index.length != 3) {
+        return null;
+    }
+    var newDate = new Date(index[2] + "-" + index[1] + "-" + index[0]);
+    if (newDate.getDate()) {
+        return newDate;
+    }
+    return null;
+}

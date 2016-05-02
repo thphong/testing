@@ -326,6 +326,7 @@
     <Content Include="Scripts\Controller\CostType.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\CustomerModal.js" />
+    <Content Include="Scripts\Controller\Exception.js" />
     <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />
     <Content Include="Scripts\Controller\Order.js" />
@@ -433,6 +434,7 @@
     <Content Include="Views\Shared\CostModal.cshtml" />
     <Content Include="Views\Shared\CostTypeModal.cshtml" />
     <Content Include="Views\Shared\ReceiveHistoryModal.cshtml" />
+    <Content Include="Views\Admin\Exception.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

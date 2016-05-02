@@ -43,6 +43,7 @@ mdlCommon.controller('AttributeController',
         };
 
         $scope.AttributeFormConfig = new ObjectDataConfig("T_Master_Attibutes", $scope);
+        $scope.AttributeFormConfig.CheckCanCreateObject();
 
         $scope.DeleteAttribute = function (attribute) {
             if (confirm("Bạn có muốn xóa thuộc tính " + attribute.AttributeName + "?")) {

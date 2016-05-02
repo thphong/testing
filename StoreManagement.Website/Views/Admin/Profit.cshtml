@@ -461,100 +461,175 @@
                                     <th><span>Chỉ tiêu</span></th>
                                     <th>
                                         <span>Kỳ trước</span>
-                                        <div style="font-weight: normal">({{FilterRangeDate.PreStartDate}}    {{FilterRangeDate.PreEndDate}})</div>
+                                        <div style="font-weight: normal">({{Filter.PreStartDate}} / {{Filter.PreEndDate}})</div>
                                     </th>
                                     <th>
                                         <span>Kỳ hiện tại</span>
-                                        <div style="font-weight: normal">({{FilterRangeDate.StartDate}}    {{FilterRangeDate.EndDate}})</div>
+                                        <div style="font-weight: normal">({{FilterRangeDate.StartDate}} / {{FilterRangeDate.EndDate}})</div>
                                     </th>
                                     <th><span>Thay đổi (%)</span></th>
                                 </tr>
                             </thead>
                             <tbody ng-repeat="item in DataSet.ReportProfit.Data">
                                 @*Dataset must have grid id*@
-                                <tr>
+                                <tr ng-init="Filter.PreStartDate = item.PreStartDate; Filter.PreEndDate = item.PreEndDate">
                                     <td>1. Doanh thu</td>
-                                    <td></td>
+                                    <td ng-bind="item.PreRevenue | currency:'':0"></td>
                                     <td ng-bind="item.Revenue | currency:'':0"></td>
-                                    <td></td>
+                                    <td>
+                                        <span ng-if="item.PreRevenue > 0" 
+                                              ng-bind="100*(item.Revenue - item.PreRevenue)/item.PreRevenue | number:2"></span>
+                                        <span ng-if="item.PreRevenue == 0 && item.Revenue > 0" >100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.Revenue > item.PreRevenue" class="fa fa-arrow-up green"> </i>
+                                            <i ng-if="item.Revenue < item.PreRevenue" class="fa fa-arrow-down red"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2. Tiền giảm giá</td>
-                                    <td></td>
+                                    <td ng-bind="item.PreDiscount | currency:'':0"></td>
                                     <td ng-bind="item.Discount | currency:'':0"></td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td>3. Tiền trả hàng</td>
-                                    <td></td>
+                                    <td ng-bind="item.PreReturnAmount | currency:'':0"></td>
                                     <td ng-bind="item.ReturnAmount | currency:'':0"></td>
-                                    <td></td>
+                                    <td >
+                                        <span ng-if="item.PreReturnAmount > 0" 
+                                              ng-bind="100*(item.ReturnAmount - item.PreReturnAmount)/item.PreReturnAmount | number:2"></span>
+                                        <span ng-if="item.PreReturnAmount == 0 && item.ReturnAmount > 0">100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.ReturnAmount > item.PreReturnAmount" class="fa fa-arrow-up green"> </i>
+                                            <i ng-if="item.ReturnAmount < item.PreReturnAmount" class="fa fa-arrow-down red"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>4. Tiền vốn mua hàng</td>
-                                    <td></td>
+                                    <td ng-bind="item.PreCost | currency:'':0"></td>
                                     <td ng-bind="item.Cost | currency:'':0"></td>
-                                    <td></td>
+                                    <td >
+                                        <span ng-if="item.PreCost > 0" 
+                                              ng-bind="100*(item.Cost - item.PreCost)/item.PreCost | number:2"></span>
+                                        <span ng-if="item.PreCost == 0 && item.Cost > 0">100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.Cost > item.PreCost" class="fa fa-arrow-up green"> </i>
+                                            <i ng-if="item.Cost < item.PreCost" class="fa fa-arrow-down red"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>5. Lãi gộp = [1] - [3]</td>
-                                    <td></td>
-                                    <td ng-bind=" (item.Revenue - item.Cost) | currency:'':0"></td>
-                                    <td></td>
+                                    <td ng-init="item.PreGrossRevenue = (item.PreRevenue - item.PreCost)" ng-bind="item.PreGrossRevenue | currency:'':0"></td>
+                                    <td ng-init="item.GrossRevenue = (item.Revenue - item.Cost)" ng-bind="item.GrossRevenue | currency:'':0"></td>
+                                    <td >
+                                        <span ng-if="item.PreGrossRevenue != 0"
+                                              ng-bind="100*(item.GrossRevenue - item.PreGrossRevenue)/Abs(item.PreGrossRevenue) | number:2"></span>
+                                        <span ng-if="item.GrossRevenue < 0 && item.PreGrossRevenue == 0">-</span>
+                                        <span ng-if="item.PreGrossRevenue == 0 && item.GrossRevenue != 0">100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.GrossRevenue > item.PreGrossRevenue" class="fa fa-arrow-up green"> </i>
+                                            <i ng-if="item.GrossRevenue < item.PreGrossRevenue" class="fa fa-arrow-down red"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>6. Chi phí</td>
-                                    <td></td>
+                                    <td ng-bind=" item.PreExtraCost | currency:'':0"></td>
                                     <td ng-bind=" item.ExtraCost | currency:'':0"></td>
-                                    <td></td>
+                                    <td>
+                                        <span ng-if="item.PreExtraCost > 0"
+                                              ng-bind="100*(item.ExtraCost - item.PreExtraCost)/item.PreExtraCost | number:2"></span>
+                                        <span ng-if="item.PreExtraCost == 0 && item.ExtraCost > 0">100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.ExtraCost > item.PreExtraCost" class="fa fa-arrow-up red"> </i>
+                                            <i ng-if="item.ExtraCost < item.PreExtraCost" class="fa fa-arrow-down green"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr class="bold">
                                     <td>7. Lãi ròng = [5] - [6]</td>
-                                    <td></td>
                                     <td>
-                                        <span ng-bind="(item.Revenue - item.Cost - item.ExtraCost) | currency:'':0"></span>
-                                        %
+                                        <span ng-init="item.PreProfit = (item.PreRevenue - item.PreCost - item.PreExtraCost)"
+                                              ng-bind="item.PreProfit | currency:'':0"></span>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <span ng-init="item.Profit = (item.Revenue - item.Cost - item.ExtraCost)"
+                                              ng-bind="item.Profit | currency:'':0"></span>
+                                    </td>
+                                    <td >
+                                        <span ng-if="item.PreProfit != 0"
+                                              ng-bind="100*(item.Profit - item.PreProfit)/ Abs(item.PreProfit) | number:2"></span>
+                                        <span ng-if="item.Profit < 0 && item.PreProfit == 0">-</span>
+                                        <span ng-if="item.PreProfit == 0 && item.Profit != 0">100</span>
+                                        %
+                                        <span>
+                                            <i ng-if="item.Profit > item.PreProfit" class="fa fa-arrow-up green"> </i>
+                                            <i ng-if="item.Profit < item.PreProfit" class="fa fa-arrow-down red"> </i>
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr >
                                     <td>8. Tiền giảm giá/Doanh thu (%) = [2]/[1]</td>
-                                    <td></td>
-                                    <td ng-if="item.Revenue > 0">
-                                        <span ng-bind="(item.Discount/item.Revenue) | currency:'':0"></span>
+                                    <td>
+                                        <span ng-if="item.PreRevenue > 0" ng-bind="(100*item.PreDiscount/item.PreRevenue) | number:2"></span>
+                                        <span ng-if="item.PreRevenue == 0"> 0</span>
                                         %
                                     </td>
-                                    <td ng-if="item.Revenue == 0"> 0 %</td>
+                                    <td>
+                                        <span ng-if="item.Revenue > 0" ng-bind="(100*item.Discount/item.Revenue) | number:2"></span>
+                                        <span ng-if="item.Revenue == 0"> 0</span>
+                                        %
+                                    </td>   
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td>9. Tiền trả hàng/Doanh thu (%) = [3]/[1]</td>
-                                    <td></td>
-                                    <td ng-if="item.Revenue > 0" >
-                                        <span ng-bind="(item.ReturnAmount/item.Revenue) | currency:'':0"></span>
+                                    <td>
+                                        <span ng-if="item.PreRevenue > 0" ng-bind="(100*item.PreReturnAmount/item.PreRevenue) | number:2"></span>
+                                        <span ng-if="item.PreRevenue == 0"> 0</span>
                                         %
                                     </td>
-                                    <td ng-if="item.Revenue == 0"> 0 %</td>
+                                    <td>
+                                        <span ng-if="item.Revenue > 0" ng-bind="(100*item.ReturnAmount/item.Revenue) | number:2"></span>
+                                        <span ng-if="item.Revenue == 0"> 0</span>
+                                        %
+                                    </td>                                    
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td>10. Lãi gộp/Doanh thu (%) = [5]/[1]</td>
-                                    <td></td>
-                                    <td ng-if="item.Revenue > 0" >
-                                        <span ng-bind="((item.Revenue - item.Cost)/item.Revenue) | currency:'':0"></span>
+                                    <td>
+                                        <span ng-if="item.PreRevenue > 0" ng-bind="(100*(item.PreRevenue - item.PreCost)/item.PreRevenue) | number:2"></span>
+                                        <span ng-if="item.PreRevenue == 0"> 0</span>
                                         %
                                     </td>
-                                    <td ng-if="item.Revenue == 0"> 0 %</td>
+                                    <td>
+                                        <span ng-if="item.Revenue > 0" ng-bind="(100*(item.Revenue - item.Cost)/item.Revenue) | number:2"></span>
+                                        <span ng-if="item.Revenue == 0"> 0</span>
+                                        %
+                                    </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td>11. Lãi ròng/Doanh thu (%) = [7]/[1]</td>
-                                    <td></td>
-                                    <td ng-if="item.Revenue > 0">
-                                        <span ng-bind=" ((item.Revenue - item.Cost - item.ExtraCost)/item.Revenue) | currency:'':0"></span>
+                                    <td>
+                                        <span ng-if="item.PreRevenue > 0" ng-bind=" (100*(item.PreRevenue - item.PreCost - item.PreExtraCost)/item.PreRevenue) | number:2"></span>
+                                        <span ng-if="item.PreRevenue == 0"> 0</span>
                                         %
                                     </td>
-                                    <td ng-if="item.Revenue == 0"> 0 %</td>
+                                    <td>
+                                        <span ng-if="item.Revenue > 0" ng-bind=" (100*(item.Revenue - item.Cost - item.ExtraCost)/item.Revenue) | number:2"></span>
+                                        <span ng-if="item.Revenue == 0"> 0</span>
+                                        %
+                                    </td>
                                     <td></td>
                                 </tr>
                             </tbody>

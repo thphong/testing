@@ -14,13 +14,16 @@
                     <div class="row">
                         <div class="tabbable" style="padding-top: 10px">
                             <ul class="nav nav-tabs padding-left-18">
-                                <li ng-click="SetCurrentTabAttribute('tab-list')" ng-class="{'active' : (CurrentTabAttribute == 'tab-list')}">
+                                <li ng-click="SetCurrentTabAttribute('tab-list')" 
+                                    ng-class="{'active' : (CurrentTabAttribute == 'tab-list')}">
                                     <a data-toggle="tab">
                                         <i class="blue fa-list fa"></i>
                                         <span>Danh sách thuộc tính</span>
                                     </a>
                                 </li>
-                                <li ng-click="SetCurrentTabAttribute('tab-add-new')" ng-class="{'active' : (CurrentTabAttribute == 'tab-add-new')}">
+                                <li ng-click="SetCurrentTabAttribute('tab-add-new')" 
+                                    ng-class="{'active' : (CurrentTabAttribute == 'tab-add-new')}"
+                                    ng-if="AttributeFormConfig._CanCreate">
                                     <a data-toggle="tab">
                                         <i class="blue fa-plus fa"></i>
                                         <span>Tạo mới thuộc tính</span>

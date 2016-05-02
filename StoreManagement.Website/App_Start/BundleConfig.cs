@@ -114,6 +114,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/Revenue.js"));
             bundles.Add(new ScriptBundle("~/bundles/Profit").Include(
                         "~/Scripts/Controller/Profit.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Exception").Include(
+                        "~/Scripts/Controller/Exception.js"));
             bundles.Add(new ScriptBundle("~/bundles/ProductList").Include(
                         "~/Scripts/Controller/ProductList.js"));
 
