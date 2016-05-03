@@ -33,13 +33,15 @@ mdlCommon.controller('AttributeController',
         $scope.AttributeForm = {
             AttributeId: "-1",
             AttributeName: "",
-            IsActive: "1"
+            IsActive: "1",
+            Version: 0
         };
 
         $scope.ResetAttributeForm = function () {
             $scope.AttributeForm.AttributeId = "-1";
             $scope.AttributeForm.AttributeName = "";
-            $scope.AttributeForm.IsActive = "1"
+            $scope.AttributeForm.IsActive = "1";
+            $scope.AttributeForm.Version = 0;
         };
 
         $scope.AttributeFormConfig = new ObjectDataConfig("T_Master_Attibutes", $scope);

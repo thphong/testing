@@ -67,7 +67,8 @@ mdlCommon.controller('InventoryController',
             NumMore: 0,
             NumLess: 0,
             _CanUpdate: true,
-            _CanDelete: true
+            _CanDelete: true,
+            Version: 0
         }
 
         $scope.ResetInventoryForm = function () {
@@ -86,6 +87,7 @@ mdlCommon.controller('InventoryController',
             $scope.InventoryForm.NumLess = 0;
             $scope.InventoryForm._CanUpdate = true;
             $scope.InventoryForm._CanDelete = true;
+            $scope.InventoryForm.Version = 0;
         }
 
         $scope.InventTranForm = {
@@ -104,7 +106,8 @@ mdlCommon.controller('InventoryController',
             IsActive: 1,
             NumProducts: 0,
             _CanUpdate: true,
-            _CanDelete: true
+            _CanDelete: true,
+            Version: 0
         }
 
         $scope.ResetInventTranForm = function () {
@@ -122,6 +125,7 @@ mdlCommon.controller('InventoryController',
             $scope.InventTranForm.NumProducts = 0;
             $scope.InventTranForm._CanUpdate = true;
             $scope.InventTranForm._CanDelete = true;
+            $scope.InventTranForm.Version = 0;
         }
 
         $scope.AddInventory = function () {

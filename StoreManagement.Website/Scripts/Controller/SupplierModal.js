@@ -27,7 +27,8 @@ mdlCommon.controller('SupplierModalController',
             Notes: "",
             IsActive: 1,
             _CanUpdate: true,
-            _CanDelete : true
+            _CanDelete: true,
+            Version : 0
         };
 
         $scope.ResetSupplierForm = function () {
@@ -41,6 +42,7 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.Address = "";
             $scope.SupplierForm._CanUpdate = true;
             $scope.SupplierForm._CanDelete = true;
+            $scope.SupplierForm.Version = 0;
         }
 
         $scope.SupplierFormConfig = new ObjectDataConfig("T_Master_Suppliers", $scope);

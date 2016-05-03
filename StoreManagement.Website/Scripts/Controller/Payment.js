@@ -66,7 +66,8 @@ mdlCommon.controller('PaymentController',
             Amount: "",
             Notes: "",
             StoreId: $scope.CurrentStore,
-            IsActive: 1
+            IsActive: 1,
+            Version : 0
         };
 
         $scope.ResetCostForm = function() {
@@ -77,6 +78,7 @@ mdlCommon.controller('PaymentController',
             $scope.CostForm.Notes = "";
             $scope.CostForm.IsActive = 1;
             $scope.CostForm.StoreId = $scope.CurrentStore;
+            $scope.CostForm.Version = 0;
         };
 
         $scope.AddCost = function()

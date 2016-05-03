@@ -49,7 +49,8 @@ mdlCommon.controller('ProductGroupController',
             GroupName: "",
             IsActive: "1",
             IsParent: "0",
-            ParentId: ""
+            ParentId: "",
+            Version: 0
         };
 
         $scope.ResetProductGroupForm = function () {
@@ -58,6 +59,7 @@ mdlCommon.controller('ProductGroupController',
             $scope.ProductGroupForm.IsActive = "1";
             $scope.ProductGroupForm.IsParent = "0";
             $scope.ProductGroupForm.ParentId = "";
+            $scope.ProductGroupForm.Version = 0;
         };
 
         $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups", $scope);

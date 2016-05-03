@@ -51,6 +51,7 @@ mdlCommon.controller('OrderController',
             IsActive: 1,
             PaidForDebt: 0,
             IsEditingPaidForDebt: false,
+            Version:0,
             _CanUpdate: true,
             _CanDelete : true
         };
@@ -79,6 +80,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.IsActive = 1;
             $scope.OrderForm.PaidForDebt = 0;
             $scope.OrderForm.IsEditingPaidForDebt = false;
+            $scope.OrderForm.Version = 0;
             $scope.OrderForm._CanUpdate = true;
             $scope.OrderForm._CanDelete = true;
         }

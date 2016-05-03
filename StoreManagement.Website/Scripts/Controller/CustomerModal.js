@@ -30,7 +30,8 @@ mdlCommon.controller('CustomerModalController',
             Gender: "M",
             IsActive: 1,
             _CanUpdate: true,
-            _CanDelete : true
+            _CanDelete: true,
+            Version : 0
         };
 
         $scope.ResetCustomerForm = function () {
@@ -47,6 +48,7 @@ mdlCommon.controller('CustomerModalController',
             $scope.CustomerForm.IsActive = 1;
             $scope.CustomerForm._CanUpdate = 1;
             $scope.CustomerForm._CanDelete = 1;
+            $scope.CustomerForm.Version = 0;
         };
 
 

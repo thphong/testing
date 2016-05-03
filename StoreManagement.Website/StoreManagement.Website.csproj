@@ -304,6 +304,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Images\photo.jpg" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -326,6 +327,7 @@
     <Content Include="Scripts\Controller\CostType.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\CustomerModal.js" />
+    <Content Include="Scripts\Controller\DataLog.js" />
     <Content Include="Scripts\Controller\Exception.js" />
     <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />

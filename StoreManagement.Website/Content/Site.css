@@ -694,3 +694,16 @@ button.btn-tiny {
 {
     background-color: #fff !important;
 }
+
+div.col-name
+{
+    font-weight: bold;
+    width: 45%;
+    display: inline-flex;
+}
+
+div.col-value
+{
+    width: 54%;
+    display: inline-flex;
+}

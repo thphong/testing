@@ -44,7 +44,8 @@ mdlCommon.controller('PurchaseController',
             Paid: 0,
             IsActive: 1,
             _CanUpdate: true,
-            _CanDelete: true
+            _CanDelete: true,
+            Version : 0
         };
 
         $scope.ResetPurchaseForm = function () {
@@ -69,6 +70,7 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.IsEditingPaidForDebt = false;
             $scope.PurchaseForm._CanUpdate = true;
             $scope.PurchaseForm._CanDelete = true;
+            $scope.PurchaseForm.Version = 0;
         }
 
         $scope.ListProductsPurchase = [];

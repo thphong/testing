@@ -62,6 +62,7 @@ mdlCommon.controller('ProductController',
             IsCost: 0,
             LastReferNo: "",
             LastComment: "",
+            Version: 0,
             _CanUpdate: true,
             _CanDelete: true
         };
@@ -92,6 +93,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.LastComment = "";
             $scope.ProductForm._CanUpdate = true;
             $scope.ProductForm._CanDelete = true;
+            $scope.ProductForm.Version = 0;
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);

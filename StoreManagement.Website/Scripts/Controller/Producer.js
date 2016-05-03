@@ -33,13 +33,15 @@ mdlCommon.controller('ProducerController',
         $scope.ProducerForm = {
             ProducerId: "-1",
             ProducerName: "",
-            IsActive: "1"
+            IsActive: "1",
+            Version : 0
         };
 
         $scope.ResetProducerForm = function () {
             $scope.ProducerForm.ProducerId = "-1";
             $scope.ProducerForm.ProducerName = "";
-            $scope.ProducerForm.IsActive = "1"
+            $scope.ProducerForm.IsActive = "1";
+            $scope.ProducerForm.Version = 0;
         };
 
         $scope.ProducerFormConfig = new ObjectDataConfig("T_Master_Producers", $scope);

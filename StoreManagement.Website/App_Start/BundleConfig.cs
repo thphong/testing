@@ -29,7 +29,8 @@ namespace StoreManagement.Website
                         "~/Content/jquery-ui.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
-                        "~/Scripts/angular.js"));
+                        "~/Scripts/angular.js",
+                        "~/Scripts/angular-sanitize.js")); 
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.js",
@@ -116,6 +117,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/Profit.js"));
             bundles.Add(new ScriptBundle("~/bundles/Exception").Include(
                         "~/Scripts/Controller/Exception.js"));
+            bundles.Add(new ScriptBundle("~/bundles/DataLog").Include(
+                        "~/Scripts/Controller/DataLog.js"));
             bundles.Add(new ScriptBundle("~/bundles/ProductList").Include(
                         "~/Scripts/Controller/ProductList.js"));
 

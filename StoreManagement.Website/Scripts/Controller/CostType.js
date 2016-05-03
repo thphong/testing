@@ -34,14 +34,16 @@ mdlCommon.controller('CostTypeController',
             CostTypeId: "-1",
             CostTypeName: "",
             Notes: "",
-            IsActive: "1"
+            IsActive: "1",
+            Version: 0
         };
 
         $scope.ResetCostTypeForm = function () {
             $scope.CostTypeForm.CostTypeId = "-1";
             $scope.CostTypeForm.CostTypeName = "";
             $scope.CostTypeForm.Notes = "";
-            $scope.CostTypeForm.IsActive = "1"
+            $scope.CostTypeForm.IsActive = "1";
+            $scope.CostTypeForm.Version = 0;
         };
 
         $scope.CostTypeFormConfig = new ObjectDataConfig("T_Master_CostTypes", $scope);

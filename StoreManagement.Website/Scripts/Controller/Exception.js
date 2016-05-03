@@ -16,7 +16,8 @@
             ErrorMessage: "",
             Data: "",
             Source : "",
-            IsResolve : 0
+            IsResolve: 0,
+            Version: 0
         }
 
         $scope.ResetExceptionForm = function()
@@ -27,6 +28,7 @@
             $scope.ExceptionForm.Data = "";
             $scope.ExceptionForm.Source = "";
             $scope.ExceptionForm.IsResolve = 0;
+            $scope.ExceptionForm.Version = 0;
         }
 
         $scope.SaveBug = function ()
@@ -45,7 +47,7 @@
         $scope.ResolveBug = function(bug)
         {
             if (FValidation.CheckControls("Ex" + bug.Id)) {
-                $scope.ExceptionFormConfig.SetObject({ Id: bug.Id, IsResolve: 1, Hero: $scope.CurrentUser , Remarks: bug.Remarks});
+                $scope.ExceptionFormConfig.SetObject({ Id: bug.Id, IsResolve: 1, Hero: $scope.CurrentUser, Remarks: bug.Remarks, Version: bug.Version});
                 if ($scope.ExceptionFormConfig.SaveObject()) {
                     ShowSuccessMessage("Chúc mừng bạn đã thành dũng sĩ diệt bug!");
                     $scope.ReloadGrid('Exceptions');
