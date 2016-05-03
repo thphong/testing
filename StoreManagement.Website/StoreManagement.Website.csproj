@@ -435,6 +435,7 @@
     <Content Include="Views\Shared\CostTypeModal.cshtml" />
     <Content Include="Views\Shared\ReceiveHistoryModal.cshtml" />
     <Content Include="Views\Admin\Exception.cshtml" />
+    <Content Include="Views\Admin\LogData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,8 +23,7 @@ namespace StoreManagement.Service
         public DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig)
         {
             string statement;
-            
-            if(gridConfig.GridDataType == GridViewConfig.FunctionType)
+            if (gridConfig.GridDataType == GridViewConfig.FunctionType)
             {
                 statement = string.Format("exec [dbo].[USP_System_Data_Function_Get] @UserId ={0}, @FunctionName = '{1}', @Parameter = N'{2}', @TextFilter = N'{3}', @Action = '{4}', @StartRow = {5}, @EndRow = {6}, @GlobalOrder = '{7}', @GlobalOrderDirection = {8}, @ColumSum = '{9}'"
                     ,userId, gridConfig.GridDataObject, gridConfig.GridParameters, gridConfig.FilterByValue, gridConfig.GridDataAction, gridConfig.StartRow, gridConfig.EndRow, gridConfig.OrderBy, gridConfig.OrderDirection, gridConfig.GridSumColums);
@@ -94,6 +93,7 @@ namespace StoreManagement.Service
         public Dictionary<string, object> SumDataFromConfiguration(int userId, GridViewConfig gridConfig)
         {
             gridConfig.GridDataAction = "sum";
+            //gridConfig.FilterBy
             return GetDataFromConfigurationJsonable(userId, gridConfig).First();
         }
 
@@ -102,6 +102,7 @@ namespace StoreManagement.Service
         #region Object
         public int SaveObject(int userId, string tableName, string objectData)
         {
+            objectData = objectData.Replace("'", "''");
             string statement = string.Format("exec [dbo].[USP_System_Data_Update] @TableName = '{0}', @Data = N'{1}', @UserId = {2}"
                     , tableName, objectData, userId);
             
@@ -112,6 +113,7 @@ namespace StoreManagement.Service
 
         public void SaveListObject(int userId, string tableName, string objectData)
         {
+            objectData = objectData.Replace("'", "''");
             string statement = string.Format("exec [dbo].[USP_System_Data_BulkUpdate] @TableName = '{0}', @Data = N'{1}', @UserId = {2}"
                     , tableName, objectData, userId);
 

@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Store Management";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/Exception")
+}
+
+<div id="ExceptionController" ng-controller="ExceptionController">
+    <div class="container-fluid">
+        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+            <div class="col-md-5">
+                <span grid-filter-for="DataChanges" place-holder-message="Tìm kiếm"></span>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control input-sm width-90" ng-model="AdditionalFilter.ExceptionType" ng-change="ReloadGrid('DataChanges')">
+                    <option selected="selected" value="0">Chưa fix</option>
+                    <option value="1">Đã fix</option>
+                </select>
+            </div>
+            <div class="col-md-5 pull-right text-right">
+                <span grid-export-import-for="DataChanges"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table grid-data="DataChanges"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="get" @*get/getall*@
+                       grid-data-object="V_System_Data_Log" @*table name or stored procedure name*@
+                       grid-filter-condition=""
+                       @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[ModifiedDate] DESC" @*must have [fieldname] for each colum field*@
+                       class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="TableName"><span>TableName</span></th>
+                            <th grid-defined-colum="KeyValue"><span>KeyValue</span></th>
+                            <th grid-defined-colum="UserName"><span>UserName</span></th>
+                            <th grid-defined-colum="ModifiedDate"><span>ModifiedDate</span></th>
+                            <th grid-defined-colum="Data"><span>Data</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*Dataset must have grid id*@
+                        <tr ng-repeat="item in DataSet.DataChanges.Data">
+                            <td ng-bind="item.TableName"></td>
+                            <td ng-bind="item.KeyValue"></td>
+                            <td ng-bind="item.UserName"></td>
+                            <td ng-bind="item.ModifiedDate"></td>
+                            <td style="max-width: 200px; word-break: break-all;"
+                                >{{item.Data}}</td>                            
+                        </tr>
+                        <tr ng-if="!DataSet.DataChanges.HasRecord()">
+                            @*Edit colspan*@
+                            <td colspan="5" align="center"> Không có dữ liệu! </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-9 pull-left">
+                        <span grid-paging-for="DataChanges"></span>
+                    </div>
+
+                    <div class="col-md-3 pull-right">
+                        <span grid-page-size-for="DataChanges"></span>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@ namespace StoreManagement.Service
         {
             get
             {
-                return FilterBy != null ? FilterBy : "";
+                return FilterBy != null ? FilterBy.Replace("'", "''") : "";
             }
         }
         public string FilterBy { get; set; }

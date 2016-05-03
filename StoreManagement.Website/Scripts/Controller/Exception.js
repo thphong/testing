@@ -45,9 +45,7 @@
         $scope.ResolveBug = function(bug)
         {
             if (FValidation.CheckControls("Ex" + bug.Id)) {
-                bug.IsResolve = 1;
-                bug.Hero = $scope.CurrentUser;
-                $scope.ExceptionFormConfig.SetObject(bug);
+                $scope.ExceptionFormConfig.SetObject({ Id: bug.Id, IsResolve: 1, Hero: $scope.CurrentUser , Remarks: bug.Remarks});
                 if ($scope.ExceptionFormConfig.SaveObject()) {
                     ShowSuccessMessage("Chúc mừng bạn đã thành dũng sĩ diệt bug!");
                     $scope.ReloadGrid('Exceptions');

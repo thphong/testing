@@ -25,19 +25,19 @@
                 if ($scope.BarChartByTime == null) {
                     $scope.BarChartByTime = c3.generate({
                         bindto: '#chartReportByTime',
-                        data: { x: 'x', columns: [], type: "bar" },
+                        data: { x: 'x', columns: [], type: "bar", groups: [['Lãi', 'Vốn']], order: null },
                         axis: {
                             x: { label: 'Thời gian', type: 'category' } //this needed to load string x value
                             , y: { label: 'Doanh thu' }
                         },
                         bar: { width: { ratio: 0.5 } },
-                        legend: { show: false }
+                        legend: { position: "right" }
                     });
                 }
 
                 if (listName.length > 1) {
                     $scope.BarChartByTime.load({
-                        columns: [listName, cost, profit]
+                        columns: [listName, cost, profit ]
                     });
                 }
                 else {
@@ -66,13 +66,13 @@
                 if ($scope.BarChartByProduct == null) {
                     $scope.BarChartByProduct = c3.generate({
                         bindto: '#chartReportByProduct',
-                        data: { x: 'x', columns: [], type: "bar" },
+                        data: { x: 'x', columns: [], type: "bar", groups: [['Lãi', 'Vốn']], order: null },
                         axis: {
                             x: { label: 'Sản phẩm', type: 'category' } //this needed to load string x value
                             , y: { label: 'Doanh thu' }
                         },
                         bar: { width: { ratio: 0.5 } },
-                        legend: { show: false }
+                        legend: { position: "right" }
                     });
                 }
                 if (listName.length > 1) {
@@ -106,13 +106,13 @@
                 if ($scope.BarChartByStore == null) {
                     $scope.BarChartByStore = c3.generate({
                         bindto: '#chartReportByStore',
-                        data: { x: 'x', columns: [], type: "bar" },
+                        data: { x: 'x', columns: [], type: "bar", groups: [['Lãi', 'Vốn']], order: null },
                         axis: {
                             x: { label: 'Cửa hàng', type: 'category' } //this needed to load string x value
                             , y: { label: 'Doanh thu' }
                         },
                         bar: { width: { ratio: 0.5 } },
-                        legend: { show: false }
+                        legend: { position: "right" }
                     });
                 }
                 if (listName.length > 1) {

@@ -121,7 +121,7 @@
                             <span class="bold">Báo cáo lãi theo thời gian</span>
                         </div>
                     </div>
-                    <div class="row col-md-6 margin-top-10">
+                    <div class="row col-md-6 margin-top-10" ng-show="CurrentTab =='ReportByTime'">
                         <div id="chartReportByTime"></div>
                     </div>
                     @*use ng-if to reload chart*@
@@ -249,7 +249,7 @@
                             <span class="bold">Báo cáo lãi theo sản phẩm</span>
                         </div>
                     </div>
-                    <div class="row col-md-6 margin-top-10">
+                    <div class="row col-md-6 margin-top-10" ng-show="CurrentTab =='ReportByProduct'">
                         <div id="chartReportByProduct"></div>
                     </div>
                     @*use ng-if to reload chart*@
@@ -371,7 +371,7 @@
                             <span class="bold">Báo cáo lãi cửa hàng</span>
                         </div>
                     </div>
-                    <div class="row col-md-6 margin-top-10">
+                    <div class="row col-md-6 margin-top-10" ng-show="CurrentTab =='ReportByStore'">
                         <div id="chartReportByStore"></div>
                     </div>
                     @*use ng-if to reload chart*@

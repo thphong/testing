@@ -75,5 +75,10 @@ namespace StoreManagement.Website.Controllers
         {
             return View();
         }
+
+        public ActionResult LogData()
+        {
+            return View();
+        }
     }
 }

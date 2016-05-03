@@ -56,9 +56,12 @@
                         @*Dataset must have grid id*@
                         <tr ng-repeat="item in DataSet.Exceptions.Data">
                             <td ng-bind="item.ObjectName"></td>
-                            <td ng-bind="item.ErrorMessage"></td>
-                            <td style="max-width: 200px; word-break: break-all;" ng-bind="item.Data"></td>
-                            <td ng-bind="item.Source"></td>
+                            <td style="max-width: 200px; word-break: break-all;" 
+                                ng-bind="item.ErrorMessage"></td>
+                            <td style="max-width: 200px; word-break: break-all;" 
+                                ng-bind="item.Data"></td>
+                            <td style="max-width: 200px; word-break: break-all;"
+                                ng-bind="item.Source"></td>
                             <td ng-bind="item.Logger"></td>
                             <td ng-bind="item.Hero"></td>
                             <td>
