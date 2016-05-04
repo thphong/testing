@@ -31,7 +31,8 @@ mdlCommon.controller('ProductController',
         $scope.AdditionalFilter = {
             ProductStatus: "1",
             ProductGroup: "0",
-            Producer: "0"
+            Producer: "0",
+            ProductType: "0"
         };
 
         $scope.IsShowProductDetail = false;

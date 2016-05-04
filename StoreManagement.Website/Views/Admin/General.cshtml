@@ -4,10 +4,10 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/DataList")
+    @Scripts.Render("~/bundles/General")
 }
 
-<div ng-controller="RootController">
+<div ng-controller="GeneralController">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-title"> <span>Doanh thu </span></div>
-                        <span class="infobox-data-number center">1,720,000</span>
+                        <span class="infobox-data-number center" ng-bind="GeneralInfo.Revenue | currency:'':0"></span>
                     </div>
                 </div>
             </div>
@@ -32,13 +32,15 @@
                         <i class="fa fa-shopping-cart"></i>
                     </div>
                     <div class="infobox-data">
-                        <div class="infobox-subtitle" style="cursor: pointer;" title="Click để xem danh sách đơn hàng">
+                        <div class="infobox-subtitle">
                             <span>Số đơn hàng:</span>
-                            <span style="text-decoration: underline !important;">2</span>
+                            <a href="@Url.Action("Orders", "Admin", new { DateRangeCode = 0, Status = 2})"
+                                class="white" ng-bind="GeneralInfo.NumOrder"></a>
                         </div>
-                        <div class="infobox-subtitle" style="cursor: pointer;" title="Click để xem danh sách hàng hóa">
+                        <div class="infobox-subtitle" >
                             <span>Số hàng hóa:</span>
-                            <span style="text-decoration: underline !important;">2</span>
+                            <a href="@Url.Action("Orders", "Admin", new { DateRangeCode = 0 , Status = 2})"
+                               class="white" ng-bind="GeneralInfo.NumSoldProduct"></a>
                         </div>
                     </div>
                 </div>
@@ -46,19 +48,19 @@
             <div class="col-md-3 col-xs-6 ">
                 <div class="col-xs-12 report-box infobox-red">
                     <div class="infobox-icon">
-                        <i class="fa fa-undo"></i>
+                        <i class="fa fa-trash-o"></i>
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-title">
-                            <span>Hàng khách trả</span>
+                            <span>Hóa đơn bị xóa</span>
                         </div>
                         <div class="infobox-data-number text-center">
-                            <span>0</span>
+                            <span ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-xs-6 ">
+            <div class="col-md-3 col-xs-6 none-display">
                 <div class="col-xs-12 report-box infobox-orange">
                     <div class="infobox-icon">
                         <i class="fa fa-cloud"></i>
@@ -139,25 +141,29 @@
                                     Tồn kho lâu
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách hàng hóa">15</span>
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 5})"
+                                          ng-bind="GeneralInfo.LongInventory"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Hết hàng
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách hàng hóa">4</span>
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 2})" 
+                                          ng-bind="GeneralInfo.OutOfQuantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    Sắp hết hàng
+                                    Dưới định mức
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>0</span>
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 3})" 
+                                       ng-bind="GeneralInfo.UnderMin"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Vượt định mức
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>0</span>
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 4})" 
+                                          ng-bind="GeneralInfo.OverMax"></a>
                                 </div>
                             </div>
                         </div>
@@ -176,28 +182,32 @@
                         <div class="widget-main">
                             <div class="row">
                                 <div class="col-xs-7 info">
-                                    Hàng hóa/Chủng loại
+                                    Số hàng hóa
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span href="#/product" style="text-decoration: underline !important;">10 / 21</span>
+                                    <a href="@Url.Action("Products", "Admin")"
+                                          ng-bind="GeneralInfo.TotalProduct"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Chưa làm giá bán
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>0</span>
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 1})"
+                                          ng-bind="GeneralInfo.NotInputPrice"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Chưa nhập giá mua
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>0</span>
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 2})"
+                                          ng-bind="GeneralInfo.NotInputCost"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Hàng chưa phân loại
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span >0</span>                                    
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 3})" 
+                                       ng-bind="GeneralInfo.NotInputGroup"></a>                                    
                                 </div>
                             </div>
                         </div>
@@ -225,56 +235,19 @@
                 <div class="widget-box">
                     <div class="widget-header gray" style="border-bottom: 1px solid #ccc;">
                         <h4 class="widget-title">
-                            <i class="fa-cloud fa"></i>
-                            Thông tin từ web
+                            <i class="fa-soundcloud fa"></i>
+                            Thông báo
                         </h4>
                     </div>
                     <div class="widget-body" style="border: none; min-height: 155px">
                         <div class="widget-main">
                             <div class="row">
-                                <div class="col-xs-12">(Chưa đăng ký website)</div>
-                                <div class="col-xs-6 info">
-                                    Lượng truy cập
+                                <div class="col-xs-6 data">
+                                    Thông báo khuyến mãi
                                 </div>
-                                <div class="col-xs-6 data text-right">
-                                    0
+                                <div class="col-xs-6 text-right">
+                                    Tin khuyến mãi ...
                                 </div>
-                                <div class="col-xs-6 info">
-                                    Số trang xem
-                                </div>
-                                <div class="col-xs-6 data text-right">
-                                    0
-                                </div>
-                                <div class="col-xs-6 info">
-                                    Thời gian lưu lại web
-                                </div>
-                                <div class="col-xs-6 data text-right">
-                                    0
-                                </div>
-                                <div class="col-xs-6 info">
-                                    Trang xem nhiều nhất
-                                </div>
-                                <div class="col-xs-6 data text-right">
-                                    N/A
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="widget-box">
-                    <div class="widget-header gray" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #ccc;">
-                        <h4 class="widget-title">
-                            <i class="fa-rss fa"></i>
-                            Tin chuyên ngành
-                        </h4>
-                    </div>
-
-                    <div class="widget-body" style="border: none;min-height: 155px;">
-                        <div class="widget-main" style="min-height: 139px;">
-                            <div class="row text-center bolder" style="margin-top: 40px;">
-                                Dữ liệu đang cập nhật
                             </div>
                         </div>
                     </div>

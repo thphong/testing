@@ -329,6 +329,7 @@
     <Content Include="Scripts\Controller\CustomerModal.js" />
     <Content Include="Scripts\Controller\DataLog.js" />
     <Content Include="Scripts\Controller\Exception.js" />
+    <Content Include="Scripts\Controller\General.js" />
     <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />
     <Content Include="Scripts\Controller\Order.js" />

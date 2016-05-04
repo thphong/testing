@@ -88,15 +88,6 @@
                                         <div class="infobox-content">Lãi gộp</div>
                                     </div>
                                 </div>
-                                <div class="infobox infobox-red">
-                                    <div class="infobox-icon">
-                                        <i class="fa-undo fa"></i>
-                                    </div>
-                                    <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByTime.Sums.ReturnAmount | currency:'':0"></span>
-                                        <div class="infobox-content">Tiền trả hàng</div>
-                                    </div>
-                                </div>
                                 <div class="infobox infobox-blue">
                                     <div class="infobox-icon">
                                         <i class="fa-money fa"></i>
@@ -113,6 +104,15 @@
                                     <div class="infobox-data">
                                         <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByTime.Sums.Discount | currency:'':0"></span>
                                         <div class="infobox-content">Tiền giảm giá</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-red">
+                                    <div class="infobox-icon">
+                                        <i class="fa-trash-o fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByTime.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Hóa đơn bị xóa</div>
                                     </div>
                                 </div>
                             </div>
@@ -142,10 +142,10 @@
                                 <tr>
                                     <th grid-defined-colum="GroupBy"><span>Thời gian</span></th>
                                     <th grid-defined-colum="Quantity"><span>SL bán</span></th>
-                                    <th grid-defined-colum="ReturnQuan"><span>SL trả</span></th>
+                                    <th grid-defined-colum="ReturnQuan"><span>SL xóa</span></th>
                                     <th grid-defined-colum="Discount"><span>Giảm giá</span></th>
                                     <th grid-defined-colum="Revenue"><span>Doanh thu</span></th>
-                                    <th grid-defined-colum="ReturnAmount"><span>Trả hàng</span></th>
+                                    <th grid-defined-colum="ReturnAmount"><span>Hóa đơn xóa</span></th>
                                     <th grid-defined-colum="Cost"><span>Vốn</span></th>
                                     <th grid-defined-colum="Profit"><span>Lãi</span></th>
                                 </tr>
@@ -216,15 +216,6 @@
                                         <div class="infobox-content">Lãi gộp</div>
                                     </div>
                                 </div>
-                                <div class="infobox infobox-red">
-                                    <div class="infobox-icon">
-                                        <i class="fa-undo fa"></i>
-                                    </div>
-                                    <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByProduct.Sums.ReturnAmount | currency:'':0"></span>
-                                        <div class="infobox-content">Tiền trả hàng</div>
-                                    </div>
-                                </div>
                                 <div class="infobox infobox-blue">
                                     <div class="infobox-icon">
                                         <i class="fa-money fa"></i>
@@ -241,6 +232,15 @@
                                     <div class="infobox-data">
                                         <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByProduct.Sums.Discount | currency:'':0"></span>
                                         <div class="infobox-content">Tiền giảm giá</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-red">
+                                    <div class="infobox-icon">
+                                        <i class="fa-trash-o fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByProduct.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Hóa đơn bị xóa</div>
                                     </div>
                                 </div>
                             </div>
@@ -271,10 +271,10 @@
                                     <th grid-defined-colum="ProductCode"><span>Mã</span></th>
                                     <th grid-defined-colum="ProductName"><span>Tên sản phẩm</span></th>
                                     <th grid-defined-colum="Quantity"><span>SL bán</span></th>
-                                    <th grid-defined-colum="ReturnQuan"><span>SL trả</span></th>
+                                    <th grid-defined-colum="ReturnQuan"><span>SL xóa</span></th>
                                     <th grid-defined-colum="Discount"><span>Giảm giá</span></th>
                                     <th grid-defined-colum="Revenue"><span>Doanh thu</span></th>
-                                    <th grid-defined-colum="ReturnAmount"><span>Trả hàng</span></th>
+                                    <th grid-defined-colum="ReturnAmount"><span>Hóa đơn xóa</span></th>
                                     <th grid-defined-colum="Cost"><span>Vốn</span></th>
                                     <th grid-defined-colum="Profit"><span>Lãi</span></th>
                                 </tr>
@@ -338,15 +338,6 @@
                                         <div class="infobox-content">Lãi gộp</div>
                                     </div>
                                 </div>
-                                <div class="infobox infobox-red">
-                                    <div class="infobox-icon">
-                                        <i class="fa-undo fa"></i>
-                                    </div>
-                                    <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByStore.Sums.ReturnAmount | currency:'':0"></span>
-                                        <div class="infobox-content">Tiền trả hàng</div>
-                                    </div>
-                                </div>
                                 <div class="infobox infobox-blue">
                                     <div class="infobox-icon">
                                         <i class="fa-money fa"></i>
@@ -363,6 +354,15 @@
                                     <div class="infobox-data">
                                         <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByStore.Sums.Discount | currency:'':0"></span>
                                         <div class="infobox-content">Tiền giảm giá</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-red">
+                                    <div class="infobox-icon">
+                                        <i class="fa-trash-o fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByStore.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Hóa đơn bị xóa</div>
                                     </div>
                                 </div>
                             </div>
@@ -391,10 +391,10 @@
                                 <tr>
                                     <th grid-defined-colum="StoreCode"><span>Cửa hàng</span></th>
                                     <th grid-defined-colum="Quantity"><span>SL bán</span></th>
-                                    <th grid-defined-colum="ReturnQuan"><span>SL trả</span></th>
+                                    <th grid-defined-colum="ReturnQuan"><span>SL xóa</span></th>
                                     <th grid-defined-colum="Discount"><span>Giảm giá</span></th>
                                     <th grid-defined-colum="Revenue"><span>Doanh thu</span></th>
-                                    <th grid-defined-colum="ReturnAmount"><span>Trả hàng</span></th>
+                                    <th grid-defined-colum="ReturnAmount"><span>Hóa đơn xóa</span></th>
                                     <th grid-defined-colum="Cost"><span>Vốn</span></th>
                                     <th grid-defined-colum="Profit"><span>Lãi</span></th>
                                 </tr>

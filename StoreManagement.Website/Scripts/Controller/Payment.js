@@ -100,9 +100,21 @@ mdlCommon.controller('PaymentController',
 
         $scope.Receivement = function (receive) {
             if (FValidation.CheckControls("receive" + receive.Cashier)) {
+                receive.IsReceive = 1;
                 $scope.ReceivementConfig.SetObject(receive);
                 if ($scope.ReceivementConfig.SaveObject() > 0) {
                     ShowSuccessMessage("Đã lưu phiếu nhận tiền thành công!");
+                    $scope.ReloadGrid('CollectMoneys');
+                }
+            }
+        }
+
+        $scope.Givement = function (give) {
+            if (FValidation.CheckControls("give" + give.Cashier)) {
+                give.IsReceive = 0;
+                $scope.ReceivementConfig.SetObject(give);
+                if ($scope.ReceivementConfig.SaveObject() > 0) {
+                    ShowSuccessMessage("Đã lưu phiếu ứng tiền thành công!");
                     $scope.ReloadGrid('CollectMoneys');
                 }
             }

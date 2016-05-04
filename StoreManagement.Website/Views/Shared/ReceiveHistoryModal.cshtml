@@ -6,7 +6,7 @@
             <div class="modal-header infobox-blue white border-6">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title bold">
-                    Lịch sử nộp tiền của nhân viên '<span ng-bind="SelectedCashier.CashierName"></span>'
+                    Lịch sử nộp tiền / ứng tiền của nhân viên '<span ng-bind="SelectedCashier.CashierName"></span>'
                 </h4>
             </div>
 
@@ -32,9 +32,10 @@
                                     <thead>
                                         <tr>
                                             <th ><span>STT </span></th>
-                                            <th grid-defined-colum="CreatedBy.UserName"><span>Người nhận</span></th>
-                                            <th grid-defined-colum="CreatedDate"><span>Ngày nhận</span></th>
+                                            <th grid-defined-colum="CreatedBy.UserName"><span>Người nhận/giao</span></th>
+                                            <th grid-defined-colum="CreatedDate"><span>Ngày nhận/giao</span></th>
                                             <th grid-defined-colum="Amount"><span>Số tiền</span></th>
+                                            <th grid-defined-colum="IsReceive"><span>Ghi chú</span></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,11 +44,15 @@
                                             <td ng-bind="item.UserName"> </td>
                                             <td ng-bind="item.CreatedDate"></td>
                                             <td> <span ng-bind="item.Amount | currency:'':0" class="bold"></span> </td>
+                                            <td>
+                                                <span ng-if="item.IsReceive == 0">Ứng tiền</span>
+                                                <span ng-if="item.IsReceive == 1">Nhận tiền</span>
+                                            </td>
                                             
                                         </tr>
                                         <tr ng-if="!DataSet.ReceiveHistorys.HasRecord()">
                                             @*Edit colspan*@
-                                            <td colspan="4" align="center"> Không có dữ liệu! </td>
+                                            <td colspan="5" align="center"> Không có dữ liệu! </td>
                                         </tr>
                                     </tbody>
 

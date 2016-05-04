@@ -10,8 +10,11 @@
 }
 
 <div id="InventoryController" ng-controller="InventoryController">
+    @if (!String.IsNullOrWhiteSpace(@ViewBag.InventoryProductType))
+    {
+    <div ng-init="AdditionalFilter.InventoryProductType = '@ViewBag.InventoryProductType'"></div>    
+    }
     <div class="container-fluid">
-
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
@@ -124,7 +127,8 @@
                                                 or ({{AdditionalFilter.InventoryProductType}} = 2 and [Quantity] <= 0)
                                                 or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [ProductId.AllowMin])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [ProductId.AllowMax])
-                                                or ({{AdditionalFilter.InventoryProductType}} = 5 and [ProductId.LastBoughtDate] < dateadd(dd, -7, getdate())))" @*must have [fieldname] for each colum field*@
+                                                or ({{AdditionalFilter.InventoryProductType}} = 5 and [Quantity] > 0 
+                                                        and convert(date,[ProductId.LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'')), getdate()))))" @*must have [fieldname] for each colum field*@
                                grid-sort-condition="[ProductId.ProductCode] ASC" @*must have [fieldname] for each colum field*@
                                grid-sum-collection="[ProductId.Cost]*[Quantity],SumCost;[ProductId.Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">

@@ -10,6 +10,10 @@
 }
 
 <div id="OrderController" ng-controller="OrderController">
+    @if (!String.IsNullOrWhiteSpace(@ViewBag.Status))
+    {
+        <div ng-init="AdditionalFilter.Status = '@ViewBag.Status'"></div>
+    }
     <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowOrderDetail}">
         <div ng-if="!IsShowOrderDetail">
             <div class="row" style="padding-top: 5px">
@@ -33,7 +37,14 @@
                     </select>
                 </div>
                 <div class="col-md-5 text-right">
-                    <span date-range-filter-for="Orders" date-range-init-code="2"></span>
+                    @if (!String.IsNullOrWhiteSpace(@ViewBag.DateRangeCode))
+                    {
+                        <span date-range-filter-for="Orders" date-range-init-code="@ViewBag.DateRangeCode"></span>
+                    }
+                    else
+                    {
+                        <span date-range-filter-for="Orders" date-range-init-code="2"></span>
+                    }
                 </div>
             </div>
             <div class="row">

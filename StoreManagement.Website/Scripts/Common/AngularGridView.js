@@ -603,6 +603,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         var quarter = Math.floor(curr.getMonth() / 3);
 
         switch (option) {
+            case 0: //today
+                $scope.FilterRangeDate.StartDate = formatDate(curr);
+                $scope.FilterRangeDate.EndDate = formatDate(curr);
+                break;
             case 1: //This week
                 $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first)));
                 $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last)));

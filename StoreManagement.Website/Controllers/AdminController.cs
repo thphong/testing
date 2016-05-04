@@ -25,13 +25,16 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult Orders()
+        public ActionResult Orders(string DateRangeCode, string Status)
         {
+            ViewBag.DateRangeCode = DateRangeCode;
+            ViewBag.Status = Status;
             return View();
         }
 
-        public ActionResult Products()
+        public ActionResult Products(string ProductType)
         {
+            ViewBag.ProductType = ProductType;
             return View();
         }
 
@@ -46,8 +49,9 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult Inventory()
+        public ActionResult Inventory(string InventoryProductType)
         {
+            ViewBag.InventoryProductType = InventoryProductType;
             return View();
         }
 

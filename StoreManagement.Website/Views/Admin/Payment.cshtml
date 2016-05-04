@@ -9,7 +9,6 @@
 
 <div id="InventoryController" ng-controller="PaymentController">
     <div class="container-fluid">
-
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
@@ -270,6 +269,7 @@
                                     <th grid-defined-colum="Pending"><span>Chưa nhận</span></th>
                                     <th><span>Số tiền nhận</span></th>
                                     <th><span>Nhận tiền</span></th>
+                                    <th><span>Ứng tiền</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -282,7 +282,7 @@
                                     <td ng-bind="item.Receivement | currency:'':0"></td>
                                     <td ng-bind="item.Pending | currency:'':0"></td>
                                     <td>
-                                        <input ng-readonly="!item.IsEditing" class="form-control" 
+                                        <input ng-readonly="!item.IsEditingReceive && !item.IsEditingGive" class="form-control" 
                                                @*check-currency*@ ng-model="item.Amount"
                                                check-empty=""
                                                check-empty-message="Vui lòng nhập số tiền."
@@ -291,23 +291,37 @@
                                                check-range-message="Vui lòng nhập số dương và không vượt quá {{item.Pending}}." />
                                     </td>
                                     <td>
-                                        <a ng-if="!item.IsEditing && ReceivementConfig._CanCreate" class="blue margin-left-10" 
-                                           title="Nhận tiền" ng-click="item.IsEditing = true;">
+                                        <a ng-if="!item.IsEditingReceive && !item.IsEditingGive && ReceivementConfig._CanCreate" class="blue margin-left-10" 
+                                           title="Nhận tiền" ng-click="item.IsEditingReceive = true;">
                                             <i class="fa-edit fa"></i>
                                         </a>
-                                        <a ng-if="item.IsEditing && ReceivementConfig._CanCreate" class="blue margin-left-10" 
+                                        <a ng-if="item.IsEditingReceive && ReceivementConfig._CanCreate" class="blue margin-left-10" 
                                            title="Lưu" ng-click="Receivement(item)">
                                             <i class="fa-save fa"></i>
                                         </a>
-                                        <a ng-if="item.IsEditing" class="blue margin-left-10" 
-                                           title="Hủy" ng-click="item.IsEditing = false;">
+                                        <a ng-if="item.IsEditingReceive" class="blue margin-left-10" 
+                                           title="Hủy" ng-click="item.IsEditingReceive = false;">
+                                            <i class="fa-undo fa"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a ng-if="!item.IsEditingGive && !item.IsEditingReceive && ReceivementConfig._CanCreate" class="blue margin-left-10"
+                                           title="Nhận tiền" ng-click="item.IsEditingGive = true;">
+                                            <i class="fa-edit fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditingGive && ReceivementConfig._CanCreate" class="blue margin-left-10"
+                                           title="Lưu" ng-click="Givement(item)">
+                                            <i class="fa-save fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditingGive" class="blue margin-left-10"
+                                           title="Hủy" ng-click="item.IsEditingGive = false;">
                                             <i class="fa-undo fa"></i>
                                         </a>
                                     </td>
                                 </tr>
                                 <tr ng-if="!DataSet.CollectMoneys.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="6" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="7" align="center"> Không có dữ liệu! </td>
                                 </tr>
                             </tbody>
                         </table>
