@@ -52,7 +52,7 @@
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-title">
-                            <span>Hóa đơn bị xóa</span>
+                            <span>Đơn hàng bị xóa</span>
                         </div>
                         <div class="infobox-data-number text-center">
                             <span ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></span>
@@ -94,31 +94,35 @@
                                     Doanh thu
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span style="text-decoration: underline !important;">1,720,000</span>
+                                    <a href="@Url.Action("Profit", "Admin", new { DateRangeCode = 1})"
+                                       ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Lãi gộp
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span style="text-decoration: underline !important;">620,000</span>
+                                    <a href="@Url.Action("Profit", "Admin", new { DateRangeCode = 1})"
+                                       ng-bind="Revenue.Data.Profit | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Số đơn hàng
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span style="text-decoration: underline !important;" title="Click để xem danh sách đơn hàng">2</span>
+                                    <a href="@Url.Action("Profit", "Admin", new { DateRangeCode = 1})"
+                                       ng-bind="Revenue.Data.Quantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
                                     Doanh thu/đơn hàng
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>860,000</span>
+                                    <a ng-if="Revenue.Data.Quantity > 0"
+                                       ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0">860,000</a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    Hàng khách trả lại
+                                    Đơn hàng bị xóa
                                 </div>
                                 <div class="col-xs-5 data text-right">
-                                    <span>0</span>
+                                    <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
                                 </div>
                             </div>
                         </div>

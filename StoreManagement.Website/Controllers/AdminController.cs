@@ -65,8 +65,9 @@ namespace StoreManagement.Website.Controllers
             return View();
         }
 
-        public ActionResult Profit()
+        public ActionResult Profit(string DateRangeCode)
         {
+            ViewBag.DateRangeCode = DateRangeCode;
             return View();
         }
 
