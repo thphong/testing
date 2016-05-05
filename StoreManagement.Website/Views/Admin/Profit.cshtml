@@ -50,6 +50,7 @@
                                 @if (!String.IsNullOrWhiteSpace(@ViewBag.DateRangeCode))
                                 {
                                     <span date-range-filter-for="ReportByTime" date-range-init-code="@ViewBag.DateRangeCode"></span>
+                                    <span ng-init="Filter.CurrentStore = CurrentStore"></span>
                                 }
                                 else
                                 {

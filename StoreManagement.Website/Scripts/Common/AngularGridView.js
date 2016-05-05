@@ -360,7 +360,7 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')">Quí</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{4:\'clicked\', 5:\'clicked\', 6:\'clicked\'}[RangeDateCode]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>'
-        + ' <ul class="dropdown-menu dropdown-menu-right" ] role="menu">'
+        + ' <ul class="dropdown-menu dropdown-menu-right" role="menu">'
         + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')">Tuần trước</a></li>'
         + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')">Tháng trước</a></li>'
         + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
@@ -620,8 +620,9 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
                 $scope.FilterRangeDate.EndDate = formatDate(new Date(y, quarter * 3 + 3, 0));
                 break;
             case 4: //last week
-                $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first - 7)));
-                $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last - 7)));
+                var firstLastWeek = new Date(curr.setDate(first - 7));
+                $scope.FilterRangeDate.StartDate = formatDate(firstLastWeek);
+                $scope.FilterRangeDate.EndDate = formatDate(new Date(firstLastWeek.setDate(firstLastWeek.getDate() + 6)));
                 break;
             case 5: //Last month
                 $scope.FilterRangeDate.StartDate = formatDate(new Date(y, m - 1, 1));
