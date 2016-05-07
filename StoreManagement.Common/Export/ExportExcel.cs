@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -90,5 +91,63 @@ namespace StoreManagement.Common.Export
                 throw;
             }
         }
+
+        public static byte[] ExportFromTempalte(string tempalteFile, Dictionary<string, object> objectData, DataTable list)
+        {
+            string fileName = tempalteFile;
+
+            /*using (var document = SpreadsheetDocument.Open(fileName, false))
+            {
+                var workbookPart = document.WorkbookPart;
+                var workbook = workbookPart.Workbook;
+
+                var sheets = workbook.Descendants<Sheet>();
+                foreach (var sheet in sheets)
+                {
+                    var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
+
+                    SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
+                    SharedStringTable sst = sstpart.SharedStringTable;
+                    
+                    var rows = worksheetPart.Worksheet.Descendants<Row>();
+                    foreach (var row in rows)
+                    {
+                        Console.WriteLine();
+                        int count = row.Elements<Cell>().Count();
+
+                        foreach (Cell c in row.Elements<Cell>())
+                        {
+                            int ssid = int.Parse(c.CellValue.Text);
+                            string str = sst.ChildElements[ssid].InnerText;
+                            
+                        }
+                    }
+                }
+            }*/
+
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fs, true))
+                {
+                    WorkbookPart workbookPart = doc.WorkbookPart;
+                    SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
+                    SharedStringTable sst = sstpart.SharedStringTable;
+
+                    // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
+                    foreach (SharedStringItem item in sstpart.SharedStringTable.Elements<SharedStringItem>())
+                    {
+                        if (item.InnerText != "" && item.InnerText.ToString().Contains("d"))
+                        {
+                            Text text2 = item.Descendants<Text>().First();
+                            text2.Text = DateTime.Now.ToString();
+                        }
+                    }
+                    sstpart.SharedStringTable.Save();
+                }
+            }
+
+            return null;
+        }
+
     }
 }

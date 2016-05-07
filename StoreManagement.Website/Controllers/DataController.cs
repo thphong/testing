@@ -145,6 +145,14 @@ namespace StoreManagement.Website.Controllers
             }
         }
 
+        public ActionResult ExportExcelWithTemplate(string template, Dictionary<string, object> objectData, GridViewConfig gridConfig)
+        {
+            template = Server.MapPath(ConfigurationManager.AppSettings["ExportedTemplatePath"] + template);
+            DataTable list = null;// dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, SessionCollection.ExportConfig);
+            Common.Export.ExportExcel.ExportFromTempalte(template, objectData, list);
+            return Json(true);
+        }
+
         public ActionResult ExportExcelAjax(GridViewConfig gridConfig)
         {
             try
