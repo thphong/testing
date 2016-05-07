@@ -595,7 +595,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         }
     }
     $scope.SetFilterRangeDate = function (option, gridId) {
-
+        if ($scope.RangeDateCode == option) return;
         var curr = new Date(); // get current date
         var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
         var last = first + 6; // last day is the first day + 6
@@ -634,8 +634,12 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
                 break;
         }
         $scope.RangeDateCode = option;
-        $("input[date-picker-for][ng-model='FilterRangeDate.StartDate']").datepicker("setDate", $scope.FilterRangeDate.StartDate);
-        $("input[date-picker-for][ng-model='FilterRangeDate.EndDate']").datepicker("setDate", $scope.FilterRangeDate.EndDate);
+
+        $("input[date-picker-for][ng-model='FilterRangeDate.StartDate']").val($scope.FilterRangeDate.StartDate);
+        $("input[date-picker-for][ng-model='FilterRangeDate.EndDate']").val($scope.FilterRangeDate.EndDate);
+            
+        //$("input[date-picker-for][ng-model='FilterRangeDate.EndDate']")
+            //.datepicker("setDate", $scope.FilterRangeDate.EndDate);
         $scope.ReloadGrid(gridId);
     }
 

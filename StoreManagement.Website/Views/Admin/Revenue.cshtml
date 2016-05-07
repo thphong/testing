@@ -44,7 +44,7 @@
             <div class="tab-content no-border active">
                 <div class="tab-pane col-md-12 active" ng-class="{'active': CurrentTab =='ReportBySeller'}">
                     @*If use ng-if, chart will be bind wrong*@
-                    <div ng-if="CurrentTab =='ReportBySeller'">
+                    <div ng-show="CurrentTab =='ReportBySeller'">
                         <div class="row margin-top-30">
                             <div class="col-md-5">
                                 <span date-range-filter-for="ReportBySeller" date-range-init-code="2"></span>
@@ -182,10 +182,10 @@
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportByStore'}">
-                    <div ng-if="CurrentTab =='ReportByStore'">
+                    <div ng-show="CurrentTab =='ReportByStore'">
                         <div class="row margin-top-30">
                             <div class="col-md-5">
-                                <span date-range-filter-for="ReportByStore" date-range-init-code="2"></span>
+                                <span date-range-filter-for="ReportByStore" ></span>
                             </div>
                             <div class="col-md-7">
                                 <span grid-export-import-for="ReportByStore"></span>
@@ -422,13 +422,13 @@
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportByProduct'}">
-                    <div ng-if="CurrentTab =='ReportByProduct'">
+                    
                         <div class="row margin-top-30">
                             <div class="col-md-3">
                                 <span grid-filter-for="ReportByProduct" place-holder-message="Nhập mã hoặc tên hàng hóa để tìm kiếm"></span>
                             </div>
                             <div class="col-md-5">
-                                <span date-range-filter-for="ReportByProduct" date-range-init-code="2"></span>
+                                <span date-range-filter-for="ReportByProduct" ></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
@@ -441,6 +441,7 @@
                                 <span grid-export-import-for="ReportByProduct"></span>
                             </div>
                         </div>
+                    <div ng-if="CurrentTab =='ReportByProduct'">
                         <div class="row col-md-12 margin-top-10">
                             <table grid-data="ReportByProduct"
                                    grid-data-type="function" @*table/storedprocedure*@
