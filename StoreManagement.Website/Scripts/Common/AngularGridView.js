@@ -78,7 +78,8 @@ mdlCommon.directive('gridExportImportFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridExportImportFor;
-        element.append('<button class="btn btn-success btn-primary" ng-click="ExportExcel(\'' + gridId + '\')">'
+        var template = attributes.gridExportTemplate;
+        element.append('<button class="btn btn-success btn-primary" ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
                     + '<i class="fa fa-download white"></i>'
                     + '<span>Xuất Excel</span>'
                     + '</button>');
@@ -293,7 +294,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
         configList.GridDefinedColums = valueField + ";" + nameField;
         configList.GridSortCondition = nameField + " ASC";
         if (attributes.dropdownCondition) {
-            configList.GridFilterConditionExpression = configList.NormalizeColumName(attributes.dropdownCondition);            
+            configList.GridFilterConditionExpression = configList.NormalizeColumName(attributes.dropdownCondition);
         }
         _DropdownConfigs[dropdownId] = configList;
 
@@ -526,10 +527,16 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         return config.SumListData();
     }*/
 
-    $scope.ExportExcel = function (gridId) {
+    $scope.ExportExcel = function (gridId, template) {
         //Evaluate condition before send to execute in DB
         var config = $scope.Config[gridId];
-        config.ExportDataToExcel();
+        config.ExportDataToExcel(template, {});
+    }
+
+    $scope.ExportExcelObject = function (gridId, template, object) {
+        //Evaluate condition before send to execute in DB
+        var config = $scope.Config[gridId];
+        config.ExportDataToExcel(template, object);
     }
 
 
@@ -595,7 +602,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         }
     }
     $scope.SetFilterRangeDate = function (option, gridId) {
-        if ($scope.RangeDateCode == option) return;
+
         var curr = new Date(); // get current date
         var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
         var last = first + 6; // last day is the first day + 6
@@ -637,9 +644,9 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
 
         $("input[date-picker-for][ng-model='FilterRangeDate.StartDate']").val($scope.FilterRangeDate.StartDate);
         $("input[date-picker-for][ng-model='FilterRangeDate.EndDate']").val($scope.FilterRangeDate.EndDate);
-            
+
         //$("input[date-picker-for][ng-model='FilterRangeDate.EndDate']")
-            //.datepicker("setDate", $scope.FilterRangeDate.EndDate);
+        //.datepicker("setDate", $scope.FilterRangeDate.EndDate);
         $scope.ReloadGrid(gridId);
     }
 

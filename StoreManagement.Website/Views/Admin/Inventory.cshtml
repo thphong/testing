@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="col-md-3 pull-right text-right">
-                                <span grid-export-import-for="InventoryProduct"></span>
+                                <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProduct.xlsx"></span>
                             </div>
                         </div>
                         <div class="row form-group col-md-12">
@@ -134,7 +134,7 @@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th grid-defined-colum="ProductId" class="none-display"></th>
+                                    <th grid-defined-colum="!ProductId" class="none-display"></th>
                                     <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
                                     <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
                                     <th grid-defined-colum="Quantity"><span>SL</span></th>
@@ -183,7 +183,7 @@
                                         dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
                             </div>
                             <div class="col-md-2 pull-right text-right">
-                                <span grid-export-import-for="InventoryInOut"></span>
+                                <span grid-export-import-for="InventoryInOut" grid-export-template="InventoryInOut.xlsx"></span>
                             </div>
                         </div>
                         <div class="row form-group col-md-12">
@@ -239,8 +239,8 @@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th grid-defined-colum="ProductId" class="none-display"></th>
-                                    <th grid-defined-colum="Quantity" class="none-display"></th>
+                                    <th grid-defined-colum="!ProductId" class="none-display"></th>
+                                    <th grid-defined-colum="!Quantity" class="none-display"></th>
                                     <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
                                     <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
                                     <th grid-defined-colum="BeginPeriod"><span>Đầu kỳ</span></th>
@@ -293,6 +293,7 @@
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo Phiếu</span>
                                 </button>
+                                <span grid-export-import-for="InventoryCheck" grid-export-template="InventoryCheck.xlsx"></span>
                             </div>
                         </div>
                         <table grid-data="InventoryCheck"
@@ -306,7 +307,7 @@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th grid-defined-colum="InventoryId" class="none-display"></th>
+                                    <th grid-defined-colum="!InventoryId" class="none-display"></th>
                                     <th grid-defined-colum="InventoryCode"><span>Mã phiếu</span></th>
                                     <th grid-defined-colum="NumProducts"><span>Số lượng</span></th>
                                     <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
@@ -315,8 +316,8 @@
                                     <th grid-defined-colum="BalancerId.UserName, BalancerName"><span>Người cân bằng</span></th>
                                     <th grid-defined-colum="BalancedDate"><span>Ngày cân bằng</span></th>
                                     <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                    <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
-                                    <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                                    <th grid-defined-colum="!StatusId.IsFinish" class="none-display"></th>
+                                    <th grid-defined-colum="!StatusId.DisplayClass" class="none-display"></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -378,6 +379,7 @@
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo Phiếu</span>
                                 </button>
+                                <span grid-export-import-for="InventTrans" grid-export-template="InventTrans.xlsx"></span>
                             </div>
                         </div>
                         <table grid-data="InventTrans"
@@ -391,7 +393,7 @@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th grid-defined-colum="InventTranId" class="none-display"></th>
+                                    <th grid-defined-colum="!InventTranId" class="none-display"></th>
                                     <th grid-defined-colum="InventTranCode"><span>Mã phiếu</span></th>
                                     <th grid-defined-colum="FromStoreId.StoreCode,FromStoreCode"><span>Từ CH</span></th>
                                     <th grid-defined-colum="ToStoreId.StoreCode,ToStoreCode"><span>Sang CH</span></th>
@@ -401,8 +403,8 @@
                                     <th grid-defined-colum="CreatedDate"><span>Ngày tạo</span></th>
                                     <th grid-defined-colum="TransferId.UserName, TransferName"><span>Người chuyển</span></th>
                                     <th grid-defined-colum="TransferedDate"><span>Ngày chuyển</span></th>
-                                    <th grid-defined-colum="StatusId.IsFinish" class="none-display"></th>
-                                    <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
+                                    <th grid-defined-colum="!StatusId.IsFinish" class="none-display"></th>
+                                    <th grid-defined-colum="!StatusId.DisplayClass" class="none-display"></th>
                                     <th></th>
                                 </tr>
                             </thead>

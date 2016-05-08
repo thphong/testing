@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
@@ -96,58 +97,166 @@ namespace StoreManagement.Common.Export
         {
             string fileName = tempalteFile;
 
-            /*using (var document = SpreadsheetDocument.Open(fileName, false))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+            var template = new FileInfo(fileName);
+            byte[] templateBytes = File.ReadAllBytes(template.FullName);
 
-                var sheets = workbook.Descendants<Sheet>();
-                foreach (var sheet in sheets)
+            using (var templateStream = new MemoryStream())
+            {
+                templateStream.Write(templateBytes, 0, templateBytes.Length);
+                using (var excelDoc = SpreadsheetDocument.Open(templateStream, true))
                 {
-                    var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
+                    WorkbookPart workbookPart = excelDoc.WorkbookPart;
+                    SheetData sheetData = workbookPart.WorksheetParts.First().Worksheet.GetFirstChild<SheetData>();
+
+                    string text;
+                    object value;
 
                     SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
                     SharedStringTable sst = sstpart.SharedStringTable;
-                    
-                    var rows = worksheetPart.Worksheet.Descendants<Row>();
-                    foreach (var row in rows)
-                    {
-                        Console.WriteLine();
-                        int count = row.Elements<Cell>().Count();
 
-                        foreach (Cell c in row.Elements<Cell>())
-                        {
-                            int ssid = int.Parse(c.CellValue.Text);
-                            string str = sst.ChildElements[ssid].InnerText;
-                            
-                        }
-                    }
-                }
-            }*/
-
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-            {
-                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fs, true))
-                {
-                    WorkbookPart workbookPart = doc.WorkbookPart;
-                    SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
-                    SharedStringTable sst = sstpart.SharedStringTable;
-
-                    // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
+                    //Change value of object 
                     foreach (SharedStringItem item in sstpart.SharedStringTable.Elements<SharedStringItem>())
                     {
-                        if (item.InnerText != "" && item.InnerText.ToString().Contains("d"))
+                        text = item.InnerText.ToString();
+                        if (text.StartsWith("{{") && text.EndsWith("}}"))
                         {
-                            Text text2 = item.Descendants<Text>().First();
-                            text2.Text = DateTime.Now.ToString();
+                            text = text.Substring(2, text.Length - 4);
+                            Text textItem = item.Descendants<Text>().First();
+                            value = objectData[text];
+                            if (value != null)
+                            {
+                                textItem.Text = value.ToString();
+                            }
                         }
                     }
-                    sstpart.SharedStringTable.Save();
+
+                    //Change value of list data
+                    var rows = sheetData.Elements<Row>();
+                    string baseColum = string.Empty;
+                    uint baseRow = 0;
+                    foreach (Row row in rows)
+                    {
+                        var cells = row.Elements<Cell>();
+                        foreach (Cell cell in cells)
+                        {
+                            text = cell.InnerText;
+                            if (!String.IsNullOrEmpty(text))
+                            {
+                                text = sst.ElementAt(int.Parse(text)).InnerText;
+                                if (text.Equals("[[DataList]]"))
+                                {
+                                    baseColum = GetCoumn(cell.CellReference);
+                                    baseRow = GetRow(cell.CellReference);
+                                    break;
+                                }
+                            }
+                        }
+                        if (baseRow > 0)
+                            break;
+                    }
+
+                    uint numRow = 0;
+                    string runCoulm;
+                    foreach (DataRow row in list.Rows)
+                    {
+                        runCoulm = baseColum;
+                        for (int numCol = 0; numCol < list.Columns.Count; numCol++)
+                        {
+                            if (row[numCol] != DBNull.Value)
+                            {
+                                Cell cell = GetCell(sheetData, runCoulm, baseRow + numRow);
+                                if (cell != null)
+                                {
+                                    cell.CellValue = new CellValue(row[numCol].ToString());
+                                    if( row[numCol].GetType() == typeof(int) || row[numCol].GetType() == typeof(float)
+                                        || row[numCol].GetType() == typeof(decimal))
+                                    {
+                                        cell.DataType = CellValues.Number;
+                                    }
+                                    else
+                                    {
+                                        cell.DataType = CellValues.String;
+                                    }
+                                    
+                                }
+                            }
+
+                            runCoulm = AddCoumn(runCoulm);
+                        }
+                        numRow++;
+                    }
+                }
+                templateStream.Position = 0;
+                var result = templateStream.ToArray();
+                templateStream.Flush();
+
+                return result;
+            }
+        }
+        private static string AddCoumn(string colum)
+        {
+            string result = "";
+            int add = 1;
+            for (int i = colum.Length - 1; i >= 0; i--)
+            {
+                if (colum[i] + add <= 'Z')
+                {
+                    result = (char)(colum[i] + add) + result;
+                    add = 0;
+                }
+                else
+                {
+                    result = 'A' + result;
                 }
             }
-
-            return null;
+            if (add == 1)
+                result = 'A' + result;
+            return result;
         }
 
+        private static string GetCoumn(string referenceCode)
+        {
+            string result = "";
+            for (int i = 0; i < referenceCode.Length; i++)
+            {
+                if (referenceCode[i] >= '0' && referenceCode[i] <= '9')
+                {
+                    break;
+                }
+                result += referenceCode[i];
+            }
+            return result;
+        }
+
+        private static uint GetRow(string referenceCode)
+        {
+            string result = "";
+            for (int i = 0; i < referenceCode.Length; i++)
+            {
+                if (referenceCode[i] >= '0' && referenceCode[i] <= '9')
+                {
+                    result += referenceCode[i];
+                }
+            }
+            return uint.Parse(result);
+        }
+
+        private static Cell GetCell(SheetData sheetData, string columnName, uint rowIndex)
+        {
+            Row row = GetRow(sheetData, rowIndex);
+
+            if (row == null)
+                return null;
+
+            return row.Elements<Cell>().Where(c => string.Compare
+                      (c.CellReference.Value, columnName +
+                      rowIndex, true) == 0).FirstOrDefault();
+        }
+
+        // Given a worksheet and a row index, return the row.
+        private static Row GetRow(SheetData sheetData, uint rowIndex)
+        {
+            return sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).FirstOrDefault();
+        }
     }
 }

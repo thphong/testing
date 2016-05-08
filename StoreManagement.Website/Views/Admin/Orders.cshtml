@@ -22,7 +22,7 @@
                         <i class="fa fa-desktop white"></i>
                         <span>Bán hàng</span>
                     </button>
-                    <span grid-export-import-for="Orders"></span>
+                    <span grid-export-import-for="Orders" grid-export-template="Orders.xlsx"></span>
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px; padding-top: 10px">
@@ -67,8 +67,8 @@
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th grid-defined-colum="OrderId" class="none-display"></th>
-                                <th grid-defined-colum="Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
+                                <th grid-defined-colum="!OrderId" class="none-display"></th>
+                                <th grid-defined-colum="!Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
                                 <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
                                 <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                                 <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
@@ -84,9 +84,9 @@
                                 <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                 <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
                                 <th></th>
-                                <th grid-defined-colum="OrderStatus.DisplayClass" class="none-display"></th>
-                                <th grid-defined-colum="Notes" class="none-display"></th>
-                                <th grid-defined-colum="IsActive" class="none-display"></th>
+                                <th grid-defined-colum="!OrderStatus.DisplayClass" class="none-display"></th>
+                                <th grid-defined-colum="!Notes" class="none-display"></th>
+                                <th grid-defined-colum="!IsActive" class="none-display"></th>
                             </tr>
                         </thead>
                         <tbody>

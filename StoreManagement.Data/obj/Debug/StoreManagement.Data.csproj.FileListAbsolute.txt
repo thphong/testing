@@ -25,5 +25,6 @@ E:\Work\StoreManagement2\testing\StoreManagement.Data\bin\Debug\EntityFramework.
 E:\Work\StoreManagement2\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Data\bin\Debug\EntityFramework.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache
 E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb

@@ -145,19 +145,35 @@ namespace StoreManagement.Website.Controllers
             }
         }
 
-        public ActionResult ExportExcelWithTemplate(string template, Dictionary<string, object> objectData, GridViewConfig gridConfig)
+        public ActionResult ExportExcelWithTemplateAjax(string template, Dictionary<string, object> objectData, GridViewConfig gridConfig)
         {
-            template = Server.MapPath(ConfigurationManager.AppSettings["ExportedTemplatePath"] + template);
-            DataTable list = null;// dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, SessionCollection.ExportConfig);
-            Common.Export.ExportExcel.ExportFromTempalte(template, objectData, list);
-            return Json(true);
+            try
+            {
+                gridConfig.GridDataAction = "excel";
+                SessionCollection.ExportConfig = gridConfig;
+                SessionCollection.ExportObjectData = objectData;
+                SessionCollection.ExportTemplate = template;
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+        public ActionResult ExportExcelWithTemplate()
+        {
+            string template = Server.MapPath(ConfigurationManager.AppSettings["ExportedTemplatePath"] + SessionCollection.ExportTemplate);
+            DataTable list = dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, SessionCollection.ExportConfig);
+            return File(Common.Export.ExportExcel.ExportFromTempalte(template, SessionCollection.ExportObjectData, list), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                , SessionCollection.ExportConfig.GridId + DateTime.Now.ToString(" dd-MM-yyyy hh_mm_ss") + ".xlsx");
         }
 
         public ActionResult ExportExcelAjax(GridViewConfig gridConfig)
         {
             try
             {
-                gridConfig.GridDataAction = "getall";
+                gridConfig.GridDataAction = "excel";
                 SessionCollection.ExportConfig = gridConfig;
                 return Json(true);
             }

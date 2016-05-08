@@ -32,6 +32,30 @@ namespace StoreManagement.Website
             }
         }
 
+        public static Dictionary<string, object> ExportObjectData
+        {
+            get
+            {
+                return (Dictionary<string, object>)HttpContext.Current.Session["ExportObjectData"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ExportObjectData"] = value;
+            }
+        }
+
+        public static string ExportTemplate
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["ExportTemplate"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ExportTemplate"] = value;
+            }
+        }
+
 
         public static int CurrentStore
         {

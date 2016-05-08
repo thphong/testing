@@ -19,7 +19,7 @@
                         <i class="fa fa-desktop white"></i>
                         <span>Tạo phiếu nhập</span>
                     </button>
-                    <span grid-export-import-for="Purchases"></span>
+                    <span grid-export-import-for="Purchases" grid-export-template="Purchases.xlsx"></span>
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px; padding-top: 10px">
@@ -57,7 +57,7 @@
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th grid-defined-colum="PurchaseId" class="none-display"></th>
+                                <th grid-defined-colum="!PurchaseId" class="none-display"></th>
                                 <th grid-defined-colum="PurchaseCode"><span>Mã hóa đơn</span></th>
                                 <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                                 <th grid-defined-colum="StatusId.StatusName">
@@ -73,10 +73,10 @@
                                 <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                 <th grid-defined-colum="Debt"><span>Nợ</span></th>
                                 <th></th>
-                                <th grid-defined-colum="StatusId.DisplayClass" class="none-display"></th>
-                                <th grid-defined-colum="Notes" class="none-display"></th>
-                                <th grid-defined-colum="SupplierId.SupplierName" class="none-display"></th>
-                                <th grid-defined-colum="IsActive" class="none-display"></th>
+                                <th grid-defined-colum="!StatusId.DisplayClass" class="none-display"></th>
+                                <th grid-defined-colum="!Notes" class="none-display"></th>
+                                <th grid-defined-colum="!SupplierId.SupplierName" class="none-display"></th>
+                                <th grid-defined-colum="!IsActive" class="none-display"></th>
                             </tr>
                         </thead>
                         <tbody>

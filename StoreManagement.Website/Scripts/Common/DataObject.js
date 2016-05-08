@@ -57,16 +57,11 @@ function GridViewConfig(gridId) {
         }
     }
 
-    this.ExportDataToExcel = function () {
-        /*AjaxAsync(g_exportExcelAjaxUrl, '{ gridConfig: ' + JSON.stringify(this) + '}',
+    this.ExportDataToExcel = function (template, objectData) {
+        AjaxAsync(g_exportExcelAjaxUrl, '{ template : "' + template + '", objectData : ' + JSON.stringify(objectData) + ', gridConfig: ' + JSON.stringify(this) + '}',
             function () {
                 window.location = g_exportExcelUrl;
-        });*/
-
-        AjaxAsync(g_exportExcelWithTemplateUrl, '{ template : "Template.xlsx", objectData : {a:"1", b:"2"}, gridConfig: ' + JSON.stringify(this) + '}',
-            function () {
-                
-            });
+        });
     }
 
     this.NormalizeColumName = function (columName) {
