@@ -341,6 +341,7 @@
     <Content Include="Scripts\Controller\Profit.js" />
     <Content Include="Scripts\Controller\Purchase.js" />
     <Content Include="Scripts\Controller\Revenue.js" />
+    <Content Include="Scripts\Controller\Setting.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
