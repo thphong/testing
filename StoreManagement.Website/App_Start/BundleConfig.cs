@@ -74,6 +74,9 @@ namespace StoreManagement.Website
                             "~/Scripts/canvas-to-blob.js",
                             "~/Scripts/fileinput.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/MD5").Include(
+                            "~/Scripts/MD5.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/Common/Common.js",
                         "~/Scripts/Common/DataObject.js",

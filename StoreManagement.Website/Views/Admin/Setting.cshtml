@@ -45,81 +45,106 @@
                     <div class="col-md-12" ng-if="(CurrentTab =='Customers') && !IsShowCustomerDetail">
                         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
                             <div class="col-md-5">
-                                <span grid-filter-for="Customers" place-holder-message="Nhập mã, tên nhân viên"></span>
+                                <span grid-filter-for="Users" place-holder-message="Nhập mã, tên nhân viên"></span>
                             </div>
                             <div class="col-md-4 pull-right text-right">
                                 <button class="btn btn-success btn-primary" data-toggle="modal"
-                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
-                                        ng-if="CustomerFormConfig._CanCreate">
+                                        data-target="#userModal" ng-click="ResetUserModal()"
+                                        ng-if="UserFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo nhân viên</span>
                                 </button>
                             </div>
                         </div>
 
-                        <table grid-data="Customers"
+                        <table grid-data="Users"
                                grid-data-type="table" @*table/storedprocedure*@
                                grid-data-action="get" @*get/getall*@
-                               grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                               grid-filter-condition="[IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
-                                                or ({{AdditionalFilter.CustomerType}} = 1 and  [LastTimeVisited] is not null)
-                                                or ({{AdditionalFilter.CustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
-                               grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
-                               grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                               grid-data-object="T_Master_User" @*table name or stored procedure name*@
+                               grid-filter-condition="" @*must have [fieldname] for each colum field*@
+                               grid-sort-condition="[UserName] ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="" @*must have [fieldname] for each colum field*@
                                class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th grid-defined-colum="!CustomerId" class="none-display"></th>
-                                    <th grid-defined-colum="CustomerCode"><span>Mã KH</span></th>
-                                    <th grid-defined-colum="CustomerName"><span>Tên KH</span></th>
+                                    <th grid-defined-colum="LoginId"><span>Mã nhân viên</span></th>
+                                    <th grid-defined-colum="UserName"><span>Tên nhân viên</span></th>
+                                    <th grid-defined-colum="Email"><span>Email</span></th>
                                     <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
-                                    <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
-                                    <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
-                                    <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
-                                    <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                    <th grid-defined-colum="IsActive"><span>Trạng thái</span></th>
+                                    <th><span>Lấy lại mật khẩu</span></th>
                                     <th></th>
+                                    <th grid-defined-colum="UserId" class="none-display"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @*Dataset must have grid id*@
-                                <tr ng-repeat="item in DataSet.Customers.Data">
-                                    <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerCode"></a> </td>
-                                    <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerName"></a></td>
-                                    <td ng-bind="item.Phone"></td>
-                                    <td ng-bind="item.Address"></td>
-                                    <td ng-bind="item.LastTimeVisited"></td>
-                                    <td ng-bind="item.SumMoney | currency:'':0"></td>
-                                    <td ng-bind="item.Debt | currency:'':0"></td>
+                                <tr ng-repeat="item in DataSet.Users.Data">
+                                    <td ng-bind="item.LoginId" ></td>
                                     <td>
-                                        <a class="red margin-left-10" ng-click="DeleteCustomer(item, 0)" ng-if="item._CanDelete">
-                                            <i class="fa-trash fa"></i>
+                                        <span ng-bind="item.UserName" ng-if="!item.IsEditing"> </span>
+                                        <input class="form-control" ng-model="item.UserName" ng-if="item.IsEditing"
+                                               check-empty="" check-empty-message="Vui lòng nhập tên nhân viên."
+                                               check-length="100" check-length-message="Chiều dài tối đa tên nhân viên là {0}."
+                                               check-under="check-user{{item.UserId}}"/>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="item.Email" ng-if="!item.IsEditing"></span>
+                                        <input class="form-control" ng-model="item.Email" ng-if="item.IsEditing" 
+                                               check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ."
+                                               check-under="check-user{{item.UserId}}"/>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="item.Phone" ng-if="!item.IsEditing"></span>
+                                        <input class="form-control" ng-model="item.Phone" ng-if="item.IsEditing" 
+                                               check-length="50" check-length-message="Chiều dài tối ta là {0}."
+                                               check-under="check-user{{item.UserId}}"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-true-value="1" ng-false-value="0"  
+                                               ng-model="item.IsActive" ng-if="item.IsEditing" />
+                                        <span ng-if="item.IsActive == 1" class="label label-success">
+                                            <i class="fa fa-unlock"> </i> 
+                                            Đang hoạt động
+                                        </span>
+                                        <span ng-if="item.IsActive == 0" class="label label-warning">
+                                            <i class="fa fa-lock"> </i>
+                                            Ngừng hoạt động
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a ng-if="item._CanUpdate" class="blue margin-left-10"
+                                           ng-click="RestorePassword(item)">
+                                            <i class="fa-key fa"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
+                                           title="Chỉnh sửa" ng-click="item.IsEditing = true;">
+                                            <i class="fa-edit fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditing && item._CanUpdate" class="blue margin-left-10"
+                                           title="Lưu" ng-click="SaveUser(item);">
+                                            <i class="fa-save fa"></i>
+                                        </a>
+                                        <a ng-if="item.IsEditing" class="blue margin-left-10"
+                                           title="Hủy" ng-click="item.IsEditing = false; ReloadGrid('Users')">
+                                            <i class="fa-undo fa"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                <tr ng-if="!DataSet.Customers.HasRecord()">
+                                <tr ng-if="!DataSet.Users.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="7" align="center"> Không có dữ liệu! </td>
                                 </tr>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="8" align="left">
-                                        <div style="float: left;">
-                                            <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.Customers.TotalItems"></span>
-                                            <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                            <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.Debt | currency:'':0"></span> đ</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-9 pull-left">
-                                <span grid-paging-for="Customers"></span>
+                                <span grid-paging-for="Users"></span>
                             </div>
-
                             <div class="col-md-3 pull-right">
-                                <span grid-page-size-for="Customers"></span>
+                                <span grid-page-size-for="Users"></span>
                             </div>
                         </div>
 
@@ -133,4 +158,5 @@
             </div>
         </div>
     </div>
+    @Html.Partial("UserModal")    
 </div>

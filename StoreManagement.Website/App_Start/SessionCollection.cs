@@ -8,11 +8,23 @@ namespace StoreManagement.Website
 {
     public static class SessionCollection
     {
+        public static bool IsLogIn
+        {
+            get
+            {
+                return HttpContext.Current.Session["IsLogIn"] == null ? false : (bool)HttpContext.Current.Session["IsLogIn"];
+            }
+            set
+            {
+                HttpContext.Current.Session["IsLogIn"] = value;
+            }
+        }
+
         public static int CurrentUserId
         {
             get
             {
-                return (int)HttpContext.Current.Session["CurrentUserId"];
+                return HttpContext.Current.Session["CurrentUserId"] != null ? (int)HttpContext.Current.Session["CurrentUserId"] : -1;
             }
             set
             {
@@ -61,7 +73,7 @@ namespace StoreManagement.Website
         {
             get
             {
-                return (int)HttpContext.Current.Session["CurrentStore"];
+                return HttpContext.Current.Session["CurrentStore"] != null ? (int)HttpContext.Current.Session["CurrentStore"] : -1;
             }
             set
             {

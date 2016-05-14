@@ -30,8 +30,8 @@ namespace StoreManagement.Website
         {
 
             //get session
-            SessionCollection.CurrentUserId = 1;
-            SessionCollection.CurrentStore = 1;
+            //SessionCollection.CurrentUserId = 1;
+            //SessionCollection.CurrentStore = 1;
         }
     }
 }

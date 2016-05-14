@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewBag.Title - Store Management</title>
+    <title>Quản lý cửa hàng</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
 
@@ -45,6 +45,7 @@
     @Scripts.Render("~/bundles/common")
     @Scripts.Render("~/bundles/C3Chart")
     @Scripts.Render("~/bundles/FileInput")
+    @Scripts.Render("~/bundles/MD5")
 
     @RenderSection("scripts", required: false)
 </head>
@@ -56,76 +57,87 @@
             <div class="navbar-header">
                 <a class="navbar-brand white" href="index.html">Quản lý cửa hàng</a>
             </div>
+
+            @if (StoreManagement.Website.SessionCollection.IsLogIn)
+            {
             <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle white" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <div class="pull-right text-right margin-top-10 width-15">
-                <div class="col-md-6 white margin-top-10">Cửa hàng</div>
-                <select class="form-control width-50" ng-model="CurrentStore" ng-change="SetStoreId()"
-                        dropdown-master-table="T_Master_Stores"
-                        dropdown-value-field="StoreId"
-                        dropdown-name-field="StoreCode"></select>
-            </div>
-            <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-shortcuts">
-                            <div class="input-group custom-search-form">
-                                <a target="_blank" href="/pos" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 100%; margin: 7px 10px; font-weight: bold;">
-                                    <i class="fa fa-desktop" style="margin-right: 12px;"></i>POS - Bán hàng
-                                </a>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-                        <li ng-class="{'active' : (menu.Url.toLowerCase() == CurrentUrl)}" ng-repeat="menu in ListMenu">
-                            <a href="{{menu.Url}}"><i class="{{menu.CssClass}}"></i> <span ng-bind="menu.Menu"></span></a>
-                        </li>
-                        @*Multi levels*@
-                        @*<li>
-                                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="flot.html">Flot Charts</a>
-                                    </li>
-                                    <li>
-                                        <a href="morris.html">Morris.js Charts</a>
-                                    </li>
-                                </ul>
-                            </li>*@
-                    </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle white" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <div class="pull-right text-right margin-top-10 width-15">
+                    <div class="col-md-6 white margin-top-10">Cửa hàng</div>
+                    <select class="form-control width-50" ng-model="CurrentStore" ng-change="SetStoreId()"
+                            dropdown-master-table="T_Master_Stores"
+                            dropdown-value-field="StoreId"
+                            dropdown-name-field="StoreCode"></select>
                 </div>
-                <!-- /.sidebar-collapse -->
-            </div>
+            <!-- /.navbar-top-links -->
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li class="sidebar-shortcuts">
+                                <div class="input-group custom-search-form">
+                                    <a target="_blank" href="/pos" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 100%; margin: 7px 10px; font-weight: bold;">
+                                        <i class="fa fa-desktop" style="margin-right: 12px;"></i>POS - Bán hàng
+                                    </a>
+                                </div>
+                                <!-- /input-group -->
+                            </li>
+                            <li ng-class="{'active' : (menu.Url.toLowerCase() == CurrentUrl)}" ng-repeat="menu in ListMenu">
+                                <a href="{{menu.Url}}"><i class="{{menu.CssClass}}"></i> <span ng-bind="menu.Menu"></span></a>
+                            </li>
+                            @*Multi levels*@
+                            @*<li>
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="flot.html">Flot Charts</a>
+                                        </li>
+                                        <li>
+                                            <a href="morris.html">Morris.js Charts</a>
+                                        </li>
+                                    </ul>
+                                </li>*@
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
             <!-- /.navbar-static-side -->
+            }
+            else
+            {
+                @RenderBody()
+            }
         </nav>
         <!-- Page Content -->
-        <div id="page-wrapper">
-            <div id="body" style="margin-left:-35px">
-                <section class="content-wrapper main-content clear-fix">
-                    <form method="post" enctype="multipart/form-data">
-                        @RenderBody()
-                    </form>
-                </section>
+        @if (StoreManagement.Website.SessionCollection.IsLogIn)
+        {
+            <div id="page-wrapper">
+                <div id="body" style="margin-left:-35px">
+                    <section class="content-wrapper main-content clear-fix">
+                        <form method="post" enctype="multipart/form-data">
+                            @RenderBody()
+                        </form>
+                    </section>
+                </div>
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
-        </div>
+        }
     </div>
 </body>
 </html>

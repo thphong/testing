@@ -37,7 +37,7 @@ function AjaxAsync(service, para, delegate) {
             }
         },
         error: function () {
-            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
+            //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
 }
@@ -77,9 +77,9 @@ function AjaxSync(service, para) {
                 result = data;
             }
         },
-        error: function () {
+        error: function (e) {
             result = null;
-            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
+            //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
     return result;
@@ -105,7 +105,7 @@ function AjaxSyncWithoutLoading(service, para) {
         },
         error: function () {
             result = null;
-            ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
+            //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
     return result;

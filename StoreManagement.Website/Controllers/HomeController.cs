@@ -16,12 +16,14 @@ namespace StoreManagement.Website.Controllers
 
         public ActionResult Index()
         {
-            //var a = chemBusiness.GetAllQuestion().ToList();
-            //var x = a[0];
-            //return View();
-
-            //return View("Input", "Data");
-            return RedirectToAction("General", "Admin" );
+            if (SessionCollection.IsLogIn)
+            {
+                return RedirectToAction("General", "Admin");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
     }
 }
