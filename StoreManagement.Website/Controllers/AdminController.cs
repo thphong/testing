@@ -22,68 +22,68 @@ namespace StoreManagement.Website.Controllers
 
         public ActionResult General()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Orders(string DateRangeCode, string Status)
         {
             ViewBag.DateRangeCode = DateRangeCode;
             ViewBag.Status = Status;
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Products(string ProductType)
         {
             ViewBag.ProductType = ProductType;
-            return View();
+            return CheckSession();
         }
 
 
         public ActionResult Customers()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Purchase()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Inventory(string InventoryProductType)
         {
             ViewBag.InventoryProductType = InventoryProductType;
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Revenue()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Payment()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Profit(string DateRangeCode)
         {
             ViewBag.DateRangeCode = DateRangeCode;
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Setting()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult Exception()
         {
-            return View();
+            return CheckSession();
         }
 
         public ActionResult LogData()
         {
-            return View();
+            return CheckSession();
         }
     }
 }

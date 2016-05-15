@@ -119,7 +119,7 @@ mdlCommon.controller('ProductController',
 
         $scope.StopSellingProduct = function (product) {
             if (confirm("Bạn có muốn ngừng kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "0" });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "0", "version": product.Version });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
                     product.IsSelling = 0;
@@ -130,7 +130,7 @@ mdlCommon.controller('ProductController',
 
         $scope.EnableSellingProduct = function (product) {
             if (confirm("Bạn có muốn cho phép kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "1" });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "1", "version": product.Version });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
                     product.IsSelling = 1;

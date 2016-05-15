@@ -15,5 +15,17 @@ namespace StoreManagement.Website.Controllers
         {
             dataService = _dataService;
         }
+
+        public ActionResult CheckSession()
+        {
+            if (!SessionCollection.IsLogIn)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }

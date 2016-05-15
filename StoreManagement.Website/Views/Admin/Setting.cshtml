@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Store Management";
-}
-
-@section scripts
+﻿@section scripts
 {
     @Scripts.Render("~/bundles/Setting")
 }
@@ -72,7 +68,7 @@
                                     <th grid-defined-colum="Email"><span>Email</span></th>
                                     <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
                                     <th grid-defined-colum="IsActive"><span>Trạng thái</span></th>
-                                    <th><span>Lấy lại mật khẩu</span></th>
+                                    <th><span>Nhóm người dùng</span></th>
                                     <th></th>
                                     <th grid-defined-colum="UserId" class="none-display"></th>
                                 </tr>
@@ -80,31 +76,31 @@
                             <tbody>
                                 @*Dataset must have grid id*@
                                 <tr ng-repeat="item in DataSet.Users.Data">
-                                    <td ng-bind="item.LoginId" ></td>
+                                    <td ng-bind="item.LoginId"></td>
                                     <td>
                                         <span ng-bind="item.UserName" ng-if="!item.IsEditing"> </span>
                                         <input class="form-control" ng-model="item.UserName" ng-if="item.IsEditing"
                                                check-empty="" check-empty-message="Vui lòng nhập tên nhân viên."
                                                check-length="100" check-length-message="Chiều dài tối đa tên nhân viên là {0}."
-                                               check-under="check-user{{item.UserId}}"/>
+                                               check-under="check-user{{item.UserId}}" />
                                     </td>
                                     <td>
                                         <span ng-bind="item.Email" ng-if="!item.IsEditing"></span>
-                                        <input class="form-control" ng-model="item.Email" ng-if="item.IsEditing" 
+                                        <input class="form-control" ng-model="item.Email" ng-if="item.IsEditing"
                                                check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ."
-                                               check-under="check-user{{item.UserId}}"/>
+                                               check-under="check-user{{item.UserId}}" />
                                     </td>
                                     <td>
                                         <span ng-bind="item.Phone" ng-if="!item.IsEditing"></span>
-                                        <input class="form-control" ng-model="item.Phone" ng-if="item.IsEditing" 
+                                        <input class="form-control" ng-model="item.Phone" ng-if="item.IsEditing"
                                                check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                               check-under="check-user{{item.UserId}}"/>
+                                               check-under="check-user{{item.UserId}}" />
                                     </td>
                                     <td>
-                                        <input type="checkbox" ng-true-value="1" ng-false-value="0"  
+                                        <input type="checkbox" ng-true-value="1" ng-false-value="0"
                                                ng-model="item.IsActive" ng-if="item.IsEditing" />
                                         <span ng-if="item.IsActive == 1" class="label label-success">
-                                            <i class="fa fa-unlock"> </i> 
+                                            <i class="fa fa-unlock"> </i>
                                             Đang hoạt động
                                         </span>
                                         <span ng-if="item.IsActive == 0" class="label label-warning">
@@ -112,13 +108,17 @@
                                             Ngừng hoạt động
                                         </span>
                                     </td>
-                                    <td>
-                                        <a ng-if="item._CanUpdate" class="blue margin-left-10"
-                                           ng-click="RestorePassword(item)">
-                                            <i class="fa-key fa"></i>
+                                    <td class="text-center">
+                                        <a ng-if="item._CanUpdate" class="blue margin-left-10" title="Lấy lại mật khẩu"
+                                           data-toggle="modal" data-target="#rolesModal" ng-click="ViewUserRole(item)">
+                                            <i class="fa-user-md fa"></i>
                                         </a>
                                     </td>
                                     <td>
+                                        <a ng-if="item._CanUpdate" class="blue margin-left-10" title="Lấy lại mật khẩu"
+                                           ng-click="RestorePassword(item)">
+                                            <i class="fa-key fa"></i>
+                                        </a>
                                         <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
                                            title="Chỉnh sửa" ng-click="item.IsEditing = true;">
                                             <i class="fa-edit fa"></i>
@@ -152,11 +152,12 @@
                 </div>
                 <div class="tab-pane" ng-class="{active : (CurrentTab =='SaleCustomers') && !IsShowCustomerDetail }">
                     <div class="col-md-12" ng-if="(CurrentTab =='SaleCustomers') && !IsShowCustomerDetail">
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @Html.Partial("UserModal")    
+    @Html.Partial("UserModal")
+    @Html.Partial("RolesModal")
 </div>

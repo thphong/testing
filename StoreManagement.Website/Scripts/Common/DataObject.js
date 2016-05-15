@@ -126,7 +126,7 @@ function ObjectDataConfig(tableName, $scope) {
 
         this.ReloadMasterData(this.TableName);
 
-        if (this.ObjectData.Version != undefined)
+        if (this.ObjectData.Version != undefined && result > 0)
         {
             this.ObjectData.Version++;
         }

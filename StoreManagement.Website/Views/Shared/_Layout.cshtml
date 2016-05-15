@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width" />
 
     <script type="text/javascript">
+        var g_loginUrl = '@Url.Action("Login", "Account")';
+        var g_logoutUrl = '@Url.Action("Logout", "Account")';
         var g_getDataListUrl = '@Url.Action("GetDataList", "Data")';
         var g_countDataListUrl = '@Url.Action("CountDataList", "Data")';
         var g_sumDataListUrl = '@Url.Action("SumDataList", "Data")';
@@ -68,11 +70,11 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
-                                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                <a href="@Url.Action("Info", "Account")"><i class="fa fa-user fa-fw"></i> Thông tin</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <a href="#" ng-click="LogOut()"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->

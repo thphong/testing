@@ -80,5 +80,10 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["CurrentStore"] = value;
             }
         }
+
+        public static void ClearSession()
+        {
+            HttpContext.Current.Session.Clear();
+        }
     }
 }

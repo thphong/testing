@@ -14,7 +14,7 @@
         configMenuList.GridParametersExpression = "{{CurrentUser}}";
         configMenuList.OrderBy = "DisplayOrder";
 
-        if ($scope.CurrentStore > 0) {
+        if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);
             $scope.ListMenu = configMenuList.GetListData();
         }
@@ -23,10 +23,31 @@
             AjaxSync(g_setStoreIdUrl, '{ "storedId": "' + $scope.CurrentStore + '"}');
             location.reload();
         }
-
+        
         $scope.LogIn = function () {
-            AjaxSync(g_setStoreIdUrl, '{ "storedId": "' + $scope.CurrentStore + '"}');
-            location.reload();
+            if (FValidation.CheckControls("")) {
+                var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
+                if (result) {
+
+                    if (typeof (Storage) !== "undefined") {
+                        // Store
+                        localStorage.setItem("SM_LoginId", $scope.LoginInfo.LoginId);
+                        localStorage.setItem("SM_Password", $scope.LoginInfo.Password);
+                    }
+
+                    location.reload();
+                }
+                else {
+                    ShowErrorMessage("Tài khoản không hợp lệ.");
+                }
+            }
+        }
+
+        $scope.LogOut = function () {
+            var result = AjaxSync(g_logoutUrl, '{ }');
+            if (result) {
+                location.reload();
+            }
         }
 
         $scope.LoginInfo =
@@ -34,5 +55,10 @@
             LoginId: "",
             Password : ""
         };
+
+        if (typeof (Storage) !== "undefined") {
+            $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
+            $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
+        }
 
     }]);

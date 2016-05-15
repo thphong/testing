@@ -343,6 +343,7 @@
     <Content Include="Scripts\Controller\Revenue.js" />
     <Content Include="Scripts\Controller\Setting.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
+    <Content Include="Scripts\Controller\User.js" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\DataService\Reaction.js" />
     <Content Include="Scripts\DataService\DataList.js" />
@@ -433,6 +434,8 @@
     <Content Include="Views\Admin\Exception.cshtml" />
     <Content Include="Views\Admin\LogData.cshtml" />
     <Content Include="Views\Shared\UserModal.cshtml" />
+    <Content Include="Views\Account\Info.cshtml" />
+    <Content Include="Views\Shared\RolesModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

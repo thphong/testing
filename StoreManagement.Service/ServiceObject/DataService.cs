@@ -19,6 +19,35 @@ namespace StoreManagement.Service
         }
         #endregion
 
+        public Dictionary<string, object> Login(string loginId, string password)
+        {
+            string statement = string.Format("exec [dbo].[USP_System_Login] @Login = '{0}', @Password = '{1}'", loginId, password);
+            
+            DataSet retVal = new DataSet();
+            SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;
+            SqlCommand cmdReport = new SqlCommand(statement, sqlConn);
+            SqlDataAdapter daReport = new SqlDataAdapter(cmdReport);
+            using (cmdReport)
+            {
+                cmdReport.CommandType = CommandType.Text;
+                daReport.Fill(retVal);
+            }
+            DataTable dt = retVal.Tables[0];
+            
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                return row;
+            }
+
+            return null;
+        }
+
         #region Get List
         public DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig)
         {
@@ -134,8 +163,7 @@ namespace StoreManagement.Service
                 cmdReport.CommandType = CommandType.Text;
                 daReport.Fill(retVal);
             }
-
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            
             DataTable dt = retVal.Tables[0];
             Dictionary<string, object> row;
             foreach (DataRow dr in dt.Rows)

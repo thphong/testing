@@ -9,13 +9,50 @@ namespace StoreManagement.Website.Controllers
 {
     public class AccountController : BaseController
     {
-        public AccountController(IDataService _dataService) : base (_dataService)
+        public AccountController(IDataService _dataService) : base(_dataService)
         {
         }
 
         public ActionResult Login()
         {
-            return View();
+            if (SessionCollection.IsLogIn)
+            {
+                return RedirectToAction("General", "Admin");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Info()
+        {
+            return CheckSession();
+        }
+
+
+        [HttpPost]
+        public ActionResult Login(string loginId, string password)
+        {
+            try
+            {
+                var result = dataService.Login(loginId, password);
+                SessionCollection.CurrentUserId = (int)result["UserId"];
+                SessionCollection.CurrentStore = (int)result["CurrentStore"];
+                SessionCollection.IsLogIn = true;
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            SessionCollection.ClearSession();
+            return Json(true);
         }
     }
 }
