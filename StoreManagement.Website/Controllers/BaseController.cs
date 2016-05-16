@@ -11,7 +11,7 @@ namespace StoreManagement.Website.Controllers
     {
         protected IDataService dataService;
 
-        public BaseController (IDataService _dataService)
+        public BaseController(IDataService _dataService)
         {
             dataService = _dataService;
         }
@@ -24,7 +24,29 @@ namespace StoreManagement.Website.Controllers
             }
             else
             {
-                return View();
+                string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+                string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+
+                var gridConfig = new GridViewConfig
+                {
+                    GridDataObject = "dbo.UFN_System_Get_Menu",
+                    GridDataType = "function",
+                    GridParameters = SessionCollection.CurrentUserId.ToString(),
+                    GridDataAction = "count",
+                    FilterBy = controllerName + "/" + actionName
+
+                };
+
+                int count = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
+
+                if (count > 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Error", "Account");
+                }
             }
         }
     }

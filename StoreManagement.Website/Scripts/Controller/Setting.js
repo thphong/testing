@@ -9,6 +9,7 @@
     return true;
 }
 
+
 $(document).ready(function () {
     $('#rolesModal').on('show.bs.modal', function (e) {
         var modalId = $(this).attr("id");
@@ -64,7 +65,8 @@ mdlCommon.controller('SettingController',
         {
             StoreId: "",
             RoleId: "",
-            UserId: ""
+            UserId: "",
+            IsActive: 1
         }
 
         $scope.ResetUserForm = function () {
@@ -121,16 +123,38 @@ mdlCommon.controller('SettingController',
             $scope.UserRoleForm.UserId = $scope.UserForm.UserId;
         }
 
-        $scope.SaveUserRole = function ()
-        {
-            if (FValidation.CheckControls("")) {
+        $scope.CheckUserRoleUnique = function () {
+            var list = $scope.DataSet.UserRoles.Data;
+            for (var i = 0 ; i < list.length; i++) {
+                if (list[i].StoreId == $scope.UserRoleForm.StoreId && list[i].RoleId == $scope.UserRoleForm.RoleId) {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-                $scope.UserStoreFormConfig.SetObject($scope.UserRoleForm);
-                if ($scope.UserStoreFormConfig.SaveObject() > 0) {
-                    ShowSuccessMessage("Thêm nhóm người dùng thành công.");
+        $scope.SaveUserRole = function () {
+            if (FValidation.CheckControls("")) {
+                if ($scope.CheckUserRoleUnique()) {
+                    $scope.UserStoreFormConfig.SetObject($scope.UserRoleForm);
+                    if ($scope.UserStoreFormConfig.SaveObject() > 0) {
+                        ShowSuccessMessage("Thêm chức vụ của nhân viên thành công.");
+                        $scope.ReloadGrid('UserRoles');
+                        $scope.UserRoleForm.StoreId = "";
+                        $scope.UserRoleForm.RoleId = "";
+                    }
+                }
+                else {
+                    ShowErrorMessage("Nhân viên đã có chức vụ này ở cửa hàng đang chọn.");
+                }
+            }
+        }
+
+        $scope.DeleteUserRole = function (userRole) {
+            if (confirm("Bạn có muốn xóa chức vụ của nhân viên?")) {
+                if ($scope.UserStoreFormConfig.HardDeleteObject(userRole.Id)) {
+                    ShowSuccessMessage("Chức vụ của nhân viên được xóa thành công.");
                     $scope.ReloadGrid('UserRoles');
-                    $scope.UserRoleForm.StoreId = "";
-                    $scope.UserRoleForm.RoleId = "";
                 }
             }
         }

@@ -30,6 +30,18 @@ namespace StoreManagement.Website.Controllers
             return CheckSession();
         }
 
+        public ActionResult Error()
+        {
+            if (SessionCollection.IsLogIn)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
 
         [HttpPost]
         public ActionResult Login(string loginId, string password)
