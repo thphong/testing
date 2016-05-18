@@ -26,27 +26,27 @@ namespace StoreManagement.Website.Controllers
             {
                 string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
                 string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
-
-                var gridConfig = new GridViewConfig
+                if (controllerName != "Account")
                 {
-                    GridDataObject = "dbo.UFN_System_Get_Menu",
-                    GridDataType = "function",
-                    GridParameters = SessionCollection.CurrentUserId.ToString(),
-                    GridDataAction = "count",
-                    FilterBy = controllerName + "/" + actionName
+                    var gridConfig = new GridViewConfig
+                    {
+                        GridDataObject = "dbo.UFN_System_Get_Menu",
+                        GridDataType = "function",
+                        GridParameters = SessionCollection.CurrentUserId.ToString(),
+                        GridDataAction = "count",
+                        FilterBy = controllerName + "/" + actionName
 
-                };
+                    };
 
-                int count = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
+                    int count = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
 
-                if (count > 0)
-                {
-                    return View();
+                    if (count <= 0)
+                    {
+                        return RedirectToAction("Error", "Account"); 
+                    }
                 }
-                else
-                {
-                    return RedirectToAction("Error", "Account");
-                }
+
+                return View();
             }
         }
     }

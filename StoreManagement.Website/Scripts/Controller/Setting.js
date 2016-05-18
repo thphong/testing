@@ -31,7 +31,7 @@ mdlCommon.controller('SettingController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
 
-        $scope.CurrentTab = "Customers";
+        $scope.CurrentTab = "Users";
 
         $scope.IsShownUserRolesModal = false;
 
@@ -155,6 +155,77 @@ mdlCommon.controller('SettingController',
                 if ($scope.UserStoreFormConfig.HardDeleteObject(userRole.Id)) {
                     ShowSuccessMessage("Chức vụ của nhân viên được xóa thành công.");
                     $scope.ReloadGrid('UserRoles');
+                }
+            }
+        }
+
+        $scope.StoreForm =
+        {
+            StoreId: -1,
+            StoreCode: "",
+            StoreName: "",
+            PresenterName: "",
+            PhoneNumber: "",
+            Address: "",
+            TaxCode: "",
+            ProductGroup: "",
+            IsEditing: false,
+            Version: 0
+        }
+
+        $scope.ResetStoreForm = function()
+        {
+            $scope.StoreForm.StoreId = -1;
+            $scope.StoreForm.StoreCode = "";
+            $scope.StoreForm.StoreName = "";
+            $scope.StoreForm.PresenterName = "";
+            $scope.StoreForm.PhoneNumber = "";
+            $scope.StoreForm.Address = "";
+            $scope.StoreForm.TaxCode = "";
+            $scope.StoreForm.ProductGroup = "";
+            $scope.StoreForm.IsEditing = false;
+            $scope.StoreForm.Version = 0;
+        }
+
+        $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
+        $scope.StoreFormConfig.CheckCanCreateObject();
+        $scope.LoadStoreForm = function () {
+            if ($scope.StoreForm.StoreId <= 0) {
+                var store = $scope.StoreFormConfig.GetObject($scope.CurrentStore);
+                $scope.StoreFormConfig.CopyFields(store, $scope.StoreForm);
+            }
+        }
+
+        $scope.UndoStoreForm = function () {
+            $scope.StoreForm.IsEditing = false;
+            var store = $scope.StoreFormConfig.GetObject($scope.CurrentStore);
+            $scope.StoreFormConfig.CopyFields(store, $scope.StoreForm);
+            FValidation.ClearAllError();
+        }
+
+        $scope.SaveStoreForm = function () {            
+            if (FValidation.CheckControls("")) {
+                $scope.StoreFormConfig.SetObject($scope.StoreForm);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Cửa hàng được đổi thành công.");
+                    $scope.ReloadGrid('Stores');
+                    if ($scope.StoreForm.StoreId == -1) {
+                        var store = $scope.StoreFormConfig.GetObject($scope.CurrentStore);
+                        $scope.StoreFormConfig.CopyFields(store, $scope.StoreForm);
+                    }
+                    $scope.StoreForm.IsEditing = false;
+                }
+            }
+        }
+
+        $scope.SaveStoreItem = function (store) {
+            if (FValidation.CheckControls("check-store" + store.StoreId)) {
+                $scope.StoreFormConfig.SetObject(store);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Cửa hàng được đổi thành công.");
+                    $scope.ReloadGrid('Stores');
                 }
             }
         }

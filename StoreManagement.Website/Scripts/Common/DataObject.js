@@ -218,7 +218,7 @@ function ObjectDataConfig(tableName, $scope) {
             var value = fromObject[key];
             if (toObject[key] != undefined) {
                 if (value != null && value != undefined) {
-                    toObject[key] = value;
+                    toObject[key] = value + "";
                 }
                 else {
                     toObject[key] = "";
