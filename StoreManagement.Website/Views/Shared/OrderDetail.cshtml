@@ -316,7 +316,9 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8">
-                <input class="form-control" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" />
+                <input class="form-control" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" 
+                       check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
+                       check-under="check-order"/>
                 <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>                
                 <input class="form-control" ng-if="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt" 
                        ng-model="OrderForm.PaidForDebt" 

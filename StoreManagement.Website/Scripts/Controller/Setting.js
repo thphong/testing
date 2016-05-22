@@ -30,6 +30,7 @@ mdlCommon.controller('SettingController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
+        $controller('ProductGroupController', { $scope: $scope });
 
         $scope.CurrentTab = "Users";
 
@@ -226,6 +227,19 @@ mdlCommon.controller('SettingController',
                 if (storeId > 0) {
                     ShowSuccessMessage("Cửa hàng được đổi thành công.");
                     $scope.ReloadGrid('Stores');
+                }
+            }
+        }
+
+        $scope.RuleFormConfig = new ObjectDataConfig("T_System_Rule", $scope);
+
+        $scope.SaveRule = function (rule) {
+            if (FValidation.CheckControls("check-rule" + rule.RuleId)) {
+                $scope.RuleFormConfig.SetObject(rule);
+                var ruleId = $scope.RuleFormConfig.SaveObject();
+                if (ruleId > 0) {
+                    ShowSuccessMessage("Thiết lập được đổi thành công.");
+                    rule.IsEditing = false;
                 }
             }
         }

@@ -22,5 +22,8 @@ namespace StoreManagement.Service
         void SaveListObject(int userId, string tableName, string objectData);
         void DeleteObject(int userId, string tableName, int keyValue, bool isHardDelete);
         bool CheckCanCreate(int userId, string tableName);
+
+
+        Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig);
     }
 }

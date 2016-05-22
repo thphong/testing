@@ -378,6 +378,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
     //Global variable
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentStore = g_currentStoreId;
+    $scope.RULES = g_Rules;
 
     /*begin configurable*/
     //Number of displayed index in the paging. It should be odd number

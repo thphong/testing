@@ -220,5 +220,23 @@ namespace StoreManagement.Website.Controllers
                 return Json("#error:" + ex.Message);
             }
         }
+
+        [HttpPost]
+        public ActionResult GetAllRules()
+        {
+            try
+            {
+                var config = new GridViewConfig() {
+                    GridDataObject = "T_System_Rule",
+                    GridDefinedColums = "RuleName;Value",
+                    GridDataAction = "getall"
+                };
+                return Json(dataService.GetRules(SessionCollection.CurrentUserId, config));
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
     }
 }

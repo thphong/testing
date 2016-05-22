@@ -23,10 +23,13 @@
         var g_checkCanCreateObjectUrl = '@Url.Action("CheckCanCreate", "Data")';
         var g_currentUserId = '@StoreManagement.Website.SessionCollection.CurrentUserId';
         var g_currentStoreId = '@StoreManagement.Website.SessionCollection.CurrentStore';
+        var g_Rules = {};
         var g_exportExcelAjaxUrl = '@Url.Action("ExportExcelWithTemplateAjax", "Data")';
         var g_exportExcelUrl = '@Url.Action("ExportExcelWithTemplate", "Data")';
         var g_saveProductImageUrl = '@Url.Action("SaveProductImage", "Data")';
         var g_setStoreIdUrl = '@Url.Action("SetStoreId", "Data")';
+        var g_getAllRulesUrl = '@Url.Action("GetAllRules", "Data")';
+
     </script>
 
     @Styles.Render("~/Content/jqueryui")
@@ -50,6 +53,14 @@
     @Scripts.Render("~/bundles/MD5")
 
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        if (g_currentUserId > 0) {
+            AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
+                g_Rules = result;
+            });
+        }
+    </script>
 </head>
 <body ng-app="mdlCommon">
 

@@ -161,7 +161,7 @@
                                     <input class="form-control" ng-model="StoreForm.StoreName"
                                            check-empty="" check-empty-message="Vui lòng nhập tên cửa hàng."
                                            check-length="500" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -169,10 +169,10 @@
                                     <label class="control-label">Mã cửa hàng</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" ng-model="StoreForm.StoreCode" 
+                                    <input class="form-control" ng-model="StoreForm.StoreCode"
                                            check-empty="" check-empty-message="Vui lòng nhập mã cửa hàng."
                                            check-length="100" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -180,9 +180,9 @@
                                     <label class="control-label">Tên người đại diện</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" ng-model="StoreForm.PresenterName" 
+                                    <input class="form-control" ng-model="StoreForm.PresenterName"
                                            check-length="100" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -190,9 +190,9 @@
                                     <label class="control-label">Số điện thoại</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" ng-model="StoreForm.PhoneNumber" 
+                                    <input class="form-control" ng-model="StoreForm.PhoneNumber"
                                            check-length="50" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -200,9 +200,9 @@
                                     <label class="control-label">Địa chỉ cửa hàng</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" ng-model="StoreForm.Address" 
+                                    <input class="form-control" ng-model="StoreForm.Address"
                                            check-length="500" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -210,13 +210,22 @@
                                     <label class="control-label">Bộ danh mục</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <select class="form-control" ng-model="StoreForm.ProductGroup" 
-                                            dropdown-master-table="T_Master_ProductGroups" 
-                                            dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName" 
-                                            dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
-                                            dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
-                                            check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
-                                            ng-disabled="!StoreForm.IsEditing"></select>
+                                    <div class="width-90">
+                                        <select class="form-control" ng-model="StoreForm.ProductGroup"
+                                                dropdown-master-table="T_Master_ProductGroups"
+                                                dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName"
+                                                dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
+                                                dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
+                                                check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
+                                                ng-disabled="!StoreForm.IsEditing || StoreForm.StoreId > 0"></select>
+                                    </div>
+                                    <div class="width-10">
+                                        <button class="btn btn-primary btn-sm" title="Quản lý nhóm hàng"
+                                                ng-if="StoreForm.IsEditing && StoreForm.StoreId == -1"
+                                                data-toggle="modal" data-target="#productGroupModal">
+                                            ...
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -224,9 +233,9 @@
                                     <label class="control-label">Mã số thuế</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" ng-model="StoreForm.TaxCode" 
+                                    <input class="form-control" ng-model="StoreForm.TaxCode"
                                            check-length="100" check-length-message="Chiều dài tối ta là {0}."
-                                           ng-disabled="!StoreForm.IsEditing"/>
+                                           ng-disabled="!StoreForm.IsEditing" />
                                 </div>
                             </div>
                             <div class="row margin-top-10">
@@ -242,7 +251,7 @@
                                         <span>Thêm Cửa hàng</span>
                                     </button>
                                     <button class="btn btn-default margin-top-10" ng-if="StoreForm.IsEditing"
-                                            ng-click="UndoStoreForm()" >
+                                            ng-click="UndoStoreForm()">
                                         <i class="fa fa-undo"></i>
                                         <span>Trở về</span>
                                     </button>
@@ -305,7 +314,7 @@
                                                    check-under="check-store{{item.StoreId}}" />
                                         </td>
                                         <td>
-                                            <span ng-bind="item.GroupName" ng-if="!item.IsEditing"></span>
+                                            <span ng-bind="item.GroupName"></span>
                                             <select class="form-control" ng-init="item.ProductGroup = item.ProductGroup + ''" ng-model="item.ProductGroup"
                                                     dropdown-master-table="T_Master_ProductGroups"
                                                     dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName"
@@ -313,7 +322,7 @@
                                                     dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
                                                     check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
                                                     check-under="check-store{{item.StoreId}}"
-                                                    ng-show="item.IsEditing"></select>
+                                                    ng-if="false"></select>
                                         </td>
                                         <td>
                                             <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
@@ -347,9 +356,77 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane" ng-class="{active : (CurrentTab =='Setting') }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='Setting')">
+                        <div class="row col-md-12 margin-top-10">
+                            <table grid-data="Setting"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="getall" @*get/getall*@
+                                   grid-data-object="T_System_Rule" @*table name or stored procedure name*@
+                                   grid-filter-condition="[IsDisplay] = 1" @*must have [fieldname] for each colum field*@
+                                   grid-sort-condition="[OrderDisplay] ASC" @*must have [fieldname] for each colum field*@
+                                   grid-sum-collection="" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60%" grid-defined-colum="Description"><span>Mô tả</span></th>
+                                        <th grid-defined-colum="Value"><span>Giá trị</span></th>
+                                        <th></th>
+                                        <th grid-defined-colum="RuleId" class="none-display"></th>
+                                        <th grid-defined-colum="DataType" class="none-display"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.Setting.Data">
+                                        <td>
+                                            <span class="bold" ng-bind="item.Description"> </span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="item.DataType != 'bool'">
+                                                <span ng-bind="item.Value" ng-if="!item.IsEditing"></span>
+                                                <input class="form-control" ng-model="item.Value" ng-if="item.IsEditing"
+                                                       check-empty="" check-empty-message="Vui lòng nhập giá trị."
+                                                       check-length="100" check-length-message="Chiều dài tối ta là {0}."
+                                                       check-under="check-rule{{item.RuleId}}" />
+                                            </span>
+
+                                            <span ng-if="item.DataType == 'bool'">
+                                                <input id="rdYes{{item.RuleId}}" type="radio" ng-model="item.Value" value="1" ng-disabled="!item.IsEditing" />
+                                                <label class="font-weigth-normal" for="rdYes{{item.RuleId}}">Có</label>
+                                                &nbsp;&nbsp;
+                                                <input id="rdNo{{item.RuleId}}" type="radio" ng-model="item.Value" value="0" ng-disabled="!item.IsEditing" />
+                                                <label class="font-weigth-normal" for="rdNo{{item.RuleId}}">Không</label>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
+                                               title="Chỉnh sửa" ng-click="item.IsEditing = true;">
+                                                <i class="fa-edit fa"></i>
+                                            </a>
+                                            <a ng-if="item.IsEditing && item._CanUpdate" class="blue margin-left-10"
+                                               title="Lưu" ng-click="SaveRule(item);">
+                                                <i class="fa-save fa"></i>
+                                            </a>
+                                            <a ng-if="item.IsEditing" class="blue margin-left-10"
+                                               title="Hủy" ng-click="item.IsEditing = false; ReloadGrid('Setting')">
+                                                <i class="fa-undo fa"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.Setting.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="3" align="center"> Không có dữ liệu! </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     @Html.Partial("UserModal")
     @Html.Partial("RolesModal")
+    @Html.Partial("ProductGroupModal")
 </div>

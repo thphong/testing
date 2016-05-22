@@ -5,6 +5,16 @@ function CheckNumOfProduct() {
     return len > 0;
 }
 
+function CheckAllowCredit() {
+    var scope = angular.element(document.getElementById("OrderController")).scope();
+    var debt = scope.OrderForm.DebtMoney;
+    var rule = scope.RULES.ALLOW_CREDIT_SELLING;
+    if (debt > 0 && rule != 1) {
+        return false;
+    }
+    return true;
+}
+
 mdlCommon.controller('OrderController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {

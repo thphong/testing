@@ -105,9 +105,9 @@
                         ng-click="ShowPriceHistory(0)">
                     <i class="fa-table fa"></i>
                 </button>
-                <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Price | currency:'':0) || '(Chưa nhập)'"> </div>
+                <div ng-if="!IsEditingProductDetail || (ProductForm.ProductId != -1 && RULES.ALLOW_EDIT_PRICE != 1)" ng-bind="(ProductForm.Price | currency:'':0) || '(Chưa nhập)'"> </div>
                 <input class="form-control text-right" ng-model="ProductForm.Price"
-                       ng-if="IsEditingProductDetail"
+                       ng-if="IsEditingProductDetail && (ProductForm.ProductId == -1 || RULES.ALLOW_EDIT_PRICE == 1)"
                        check-currency />
             </div>
         </div>

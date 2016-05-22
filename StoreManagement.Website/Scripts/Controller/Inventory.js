@@ -31,7 +31,6 @@ mdlCommon.controller('InventoryController',
         $scope.CurrentTab = "InventoryProduct";
         $scope.CurrentDate = new Date();
 
-
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;

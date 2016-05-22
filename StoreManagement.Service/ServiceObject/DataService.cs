@@ -197,5 +197,17 @@ namespace StoreManagement.Service
                     (statement).FirstOrDefault();
             return result;
         }
+
+
+        public Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig)
+        {
+            DataTable dt = GetDataFromConfiguration(userId, gridConfig);
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                result.Add(dr["RuleName"].ToString(), dr["Value"]);
+            }
+            return result;
+        }
     }
 }
