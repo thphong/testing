@@ -81,6 +81,18 @@ namespace StoreManagement.Website
             }
         }
 
+        public static int ProductGroup
+        {
+            get
+            {
+                return HttpContext.Current.Session["ProductGroup"] != null ? (int)HttpContext.Current.Session["ProductGroup"] : -1;
+            }
+            set
+            {
+                HttpContext.Current.Session["ProductGroup"] = value;
+            }
+        }
+
         public static void ClearSession()
         {
             HttpContext.Current.Session.Clear();

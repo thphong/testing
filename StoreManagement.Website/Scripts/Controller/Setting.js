@@ -24,20 +24,42 @@ $(document).ready(function () {
             scope.SetShownUserRolesModal(false);
         });
     });
+
+
+    $('#PrintTermModal').on('show.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownTemplateTermsModal(true);
+        });
+    }).on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownTemplateTermsModal(false);
+        });
+    });
+
+    
 });
 
 mdlCommon.controller('SettingController',
-['$scope', '$filter', '$controller',
-    function ($scope, $filter, $controller) {
+['$scope', '$filter', '$controller', '$sce',
+    function ($scope, $filter, $controller, $sce) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('ProductGroupController', { $scope: $scope });
 
         $scope.CurrentTab = "Users";
 
         $scope.IsShownUserRolesModal = false;
+        $scope.IsShownTemplateTermsModal = false;
 
         $scope.SetShownUserRolesModal = function (isShown) {
             $scope.IsShownUserRolesModal = isShown;
+        }
+
+        $scope.SetShownTemplateTermsModal = function (isShown) {
+            $scope.IsShownTemplateTermsModal = isShown;
         }
 
         $scope.SetCurrentTab = function (tab) {
@@ -243,4 +265,76 @@ mdlCommon.controller('SettingController',
                 }
             }
         }
+
+        ///////////////////////////////////////////////////////////
+        $scope.TemplateForm =
+        {
+            TemplateId: 1,
+            TemplateName: "",
+            DefaultBody: "",
+            RuntimeBody: "",
+            HtmlBody: "",
+            Version: 0
+        }
+
+        $scope.TemplateFormConfig = new ObjectDataConfig("T_Master_PrintTemplates", $scope);
+
+        $scope.InitEditor = function ()
+        {
+
+            CKEDITOR.replace('editor', {
+                language: 'vi',
+                extraPlugins: 'autogrow',
+                autoGrow_minHeight: 200,
+                height: '500',
+                removePlugins: 'resize'
+                //autoGrow_maxHeight: 600
+                //uiColor: '#9AB8F3'
+            });
+
+            CKEDITOR.instances.editor.on('change', function () {                
+                $scope.$apply(function () {
+                    $scope.ChangeTemplate();
+                });
+            });
+
+            $scope.GetTemplate();
+        }
+
+        $scope.GetTemplate = function ()
+        {
+            var template = $scope.TemplateFormConfig.GetObject($scope.TemplateForm.TemplateId);
+            $scope.TemplateFormConfig.CopyFields(template, $scope.TemplateForm);
+            $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml($scope.TemplateForm.RuntimeBody);
+            //alert( CKEDITOR.instances.editor.getData());
+
+            CKEDITOR.instances.editor.setData($scope.TemplateForm.RuntimeBody);
+        }
+
+        $scope.GetDefaultTemplate = function ()
+        {
+            $scope.TemplateForm.RuntimeBody = $scope.TemplateForm.DefaultBody;
+            $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml($scope.TemplateForm.RuntimeBody);
+            //CKEDITOR.instances.editor.setData($scope.TemplateForm.RuntimeBody);
+            CKEDITOR.instances.editor.editable().setHtml($scope.TemplateForm.RuntimeBody);
+        }
+
+        $scope.ChangeTemplate = function ()
+        {
+            $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml(CKEDITOR.instances.editor.getData());
+        }
+
+        $scope.SaveTemplate = function () {
+            $scope.TemplateForm.RuntimeBody = CKEDITOR.instances.editor.getData();
+            $scope.TemplateFormConfig.SetObject($scope.TemplateForm);
+            var templateId = $scope.TemplateFormConfig.SaveObject();
+            if (templateId > 0) {
+                ShowSuccessMessage("Mẫu in được đổi thành công.");
+            }
+        }
+
+        $scope.ConvertTrustHtml = function (html) {
+            return $sce.trustAsHtml(html);
+        };
+
     }]);

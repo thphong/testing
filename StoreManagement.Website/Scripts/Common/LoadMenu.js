@@ -20,7 +20,7 @@
         }
 
         $scope.SetStoreId = function () {
-            AjaxSync(g_setStoreIdUrl, '{ "storedId": "' + $scope.CurrentStore + '"}');
+            AjaxSync(g_setStoreIdUrl, '{ "storedId": ' + $scope.CurrentStore + '}');
             location.reload();
         }
         

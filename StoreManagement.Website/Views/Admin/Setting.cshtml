@@ -315,14 +315,14 @@
                                         </td>
                                         <td>
                                             <span ng-bind="item.GroupName"></span>
-                                            <select class="form-control" ng-init="item.ProductGroup = item.ProductGroup + ''" ng-model="item.ProductGroup"
+                                            @*<select class="form-control" ng-init="item.ProductGroup = item.ProductGroup + ''" ng-model="item.ProductGroup"
                                                     dropdown-master-table="T_Master_ProductGroups"
                                                     dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName"
                                                     dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
                                                     dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
                                                     check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
                                                     check-under="check-store{{item.StoreId}}"
-                                                    ng-if="false"></select>
+                                                    ng-if="false"></select>*@
                                         </td>
                                         <td>
                                             <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
@@ -423,10 +423,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane" ng-class="{active : (CurrentTab =='Prints') }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='Prints')">
+                        <div class="col-md-7 margin-top-10">
+                            <div class="widget-box" ng-init="InitEditor()">
+                                <div class="widget-header gray">
+                                    <a href="#"> Chọn mẫu in </a>
+                                    <div class="width-45">
+                                        <select class="form-control" ng-model="TemplateForm.TemplateId"
+                                                ng-change="GetTemplate()"
+                                                dropdown-master-table="T_Master_PrintTemplates"
+                                                dropdown-value-field="TemplateId" dropdown-name-field="TemplateName"></select>
+                                    </div>
+                                    <button title="Tải về" class="btn btn-primary btn-sm" ng-click="GetDefaultTemplate()">
+                                        <i class="fa-refresh fa" ></i>
+                                    </button>
+                                    <button title="Lưu" class="btn btn-primary btn-sm" ng-click="SaveTemplate()">
+                                        <i class="fa-save fa"></i>
+                                    </button>
+                                    <button title="Thông tin" class="btn btn-success btn-sm" data-toggle="modal" data-target="#PrintTermModal">
+                                        <i class="fa-info fa"></i>
+                                    </button>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <textarea id="editor" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 margin-top-10">
+                            <div class="widget-box">
+                                <div class="widget-header gray">
+                                    <a href="#"> Xem trước mẫu in:</a>
+                                    <span style="color: rgb(85, 85, 85)" ng-bind="TemplateForm.TemplateName"></span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main" style="overflow-x: scroll">
+                                        <span ng-bind-html="TemplateForm.HtmlBody">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     @Html.Partial("UserModal")
     @Html.Partial("RolesModal")
     @Html.Partial("ProductGroupModal")
+    @Html.Partial("PrintTermModal")
 </div>

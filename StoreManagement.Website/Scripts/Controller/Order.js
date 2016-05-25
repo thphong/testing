@@ -24,7 +24,8 @@ mdlCommon.controller('OrderController',
 
         $scope.AdditionalFilter = {
             OrderType: "1",
-            Status: "0"
+            Status: "0",
+            ProductGroup: "0"
         };
 
         $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders", $scope);
@@ -457,5 +458,9 @@ mdlCommon.controller('OrderController',
                 }
             }
         }
+
+        //POS
+        $scope.IsShowingPOSCustomer = false;
+        $scope.IsShowingPOSSummary = true;
 
     }]);

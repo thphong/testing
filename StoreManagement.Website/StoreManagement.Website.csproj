@@ -215,6 +215,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\POSController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -437,6 +438,9 @@
     <Content Include="Views\Account\Info.cshtml" />
     <Content Include="Views\Shared\RolesModal.cshtml" />
     <Content Include="Views\Account\Error.cshtml" />
+    <Content Include="Views\Shared\PrintTermModal.cshtml" />
+    <Content Include="Views\POS\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPOS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

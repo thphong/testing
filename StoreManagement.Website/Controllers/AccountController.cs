@@ -51,6 +51,7 @@ namespace StoreManagement.Website.Controllers
                 var result = dataService.Login(loginId, password);
                 SessionCollection.CurrentUserId = (int)result["UserId"];
                 SessionCollection.CurrentStore = (int)result["CurrentStore"];
+                SessionCollection.ProductGroup = (int)result["ProductGroup"];
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }

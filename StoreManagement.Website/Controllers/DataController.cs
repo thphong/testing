@@ -110,6 +110,7 @@ namespace StoreManagement.Website.Controllers
             try
             {
                 SessionCollection.CurrentStore = storedId;
+                //SessionCollection.ProductGroup = productGroup;
                 return Json(true);
             }
             catch (Exception ex)

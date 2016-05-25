@@ -195,6 +195,7 @@ function ObjectDataConfig(tableName, $scope) {
         while (str.indexOf("<<>>") >= 0) {
             str = str.replace(/<<>>/g, '');
         }
+        str = str.replace(/"/g, '\\"');
         return str;
     }
 

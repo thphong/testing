@@ -58,7 +58,6 @@ function HideLoading() {
 
 
 function AjaxSync(service, para) {
-
     var result = null;
     $.ajax({
         type: "POST",
@@ -79,6 +78,7 @@ function AjaxSync(service, para) {
         },
         error: function (e) {
             result = null;
+            alert(e.responseText);
             //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
