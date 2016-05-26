@@ -110,7 +110,10 @@ namespace StoreManagement.Website.Controllers
             try
             {
                 SessionCollection.CurrentStore = storedId;
-                //SessionCollection.ProductGroup = productGroup;
+
+                var store = dataService.GetObject(SessionCollection.CurrentUserId, "T_Master_Stores", "", storedId.ToString());
+                SessionCollection.ProductGroup = (int)store["ProductGroup"];
+
                 return Json(true);
             }
             catch (Exception ex)

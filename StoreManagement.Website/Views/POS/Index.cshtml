@@ -20,8 +20,8 @@
                        ng-show="OrderForm._CanUpdate" />
             </div>
         </div>
-        <div class="row margin-top-10">
-            <div class="col-md-12">
+        <div class="row margin-top-10" style="padding-right: 30px">
+            <div class="col-md-12" style="max-height: 400px;box-sizing: content-box;overflow-y: scroll;">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -331,7 +331,7 @@
                 <div class="col-md-2" style="width:20%; margin-top: 20px">
                     <a href="#" class="thumbnail" ng-click="SelectProduct(item)">
                         <img id="imgProduct" class="file-preview-image"
-                             src="/Data/GetProductImage?productId={{item.ProductId}}"
+                             src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
                              alt="Chưa upload ảnh"
                              style="width:auto;height:110px;" />
 
@@ -347,7 +347,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12" style="position: fixed; bottom: 0px;">
+            <div class="col-md-12" style="position: fixed; bottom: 0%; left:65%">
                 <span grid-paging-for="Products"></span>
             </div>
         </div>

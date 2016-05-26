@@ -148,6 +148,83 @@
                             </div>
                         </div>
 
+                        <div class="col-md-12">
+                            <h3>Chức năng cho nhóm người dùng</h3>
+                            <div class="table-responsive">
+                                <table id="sample-table-2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center border white-bg">Chức năng</th>
+                                            <th class="text-center border">Chủ <span class="hidden-640">cửa hàng</span></th>
+                                            <th class="text-center border"><span class="show-640">QL</span><span class="hidden-640">Quản lý</span></th>
+                                            <th class="text-center border"><span class="show-640">NV</span><span class="hidden-640">Nhân viên bán hàng</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center border hl">Bán hàng - POS</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Báo cáo cuối ngày</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Hàng hóa</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Đơn hàng</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Nhập hàng</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Báo cáo lợi nhuận</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Báo cáo nhập xuất tồn</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Báo cáo tồn kho</td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center border hl">Thiết lập <span class="hidden-640" style="font-weight: normal">(Thông tin cửa hàng, nhân viên, thiết lập bán hàng, quản lý mẫu in)</span> </td>
+                                            <td class="text-center border"><i class="fa-check fa green"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                            <td class="text-center border"><i class="fa-remove fa red"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12">
+                                <h3 class="main-color">Lưu ý</h3>
+                                <p><i><strong>[Chủ cửa hàng]</strong> mới được xem giá vốn của hàng hóa và báo cáo lợi nhuận</i></p>
+                                <p><i><strong>[Quản lý]</strong> không xóa được dữ liệu. Để xóa được dữ liệu, cần liên hệ <strong>[Chủ cửa hàng]</strong> để xóa</i></p>
+                                <p><i><strong>[Nhân viên bán hàng]</strong> chỉ được bán hàng, nhập trả hàng và xem báo cáo cuối ngày từ POS</i></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane" ng-class="{active : (CurrentTab =='Stores') }">
@@ -462,7 +539,7 @@
                                 </div>
                                 <div class="widget-body">
                                     <div class="widget-main" style="overflow-x: scroll">
-                                        <span ng-bind-html="TemplateForm.HtmlBody">
+                                        <span bind-html-compile="TemplateForm.HtmlBody">
                                         </span>
                                     </div>
                                 </div>

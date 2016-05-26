@@ -40,7 +40,7 @@ $(document).ready(function () {
         });
     });
 
-    
+
 });
 
 mdlCommon.controller('SettingController',
@@ -196,8 +196,7 @@ mdlCommon.controller('SettingController',
             Version: 0
         }
 
-        $scope.ResetStoreForm = function()
-        {
+        $scope.ResetStoreForm = function () {
             $scope.StoreForm.StoreId = -1;
             $scope.StoreForm.StoreCode = "";
             $scope.StoreForm.StoreName = "";
@@ -226,7 +225,7 @@ mdlCommon.controller('SettingController',
             FValidation.ClearAllError();
         }
 
-        $scope.SaveStoreForm = function () {            
+        $scope.SaveStoreForm = function () {
             if (FValidation.CheckControls("")) {
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
@@ -279,8 +278,7 @@ mdlCommon.controller('SettingController',
 
         $scope.TemplateFormConfig = new ObjectDataConfig("T_Master_PrintTemplates", $scope);
 
-        $scope.InitEditor = function ()
-        {
+        $scope.InitEditor = function () {
 
             CKEDITOR.replace('editor', {
                 language: 'vi',
@@ -292,35 +290,34 @@ mdlCommon.controller('SettingController',
                 //uiColor: '#9AB8F3'
             });
 
-            CKEDITOR.instances.editor.on('change', function () {                
+            CKEDITOR.instances.editor.on('change', function () {
                 $scope.$apply(function () {
                     $scope.ChangeTemplate();
                 });
             });
 
             $scope.GetTemplate();
+
         }
 
-        $scope.GetTemplate = function ()
-        {
+        $scope.GetTemplate = function () {
             var template = $scope.TemplateFormConfig.GetObject($scope.TemplateForm.TemplateId);
             $scope.TemplateFormConfig.CopyFields(template, $scope.TemplateForm);
             $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml($scope.TemplateForm.RuntimeBody);
-            //alert( CKEDITOR.instances.editor.getData());
+
+            //alert(CKEDITOR.instances.editor.editable());
 
             CKEDITOR.instances.editor.setData($scope.TemplateForm.RuntimeBody);
         }
 
-        $scope.GetDefaultTemplate = function ()
-        {
+        $scope.GetDefaultTemplate = function () {
             $scope.TemplateForm.RuntimeBody = $scope.TemplateForm.DefaultBody;
             $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml($scope.TemplateForm.RuntimeBody);
             //CKEDITOR.instances.editor.setData($scope.TemplateForm.RuntimeBody);
             CKEDITOR.instances.editor.editable().setHtml($scope.TemplateForm.RuntimeBody);
         }
 
-        $scope.ChangeTemplate = function ()
-        {
+        $scope.ChangeTemplate = function () {
             $scope.TemplateForm.HtmlBody = $scope.ConvertTrustHtml(CKEDITOR.instances.editor.getData());
         }
 
@@ -334,7 +331,53 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.ConvertTrustHtml = function (html) {
+            //html = html.Re
+            html = html.replace(/{/g, '{{SampleData.');
+            html = html.replace(/}/g, '}}');
             return $sce.trustAsHtml(html);
         };
+
+        $scope.SampleData =
+        {
+            Ten_Cua_Hang: "Thegioididong",
+            Dia_Chi_Cua_Hang: "P3, Q.11, TP. HCM",
+            SDT_Cua_Hang: "083-333-444",
+            Ngay_Xuat: "23-06-2016",
+            Ngay_Thang_Nam: formatDate(new Date()),
+            Ghi_Chu: "Đã nhận đủ hàng!",
+            Ma_Don_Hang: "PX00010",
+            Nhan_Vien_Thu_Ngan: "Thu thủy",
+            Ma_Khach_Hang: "",
+            Khach_Hang: "Thành Phong",
+            Dia_Chi_Khach_Hang: "",
+            STT: "1",
+            Ma_Hang: "HH00016",
+            Ten_Hang_Hoa: "Áo thun thái - xanh",
+            So_Luong: "2",
+            Don_Gia_Sau_Giam_Gia: "100,000",
+            Thanh_Tien: "200,000",
+            Tong_So_Luong: "2",
+            Tong_Tien_Hang: "200,000",
+            Giam_Gia_Tren_Hoa_Don: "10,000",
+            Giam_Gia_PT_Tren_Hoa_Don: "",
+            Tong_Thanh_Toan: "190,000",
+            Da_Thanh_Toan: "190,000",
+            Chua_Thanh_Toan: "0",
+            Tien_Thua: "",
+            Ma_Phieu_Nhap: "PN100012",
+            Nha_Cung_Cap: "Cty SX Thái Tuấn",
+            Ngay_Nhap: "19-05-2016",
+            Nhan_Vien_Nhap_Hang: "Tuấn Vũ",
+            Tong_Tien_Thue: "0",
+            Ma_Phieu_Chi: "PC1000017",
+            Ngay_Chi: "20-05-2016",
+            Nguoi_Chi: "Thanh Thủy",
+            Ten_Chi_Phi: "Tiền điện tháng 10",
+            Loai_Chi_Phi: "Tiền điện nước",
+            Ngay_Chuyen: "16-05-2016",
+            Nhan_Vien_Chuyen_Hang: "Thành Phong",
+            Tu_Kho: "Thegiodidong",
+            Den_Kho: "Dienmayxanh"
+        }
 
     }]);
