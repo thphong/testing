@@ -11,6 +11,7 @@ mdlCommon.controller('PurchaseController',
         $controller('ctrlPaging', { $scope: $scope });
         $controller('SupplierModalController', { $scope: $scope });
         $controller('ProductListController', { $scope: $scope });
+        $controller('PrintController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             PurchaseType: "1",
@@ -220,17 +221,21 @@ mdlCommon.controller('PurchaseController',
 
         $scope.ShowPurchaseDetail = function (purchase) {
             //Load purchase form
-            $scope.PurchaseFormConfig.SetObject($scope.PurchaseForm);
-            var object = $scope.PurchaseFormConfig.GetObject(purchase.PurchaseId);
-            $scope.PurchaseFormConfig.CopyFields(object, $scope.PurchaseForm);
-            $scope.PurchaseForm.SupplierName = purchase.SupplierName;
-            $scope.PurchaseForm.PurchaserName = purchase.PurchaserName;
+            $scope.GetPurchaseDetail(purchase);
             $scope.IsShowPurchaseDetail = true;
             $scope.PurchaseForm._CanUpdate = purchase._CanUpdate;
             $scope.PurchaseForm._CanDelete = purchase._CanDelete;
             //Load Product purchase
             //$scope.ReloadGrid('ProductsPurchase');
             //FValidation.ClearAllError();
+        }
+
+        $scope.GetPurchaseDetail = function (purchase) {
+            $scope.PurchaseFormConfig.SetObject($scope.PurchaseForm);
+            var object = $scope.PurchaseFormConfig.GetObject(purchase.PurchaseId);
+            $scope.PurchaseFormConfig.CopyFields(object, $scope.PurchaseForm);
+            $scope.PurchaseForm.SupplierName = purchase.SupplierName;
+            $scope.PurchaseForm.PurchaserName = purchase.PurchaserName;
         }
 
         $scope.InitListProducts = function () {
@@ -296,4 +301,22 @@ mdlCommon.controller('PurchaseController',
             }
         }
 
+        $scope.PrintPurchase = function (purchase) {
+            $scope.GetPurchaseDetail(purchase);
+            $scope.ReloadGrid("ProductsPurchase");
+            $scope.InitListProducts();
+
+            //print
+            $scope.PrintForm();
+
+        }
+
+        $scope.PrintForm = function () {
+            $scope.GetListPrintTerm("Purchase");
+            $scope.GetPrintTemplate("PURCHASE");
+
+            setTimeout(function () {
+                $scope.PrintData("divPrint");
+            }, 100);
+        }
     }]);

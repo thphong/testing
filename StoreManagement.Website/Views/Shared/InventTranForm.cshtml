@@ -184,7 +184,7 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="InventTranForm.Notes" ng-if="!InventTranForm._CanUpdate"></span>
-                <textarea class="form-control" ng-model="InventTranForm.Notes" ng-if="InventTranForm.StatusId == 1"
+                <textarea class="form-control" ng-model="InventTranForm.Notes" ng-if="InventTranForm._CanUpdate"
                           placeholder="Ghi chú cho phiếu"
                           check-length="500" check-length-message="Chiều dài tối ta là {0}."
                           check-under="check-inventory-tran"></textarea>

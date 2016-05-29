@@ -21,6 +21,7 @@ mdlCommon.controller('OrderController',
         $controller('ctrlPaging', { $scope: $scope });
         $controller('CustomerModalController', { $scope: $scope });
         $controller('ProductListController', { $scope: $scope });
+        $controller('PrintController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             OrderType: "1",
@@ -62,9 +63,9 @@ mdlCommon.controller('OrderController',
             IsActive: 1,
             PaidForDebt: 0,
             IsEditingPaidForDebt: false,
-            Version:0,
+            Version: 0,
             _CanUpdate: true,
-            _CanDelete : true
+            _CanDelete: true
         };
 
         $scope.ResetOrderForm = function () {
@@ -134,8 +135,7 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.SelectProduct = function (product) {
-            if (product.AllowNegative == '0' && product.Quantity <= 0)
-            {
+            if (product.AllowNegative == '0' && product.Quantity <= 0) {
                 ShowErrorMessage("Sản phẩm không cho bán âm và không còn sản phẩm trong kho.");
                 return;
             }
@@ -376,21 +376,22 @@ mdlCommon.controller('OrderController',
             }
         }
 
-
         $scope.ShowOrderDetail = function (order) {
             //Load Order form
-            //$scope.OrderFormConfig.SetObject($scope.OrderForm);
+            $scope.IsShowOrderDetail = true;
+            $scope.GetOrderDetail(order);
+            $scope.OrderForm._CanUpdate = order._CanUpdate;
+            $scope.OrderForm._CanDelete = order._CanDelete;
+        }
+
+        $scope.GetOrderDetail = function(order)
+        {
             $scope.ResetOrderForm();
             var object = $scope.OrderFormConfig.GetObject(order.OrderId);
             $scope.OrderFormConfig.CopyFields(object, $scope.OrderForm);
             $scope.OrderForm.CustomerIsWholeSale = order.CustomerIsWholeSale;
             $scope.OrderForm.CustomerName = order.CustomerName;
             $scope.OrderForm.CashierName = order.CashierName;
-            $scope.OrderForm._CanUpdate = order._CanUpdate;
-            $scope.OrderForm._CanDelete = order._CanDelete;
-            $scope.IsShowOrderDetail = true;
-
-            //FValidation.ClearAllError();
         }
 
         $scope.InitListProducts = function () {
@@ -462,5 +463,26 @@ mdlCommon.controller('OrderController',
         //POS
         $scope.IsShowingPOSCustomer = false;
         $scope.IsShowingPOSSummary = true;
+
+        $scope.PrintOrderAdmin = function (order) {
+
+            $scope.GetOrderDetail(order);
+            $scope.ReloadGrid("ProductsOrder");
+            $scope.InitListProducts();
+
+            //print
+            $scope.PrintForm();
+
+        }
+
+        $scope.PrintForm = function () {
+            $scope.GetListPrintTerm("Order");
+            $scope.GetPrintTemplate("ORDER_ADMIN");
+
+            setTimeout(function () {
+                $scope.PrintData("divPrint");
+            }, 100);
+        }
+
 
     }]);

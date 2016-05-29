@@ -1,5 +1,6 @@
 ﻿@section scripts
 {
+    @Scripts.Render("~/bundles/Print")
     @Scripts.Render("~/bundles/Setting")
 }
 <div id="SettingController" ng-controller="SettingController">
@@ -521,6 +522,9 @@
                                     <button title="Thông tin" class="btn btn-success btn-sm" data-toggle="modal" data-target="#PrintTermModal">
                                         <i class="fa-info fa"></i>
                                     </button>
+                                    <button title="In thử" class="btn btn-primary btn-sm" ng-click="TestPrint()">
+                                        <i class="fa-print fa"></i>
+                                    </button>
                                 </div>
 
                                 <div class="widget-body">
@@ -538,7 +542,7 @@
                                     <span style="color: rgb(85, 85, 85)" ng-bind="TemplateForm.TemplateName"></span>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-main" style="overflow-x: scroll">
+                                    <div class="widget-main" id="divPrintPreview" style="overflow-x: scroll">
                                         <span bind-html-compile="TemplateForm.HtmlBody">
                                         </span>
                                     </div>

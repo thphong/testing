@@ -48,6 +48,7 @@ mdlCommon.controller('SettingController',
     function ($scope, $filter, $controller, $sce) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('ProductGroupController', { $scope: $scope });
+        $controller('PrintController', { $scope: $scope });
 
         $scope.CurrentTab = "Users";
 
@@ -276,8 +277,6 @@ mdlCommon.controller('SettingController',
             Version: 0
         }
 
-        $scope.TemplateFormConfig = new ObjectDataConfig("T_Master_PrintTemplates", $scope);
-
         $scope.InitEditor = function () {
 
             CKEDITOR.replace('editor', {
@@ -296,8 +295,11 @@ mdlCommon.controller('SettingController',
                 });
             });
 
-            $scope.GetTemplate();
+            //Get teams, sample data, replaced expression
+            $scope.GetListPrintTerm();
 
+            //Get template
+            $scope.GetTemplate();
         }
 
         $scope.GetTemplate = function () {
@@ -337,7 +339,9 @@ mdlCommon.controller('SettingController',
             return $sce.trustAsHtml(html);
         };
 
-        $scope.SampleData =
+        
+
+        /*$scope.SampleData =
         {
             Ten_Cua_Hang: "Thegioididong",
             Dia_Chi_Cua_Hang: "P3, Q.11, TP. HCM",
@@ -378,6 +382,6 @@ mdlCommon.controller('SettingController',
             Nhan_Vien_Chuyen_Hang: "Thành Phong",
             Tu_Kho: "Thegiodidong",
             Den_Kho: "Dienmayxanh"
-        }
+        }*/
 
     }]);

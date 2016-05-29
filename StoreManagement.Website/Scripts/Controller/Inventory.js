@@ -16,6 +16,7 @@ mdlCommon.controller('InventoryController',
         $controller('ctrlPaging', { $scope: $scope });
         $controller('ProductQuanHistoryController', { $scope: $scope });
         $controller('ProductListController', { $scope: $scope });
+        $controller('PrintController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             InventoryProductGroup: "0",
@@ -392,13 +393,8 @@ mdlCommon.controller('InventoryController',
 
         $scope.ShowInventTranDetail = function (tran) {
             //Load Inventory form
-            $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
-            var object = $scope.InventTranFormConfig.GetObject(tran.InventTranId);
-            $scope.InventTranFormConfig.CopyFields(object, $scope.InventTranForm);
-            $scope.InventTranForm.TransferName = tran.TransferName;
-            $scope.InventTranForm.CreatorName = tran.CreatorName;
-            $scope.InventTranForm.FromStoreCode = tran.FromStoreCode;
-            $scope.InventTranForm.ToStoreCode = tran.ToStoreCode;
+            $scope.GetInventTranDetail(tran);
+
             $scope.InventTranForm._CanUpdate = tran._CanUpdate;
             $scope.InventTranForm._CanDelete = tran._CanDelete;
             $scope.IsShowInventTranDetail = true;
@@ -406,6 +402,18 @@ mdlCommon.controller('InventoryController',
             //Load Product InventTran
             //$scope.ReloadGrid('ProductsInventTran');
             //FValidation.ClearAllError();
+        }
+
+        $scope.GetInventTranDetail = function (tran)
+        {
+            $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
+            var object = $scope.InventTranFormConfig.GetObject(tran.InventTranId);
+            $scope.InventTranFormConfig.CopyFields(object, $scope.InventTranForm);
+            $scope.InventTranForm.TransferName = tran.TransferName;
+            $scope.InventTranForm.CreatorName = tran.CreatorName;
+            $scope.InventTranForm.FromStoreCode = tran.FromStoreCode;
+            $scope.InventTranForm.ToStoreCode = tran.ToStoreCode;
+
         }
 
         $scope.InitListProductsTran = function()
@@ -422,5 +430,24 @@ mdlCommon.controller('InventoryController',
             }
 
             $scope.SummarizeInventTran();
+        }
+
+        $scope.PrintInventTran = function (tran) {
+            $scope.GetInventTranDetail(tran);
+            $scope.ReloadGrid("ProductsInventTran");
+            $scope.InitListProductsTran();
+
+            //print
+            $scope.PrintForm();
+
+        }
+
+        $scope.PrintForm = function () {
+            $scope.GetListPrintTerm("Transfer");
+            $scope.GetPrintTemplate("PRODUCT_TRANSFER");
+
+            setTimeout(function () {
+                $scope.PrintData("divPrint");
+            }, 100);
         }
     }]);

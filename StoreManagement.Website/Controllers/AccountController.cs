@@ -50,8 +50,12 @@ namespace StoreManagement.Website.Controllers
             {
                 var result = dataService.Login(loginId, password);
                 SessionCollection.CurrentUserId = (int)result["UserId"];
+                SessionCollection.UserName = (string)result["UserName"];
                 SessionCollection.CurrentStore = (int)result["CurrentStore"];
                 SessionCollection.ProductGroup = (int)result["ProductGroup"];
+                SessionCollection.StoreName = (string)result["StoreName"];
+                SessionCollection.StorePhone = (string)result["StorePhone"];
+                SessionCollection.StoreAddress = (string)result["StoreAddress"];
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }

@@ -334,6 +334,7 @@
     <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />
     <Content Include="Scripts\Controller\Order.js" />
+    <Content Include="Scripts\Controller\Print.js" />
     <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
     <Content Include="Scripts\Controller\ProductGroup.js" />

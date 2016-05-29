@@ -3,6 +3,7 @@
     @Scripts.Render("~/bundles/Purchase")
     @Scripts.Render("~/bundles/SupplierModal")
     @Scripts.Render("~/bundles/ProductList")
+    @Scripts.Render("~/bundles/Print")
 }
 
 <div id="PurchaseController" ng-controller="PurchaseController">
@@ -95,6 +96,9 @@
                                 <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
                                 <td ng-bind="item.Debt  | currency:'':0"></td>
                                 <td>
+                                    <a class="grey margin-left-10" ng-click="PrintPurchase(item)">
+                                        <i class="fa-print fa"></i>
+                                    </a>
                                     <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeletePurchase(item)">
                                         <i class="fa-trash fa"></i>
                                     </a>
@@ -135,5 +139,10 @@
         <div ng-if="IsShowPurchaseDetail">
             @Html.Partial("PurchaseDetail")
         </div>
+    </div>
+
+    <div class="none-display" id="divPrint">
+        <span bind-html-compile="PrintTemplate">
+        </span>
     </div>
 </div>

@@ -1,6 +1,7 @@
 ﻿@section scripts
 {
     @Scripts.Render("~/bundles/Payment")
+    @Scripts.Render("~/bundles/Print")
 }
 
 <div id="InventoryController" ng-controller="PaymentController">
@@ -85,7 +86,7 @@
                                                     ng-change="ReloadGrid('Costs')"></select>
                                         </span>
                                     </th>
-                                    <th grid-defined-colum="CreatedBy.UserName"><span>Người chi</span></th>
+                                    <th grid-defined-colum="CreatedBy.UserName, PayerName"><span>Người chi</span></th>
                                     <th grid-defined-colum="Amount"><span>Tiền chi</span></th>
                                     <th></th>
                                     <th grid-defined-colum="!Notes" class="none-display"></th>
@@ -105,10 +106,10 @@
                                     <td ng-bind="item.CostName"></td>
                                     <td ng-bind="item.PaidDate"></td>
                                     <td ng-bind="item.CostTypeName"></td>
-                                    <td ng-bind="item.UserName"></td>
+                                    <td ng-bind="item.PayerName"></td>
                                     <td class="bold" ng-bind="item.Amount | currency:'':0 "></td>
                                     <td>
-                                        <a class="grey margin-left-10">
+                                        <a class="grey margin-left-10" ng-click="PrintCost(item)">
                                             <i class="fa-print fa"></i>
                                         </a>
                                         <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteCost(item)">
@@ -339,5 +340,10 @@
     @Html.Partial("CostModal")
     @Html.Partial("CostTypeModal")
     @Html.Partial("ReceiveHistoryModal")    
+
+    <div class="none-display" id="divPrint">
+        <span bind-html-compile="PrintTemplate">
+        </span>
+    </div>
 </div>
 

@@ -9,7 +9,7 @@
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
@@ -21,7 +21,7 @@
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
@@ -68,7 +68,7 @@
                             <td>
                                 <div class="col-md-7 padding-left-right-5">
                                     <span ng-bind="item.Quantity" ng-if="!PurchaseForm._CanUpdate"></span>
-                                    <input ng-if="PurchaseForm.StatusId == 1"
+                                    <input ng-if="PurchaseForm._CanUpdate"
                                            class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
                                            check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
                                            check-under="check-purchase" />
@@ -270,7 +270,7 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="PurchaseForm.StatusId == 2"></span>
+                <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="!PurchaseForm._CanUpdate"></span>
                 <input class="form-control" ng-if="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
                 <input class="form-control" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
                        ng-model="PurchaseForm.PaidForDebt"
@@ -308,7 +308,7 @@
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate">
+        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
@@ -320,7 +320,7 @@
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>

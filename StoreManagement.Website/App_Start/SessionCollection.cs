@@ -32,6 +32,18 @@ namespace StoreManagement.Website
             }
         }
 
+        public static string UserName
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["UserName"];
+            }
+            set
+            {
+                HttpContext.Current.Session["UserName"] = value;
+            }
+        }
+
         public static GridViewConfig ExportConfig
         {
             get
@@ -90,6 +102,42 @@ namespace StoreManagement.Website
             set
             {
                 HttpContext.Current.Session["ProductGroup"] = value;
+            }
+        }
+
+        public static string StoreName
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["StoreName"];
+            }
+            set
+            {
+                HttpContext.Current.Session["StoreName"] = value;
+            }
+        }
+
+        public static string StoreAddress
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["StoreAddress"];
+            }
+            set
+            {
+                HttpContext.Current.Session["StoreAddress"] = value;
+            }
+        }
+
+        public static string StorePhone
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["StorePhone"];
+            }
+            set
+            {
+                HttpContext.Current.Session["StorePhone"] = value;
             }
         }
 

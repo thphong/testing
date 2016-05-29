@@ -3,6 +3,7 @@
     @Scripts.Render("~/bundles/Inventory")
     @Scripts.Render("~/bundles/ProductQuanHistory")
     @Scripts.Render("~/bundles/ProductList")
+    @Scripts.Render("~/bundles/Print")
 }
 
 <div id="InventoryController" ng-controller="InventoryController">
@@ -419,6 +420,9 @@
                                     <td ng-bind="item.TransferName"></td>
                                     <td ng-bind="item.TransferedDate"></td>
                                     <td>
+                                        <a class="grey margin-left-10" ng-click="PrintInventTran(item)">
+                                            <i class="fa-print fa"></i>
+                                        </a>
                                         <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteInventTran(item)">
                                             <i class="fa-trash fa"></i>
                                         </a>
@@ -450,5 +454,9 @@
         </div>
     </div>
     @Html.Partial("ProductQuantityHistory")
+    <div class="none-display" id="divPrint">
+        <span bind-html-compile="PrintTemplate">
+        </span>
+    </div>
 </div>
 

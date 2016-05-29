@@ -13,6 +13,7 @@ mdlCommon.controller('PaymentController',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });
         $controller('CostTypeController', { $scope: $scope });
+        $controller('PrintController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             CostType: "1",
@@ -61,8 +62,11 @@ mdlCommon.controller('PaymentController',
 
         $scope.CostForm = {
             CostName: "",
+            CostCode: "",
             CostTypeId: "",
+            CostTypeName: "",
             PaidDate: formatDate(new Date()),
+            PayerName: "",
             Amount: "",
             Notes: "",
             StoreId: $scope.CurrentStore,
@@ -72,7 +76,10 @@ mdlCommon.controller('PaymentController',
 
         $scope.ResetCostForm = function() {
             $scope.CostForm.CostName = "";
+            $scope.CostForm.CostCode = "";
+            $scope.CostForm.PayerName = "";
             $scope.CostForm.CostTypeId = "";
+            $scope.CostForm.CostTypeName = "";
             $scope.CostForm.PaidDate = formatDate(new Date());
             $scope.CostForm.Amount = "";
             $scope.CostForm.Notes = "";
@@ -95,7 +102,29 @@ mdlCommon.controller('PaymentController',
                     $scope.ReloadGrid('Costs');
                     $("button[data-dismiss='modal']:visible").click();
                 }
+
+                //get value to print
+                $scope.CostForm.CostTypeName = $("select[ng-model='CostForm.CostTypeId'] option:selected").html();
+                $scope.CostForm.PayerName = $scope.CurrentUserName;
             }
+        }
+
+        $scope.PrintCost = function (cost) {
+
+            $scope.CostFormConfig.CopyFields(cost, $scope.CostForm);
+
+            //print
+            $scope.PrintForm();
+
+        }
+
+        $scope.PrintForm = function () {
+            $scope.GetListPrintTerm("Cost");
+            $scope.GetPrintTemplate("COST");
+
+            setTimeout(function () {
+                $scope.PrintData("divPrint");
+            }, 100);
         }
 
         $scope.Receivement = function (receive) {
@@ -125,5 +154,7 @@ mdlCommon.controller('PaymentController',
             $scope.SetShownReceiveHistoryModal(true);
             $("#receiveHistoryModal").modal('show');
         }
+
+
 
     }]);
