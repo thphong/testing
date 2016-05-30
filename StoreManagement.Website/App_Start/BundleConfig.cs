@@ -78,6 +78,8 @@ namespace StoreManagement.Website
                             "~/Scripts/MD5.js"));
             bundles.Add(new ScriptBundle("~/bundles/CKEditor").Include(
                             "~/Scripts/ckeditor/ckeditor.js"));
+            bundles.Add(new ScriptBundle("~/bundles/InputMask").Include(
+                            "~/Scripts/InputMask.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/Common/Common.js",

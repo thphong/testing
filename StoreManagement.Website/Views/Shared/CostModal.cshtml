@@ -42,8 +42,8 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-sm-4 control-label ">Ngày chi </label>
-                        <div class="col-sm-7">
-                            <input class="form-control datepicker" ng-model="CostForm.PaidDate"
+                        <div class="col-sm-7" ng-init="InitDatePicker()">
+                            <input class="form-control date-picker" ng-model="CostForm.PaidDate"
                                    placeholder="dd-MM-yyyy"
                                    check-empty="" check-empty-message="Vui lòng nhập ngày chi."
                                    check-custom="CheckDateValid" check-custom-message="Vui lòng nhập ngày hợp lệ dd-MM-yyyy."
@@ -52,13 +52,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12" ng-init="InitFilterCurrency()">
                         <label class="col-sm-4 control-label ">Số tiền </label>
                         <div class="col-sm-7">
-                            <input class="form-control" ng-model="CostForm.Amount" placeholder="Nhập số tiền (bắt buộc)"
+                            <input class="form-control check-currency" ng-model="CostForm.Amount" placeholder="Nhập số tiền (bắt buộc)"
                                    check-empty="" check-empty-message="Vui lòng nhập số tiền."
                                    check-range="1;" check-range-message="Vui lòng nhập số tiền là số dương"
-                                   check-integer
                                    check-under="check-cost" />
                         </div>
                     </div>

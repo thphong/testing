@@ -316,8 +316,7 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.ChangePaid = function () {
-            $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid);
-            $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - $scope.OrderForm.Paid;
+            $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - GetIntFromCurrency($scope.OrderForm.Paid);
             if ($scope.OrderForm.DebtMoney < 0) {
                 $scope.OrderForm.DebtMoney = 0;
             }
@@ -438,17 +437,17 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.SavePaidForDebt = function () {
-            $scope.OrderForm.PaidForDebt = parseInt($scope.OrderForm.PaidForDebt);
-            if ($scope.OrderForm.PaidForDebt > $scope.OrderForm.DebtMoney) {
+            var paidForDebt = GetIntFromCurrency($scope.OrderForm.PaidForDebt);
+            if (paidForDebt > $scope.OrderForm.DebtMoney) {
                 ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
             }
             else {
                 if (FValidation.CheckControls("check-order")) {
-                    $scope.OrderForm.DebtMoney = parseInt($scope.OrderForm.DebtMoney) - $scope.OrderForm.PaidForDebt;
-                    $scope.OrderForm.Paid = parseInt($scope.OrderForm.Paid) + $scope.OrderForm.PaidForDebt;
+                    $scope.OrderForm.DebtMoney = GetIntFromCurrency($scope.OrderForm.DebtMoney) - paidForDebt;
+                    $scope.OrderForm.Paid = GetIntFromCurrency($scope.OrderForm.Paid) + paidForDebt;
 
                     $scope.PaymentForm.OrderId = $scope.OrderForm.OrderId;
-                    $scope.PaymentForm.Amount = $scope.OrderForm.PaidForDebt;
+                    $scope.PaymentForm.Amount = paidForDebt;
                     $scope.PaymentForm.PaymentType = $scope.OrderForm.PaymentType;
 
                     $scope.PaymentFormConfig.SetObject($scope.PaymentForm);

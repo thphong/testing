@@ -181,8 +181,7 @@ mdlCommon.controller('PurchaseController',
         }
 
         $scope.ChangePaid = function () {
-            $scope.PurchaseForm.Paid = parseInt($scope.PurchaseForm.Paid);
-            $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
+            $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - GetIntFromCurrency($scope.PurchaseForm.Paid);
             if ($scope.PurchaseForm.Debt < 0) {
                 $scope.PurchaseForm.Debt = 0;
             }
@@ -279,17 +278,17 @@ mdlCommon.controller('PurchaseController',
         }
 
         $scope.SavePaidForDebt = function () {
-            $scope.PurchaseForm.PaidForDebt = parseInt($scope.PurchaseForm.PaidForDebt);
+            var paidForDebt = GetIntFromCurrency($scope.PurchaseForm.PaidForDebt);
             if ($scope.PurchaseForm.PaidForDebt > $scope.PurchaseForm.Debt) {
                 ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
             }
             else {
                 if (FValidation.CheckControls("check-purchase")) {
-                    $scope.PurchaseForm.Debt = parseInt($scope.PurchaseForm.Debt) - $scope.PurchaseForm.PaidForDebt;
-                    $scope.PurchaseForm.Paid = parseInt($scope.PurchaseForm.Paid) + $scope.PurchaseForm.PaidForDebt;
+                    $scope.PurchaseForm.Debt = GetIntFromCurrency($scope.PurchaseForm.Debt) - paidForDebt;
+                    $scope.PurchaseForm.Paid = GetIntFromCurrency($scope.PurchaseForm.Paid) + paidForDebt;
 
                     $scope.PaymentForm.PurchaseId = $scope.PurchaseForm.PurchaseId;
-                    $scope.PaymentForm.Amount = $scope.PurchaseForm.PaidForDebt;
+                    $scope.PaymentForm.Amount = paidForDebt;
                     $scope.PaymentForm.PaymentType = $scope.PurchaseForm.PaymentType;
 
                     $scope.PaymentFormConfig.SetObject($scope.PaymentForm);

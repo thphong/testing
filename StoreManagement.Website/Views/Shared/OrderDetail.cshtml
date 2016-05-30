@@ -227,10 +227,10 @@
             <div class="col-md-4">
                 <label class="control-label">Ngày bán</label>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" ng-init="InitDatePicker()">
                 <span ng-bind="OrderForm.SoldDate" ng-if="!OrderForm._CanUpdate"></span>
                 <input ng-show="OrderForm._CanUpdate"
-                       class="form-control" date-picker ng-model="OrderForm.SoldDate"
+                       class="form-control date-picker" ng-model="OrderForm.SoldDate"
                        placeholder="Hôm nay" />
 
             </div>
@@ -315,12 +315,12 @@
             <div class="col-md-4">
                 <label class="control-label">Thanh toán</label>
             </div>
-            <div class="col-md-8">
-                <input class="form-control" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" 
+            <div class="col-md-8" ng-init="InitFilterCurrency()">
+                <input class="form-control check-currency" ng-show="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" 
                        check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
                        check-under="check-order"/>
                 <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>                
-                <input class="form-control" ng-if="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt" 
+                <input class="form-control check-currency" ng-show="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt" 
                        ng-model="OrderForm.PaidForDebt" 
                        check-under="check-order"
                        check-empty="" check-empty-message="Vui lòng nhập số tiền." 
@@ -345,14 +345,6 @@
                 <span ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
             </div>
         </div>
-        @*<div class="row">
-                <div class="col-md-8">
-                    <label class="control-label margin-top-10">Tổng Giảm Giá Cho Đơn Hàng</label>
-                </div>
-                <div class="col-md-4 margin-top-10">
-                    <span ng-bind="OrderForm.TotalDiscount | currency:'':0"></span>
-                </div>
-            </div>*@
     </div>
 
     @Html.Partial("CustomerModal")

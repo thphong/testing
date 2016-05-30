@@ -116,24 +116,24 @@ mdlCommon.directive('checkInteger', function () {
     };
 });
 
-mdlCommon.directive('checkCurrency', ['$filter', function ($filter) {
-    return function (scope, element, attrs) {
-        element.bind("keydown", function (event) {
-            var key = String.fromCharCode(event.keyCode);
-            if (key >= '0' && key <= '9') {
-                var value = $(this).val().replace(/,/g, '') + key;
-                value = $filter('currency')(value, "", 0);
-                if (value) {
-                    $(this).val(value);
-                }
-            }
-            if (event.keyCode != 37 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 40
-                && event.keyCode != 32 && event.keyCode != 46) {
-                event.preventDefault();
-            }
-        });
-    };
-}]);
+//mdlCommon.directive('checkCurrency', ['$filter', function ($filter) {
+//    return function (scope, element, attrs) {
+//        element.bind("keydown", function (event) {
+//            var key = String.fromCharCode(event.keyCode);
+//            if (key >= '0' && key <= '9') {
+//                var value = $(this).val().replace(/,/g, '') + key;
+//                value = $filter('currency')(value, "", 0);
+//                if (value) {
+//                    $(this).val(value);
+//                }
+//            }
+//            if (event.keyCode != 37 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 40
+//                && event.keyCode != 32 && event.keyCode != 46) {
+//                event.preventDefault();
+//            }
+//        });
+//    };
+//}]);
 
 mdlCommon.directive('gridFilterFor', function () {
     var directive = {};
@@ -325,16 +325,16 @@ mdlCommon.directive('autocompleteMasterTable', function () {
     return directive;
 });
 
-mdlCommon.directive('datePicker', function () {
-    var directive = {};
-    directive.restrict = 'A';
-    directive.compile = function (element, attributes) {
-        var datepickerId = "datepicker" + parseInt(Math.random() * 1000000);
-        element.attr("date-picker-id", datepickerId);
-        element.after('<span ng-init="InitDatePicker(\'' + datepickerId + '\');"></span>');
-    }
-    return directive;
-});
+//mdlCommon.directive('datePicker', function () {
+//    var directive = {};
+//    directive.restrict = 'A';
+//    directive.compile = function (element, attributes) {
+//        var datepickerId = "datepicker" + parseInt(Math.random() * 1000000);
+//        element.attr("date-picker-id", datepickerId);
+//        element.after('<span ng-init="InitDatePicker(\'' + datepickerId + '\');"></span>');
+//    }
+//    return directive;
+//});
 
 mdlCommon.directive('datePickerFor', function () {
     var directive = {};
@@ -390,13 +390,13 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         + ' </ul>'
         );
         if (attributes.dateRangeInitCode) {
-            element.append("<span ng-init=\"SetFilterRangeDate(" + attributes.dateRangeInitCode + ",'')\"></span>");
+            element.append("<span ng-init=\"InitFilterRangeDate(" + attributes.dateRangeInitCode + ",'')\"></span>");
         }
     }
     return directive;
 });
 
-mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, $interpolate) {
+mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', function ($scope, $interpolate, $filter) {
     //Global variable
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentUserName = g_currentUserName;
@@ -629,6 +629,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
             $scope.ReloadGrid(gridId);
         }
     }
+
+    $scope.InitFilterRangeDate = function (option, gridId) {
+        $scope.SetFilterRangeDate(($scope.RangeDateCode == 0 ? option : $scope.RangeDateCode), gridId);
+    }
+
     $scope.SetFilterRangeDate = function (option, gridId) {
 
         var curr = new Date(); // get current date
@@ -750,8 +755,12 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
         };
     }
 
-    $scope.InitDatePicker = function (datepickerId) {
-        $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
+    //$scope.InitDatePicker = function (datepickerId) {
+    //    $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
+    //}
+
+    $scope.InitDatePicker = function () {
+        $('input.date-picker').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
     }
 
     $scope.InitDatePickerFor = function (datepickerId, gridId) {
@@ -762,6 +771,27 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', function ($scope, 
                 scope.ReloadGrid(gridId);
             })
         });
+    }
+
+    $scope.InitFilterCurrency = function ()
+    {
+        setTimeout(function () {
+            $("input.check-currency").each(function () {
+                var value = $(this).val();
+                if (value) {
+                    $(this).val($filter('currency')(value, "", 0)).change();
+                }
+                $(this).inputmask("numeric", {
+                    radixPoint: ".",
+                    groupSeparator: ",",
+                    digits: 2,
+                    autoGroup: true,
+                    prefix: '', //Space after $, this will not truncate the first character.
+                    rightAlign: false,
+                    oncleared: function () { self.Value(''); }
+                });
+            });
+        }, 10);
     }
 }]);
 

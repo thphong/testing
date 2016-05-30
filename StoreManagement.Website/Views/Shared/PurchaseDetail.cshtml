@@ -190,10 +190,10 @@
             <div class="col-md-4">
                 <label class="control-label">Ngày nhập</label>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" ng-init="InitDatePicker()">
                 <span ng-bind="PurchaseForm.PurchaseDate" ng-if="!PurchaseForm._CanUpdate"></span>
                 <input ng-show="PurchaseForm._CanUpdate"
-                       class="form-control" date-picker ng-model="PurchaseForm.PurchaseDate"
+                       class="form-control date-picker"  ng-model="PurchaseForm.PurchaseDate"
                        placeholder="Hôm nay" />
 
             </div>
@@ -269,10 +269,10 @@
             <div class="col-md-4">
                 <label class="control-label">Thanh toán</label>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" ng-init="InitFilterCurrency()">
                 <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="!PurchaseForm._CanUpdate"></span>
-                <input class="form-control" ng-if="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
-                <input class="form-control" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
+                <input class="form-control check-currency" ng-show="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
+                <input class="form-control check-currency" ng-show="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
                        ng-model="PurchaseForm.PaidForDebt"
                        check-under="check-purchase"
                        check-empty="" check-empty-message="Vui lòng nhập số tiền."

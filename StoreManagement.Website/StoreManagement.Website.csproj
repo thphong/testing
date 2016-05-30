@@ -355,6 +355,7 @@
     <Content Include="Scripts\Common\FValidationScript.js" />
     <Content Include="Scripts\Common\jquery.showLoading.min.js" />
     <Content Include="Scripts\fileinput.js" />
+    <Content Include="Scripts\InputMask.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />

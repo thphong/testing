@@ -229,3 +229,10 @@ function convertDate(value) {
     }
     return null;
 }
+
+function GetIntFromCurrency(value)
+{
+    if (typeof (value) == "number")
+        return value;
+    return parseInt(value.replace(/,/g, ''));
+}

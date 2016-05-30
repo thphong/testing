@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-init="InitFilterCurrency()">
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá vốn</label>
                 <button class="btn btn-primary  btn-tiny" title="Xem lịch sử thay đổi giá vốn" ng-if="ProductForm.ProductId != '-1'"
@@ -94,10 +94,9 @@
                     <i class="fa-columns fa"></i>
                 </button>
 
-                <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Cost | currency:'':0) || '(Chưa nhập)'"> </div>
-                <input class="form-control text-right" ng-model="ProductForm.Cost"
-                       ng-if="IsEditingProductDetail"
-                       check-currency />
+                <div ng-if="!IsEditingProductDetail" ng-bind="(ProductForm.Cost) || '(Chưa nhập)'"> </div>
+                <input class="form-control text-right check-currency" ng-model="ProductForm.Cost"
+                       ng-show="IsEditingProductDetail" />
             </div>
             <div class="col-md-6">
                 <label class="control-label margin-top-10">Giá bán</label>
@@ -105,10 +104,9 @@
                         ng-click="ShowPriceHistory(0)">
                     <i class="fa-table fa"></i>
                 </button>
-                <div ng-if="!IsEditingProductDetail || (ProductForm.ProductId != -1 && RULES.ALLOW_EDIT_PRICE != 1)" ng-bind="(ProductForm.Price | currency:'':0) || '(Chưa nhập)'"> </div>
-                <input class="form-control text-right" ng-model="ProductForm.Price"
-                       ng-if="IsEditingProductDetail && (ProductForm.ProductId == -1 || RULES.ALLOW_EDIT_PRICE == 1)"
-                       check-currency />
+                <div ng-if="!IsEditingProductDetail || (ProductForm.ProductId != -1 && RULES.ALLOW_EDIT_PRICE != 1)" ng-bind="(ProductForm.Price) || '(Chưa nhập)'"> </div>
+                <input class="form-control text-right check-currency" ng-model="ProductForm.Price"
+                       ng-show="IsEditingProductDetail && (ProductForm.ProductId == -1 || RULES.ALLOW_EDIT_PRICE == 1)"/>
             </div>
         </div>
         <div class="row">
