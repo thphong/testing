@@ -760,17 +760,21 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     //}
 
     $scope.InitDatePicker = function () {
-        $('input.date-picker').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
+        setTimeout(function () {
+            $('input.date-picker').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ });
+        }, 10);
     }
 
     $scope.InitDatePickerFor = function (datepickerId, gridId) {
-        $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ })
-        .on('hide', function (e) {
-            var scope = angular.element($(this).parents("[ng-controller]")[0]).scope();
-            scope.$apply(function () {
-                scope.ReloadGrid(gridId);
-            })
-        });
+        setTimeout(function () {
+            $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ })
+            .on('hide', function (e) {
+                var scope = angular.element($(this).parents("[ng-controller]")[0]).scope();
+                scope.$apply(function () {
+                    scope.ReloadGrid(gridId);
+                })
+            });
+        }, 10);
     }
 
     $scope.InitFilterCurrency = function ()

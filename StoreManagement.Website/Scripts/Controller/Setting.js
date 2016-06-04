@@ -40,6 +40,19 @@ $(document).ready(function () {
         });
     });
 
+    $('#promotionStoreModal').on('show.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownPromotionStoreModal(true);
+        });
+    }).on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownPromotionStoreModal(false);
+        });
+    });
 
 });
 
@@ -54,6 +67,7 @@ mdlCommon.controller('SettingController',
 
         $scope.IsShownUserRolesModal = false;
         $scope.IsShownTemplateTermsModal = false;
+        $scope.IsShownPromotionStoreModal = false;
 
         $scope.SetShownUserRolesModal = function (isShown) {
             $scope.IsShownUserRolesModal = isShown;
@@ -61,6 +75,10 @@ mdlCommon.controller('SettingController',
 
         $scope.SetShownTemplateTermsModal = function (isShown) {
             $scope.IsShownTemplateTermsModal = isShown;
+        }
+
+        $scope.SetShownPromotionStoreModal = function (isShown) {
+            $scope.IsShownPromotionStoreModal = isShown;
         }
 
         $scope.SetCurrentTab = function (tab) {
@@ -339,8 +357,6 @@ mdlCommon.controller('SettingController',
             return $sce.trustAsHtml(html);
         };
 
-        
-
         /*$scope.SampleData =
         {
             Ten_Cua_Hang: "Thegioididong",
@@ -383,5 +399,35 @@ mdlCommon.controller('SettingController',
             Tu_Kho: "Thegiodidong",
             Den_Kho: "Dienmayxanh"
         }*/
+
+        //Promotion
+        $scope.SelectedPromotion = {
+            Id: -1,
+            PromoteName : ""
+        };
+
+        $scope.PromotionConfig = new ObjectDataConfig("T_Master_Promotion", $scope);
+        $scope.PromotionStoreConfig = new ObjectDataConfig("T_Trans_Promotion_Store", $scope);
+
+        $scope.SavePromotion = function(promotion)
+        {
+            if (FValidation.CheckControls("check-promotion" + promotion.Id)) {
+                $scope.PromotionConfig.SetObject(promotion);
+                var id = $scope.PromotionConfig.SaveObject();
+                if (id > 0) {
+                    ShowSuccessMessage("Chương trình khuyến mãi được lưu thành công.");
+                }
+            }
+        }
+
+        $scope.SwitchAppliedStore = function(item)
+        {
+            item.IsApplied = 1 - item.IsApplied;
+            $scope.PromotionStoreConfig.SetObject(item);
+            var id = $scope.PromotionStoreConfig.SaveObject();
+            if (id > 0) {
+                ShowSuccessMessage("Thay đổi được lưu thành công.");
+            }
+        }
 
     }]);
