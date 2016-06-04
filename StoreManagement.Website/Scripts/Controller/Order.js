@@ -1,5 +1,4 @@
-﻿
-function CheckNumOfProduct() {
+﻿function CheckNumOfProduct() {
     var scope = angular.element(document.getElementById("OrderController")).scope();
     var len = scope.ListProductsOrder.length;
     return len > 0;
@@ -22,6 +21,7 @@ mdlCommon.controller('OrderController',
         $controller('CustomerModalController', { $scope: $scope });
         $controller('ProductListController', { $scope: $scope });
         $controller('PrintController', { $scope: $scope });
+        $controller('POSController', { $scope: $scope });
 
         $scope.AdditionalFilter = {
             OrderType: "1",
@@ -366,6 +366,7 @@ mdlCommon.controller('OrderController',
                         ShowSuccessMessage("Đơn hàng được lưu thành công!");
                         //$scope.ReloadGrid('Orders');
                         $scope.IsShowOrderDetail = false;
+                        $scope.OrderForm.OrderId = orderId;
                     }
                     else if ($scope.OrderForm.OrderId == -1) {
 
@@ -460,28 +461,25 @@ mdlCommon.controller('OrderController',
         }
 
         //POS
-        $scope.IsShowingPOSCustomer = false;
-        $scope.IsShowingPOSSummary = true;
-
-        $scope.PrintOrderAdmin = function (order) {
+        
+        $scope.PrintOrderAdmin = function (order, template) {
 
             $scope.GetOrderDetail(order);
             $scope.ReloadGrid("ProductsOrder");
             $scope.InitListProducts();
 
             //print
-            $scope.PrintForm();
+            $scope.PrintForm(template);
 
         }
 
-        $scope.PrintForm = function () {
+        $scope.PrintForm = function (template) {
             $scope.GetListPrintTerm("Order");
-            $scope.GetPrintTemplate("ORDER_ADMIN");
+            $scope.GetPrintTemplate(template);
 
             setTimeout(function () {
                 $scope.PrintData("divPrint");
             }, 100);
         }
-
 
     }]);

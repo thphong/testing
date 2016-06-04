@@ -4,6 +4,7 @@
     @Scripts.Render("~/bundles/CustomerModal")
     @Scripts.Render("~/bundles/ProductList")
     @Scripts.Render("~/bundles/Print")
+    @Scripts.Render("~/bundles/POS")
 }
 
 <div id="OrderController" ng-controller="OrderController">
@@ -106,7 +107,7 @@
                                 <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
                                 <td ng-bind="item.DebtMoney  | currency:'':0"></td>
                                 <td>
-                                    <a class="grey margin-left-10" ng-click="PrintOrderAdmin(item)">
+                                    <a class="grey margin-left-10" ng-click="PrintOrderAdmin(item, 'ORDER_ADMIN')">
                                         <i class="fa-print fa"></i>
                                     </a>
                                     <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteOrder(item)">

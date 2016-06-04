@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/CustomerModal")
     @Scripts.Render("~/bundles/ProductList")
     @Scripts.Render("~/bundles/Print")
+    @Scripts.Render("~/bundles/POS")
 }
 
 <div id="OrderController" ng-controller="OrderController">
@@ -149,8 +150,8 @@
     </div>
 
     <div class="col-md-5" style="position:fixed; bottom: 0px; background-color: #EEEEEE">
-        <div class="row margin-top-10" ng-click="IsShowingPOSSummary = !IsShowingPOSSummary;">
-            <h4 class="blue">
+        <div class="row margin-top-10" >
+            <h4 class="blue" ng-click="IsShowingPOSSummary = !IsShowingPOSSummary;">
                 Thông tin thanh toán
                 <i class="fa fa-arrow-circle-down" ng-if="IsShowingPOSSummary" style="cursor: pointer"> </i>
                 <i class="fa fa-arrow-circle-up" ng-if="!IsShowingPOSSummary" style="cursor: pointer"> </i>
@@ -210,12 +211,12 @@
                 <div class="col-md-3">
                     <label class="control-label">Thanh toán</label>
                 </div>
-                <div class="col-md-4">
-                    <input class="form-control" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()"
+                <div class="col-md-4" ng-init="InitFilterCurrency()">
+                    <input class="form-control check-currency" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()"
                            check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
                            check-under="check-order" />
                     <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>
-                    <input class="form-control" ng-if="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt"
+                    <input class="form-control check-currency" ng-if="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt"
                            ng-model="OrderForm.PaidForDebt"
                            check-under="check-order"
                            check-empty="" check-empty-message="Vui lòng nhập số tiền."
@@ -232,19 +233,19 @@
                     </button>
                 </div>
                 <div class="col-md-5">
-                    <button class="btn btn-default btn-sm">
+                    <button class="btn btn-default btn-sm" ng-click="CancelOrder()">
                         <i class="fa fa-undo"> </i>
                         Hủy
                     </button>
-                    <button class="btn btn-primary btn-sm">
+                    <button class="btn btn-primary btn-sm" ng-click="SavePOSOrder()">
                         <i class="fa fa-print"> </i>
                         Lưu & In
                     </button> 
                 </div>
             </div>
         </div>
-        <div class="row margin-top-10" ng-click="IsShowingPOSCustomer = !IsShowingPOSCustomer;">
-            <h4 class="blue">
+        <div class="row margin-top-10" >
+            <h4 class="blue" ng-click="IsShowingPOSCustomer = !IsShowingPOSCustomer;">
                 Thông tin hóa đơn
                 <i class="fa fa-arrow-circle-down" ng-if="IsShowingPOSCustomer" style="cursor: pointer"> </i>
                 <i class="fa fa-arrow-circle-up" ng-if="!IsShowingPOSCustomer" style="cursor: pointer"> </i>
@@ -304,10 +305,10 @@
                         dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
             </div>
             <div class="col-md-5 margin-top-10">
-                <button class="btn btn-success btn-sm">
+                <button class="btn btn-success btn-sm" ng-click="SortByCreatedDate()">
                     Hàng mới
                 </button>
-                <button class="btn btn-success btn-sm">
+                <button class="btn btn-success btn-sm" ng-click="SortByNumSelling()">
                     Hàng bán chạy
                 </button>
             </div>
@@ -324,8 +325,11 @@
             <div grid-defined-colum="ProductId.ProductName" class="none-display"></div>
             <div grid-defined-colum="ProductId.ProductCode" class="none-display"></div>
             <div grid-defined-colum="ProductId.Price" class="none-display"></div>
+            <div grid-defined-colum="ProductId.Cost" class="none-display"></div>
             <div grid-defined-colum="Quantity" class="none-display"></div>
             <div grid-defined-colum="ProductId.VAT" class="none-display"></div>
+            <div grid-defined-colum="#ProductId.CreatedDate" class="none-display"></div>
+            <div grid-defined-colum="#NumSelling" class="none-display"></div>
             <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
 
             <div ng-repeat="item in DataSet.Products.Data">
@@ -354,4 +358,10 @@
         </div>
     </div>
     @Html.Partial("CustomerModal")
+    @Html.Partial("POSReport")
+    @Html.Partial("POSInventory")
+    <div class="none-display" id="divPrint">
+        <span bind-html-compile="PrintTemplate">
+        </span>
+    </div>
 </div>
