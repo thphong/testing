@@ -64,6 +64,7 @@ mdlCommon.controller('OrderController',
             PaidForDebt: 0,
             IsEditingPaidForDebt: false,
             Version: 0,
+            IsPOS: false,
             _CanUpdate: true,
             _CanDelete: true
         };
@@ -103,7 +104,8 @@ mdlCommon.controller('OrderController',
             CurrentProduct: {},
             IsShowing: false,
             Discount: 0,
-            IsDiscountPercent: 1
+            IsDiscountPercent: 1,
+            PromotionName: ""
         }
 
         $scope.ResetDiscountForm = function () {
@@ -181,6 +183,9 @@ mdlCommon.controller('OrderController',
                 $scope.ListProductsOrder.push(item);
             }
             $scope.Summarize();
+
+            //Calculate for POS
+            $scope.CalCulatePromotion();
         }
 
         $scope.ChangeProductQuantity = function (product, num) {
@@ -203,6 +208,9 @@ mdlCommon.controller('OrderController',
             }
 
             $scope.Summarize();
+
+            //Calculate for POS
+            $scope.CalCulatePromotion();
         }
 
         $scope.DeleteProductOrder = function (product) {
@@ -222,30 +230,33 @@ mdlCommon.controller('OrderController',
                 ShowSuccessMessage("Sản phẩm được xóa khỏi đơn hàng thành công!");
 
                 $scope.Summarize();
+
+                //Calculate for POS
+                $scope.CalCulatePromotion();
             }
         }
 
-        $scope.ShowDiscount = function ($event, product) {
-            if ($scope.DiscountForm.CurrentProduct.ProductId == product.ProductId) {
+        $scope.ShowDiscount = function ($event, discountObject) {
+            if ($scope.DiscountForm.CurrentProduct.ProductId == discountObject.ProductId) {
                 $scope.DiscountForm.IsShowing = !$scope.DiscountForm.IsShowing;
             }
             else {
                 $scope.DiscountForm.IsShowing = true;
             };
-            $scope.DiscountForm.CurrentProduct = product;
-            $scope.DiscountForm.Discount = product.Discount;
-            $scope.DiscountForm.IsDiscountPercent = product.IsDiscountPercent;
+            $scope.DiscountForm.CurrentProduct = discountObject;
+            $scope.DiscountForm.Discount = discountObject.Discount;
+            $scope.DiscountForm.IsDiscountPercent = discountObject.IsDiscountPercent;
 
             if ($scope.DiscountForm.IsShowing) {
                 var position = $($event.currentTarget).position();
-                $("#divDiscount").css('top', $event.pageY - $("#divDiscount").height() - 12);
-                if (product.ProductId) {
+                $("#divDiscount").css('top', $event.pageY - 0.5 * $("#divDiscount").height());
+                if (discountObject.ProductId) {
                     //show for specific product
-                    $("#divDiscount").css('left', $event.pageX - $("#divDiscount").width() + 40);
+                    $("#divDiscount").css('left', $event.pageX + 15);
                 }
                 else {
                     //show for order
-                    $("#divDiscount").css('left', $event.pageX - 2 * $("#divDiscount").width() - 5);
+                    $("#divDiscount").css('left', $event.pageX - $("#divDiscount").width() - 20);
                 }
             }
             else {

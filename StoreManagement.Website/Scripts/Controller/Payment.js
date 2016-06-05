@@ -66,6 +66,7 @@ mdlCommon.controller('PaymentController',
             CostTypeId: "",
             CostTypeName: "",
             PaidDate: formatDate(new Date()),
+            PaidBy: $scope.CurrentUser,
             PayerName: "",
             Amount: "",
             Notes: "",
@@ -80,6 +81,7 @@ mdlCommon.controller('PaymentController',
             $scope.CostForm.PayerName = "";
             $scope.CostForm.CostTypeId = "";
             $scope.CostForm.CostTypeName = "";
+            $scope.CostForm.PaidBy = $scope.CurrentUser;
             $scope.CostForm.PaidDate = formatDate(new Date());
             $scope.CostForm.Amount = "";
             $scope.CostForm.Notes = "";

@@ -86,7 +86,7 @@
                                                     ng-change="ReloadGrid('Costs')"></select>
                                         </span>
                                     </th>
-                                    <th grid-defined-colum="CreatedBy.UserName, PayerName"><span>Người chi</span></th>
+                                    <th grid-defined-colum="PaidBy.UserName, PayerName"><span>Người chi</span></th>
                                     <th grid-defined-colum="Amount"><span>Tiền chi</span></th>
                                     <th></th>
                                     <th grid-defined-colum="!Notes" class="none-display"></th>
@@ -262,24 +262,28 @@
                                     <th grid-defined-colum="!StoreId" class="none-display"></th>
                                     <th grid-defined-colum="CashierName"><span>Người bán</span></th>
                                     <th grid-defined-colum="Payment"><span>Tổng tiền</span></th>
+                                    <th grid-defined-colum="Givement"><span>Tiền ứng</span></th>
                                     <th grid-defined-colum="Receivement"><span>Đã nhận</span></th>
+                                    <th grid-defined-colum="CostAmount"><span>Tiền chi phí</span></th>
                                     <th grid-defined-colum="Pending"><span>Chưa nhận</span></th>
                                     <th><span>Số tiền nhận</span></th>
                                     <th><span>Nhận tiền</span></th>
                                     <th><span>Ứng tiền</span></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody ng-init="InitFilterCurrency()">
                                 @*Dataset must have grid id*@
                                 <tr ng-repeat="item in DataSet.CollectMoneys.Data">
                                     <td >
                                         <a href="#" ng-click="ShowReceiveHistory(item)" ng-bind="item.CashierName"></a>
                                     </td>
                                     <td ng-bind="item.Payment | currency:'':0"></td>
+                                    <td ng-bind="item.Givement | currency:'':0"></td>
                                     <td ng-bind="item.Receivement | currency:'':0"></td>
+                                    <td ng-bind="item.CostAmount | currency:'':0"></td>
                                     <td ng-bind="item.Pending | currency:'':0"></td>
                                     <td>
-                                        <input ng-readonly="!item.IsEditingReceive && !item.IsEditingGive" class="form-control" 
+                                        <input ng-readonly="!item.IsEditingReceive && !item.IsEditingGive" class="form-control check-currency" 
                                                @*check-currency*@ ng-model="item.Amount"
                                                check-empty=""
                                                check-empty-message="Vui lòng nhập số tiền."
@@ -318,7 +322,7 @@
                                 </tr>
                                 <tr ng-if="!DataSet.CollectMoneys.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="7" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
                                 </tr>
                             </tbody>
                         </table>

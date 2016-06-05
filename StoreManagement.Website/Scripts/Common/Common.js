@@ -78,7 +78,7 @@ function AjaxSync(service, para) {
         },
         error: function (e) {
             result = null;
-            alert(e.responseText);
+            //alert(e.responseText);
             //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });

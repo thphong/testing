@@ -584,13 +584,14 @@
                                         <th grid-defined-colum="EndDate"><span>Ngày kết thúc</span></th>
                                         <th></th>
                                         <th grid-defined-colum="Id" class="none-display"></th>
+                                        <th grid-defined-colum="Notes" class="none-display"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @*Dataset must have grid id*@
                                     <tr ng-repeat="item in DataSet.Promotion.Data">
                                         <td ng-bind="item.PromoteCode"></td>
-                                        <td ng-bind="item.PromoteName"></td>                           
+                                        <td ng-bind="item.PromoteName"></td>
                                         <td>
                                             <input class="form-control" ng-model="item.OrderApply" check-integer
                                                    check-empty="" check-empty-message="Vui lòng nhập thứ tự áp dụng."
@@ -624,6 +625,10 @@
                                                    check-empty="" check-empty-message="Vui lòng nhập điều kiện tối thiểu để áp dụng chương trình."
                                                    check-range="0;" check-range-message="Số tiền không được âm."
                                                    check-under="check-promotion{{item.Id}}" />
+                                            <span ng-if="item.Notes">
+                                                <span class="bold red"> * </span>
+                                                <span ng-bind="item.Notes"></span>
+                                            </span>
                                         </td>
                                         <td class="text-center">
                                             <a class="blue" title="Xem cửa hàng áp dụng"

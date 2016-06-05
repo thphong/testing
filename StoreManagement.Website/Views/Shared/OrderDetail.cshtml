@@ -62,7 +62,7 @@
                         <tr ng-repeat="item in ListProductsOrder">
                             <td ng-bind="item.RowNum"></td>
                             <td ng-bind="item.ProductCode"> </td>
-                            <td >
+                            <td>
                                 <span ng-bind="item.ProductName"></span>
                                 <div class="red-sm-label row" ng-if="item.MaxQuantity != undefined">
                                     (Còn tồn <span ng-bind="item.MaxQuantity"></span>)
@@ -112,40 +112,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"
-                 style="display: block; width: 350px; left:-1000px" role="tooltip">
-                <div style="top: 50%;" class="arrow"></div>
-                <h3 class="popover-title">Giảm giá</h3>
-                <div class="popover-content">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label> Lượng giảm </label>
-                        </div>
-                        <div class="col-md-7">
-                            <input class="form-control" ng-model="DiscountForm.Discount" ng-change="ChangeDiscount()" />
-                        </div>
-                    </div>
-                    <div class="row margin-top-5">
-                        <div class="col-md-5">
-                            <label> Đơn vị giảm </label>
-                        </div>
-                        <div class="col-md-7">
-                            <input id="rdIsDiscountPercentYes" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="1" ng-change="ChangeDiscount()" />
-                            <label class="font-weigth-normal" for="rdIsDiscountPercentYes">%</label>
-                            &nbsp;&nbsp;
-                            <input id="rdIsDiscountPercentNo" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="0" ng-change="ChangeDiscount()" />
-                            <label class="font-weigth-normal" for="rdIsDiscountPercentNo">VNĐ</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 margin-top-5 text-center">
-                            <button class="btn" ng-click="SetPercentDiscount(5)">5%</button>
-                            <button class="btn" ng-click="SetPercentDiscount(10)">10%</button>
-                            <button class="btn" ng-click="SetPercentDiscount(15)">15%</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row margin-top-10 none-display">
@@ -215,7 +181,7 @@
                     <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
                 </div>
                 <div class="width-10" ng-if="OrderForm._CanUpdate">
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" 
+                    <button class="btn btn-primary btn-sm" data-toggle="modal"
                             data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
                             ng-if="CustomerFormConfig._CanCreate">
                         <i class="fa fa-plus"></i>
@@ -316,15 +282,15 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8" ng-init="InitFilterCurrency()">
-                <input class="form-control check-currency" ng-show="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()" 
+                <input class="form-control check-currency" ng-show="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()"
                        check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
-                       check-under="check-order"/>
-                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>                
-                <input class="form-control check-currency" ng-show="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt" 
-                       ng-model="OrderForm.PaidForDebt" 
+                       check-under="check-order" />
+                <span ng-bind="OrderForm.Paid | currency:'':0" ng-if="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt"></span>
+                <input class="form-control check-currency" ng-show="!OrderForm._CanUpdate && OrderForm.IsEditingPaidForDebt"
+                       ng-model="OrderForm.PaidForDebt"
                        check-under="check-order"
-                       check-empty="" check-empty-message="Vui lòng nhập số tiền." 
-                       check-range="0;" check-range-message="Vui lòng thanh toán số dương."/>
+                       check-empty="" check-empty-message="Vui lòng nhập số tiền."
+                       check-range="0;" check-range-message="Vui lòng thanh toán số dương." />
                 <button class="btn btn-warning" ng-if="!OrderForm._CanUpdate && OrderForm.IsActive == 1 && OrderForm.DebtMoney > 0 && !OrderForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
                     <i class="fa fa-dollar"> </i>
                     Thanh toán nợ
@@ -332,7 +298,7 @@
                 <button class="btn btn-primary btn-sm margin-top-5" ng-if="!OrderForm._CanUpdate && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
                     <i class="fa fa-check"> </i>
                 </button>
-                <button class="btn btn-default btn-sm margin-top-5"  ng-if="!OrderForm._CanUpdate && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                <button class="btn btn-default btn-sm margin-top-5" ng-if="!OrderForm._CanUpdate && OrderForm.DebtMoney > 0 && OrderForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
                     <i class="fa fa-close"> </i>
                 </button>
             </div>
@@ -350,6 +316,40 @@
     @Html.Partial("CustomerModal")
 </div>
 
+<div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"
+     style="display: block; width: 350px; left:-1000px" role="tooltip">
+    <div style="top: 50%;" class="arrow"></div>
+    <h3 class="popover-title">Giảm giá</h3>
+    <div class="popover-content">
+        <div class="row">
+            <div class="col-md-5">
+                <label> Lượng giảm </label>
+            </div>
+            <div class="col-md-7">
+                <input class="form-control" ng-model="DiscountForm.Discount" ng-change="ChangeDiscount()" />
+            </div>
+        </div>
+        <div class="row margin-top-5">
+            <div class="col-md-5">
+                <label> Đơn vị giảm </label>
+            </div>
+            <div class="col-md-7">
+                <input id="rdIsDiscountPercentYes" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="1" ng-change="ChangeDiscount()" />
+                <label class="font-weigth-normal" for="rdIsDiscountPercentYes">%</label>
+                &nbsp;&nbsp;
+                <input id="rdIsDiscountPercentNo" type="radio" ng-model="DiscountForm.IsDiscountPercent" value="0" ng-change="ChangeDiscount()" />
+                <label class="font-weigth-normal" for="rdIsDiscountPercentNo">VNĐ</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 margin-top-5 text-center">
+                <button class="btn" ng-click="SetPercentDiscount(5)">5%</button>
+                <button class="btn" ng-click="SetPercentDiscount(10)">10%</button>
+                <button class="btn" ng-click="SetPercentDiscount(15)">15%</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row" style="padding-top: 5px">
     <div class="col-md-6 pull-right text-right">
         <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">

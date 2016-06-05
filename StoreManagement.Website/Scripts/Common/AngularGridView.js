@@ -719,10 +719,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
             focus: function (event, ui) {
                 if (ui.item[element.attr("autocomplete-colum-id")]) {
                     $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
-                    $(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
+                    /*$(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
                     if (element.attr("autocomplete-model-additional")) {
                         $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
-                    }
+                    }*/
                 }
                 return false;
             },

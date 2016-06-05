@@ -30,8 +30,8 @@ $(document).ready(function () {
 });
 
 mdlCommon.controller('POSController',
-['$scope', '$filter', '$controller',
-    function ($scope, $filter, $controller) {
+['$scope', '$filter', '$controller', '$interpolate',
+    function ($scope, $filter, $controller, $interpolate) {
 
         $scope.SortByCreatedDate = function () {
             $scope.Config.Products.GridSortCondition = "ProductId.CreatedDate DESC";
@@ -92,5 +92,55 @@ mdlCommon.controller('POSController',
 
         $scope.SetShownPOSInventory = function (isShown) {
             $scope.IsShownPOSInventory = isShown;
+        }
+
+        $scope.configPromotion = new GridViewConfig("");
+        $scope.configPromotion.GridDataAction = "getall";
+        $scope.configPromotion.GridDataType = "function";
+        $scope.configPromotion.GridDataObject = "dbo.UFN_Promotion_Calcualte";
+        $scope.configPromotion.GridParametersExpression = "{{OrderForm.Customer}}, {{CurrentStore}}";
+        $scope.ListPromotion = [];
+        
+        //Calculate Promotion
+        $scope.$watch('OrderForm.Customer', function (newVal, oldVal) {
+            if (newVal > 0 && $scope.OrderForm.IsPOS) {
+
+                $scope.configPromotion.EvaluateFieldExpression($interpolate, $scope);
+                $scope.ListPromotion = $scope.configPromotion.GetListData();
+
+                $scope.CalCulatePromotion();
+            }
+        }, false);
+
+        $scope.CalCulatePromotion = function()
+        {
+            if ($scope.ListPromotion.length > 0)
+            {
+                for (var i = 0; i < $scope.ListPromotion.length ; i++) {
+                    var promotion = $scope.ListPromotion[i];
+                    if ($scope.OrderForm.Price >= promotion.MinConditionAmount) {
+                        if (promotion.IsPercent == 1) {
+                            $scope.OrderForm.Discount = $scope.OrderForm.Price * promotion.Amount / 100;
+                        }
+                        else {
+                            $scope.OrderForm.Discount = promotion.Amount;
+                        }
+                        if ($scope.OrderForm.Discount > promotion.MaxAmount) {
+                            $scope.OrderForm.Discount = promotion.MaxAmount;
+                        }
+                        $scope.DiscountForm.PromotionName = promotion.PromoteName;
+                        break;
+                    }
+                }
+
+                if ($scope.OrderForm.Discount > $scope.OrderForm.Price) {
+                    $scope.OrderForm.Discount = $scope.OrderForm.Price;
+                }
+
+                $scope.OrderForm.IsDiscountPercent = 0;
+
+                $scope.Summarize();
+            }
+
         }
     }]);

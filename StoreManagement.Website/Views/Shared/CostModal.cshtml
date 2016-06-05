@@ -52,6 +52,17 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label">Người chi</label>
+                        <div class="col-sm-7">
+                            <select class="form-control"
+                                    ng-model="CostForm.PaidBy" dropdown-master-table="T_Master_User" 
+                                    dropdown-value-field="UserId" dropdown-name-field="UserName"
+                                    dropdown-condition="[IsActive] = 1"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-12" ng-init="InitFilterCurrency()">
                         <label class="col-sm-4 control-label ">Số tiền </label>
                         <div class="col-sm-7">
