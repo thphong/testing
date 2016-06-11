@@ -149,6 +149,18 @@ namespace StoreManagement.Service
             dbFactory.GetContext().Database.ExecuteSqlCommand(statement);
         }
 
+        public int SaveComplexObject(int userId, string tableName, string objectData, string subTableName, string subObjectData)
+        {
+            objectData = objectData.Replace("'", "''");
+            subObjectData = subObjectData.Replace("'", "''");
+            string statement = string.Format("exec [dbo].[USP_System_Data_ComplexObject_Update] @TableName = '{0}', @Data = N'{1}', @SubTableName = '{2}', @DataList = N'{3}', @UserId = {4}"
+                    , tableName, objectData, subTableName, subObjectData, userId);
+
+            int result = dbFactory.GetContext().Database.SqlQuery<int>
+                    (statement).FirstOrDefault();
+            return result;
+        }
+
         public Dictionary<string, object> GetObject(int userId, string tableName, string columName, string columValue)
         {
             string statement = string.Format("exec [dbo].[USP_System_Data_Object_Get] @UserId = {0}, @TableName = '{1}', @ColumName = '{2}', @Value = N'{3}'"
@@ -197,8 +209,7 @@ namespace StoreManagement.Service
                     (statement).FirstOrDefault();
             return result;
         }
-
-
+        
         public Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig)
         {
             DataTable dt = GetDataFromConfiguration(userId, gridConfig);

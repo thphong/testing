@@ -108,10 +108,15 @@ function GridViewConfig(gridId) {
 function ObjectDataConfig(tableName, $scope) {
 
     this.TableName = tableName;
+    this.SubTableName = "";
     this.ObjectData = {};
     this.ListObjectData = [];
     this.$scope = $scope;
     this._CanCreate = false;
+
+    this.SetSubTableName = function (subTableName) {
+        this.SubTableName = subTableName;
+    }
 
     this.SetObject = function (objectData) {
         this.ObjectData = objectData;
@@ -128,6 +133,23 @@ function ObjectDataConfig(tableName, $scope) {
 
         if (this.ObjectData.Version != undefined && result > 0)
         {
+            this.ObjectData.Version++;
+        }
+
+        return result;
+    }
+
+    this.SaveComplexObject = function () {
+        var data = "";
+        for (var i = 0; i < this.ListObjectData.length; i++) {
+            if (data) {
+                data += "<<>>";
+            }
+            data += this.GetCombinedData(this.ListObjectData[i]);
+        }
+        var result = AjaxSync(g_saveComplexObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData(this.ObjectData) + '", subObject: "' + this.SubTableName + '", listData: "' + data + '"}');
+
+        if (this.ObjectData.Version != undefined && result > 0) {
             this.ObjectData.Version++;
         }
 

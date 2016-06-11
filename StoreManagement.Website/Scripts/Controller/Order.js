@@ -30,6 +30,7 @@ mdlCommon.controller('OrderController',
         };
 
         $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders", $scope);
+        $scope.OrderFormConfig.SetSubTableName("T_Trans_Order_Product");
         $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product", $scope);
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
@@ -360,29 +361,13 @@ mdlCommon.controller('OrderController',
                 $scope.OrderForm.OrderStatus = status;
                 $scope.OrderForm.StoreId = $scope.CurrentStore;
                 $scope.OrderFormConfig.SetObject($scope.OrderForm);
-                var orderId = $scope.OrderFormConfig.SaveObject();
+                $scope.OrderFormConfig.SetListObject($scope.ListProductsOrder);
+                var orderId = $scope.OrderFormConfig.SaveComplexObject();
                 if (orderId > 0) {
 
-                    if ($scope.OrderForm.OrderId == -1) {
-                        var len = $scope.ListProductsOrder.length;
-                        for (var i = 0 ; i < len; i++) {
-                            $scope.ListProductsOrder[i].OrderId = orderId;
-                        }
-                    }
-
-                    $scope.ProductOrderFormConfig.SetListObject($scope.ListProductsOrder);
-                    var result = $scope.ProductOrderFormConfig.SaveListObject();
-
-                    if (result) {
-                        ShowSuccessMessage("Đơn hàng được lưu thành công!");
-                        //$scope.ReloadGrid('Orders');
-                        $scope.IsShowOrderDetail = false;
-                        $scope.OrderForm.OrderId = orderId;
-                    }
-                    else if ($scope.OrderForm.OrderId == -1) {
-
-                        $scope.OrderFormConfig.HardDeleteObject(orderId);
-                    }
+                    ShowSuccessMessage("Đơn hàng được lưu thành công!");
+                    $scope.IsShowOrderDetail = false;
+                    $scope.OrderForm.OrderId = orderId;
                 }
             }
         }
@@ -395,8 +380,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm._CanDelete = order._CanDelete;
         }
 
-        $scope.GetOrderDetail = function(order)
-        {
+        $scope.GetOrderDetail = function (order) {
             $scope.ResetOrderForm();
             var object = $scope.OrderFormConfig.GetObject(order.OrderId);
             $scope.OrderFormConfig.CopyFields(object, $scope.OrderForm);
@@ -450,29 +434,29 @@ mdlCommon.controller('OrderController',
 
         $scope.SavePaidForDebt = function () {
             var paidForDebt = GetIntFromCurrency($scope.OrderForm.PaidForDebt);
-            if (paidForDebt > $scope.OrderForm.DebtMoney) {
-                ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
-            }
-            else {
-                if (FValidation.CheckControls("check-order")) {
-                    $scope.OrderForm.DebtMoney = GetIntFromCurrency($scope.OrderForm.DebtMoney) - paidForDebt;
-                    $scope.OrderForm.Paid = GetIntFromCurrency($scope.OrderForm.Paid) + paidForDebt;
 
-                    $scope.PaymentForm.OrderId = $scope.OrderForm.OrderId;
-                    $scope.PaymentForm.Amount = paidForDebt;
-                    $scope.PaymentForm.PaymentType = $scope.OrderForm.PaymentType;
+            if (FValidation.CheckControls("check-order")) {
+                $scope.OrderForm.DebtMoney = GetIntFromCurrency($scope.OrderForm.DebtMoney) - paidForDebt;
+                if ($scope.OrderForm.DebtMoney < 0) {
+                    $scope.OrderForm.DebtMoney = 0;
+                }
+                $scope.OrderForm.Paid = GetIntFromCurrency($scope.OrderForm.Paid) + paidForDebt;
 
-                    $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
-                    if ($scope.PaymentFormConfig.SaveObject() > 0) {
-                        ShowSuccessMessage("Thanh toán nợ thành công.");
-                        $scope.OrderForm.IsEditingPaidForDebt = false;
-                    }
+                $scope.PaymentForm.OrderId = $scope.OrderForm.OrderId;
+                $scope.PaymentForm.Amount = paidForDebt;
+                $scope.PaymentForm.PaymentType = $scope.OrderForm.PaymentType;
+
+                $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
+                if ($scope.PaymentFormConfig.SaveObject() > 0) {
+                    ShowSuccessMessage("Thanh toán nợ thành công.");
+                    $scope.OrderForm.IsEditingPaidForDebt = false;
                 }
             }
+
         }
 
         //POS
-        
+
         $scope.PrintOrderAdmin = function (order, template) {
 
             $scope.GetOrderDetail(order);

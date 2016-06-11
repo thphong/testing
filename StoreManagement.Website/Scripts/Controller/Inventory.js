@@ -40,8 +40,10 @@ mdlCommon.controller('InventoryController',
         }
 
         $scope.InventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory", $scope);
+        $scope.InventoryFormConfig.SetSubTableName("T_Trans_Inventory_Product");
         $scope.ProductInventoryFormConfig = new ObjectDataConfig("T_Trans_Inventory_Product", $scope);
         $scope.InventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran", $scope);
+        $scope.InventTranFormConfig.SetSubTableName("T_Trans_InventTran_Product");
         $scope.ProductInventTranFormConfig = new ObjectDataConfig("T_Trans_InventTran_Product", $scope);
 
         $scope.InventoryFormConfig.CheckCanCreateObject();
@@ -308,26 +310,11 @@ mdlCommon.controller('InventoryController',
             if (FValidation.CheckControls("check-inventory")) {
                 $scope.InventoryForm.StatusId = status;
                 $scope.InventoryFormConfig.SetObject($scope.InventoryForm);
-                var inventoryId = $scope.InventoryFormConfig.SaveObject();
+                $scope.InventoryFormConfig.SetListObject($scope.ListProductsInventory);
+                var inventoryId = $scope.InventoryFormConfig.SaveComplexObject();
                 if (inventoryId > 0) {
-                    if ($scope.InventoryForm.InventoryId == '-1') {
-                        var len = $scope.ListProductsInventory.length;
-                        for (var i = 0 ; i < len; i++) {
-                            $scope.ListProductsInventory[i].InventoryId = inventoryId;
-                        }
-                    }
-
-                    $scope.ProductInventoryFormConfig.SetListObject($scope.ListProductsInventory);
-                    var result = $scope.ProductInventoryFormConfig.SaveListObject();
-
-                    if (result) {
-                        ShowSuccessMessage("Phiếu kiểm kê được lưu thành công!");
-                        //$scope.ReloadGrid('InventoryCheck');
-                        $scope.IsShowInventoryDetail = false;
-                    }
-                    else if ($scope.InventoryForm.InventoryId == '-1') {
-                        $scope.InventoryFormConfig.HardDeleteObject(inventoryId);
-                    }
+                    ShowSuccessMessage("Phiếu kiểm kê được lưu thành công!");
+                    $scope.IsShowInventoryDetail = false;
                 }
             }
         }
@@ -336,26 +323,11 @@ mdlCommon.controller('InventoryController',
             if (FValidation.CheckControls("check-inventory-tran")) {
                 $scope.InventTranForm.StatusId = status;
                 $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
-                var inventTranId = $scope.InventTranFormConfig.SaveObject();
+                $scope.InventTranFormConfig.SetListObject($scope.ListProductsInventTran);
+                var inventTranId = $scope.InventTranFormConfig.SaveComplexObject();
                 if (inventTranId > 0) {
-                    if ($scope.InventTranForm.InventTranId == '-1') {
-                        var len = $scope.ListProductsInventTran.length;
-                        for (var i = 0 ; i < len; i++) {
-                            $scope.ListProductsInventTran[i].InventTranId = inventTranId;
-                        }
-                    }
-
-                    $scope.ProductInventTranFormConfig.SetListObject($scope.ListProductsInventTran);
-                    var result = $scope.ProductInventTranFormConfig.SaveListObject();
-
-                    if (result) {
-                        ShowSuccessMessage("Phiếu chuyển kho được lưu thành công!");
-                        //$scope.ReloadGrid('InventTrans');
-                        $scope.IsShowInventTranDetail = false;
-                    }
-                    else if ($scope.InventTranForm.InventTranId == '-1') {
-                        $scope.InventTranFormConfig.HardDeleteObject(inventTranId);
-                    }
+                    ShowSuccessMessage("Phiếu chuyển kho được lưu thành công!");
+                    $scope.IsShowInventTranDetail = false;                    
                 }
             }
         }

@@ -17,8 +17,9 @@ mdlCommon.controller('PurchaseController',
             PurchaseType: "1",
             Status: "0"
         };
-        
+
         $scope.PurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase", $scope);
+        $scope.PurchaseFormConfig.SetSubTableName("T_Trans_Purchase_Product");
         $scope.ProductPurchaseFormConfig = new ObjectDataConfig("T_Trans_Purchase_Product", $scope);
         $scope.PurchaseFormConfig.CheckCanCreateObject();
 
@@ -46,7 +47,7 @@ mdlCommon.controller('PurchaseController',
             IsActive: 1,
             _CanUpdate: true,
             _CanDelete: true,
-            Version : 0
+            Version: 0
         };
 
         $scope.ResetPurchaseForm = function () {
@@ -66,7 +67,7 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.Price = 0;
             $scope.PurchaseForm.Debt = 0;
             $scope.PurchaseForm.Paid = 0;
-            $scope.PurchaseForm.IsActive = 1;            
+            $scope.PurchaseForm.IsActive = 1;
             $scope.PurchaseForm.PaidForDebt = 0;
             $scope.PurchaseForm.IsEditingPaidForDebt = false;
             $scope.PurchaseForm._CanUpdate = true;
@@ -178,6 +179,9 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.SumMoney = sum + tax;
             //$scope.PurchaseForm.Paid = sum + tax;
             $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
+            if ($scope.PurchaseForm.Debt < 0) {
+                $scope.PurchaseForm.Debt = 0;
+            }
         }
 
         $scope.ChangePaid = function () {
@@ -192,27 +196,12 @@ mdlCommon.controller('PurchaseController',
                 $scope.PurchaseForm.StatusId = status;
                 $scope.PurchaseForm.StoreId = $scope.CurrentStore;
                 $scope.PurchaseFormConfig.SetObject($scope.PurchaseForm);
-                var purchaseId = $scope.PurchaseFormConfig.SaveObject();
+                $scope.PurchaseFormConfig.SetListObject($scope.ListProductsPurchase);
+                //PurchaseFormConfig
+                var purchaseId = $scope.PurchaseFormConfig.SaveComplexObject();
                 if (purchaseId > 0) {
-
-                    if ($scope.PurchaseForm.PurchaseId == -1) {
-                        var len = $scope.ListProductsPurchase.length;
-                        for (var i = 0 ; i < len; i++) {
-                            $scope.ListProductsPurchase[i].PurchaseId = purchaseId;
-                        }
-                    }
-
-                    $scope.ProductPurchaseFormConfig.SetListObject($scope.ListProductsPurchase);
-                    var result = $scope.ProductPurchaseFormConfig.SaveListObject();
-
-                    if (result) {
-                        ShowSuccessMessage("Đơn hàng được lưu thành công!");
-                        //$scope.ReloadGrid('Purchases');
-                        $scope.IsShowPurchaseDetail = false;
-                    }
-                    else if ($scope.PurchaseForm.PurchaseId == -1) {
-                        $scope.PurchaseFormConfig.HardDeleteObject(purchaseId);
-                    }
+                    ShowSuccessMessage("Đơn hàng được lưu thành công!");
+                    $scope.IsShowPurchaseDetail = false;
                 }
             }
         }
@@ -279,23 +268,22 @@ mdlCommon.controller('PurchaseController',
 
         $scope.SavePaidForDebt = function () {
             var paidForDebt = GetIntFromCurrency($scope.PurchaseForm.PaidForDebt);
-            if ($scope.PurchaseForm.PaidForDebt > $scope.PurchaseForm.Debt) {
-                ShowErrorMessage("Số tiền trả lớn hơn số tiền nợ.");
-            }
-            else {
-                if (FValidation.CheckControls("check-purchase")) {
-                    $scope.PurchaseForm.Debt = GetIntFromCurrency($scope.PurchaseForm.Debt) - paidForDebt;
-                    $scope.PurchaseForm.Paid = GetIntFromCurrency($scope.PurchaseForm.Paid) + paidForDebt;
 
-                    $scope.PaymentForm.PurchaseId = $scope.PurchaseForm.PurchaseId;
-                    $scope.PaymentForm.Amount = paidForDebt;
-                    $scope.PaymentForm.PaymentType = $scope.PurchaseForm.PaymentType;
+            if (FValidation.CheckControls("check-purchase")) {
+                $scope.PurchaseForm.Debt = GetIntFromCurrency($scope.PurchaseForm.Debt) - paidForDebt;
+                if ($scope.PurchaseForm.Debt < 0) {
+                    $scope.PurchaseForm.Debt = 0;
+                }
+                $scope.PurchaseForm.Paid = GetIntFromCurrency($scope.PurchaseForm.Paid) + paidForDebt;
 
-                    $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
-                    if ($scope.PaymentFormConfig.SaveObject() > 0) {
-                        ShowSuccessMessage("Thanh toán nợ thành công.");
-                        $scope.PurchaseForm.IsEditingPaidForDebt = false;
-                    }
+                $scope.PaymentForm.PurchaseId = $scope.PurchaseForm.PurchaseId;
+                $scope.PaymentForm.Amount = paidForDebt;
+                $scope.PaymentForm.PaymentType = $scope.PurchaseForm.PaymentType;
+
+                $scope.PaymentFormConfig.SetObject($scope.PaymentForm);
+                if ($scope.PaymentFormConfig.SaveObject() > 0) {
+                    ShowSuccessMessage("Thanh toán nợ thành công.");
+                    $scope.PurchaseForm.IsEditingPaidForDebt = false;
                 }
             }
         }

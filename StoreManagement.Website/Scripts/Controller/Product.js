@@ -98,7 +98,7 @@ mdlCommon.controller('ProductController',
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
-        $scope.ProductAttributeFormConfig = new ObjectDataConfig("T_Trans_Product_Attribute", $scope);
+        $scope.ProductFormConfig.SetSubTableName("T_Trans_Product_Attribute");
 
         $scope.ProductFormConfig.CheckCanCreateObject();
 
@@ -172,9 +172,9 @@ mdlCommon.controller('ProductController',
             
             if (FValidation.CheckControls("")) {
                 $scope.ProductFormConfig.SetObject($scope.ProductForm);
+                $scope.ProductFormConfig.SetListObject($scope.DataSet.ProductAttributes.Data);
 
-
-                var productId = $scope.ProductFormConfig.SaveObject();
+                var productId = $scope.ProductFormConfig.SaveComplexObject();
                 if (productId > 0) {
                     if ($scope.ProductForm.ProductId != -1) {
 
@@ -182,19 +182,10 @@ mdlCommon.controller('ProductController',
                         $scope.ProductForm.ProducerName = $("select[ng-model='ProductForm.ProducerId'] option:selected").html();
 
                         $scope.IsEditingProductDetail = false;
-                        //$scope.ReloadGrid('Products');
 
                         ShowSuccessMessage("Hàng hóa được sửa thành công!");
                     }
                     else {
-                        //save product attribute
-                        var len = $scope.DataSet.ProductAttributes.Data.length;
-                        for (var i = 0 ; i < len; i++) {
-                            $scope.DataSet.ProductAttributes.Data[i].ProductId = productId;
-                        }
-                        $scope.ProductAttributeFormConfig.SetListObject($scope.DataSet.ProductAttributes.Data);
-                        $scope.ProductAttributeFormConfig.SaveListObject();
-
                         if (isContinue) {
                             $scope.ResetProductForm();
                         }
@@ -203,7 +194,6 @@ mdlCommon.controller('ProductController',
                             $scope.IsShowProductDetail = false;
                         }
                         ShowSuccessMessage("Hàng hóa được tạo thành công!");
-                        //$scope.ReloadGrid('Products');
                     }
 
                     //Save file

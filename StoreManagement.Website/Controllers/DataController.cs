@@ -91,6 +91,21 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveComplexObject(string tableName, string data, string subObject, string listData)
+        {
+            try
+            {
+                int id = dataService.SaveComplexObject(SessionCollection.CurrentUserId, tableName, data, subObject, listData);
+                return Json(id);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+
+        [HttpPost]
         public ActionResult GetObject(string tableName, string columName, string columValue)
         {
             try

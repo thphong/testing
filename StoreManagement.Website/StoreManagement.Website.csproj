@@ -216,11 +216,9 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\POSController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -348,8 +346,6 @@
     <Content Include="Scripts\Controller\SupplierModal.js" />
     <Content Include="Scripts\Controller\User.js" />
     <Content Include="Scripts\d3.js" />
-    <Content Include="Scripts\DataService\Reaction.js" />
-    <Content Include="Scripts\DataService\DataList.js" />
     <Content Include="Scripts\Common\AngularGridView.js" />
     <Content Include="Scripts\Common\AngularTranslationService.js" />
     <Content Include="Scripts\Common\Common.js" />

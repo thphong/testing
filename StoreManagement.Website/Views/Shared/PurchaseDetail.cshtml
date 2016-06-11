@@ -270,7 +270,7 @@
                 <label class="control-label">Thanh toán</label>
             </div>
             <div class="col-md-8" ng-init="InitFilterCurrency()">
-                <span ng-bind="PurchaseForm.Paid | currency:'':0" ng-if="!PurchaseForm._CanUpdate"></span>
+                <span ng-bind="PurchaseForm.Paid" ng-if="!PurchaseForm._CanUpdate"></span>
                 <input class="form-control check-currency" ng-show="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
                 <input class="form-control check-currency" ng-show="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
                        ng-model="PurchaseForm.PaidForDebt"
