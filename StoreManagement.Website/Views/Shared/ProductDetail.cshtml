@@ -31,7 +31,6 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-md-3">
         <h4>Thông tin cơ bản</h4>
@@ -62,8 +61,10 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
-                        <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == 1"
+                        <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" 
+                               ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == 1"
                                ng-true-value="1" ng-false-value="0"
+                               ng-checked="ProductForm.TrackInventory == 1"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
                             <span class="label label-success" ng-if="ProductForm.TrackInventory == 1">Có</span>
@@ -74,7 +75,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
-                        <input id="chbAllowNegative" type="checkbox" ng-model="ProductForm.AllowNegative" ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
+                        <input id="chbAllowNegative" type="checkbox" ng-model="ProductForm.AllowNegative" 
+                               ng-disabled="ProductForm.TrackInventory == '0' || ProductForm.IsManageAsSerial == '1'"
+                               ng-checked="ProductForm.AllowNegative == 1"
                                ng-true-value="1" ng-false-value="0"
                                ng-if="IsEditingProductDetail" />
                         <span ng-if="!IsEditingProductDetail">
@@ -117,6 +120,7 @@
                     <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
                             dropdown-condition="[IsActive] = 1 and [ParentId] = {{CurrentProductGroup}}"
+                            check-empty="" check-empty-message="Vui lòng chọn nhóm hàng." 
                             ng-show="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">

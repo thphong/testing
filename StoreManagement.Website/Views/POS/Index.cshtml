@@ -15,7 +15,7 @@
     <div class="col-md-5" ng-init="OrderForm.IsPOS = true;">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct')"
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false)"
                        class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
@@ -159,29 +159,35 @@
                     <span ng-bind="OrderForm.SumMoney | currency:'':0"></span>
                 </div>
                 <div class="col-md-3">
-                    <label class="control-label">Còn nợ</label>
+                    <label ng-if="OrderForm.DebtMoney > 0" class="control-label">Còn nợ</label>
+                    <label ng-if="OrderForm.ExtraMoney > 0" class="control-label">Tiền thừa</label>
                 </div>
                 <div class="col-md-3">
-                    <span ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
+                    <span ng-if="OrderForm.DebtMoney > 0" ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
+                    <span  ng-if="OrderForm.ExtraMoney > 0" ng-bind="OrderForm.ExtraMoney | currency:'':0"></span>
                 </div>
             </div>
             <div class="row margin-top-10">
                 <div class="col-md-3">
-                    <label class="control-label">Thanh toán</label>
+                    <label class="control-label">Khách trả</label>
                 </div>
-                <div class="col-md-4" ng-init="InitFilterCurrency()">
+                <div class="col-md-3" ng-init="InitFilterCurrency()">
                     <input class="form-control check-currency" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()"
                            check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
                            check-under="check-order" />
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <button class="btn btn-default btn-sm" ng-click="CancelOrder()">
                         <i class="fa fa-undo"> </i>
                         Hủy
                     </button>
                     <button class="btn btn-primary btn-sm" ng-click="SavePOSOrder()">
+                        <i class="fa fa-save"> </i>
+                        Lưu (F2)
+                    </button> 
+                    <button class="btn btn-primary btn-sm" ng-click="SavePrintPOSOrder()">
                         <i class="fa fa-print"> </i>
-                        Lưu & In
+                        Lưu & In (F3)
                     </button> 
                 </div>
             </div>
@@ -259,8 +265,10 @@
              grid-data-type="table" @*table/storedprocedure*@
              grid-data-action="get" @*get/getall*@
              grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
-             grid-filter-condition="[StoreId] = {{CurrentStore}} and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1
-                                    and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductId.ProductGroup])" @*must have [fieldname] for each colum field*@
+             grid-filter-condition="([StoreId] = {{CurrentStore}} and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1
+                                     and ([ProductId.AllowNegative] = 1 or [Quantity] > 0)
+                                     and ([ProductId.Cost] > 0 and [ProductId.Price] > 0)
+                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductId.ProductGroup]))" @*must have [fieldname] for each colum field*@
              grid-sort-condition="[ProductId.ProductName] ASC" @*must have [fieldname] for each colum field*@>
 
             <div grid-defined-colum="ProductId" class="none-display"></div>
@@ -293,7 +301,9 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12 margin-top-30" ng-if="!DataSet.Products.HasRecord()">
+                Chưa có hàng hóa! Vui lòng kiểm tra với chủ cửa hàng, có thể hàng hóa không cho bán âm, có thể hàng hóa chưa được nhập giá vốn, giá bán.
+            </div>
             <div class="col-md-12" style="position: fixed; bottom: 0%; left:65%">
                 <span grid-paging-for="Products"></span>
             </div>

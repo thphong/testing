@@ -45,7 +45,7 @@ mdlCommon.controller('ProductController',
             ProductName: "",
             Quantity: 0,
             TrackInventory: 1,
-            AllowNegative: 1,
+            AllowNegative: 0,
             Cost: 0,
             Price: 0,
             ProductGroup: "",
@@ -74,7 +74,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.ProductCode = "";
             $scope.ProductForm.ProductName = "";
             $scope.ProductForm.TrackInventory = 1;
-            $scope.ProductForm.AllowNegative = 1;
+            $scope.ProductForm.AllowNegative = 0;
             $scope.ProductForm.Cost = 0;
             $scope.ProductForm.Price = 0;
             $scope.ProductForm.ProductGroup = "";
@@ -119,7 +119,7 @@ mdlCommon.controller('ProductController',
 
         $scope.StopSellingProduct = function (product) {
             if (confirm("Bạn có muốn ngừng kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "0", "version": product.Version });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "0", "version": product.ProductVersion });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
                     product.IsSelling = 0;
@@ -130,7 +130,7 @@ mdlCommon.controller('ProductController',
 
         $scope.EnableSellingProduct = function (product) {
             if (confirm("Bạn có muốn cho phép kinh doanh hàng hóa " + product.ProductCode + " - " + product.ProductName + "?")) {
-                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "1", "version": product.Version });
+                $scope.ProductFormConfig.SetObject({ "ProductId": product.ProductId, "IsSelling": "1", "version": product.ProductVersion });
                 if ($scope.ProductFormConfig.SaveObject()) {
                     $scope.ReloadGrid('Products');
                     product.IsSelling = 1;
@@ -248,6 +248,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm._CanDelete = product._CanDelete;
             $scope.IsShowProductDetail = true;
             $scope.IsEditingProductDetail = false;
+            $scope.ProductForm.Quantity = product.Quantity;
             //$scope.ReloadGrid('ProductAttributes');
         }
 
@@ -270,7 +271,7 @@ mdlCommon.controller('ProductController',
         }
 
         $scope.AddProductAttribute = function () {
-            $scope.DataSet.ProductAttributes.Data.push({ AttributeId: "", Value: "" });
+            $scope.DataSet.ProductAttributes.Data.push({ AttributeId: "", Value: "", ProductId: $scope.ProductForm.ProductId });
         }
 
         $scope.DeleteProductAttribute = function (item) {

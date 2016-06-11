@@ -3,7 +3,7 @@ mdlCommon.controller('ProductListController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         
-        $scope.InitListAutoCompleteProducts = function (elementId) {
+        $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice) {
             $(elementId).autocomplete({
                 minLength: 0,
                 source: function (request, response) {
@@ -13,6 +13,14 @@ mdlCommon.controller('ProductListController',
                     configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Cost;ProductId.Price;ProductId.VAT;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive";
                     configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
                     configList.GridSortCondition = "ProductId.ProductCode ASC";
+
+                    if (!includeNegative) {
+                        configList.GridFilterCondition += " and (ProductId.AllowNegative = 1 or T_Trans_Product_Store.Quantity > 0)";
+                    }
+
+                    if (!includeNotPrice) {
+                        configList.GridFilterCondition += " and (ProductId.Cost > 0 and ProductId.Price > 0)";
+                    }
 
                     var listData = configList.GetListData();
                     if (listData.length > 0) {

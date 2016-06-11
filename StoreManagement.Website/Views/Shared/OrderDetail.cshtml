@@ -37,7 +37,7 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct')"
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false)"
                        class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
@@ -305,10 +305,12 @@
         </div>
         <div class="row  margin-top-10">
             <div class="col-md-4">
-                <label class="control-label">Còn nợ</label>
+                <label ng-if="OrderForm.DebtMoney > 0" class="control-label">Còn nợ</label>
+                <label ng-if="OrderForm.ExtraMoney > 0" class="control-label">Tiền thừa</label>
             </div>
             <div class="col-md-8">
-                <span ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
+                <span ng-if="OrderForm.DebtMoney > 0" ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
+                <span ng-if="OrderForm.ExtraMoney > 0" ng-bind="OrderForm.ExtraMoney | currency:'':0"></span>
             </div>
         </div>
     </div>

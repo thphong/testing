@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#reportPOSModal').on('show.bs.modal', function (e) {
         var modalId = $(this).attr("id");
         var scope = angular.element(document.getElementById(modalId)).scope();
@@ -27,7 +26,28 @@ $(document).ready(function () {
             scope.SetShownPOSInventory(false);
         });
     });
+
+    $("#OrderController").keydown(function (event) {
+        var controllerId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(controllerId)).scope();
+        if (scope.OrderForm.IsPOS) {
+            if (event.which == 113) { //F2
+                scope.$apply(function () {
+                    scope.SavePOSOrder();
+                });
+                return false;
+            }
+            else if (event.which == 114) { //F3
+                scope.$apply(function () {
+                    scope.SavePrintPOSOrder();
+                });
+                return false;
+            }
+        }
+    });
+
 });
+
 
 mdlCommon.controller('POSController',
 ['$scope', '$filter', '$controller', '$interpolate',
@@ -58,7 +78,16 @@ mdlCommon.controller('POSController',
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
         }
 
+        
         $scope.SavePOSOrder = function () {
+            $scope.SaveOrderForm(2);
+            if ($scope.OrderForm.OrderId > 0) {
+                $scope.CancelOrder();
+                $scope.ReloadGrid('Products');
+            }
+        }
+
+        $scope.SavePrintPOSOrder = function () {
             $scope.SaveOrderForm(2);
 
             if ($scope.OrderForm.OrderId > 0) {
@@ -69,6 +98,7 @@ mdlCommon.controller('POSController',
                     $scope.PrintData("divPrint");
                     $scope.$apply(function () {
                         $scope.CancelOrder();
+                        $scope.ReloadGrid('Products');
                     });
                 }, 100);
             }

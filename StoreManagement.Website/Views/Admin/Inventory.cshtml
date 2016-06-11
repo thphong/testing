@@ -54,7 +54,7 @@
                             <div class="col-md-2">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryProduct')"
-                                        dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
@@ -144,7 +144,10 @@
                                 <tr ng-repeat="item in DataSet.InventoryProduct.Data">
                                     <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductCode"></a> </td>
                                     <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
-                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
+                                    <td>
+                                        <span ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></span>
+                                        <span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)" >(...)</span>
+                                    </td>
                                     <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
                                     <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
                                 </tr>
@@ -177,7 +180,7 @@
                             <div class="col-md-2">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryInOut')"
-                                        dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
                             </div>
                             <div class="col-md-2 pull-right text-right">
                                 <span grid-export-import-for="InventoryInOut" grid-export-template="InventoryInOut.xlsx"></span>
@@ -411,7 +414,9 @@
                                     <td> <a href="#" ng-bind="item.InventTranCode" ng-click="ShowInventTranDetail(item)"></a> </td>
                                     <td ng-bind="item.FromStoreCode"></td>
                                     <td ng-bind="item.ToStoreCode"></td>
-                                    <td ng-bind="item.NumProducts"></td>
+                                    <td ng-bind="item.NumProducts">
+                                        
+                                    </td>
                                     <td>
                                         <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
                                     </td>

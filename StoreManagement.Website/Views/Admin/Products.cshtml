@@ -34,7 +34,7 @@
                 <div class="col-md-2">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('Products')"
-                            dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                            dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
                 </div>
                 <div class="col-md-2">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
@@ -44,7 +44,7 @@
                 <div class="col-md-2">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')">
                         <option value="0">Tất cả hàng hóa</option>
-                        <option value="1">Chưa làm giá bán</option>
+                        <option value="1">Chưa nhập giá bán</option>
                         <option value="2">Chưa nhập giá mua</option>
                         <option value="3">Hàng chưa phân loại</option>
                     </select>
@@ -55,31 +55,33 @@
                     <table grid-data="Products"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
-                           grid-filter-condition="(({{AdditionalFilter.ProductStatus}} = 1 and [IsSelling] = 1 and [IsActive] = 1)
-                                                or ({{AdditionalFilter.ProductStatus}} = 2 and [IsSelling] = 0 and [IsActive] = 1)
-                                                or ({{AdditionalFilter.ProductStatus}} = 3 and [IsActive] = 0))
-                                                and ({{AdditionalFilter.ProductGroup}} = 0 or [ProductGroup] = {{AdditionalFilter.ProductGroup}})
-                                                and ({{AdditionalFilter.Producer}} = 0 or [ProducerId] = {{AdditionalFilter.Producer}})
+                           grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
+                           grid-filter-condition="(({{AdditionalFilter.ProductStatus}} = 1 and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1)
+                                                or ({{AdditionalFilter.ProductStatus}} = 2 and [ProductId.IsSelling] = 0 and [ProductId.IsActive] = 1)
+                                                or ({{AdditionalFilter.ProductStatus}} = 3 and [ProductId.IsActive] = 0))
+                                                and ({{AdditionalFilter.ProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalFilter.ProductGroup}})
+                                                and ({{AdditionalFilter.Producer}} = 0 or [ProductId.ProducerId] = {{AdditionalFilter.Producer}})
                                                 and (({{AdditionalFilter.ProductType}} = 0)
-                                                or ({{AdditionalFilter.ProductType}} = 1 and ([Price] is null or [Price] <= 0))
-                                                or ({{AdditionalFilter.ProductType}} = 2 and ([Cost] is null or [Cost] <= 0))
-                                                or ({{AdditionalFilter.ProductType}} = 3 and [ProductGroup] is null))" @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[ProductName] ASC" @*must have [fieldname] for each colum field*@
+                                                or ({{AdditionalFilter.ProductType}} = 1 and ([ProductId.Price] is null or [ProductId.Price] <= 0))
+                                                or ({{AdditionalFilter.ProductType}} = 2 and ([ProductId.Cost] is null or [ProductId.Cost] <= 0))
+                                                or ({{AdditionalFilter.ProductType}} = 3 and [ProductId.ProductGroup] is null))
+                                            and [StoreId] = {{CurrentStore}}" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[ProductId.ProductName] ASC" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th grid-defined-colum="!ProductId" style="display: none"></th>
-                                <th grid-defined-colum="ProductName" style="width: 30%"><span>Tên hàng hóa</span></th>
-                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                <th grid-defined-colum="ProductId.ProductName" style="width: 30%"><span>Tên hàng hóa</span></th>
+                                <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
                                 <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                <th grid-defined-colum="Price"><span>Giá bán</span></th>
-                                <th grid-defined-colum="ProductGroup.GroupName"><span>Nhóm hàng</span></th>
-                                <th grid-defined-colum="ProducerId.ProducerName"><span>Nhà sản xuất</span></th>
+                                <th grid-defined-colum="ProductId.Price"><span>Giá bán</span></th>
+                                <th grid-defined-colum="ProductId.ProductGroup.GroupName"><span>Nhóm hàng</span></th>
+                                <th grid-defined-colum="ProductId.ProducerId.ProducerName"><span>Nhà sản xuất</span></th>
                                 <th><span>Thẻ kho</span></th>
                                 <th><span>Hình</span></th>
                                 <th></th>
-                                <th grid-defined-colum="!IsSelling" class="none-display"></th>
+                                <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
+                                <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +89,10 @@
                             <tr ng-repeat="item in DataSet.Products.Data" ng-click="ClickOnItem(item)">
                                 <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
                                 <td ng-bind="item.ProductCode"></td>
-                                <td ng-bind="item.Quantity"></td>
+                                <td>
+                                    <span ng-bind="item.Quantity"></span>
+                                    <span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>
+                                </td>
                                 <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
                                 <td ng-bind="item.GroupName"></td>
                                 <td ng-bind="item.ProducerName"></td>

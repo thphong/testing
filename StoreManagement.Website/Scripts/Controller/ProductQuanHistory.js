@@ -62,6 +62,20 @@ mdlCommon.controller('ProductQuanHistoryController',
             $("#productQuanHisModal").modal('show');
         }
 
+        $scope.ShowCountProductQuanHistory = function (product, divId) {
+            setTimeout(function () {
+                $scope.SetProductQuanHistoryForm(product);
+                $scope.ConfigStoreList.GridFilterCondition = $interpolate($scope.ConfigStoreList.GridFilterConditionExpression)($scope);
+                $scope.ListStores = $scope.ConfigStoreList.GetListData();
+
+                var quantity = 0;
+                for (var i = 0 ; i < $scope.ListStores.length; i++) {
+                    quantity += $scope.ListStores[i].Quantity;
+                }
+                $("#" + divId).html("(" + quantity + ")");
+            }, 10);
+        }
+
         $scope.SelectStore = function (store) {
             $scope.SelectedStoreId = store.StoreId;
             $scope.ReloadGrid('ProductQuanHistory');

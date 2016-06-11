@@ -157,7 +157,7 @@ namespace StoreManagement.Service
                     , tableName, objectData, subTableName, subObjectData, userId);
 
             int result = dbFactory.GetContext().Database.SqlQuery<int>
-                    (statement).FirstOrDefault();
+                    (statement).LastOrDefault();
             return result;
         }
 

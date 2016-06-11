@@ -58,6 +58,7 @@ mdlCommon.controller('OrderController',
             DiscountAmmount: 0,
             TotalDiscount: 0,
             DebtMoney: 0,
+            ExtraMoney: 0,
             OrginalMoney: 0,
             Paid: 0,
             IsDiscountPercent: 1,
@@ -89,6 +90,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.DiscountAmmount = 0;
             $scope.OrderForm.TotalDiscount = 0;
             $scope.OrderForm.DebtMoney = 0;
+            $scope.OrderForm.ExtraMoney = 0;
             $scope.OrderForm.Paid = 0;
             $scope.OrderForm.IsDiscountPercent = 1;
             $scope.OrderForm.IsActive = 1;
@@ -323,14 +325,19 @@ mdlCommon.controller('OrderController',
             }
             $scope.OrderForm.SumMoney = $scope.OrderForm.Price - $scope.OrderForm.DiscountAmmount;
             $scope.OrderForm.TotalDiscount = initSum - $scope.OrderForm.SumMoney;
-            //$scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
-            $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - $scope.OrderForm.Paid;
+            $scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
+            $scope.OrderForm.DebtMoney = 0;
+            $scope.OrderForm.ExtraMoney = 0;
         }
 
         $scope.ChangePaid = function () {
             $scope.OrderForm.DebtMoney = $scope.OrderForm.SumMoney - GetIntFromCurrency($scope.OrderForm.Paid);
             if ($scope.OrderForm.DebtMoney < 0) {
+                $scope.OrderForm.ExtraMoney = -$scope.OrderForm.DebtMoney;
                 $scope.OrderForm.DebtMoney = 0;
+            }
+            else {
+                $scope.OrderForm.ExtraMoney = 0;
             }
         }
 
