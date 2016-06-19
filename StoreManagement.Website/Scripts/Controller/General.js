@@ -1,6 +1,6 @@
 ﻿mdlCommon.controller('GeneralController',
-['$scope', '$filter', '$controller', '$interpolate',
-    function ($scope, $filter, $controller, $interpolate) {
+['$scope', '$filter', '$controller', '$interpolate', '$sce',
+    function ($scope, $filter, $controller, $interpolate, $sce) {
         $controller('ctrlPaging', { $scope: $scope });
 
         //General info
@@ -85,5 +85,21 @@
             $scope.Revenue.DateRangeText = text;
             $scope.SetFilterRangeDate(option, '');
             $scope.ShowRevenue();
+        }
+
+        $scope.Announcement = 
+        {
+            Title: "",
+            Body: "",
+            CreatorName: "",
+            CreatedDate: ""
+        }
+
+        $scope.ShowAnnouncement = function(announce)
+        {
+            $scope.Announcement.Title = announce.Title;
+            $scope.Announcement.Body = $sce.trustAsHtml(announce.Body);
+            $scope.Announcement.CreatorName = announce.CreatorName;
+            $scope.Announcement.CreatedDate = announce.CreatedDate;
         }
     }]);

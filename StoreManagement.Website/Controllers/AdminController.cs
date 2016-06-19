@@ -85,5 +85,10 @@ namespace StoreManagement.Website.Controllers
         {
             return CheckSession();
         }
+
+        public ActionResult Announcement()
+        {
+            return CheckSession();
+        }
     }
 }

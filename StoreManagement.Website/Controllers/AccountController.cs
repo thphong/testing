@@ -17,7 +17,7 @@ namespace StoreManagement.Website.Controllers
         {
             if (SessionCollection.IsLogIn)
             {
-                return RedirectToAction("General", "Admin");
+                return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
             }
             else
             {
@@ -56,6 +56,8 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.StoreName = (string)result["StoreName"];
                 SessionCollection.StorePhone = (string)result["StorePhone"];
                 SessionCollection.StoreAddress = (string)result["StoreAddress"];
+                SessionCollection.DefaultAction = (string)result["DefaultAction"];
+                SessionCollection.DefaultController = (string)result["DefaultController"];
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }

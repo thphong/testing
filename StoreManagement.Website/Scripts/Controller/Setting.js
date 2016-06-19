@@ -194,7 +194,7 @@ mdlCommon.controller('SettingController',
 
         $scope.DeleteUserRole = function (userRole) {
             if (confirm("Bạn có muốn xóa chức vụ của nhân viên?")) {
-                if ($scope.UserStoreFormConfig.HardDeleteObject(userRole.Id)) {
+                if ($scope.UserStoreFormConfig.DeleteObject(userRole.Id)) {
                     ShowSuccessMessage("Chức vụ của nhân viên được xóa thành công.");
                     $scope.ReloadGrid('UserRoles');
                 }

@@ -145,5 +145,29 @@ namespace StoreManagement.Website
         {
             HttpContext.Current.Session.Clear();
         }
+
+        public static string DefaultAction
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["DefaultAction"];
+            }
+            set
+            {
+                HttpContext.Current.Session["DefaultAction"] = value;
+            }
+        }
+
+        public static string DefaultController
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["DefaultController"];
+            }
+            set
+            {
+                HttpContext.Current.Session["DefaultController"] = value;
+            }
+        }
     }
 }

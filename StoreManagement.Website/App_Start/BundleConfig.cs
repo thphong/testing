@@ -138,6 +138,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/Print.js"));
             bundles.Add(new ScriptBundle("~/bundles/POS").Include(
                         "~/Scripts/Controller/POS.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Announcement").Include(
+                        "~/Scripts/Controller/Announcement.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ProductQuanHistory").Include(
                         "~/Scripts/Controller/ProductQuanHistory.js"));

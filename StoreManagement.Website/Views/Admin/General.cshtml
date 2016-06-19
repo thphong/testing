@@ -254,17 +254,39 @@
                     </div>
                     <div class="widget-body" style="border: none; min-height: 155px">
                         <div class="widget-main">
-                            <div class="row">
-                                <div class="col-xs-6 data">
-                                    Thông báo khuyến mãi
+                            <div grid-data="Announcement"
+                                 grid-data-type="table" @*table/storedprocedure*@
+                                 grid-data-action="get10" @*get/getall*@
+                                 grid-data-object="T_Trans_Announcement_Store" @*table name or stored procedure name*@
+                                 grid-filter-condition="[StoreId] = {{CurrentStore}}" @*must have [fieldname] for each colum field*@
+                                 grid-sort-condition="[AnnouncementId.CreatedDate] DESC" @*must have [fieldname] for each colum field*@>
+
+                                <div grid-defined-colum="AnnouncementId.Title" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.Body" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.CreatedBy.UserName, CreatorName" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.CreatedDate" class="none-display"></div>
+
+                                <div ng-repeat="item in DataSet.Announcement.Data">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <a href="#" data-toggle="modal" data-target="#announcementModal" 
+                                               ng-click="ShowAnnouncement(item)"
+                                               ng-bind="item.Title"></a>
+                                        </div>
+                                        <div class="text-right" style="font-size: 11px">
+                                            Đăng bởi: <span ng-bind="item.CreatorName"></span>
+                                            - Ngày đăng: <span ng-bind="item.CreatedDate"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-6 text-right">
-                                    Tin khuyến mãi ...
+                                <div class="col-md-12 margin-top-30" ng-if="!DataSet.Announcement.HasRecord()">
+                                    Chưa có thông báo!
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @Html.Partial("AnnouncementModal")
             </div>
         </div>
     </div>
