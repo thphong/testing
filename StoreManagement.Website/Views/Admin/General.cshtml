@@ -95,8 +95,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="widget-body" style="border: none; min-height: 144px;">
-                        <div class="widget-main">
+                    <div class="widget-body" style="border: none; min-height: 144px;" >
+                        <div class="widget-main" ng-if="CanViewProfit">
                             <div class="row">
                                 <div class="col-xs-7 info">
                                     Doanh thu
@@ -117,6 +117,37 @@
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Quantity"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Doanh thu/đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-if="Revenue.Data.Quantity > 0"
+                                       ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0">860,000</a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Đơn hàng bị xóa
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-main" ng-if="!CanViewProfit">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Doanh thu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Số đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}"
                                        ng-bind="Revenue.Data.Quantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
@@ -252,7 +283,7 @@
                             Thông báo
                         </h4>
                     </div>
-                    <div class="widget-body" style="border: none; min-height: 155px">
+                    <div class="widget-body" style="border: none; min-height: 155px; display: inline-block">
                         <div class="widget-main">
                             <div grid-data="Announcement"
                                  grid-data-type="table" @*table/storedprocedure*@

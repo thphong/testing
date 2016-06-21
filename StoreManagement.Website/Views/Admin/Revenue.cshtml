@@ -42,8 +42,16 @@
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportBySeller'">
                         <div class="row margin-top-30">
-                            <div class="col-md-5">
-                                <span date-range-filter-for="ReportBySeller" date-range-init-code="2"></span>
+                            <div class="col-md-5">                                
+                                @if (!String.IsNullOrWhiteSpace(@ViewBag.DateRangeCode))
+                                {
+                                    <span date-range-filter-for="ReportBySeller" date-range-init-code="@ViewBag.DateRangeCode"></span>
+                                    <span ng-init="Filter.CurrentStore = CurrentStore"></span>
+                                }
+                                else
+                                {
+                                    <span date-range-filter-for="ReportBySeller" date-range-init-code="2"></span>
+                                }
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" ng-model="Filter.CurrentStore"

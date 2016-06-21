@@ -78,6 +78,8 @@
             $scope.Revenue.Data = $scope.ConfigList.GetListData()[0];
         }
 
+        $scope.ProductFormConfig = new ObjectDataConfig("", $scope);
+        $scope.CanViewProfit = $scope.ProductFormConfig.CheckField('PROFIT');
         $scope.ShowRevenue();
 
         $scope.ChangeDateRange = function(option, text)

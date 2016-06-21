@@ -203,6 +203,12 @@ function ObjectDataConfig(tableName, $scope) {
         });
     }
 
+    this.CheckField = function (field) {
+        var result = AjaxSync(g_checkFieldUrl, '{ field: "' + field + '"}');
+
+        return result;
+    }
+
     //this.CheckCanCreateObject();
 
     this.RemoveSpecialChars = function (str) {

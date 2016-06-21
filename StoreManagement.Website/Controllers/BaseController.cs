@@ -26,7 +26,7 @@ namespace StoreManagement.Website.Controllers
             {
                 string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
                 string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
-                /*if (controllerName != "Account")
+                if (controllerName != "Account" && controllerName != "POS")
                 {
                     var gridConfig = new GridViewConfig
                     {
@@ -44,7 +44,7 @@ namespace StoreManagement.Website.Controllers
                     {
                         return RedirectToAction("Error", "Account"); 
                     }
-                }*/
+                }
 
                 return View();
             }

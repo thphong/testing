@@ -55,8 +55,9 @@ namespace StoreManagement.Website.Controllers
             return CheckSession();
         }
 
-        public ActionResult Revenue()
+        public ActionResult Revenue(string DateRangeCode)
         {
+            ViewBag.DateRangeCode = DateRangeCode;
             return CheckSession();
         }
 

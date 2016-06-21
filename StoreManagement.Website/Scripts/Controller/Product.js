@@ -101,6 +101,7 @@ mdlCommon.controller('ProductController',
         $scope.ProductFormConfig.SetSubTableName("T_Trans_Product_Attribute");
 
         $scope.ProductFormConfig.CheckCanCreateObject();
+        $scope.CanViewPrice = $scope.ProductFormConfig.CheckField('PRODUCT_PRICE');
 
         $scope.IsShownPriceHisModal = false;
         $scope.SetShownPriceHisModal = function (isShown) {

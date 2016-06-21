@@ -209,7 +209,17 @@ namespace StoreManagement.Service
                     (statement).FirstOrDefault();
             return result;
         }
-        
+
+        public bool CheckField(int userId, string field)
+        {
+            string statement = string.Format("select [dbo].[UFN_System_Check_Role_Field] ( {0}, '{1}')",
+                    userId, field);
+
+            bool result = dbFactory.GetContext().Database.SqlQuery<bool>
+                    (statement).FirstOrDefault();
+            return result;
+        }
+
         public Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig)
         {
             DataTable dt = GetDataFromConfiguration(userId, gridConfig);

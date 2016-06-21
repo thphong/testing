@@ -164,6 +164,19 @@ namespace StoreManagement.Website.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CheckField(string field)
+        {
+            try
+            {
+                return Json(dataService.CheckField(SessionCollection.CurrentUserId, field));
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
         public ActionResult ExportExcelWithTemplateAjax(string template, Dictionary<string, object> objectData, GridViewConfig gridConfig)
         {
             try
