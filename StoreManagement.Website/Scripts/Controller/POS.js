@@ -27,6 +27,20 @@
         });
     });
 
+    $('#annoucementPOSModal').on('show.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownPOSAnnoucement(true);
+        });
+    }).on('hide.bs.modal', function (e) {
+        var modalId = $(this).attr("id");
+        var scope = angular.element(document.getElementById(modalId)).scope();
+        scope.$apply(function () {
+            scope.SetShownPOSAnnoucement(false);
+        });
+    });
+
     $("#OrderController").keydown(function (event) {
         var controllerId = $(this).attr("id");
         var scope = angular.element(document.getElementById(controllerId)).scope();
@@ -50,8 +64,8 @@
 
 
 mdlCommon.controller('POSController',
-['$scope', '$filter', '$controller', '$interpolate',
-    function ($scope, $filter, $controller, $interpolate) {
+['$scope', '$filter', '$controller', '$interpolate', '$sce',
+    function ($scope, $filter, $controller, $interpolate, $sce) {
 
         $scope.SortByCreatedDate = function () {
             $scope.Config.Products.GridSortCondition = "ProductId.CreatedDate DESC";
@@ -124,6 +138,10 @@ mdlCommon.controller('POSController',
             $scope.IsShownPOSInventory = isShown;
         }
 
+        $scope.SetShownPOSAnnoucement = function (isShown) {
+            $scope.IsShownPOSAnnoucement = isShown;
+        }
+
         $scope.configPromotion = new GridViewConfig("");
         $scope.configPromotion.GridDataAction = "getall";
         $scope.configPromotion.GridDataType = "function";
@@ -172,5 +190,24 @@ mdlCommon.controller('POSController',
                 $scope.Summarize();
             }
 
+        }
+
+        //Annoucement
+        $scope.Announcement =
+        {
+            Title: "",
+            Body: "",
+            CreatorName: "",
+            CreatedDate: "",
+            IsShow: false
+        }
+
+        $scope.ShowAnnouncement = function (announce)
+        {
+            $scope.Announcement.Title = announce.Title;
+            $scope.Announcement.Body = $sce.trustAsHtml(announce.Body);
+            $scope.Announcement.CreatorName = announce.CreatorName;
+            $scope.Announcement.CreatedDate = announce.CreatedDate;
+            $scope.Announcement.IsShow = true;
         }
     }]);

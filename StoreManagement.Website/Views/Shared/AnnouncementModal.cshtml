@@ -8,6 +8,10 @@
             </div>
             <div class="modal-body">
                 <div style="padding: 1px 15px">
+                    <div style="font-size: 11px;" class="text-right">
+                        Đăng bởi: <span ng-bind="Announcement.CreatorName"></span>
+                        - Ngày đăng: <span ng-bind="Announcement.CreatedDate"></span>
+                    </div>
                     <div class="row">
                         <span ng-bind-html="Announcement.Body"></span>
                     </div>
