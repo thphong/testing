@@ -19,23 +19,23 @@
                     <span grid-export-import-for="Purchases" grid-export-template="Purchases.xlsx"></span>
                 </div>
             </div>
-            <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                <div class="col-md-5">
+            <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+                <div class="col-md-5 margin-top-5">
                     <span grid-filter-for="Purchases" place-holder-message="Nhập mã hóa đơn để tìm kiếm"></span>
                 </div>
-                <div class="col-md-2">
-                    <select class="form-control input-sm width-90" ng-model="AdditionalFilter.PurchaseType" ng-change="ReloadGrid('Purchases')">
+                <div class="col-md-2 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.PurchaseType" ng-change="ReloadGrid('Purchases')">
                         <option selected="selected" value="1">Phiếu nhập</option>
                         <option value="2">Phiếu nhập đã xóa</option>
                         <option value="3">Phiếu nhập còn nợ</option>
                     </select>
                 </div>
-                <div class="col-md-5 text-right">
+                <div class="col-md-5 text-right margin-top-5">
                     <span date-range-filter-for="Purchases" date-range-init-code="2"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 table-responsive">
                     <table grid-data="Purchases"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@

@@ -50,14 +50,14 @@ namespace StoreManagement.Website.Controllers
             {
                 var result = dataService.Login(loginId, password);
                 SessionCollection.CurrentUserId = (int)result["UserId"];
-                SessionCollection.UserName = (string)result["UserName"];
+                SessionCollection.UserName = result["UserName"].ToString();
                 SessionCollection.CurrentStore = (int)result["CurrentStore"];
                 SessionCollection.ProductGroup = (int)result["ProductGroup"];
-                SessionCollection.StoreName = (string)result["StoreName"];
-                SessionCollection.StorePhone = (string)result["StorePhone"];
-                SessionCollection.StoreAddress = (string)result["StoreAddress"];
-                SessionCollection.DefaultAction = (string)result["DefaultAction"];
-                SessionCollection.DefaultController = (string)result["DefaultController"];
+                SessionCollection.StoreName = result["StoreName"].ToString();
+                SessionCollection.StorePhone = result["StorePhone"].ToString();
+                SessionCollection.StoreAddress = result["StoreAddress"].ToString();
+                SessionCollection.DefaultAction = result["DefaultAction"].ToString();
+                SessionCollection.DefaultController = result["DefaultController"].ToString();
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }
@@ -71,6 +71,7 @@ namespace StoreManagement.Website.Controllers
         public ActionResult Logout()
         {
             SessionCollection.ClearSession();
+            SessionCollection.IsLogOut = true;
             return Json(true);
         }
     }

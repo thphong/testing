@@ -20,7 +20,14 @@ namespace StoreManagement.Website.Controllers
         {
             if (!SessionCollection.IsLogIn)
             {
-                return RedirectToAction("Login", "Account");
+                if (SessionCollection.IsLogOut)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account", new { auto = true});
+                }
             }
             else
             {

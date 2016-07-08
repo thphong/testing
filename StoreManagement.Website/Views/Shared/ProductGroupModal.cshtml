@@ -49,7 +49,7 @@
                         <div class="tab-content no-border active">
                             <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-product-group')}">
                                 <div ng-if="(CurrentTabProductGroup == 'tab-list-product-group')">
-                                    <div class="col-md-12 margin-top-10">
+                                    <div class="col-md-12 margin-top-10 table-responsive">
                                         <table grid-data="ProductGroups"
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@
@@ -128,7 +128,7 @@
                             </div>
                             <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-parent-group')}">
                                 <div ng-if="(CurrentTabProductGroup == 'tab-list-parent-group')">
-                                    <div class="col-md-12 margin-top-10">
+                                    <div class="col-md-12 margin-top-10 table-responsive">
                                         <table grid-data="ProductParentGroups"
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@

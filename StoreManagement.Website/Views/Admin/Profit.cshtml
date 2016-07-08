@@ -41,8 +41,8 @@
                 <div class="tab-pane col-md-12 active" ng-class="{'active': CurrentTab =='ReportByTime'}">
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportByTime'">
-                        <div class="row margin-top-30">
-                            <div class="col-md-5">
+                        <div class="row margin-top-10">
+                            <div class="col-md-5 margin-top-5">
                                 @if (!String.IsNullOrWhiteSpace(@ViewBag.DateRangeCode))
                                 {
                                     <span date-range-filter-for="ReportByTime" date-range-init-code="@ViewBag.DateRangeCode"></span>
@@ -53,7 +53,7 @@
                                     <span date-range-filter-for="ReportByTime" date-range-init-code="2"></span>
                                 }
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.ReportGroupBy"
                                         ng-change="ReloadGrid('ReportByTime')">
                                     <option value="d">Theo ngày</option>
@@ -61,14 +61,14 @@
                                     <option value="m">Theo tháng</option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
                                         ng-change="ReloadGrid('ReportByTime')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 margin-top-5">
                                 <span grid-export-import-for="ReportByTime" grid-export-template="ReportByTime.xlsx"></span>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div id="chartReportByTime"></div>
                     </div>
                     @*use ng-if to reload chart*@
-                    <div class="row col-md-12 margin-top-10" ng-if="CurrentTab =='ReportByTime'">
+                    <div class="row col-md-12 margin-top-10 table-responsive" ng-if="CurrentTab =='ReportByTime'">
                         <table grid-data="ReportByTime"
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@
@@ -177,11 +177,11 @@
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportByProduct'}">
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportByProduct'">
-                        <div class="row margin-top-30">
-                            <div class="col-md-5">
+                        <div class="row margin-top-10">
+                            <div class="col-md-5 margin-top-5">
                                 <span date-range-filter-for="ReportByProduct"></span>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.ProductGroup"
                                         ng-change="ReloadGrid('ReportByProduct')"
                                         dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
@@ -189,14 +189,14 @@
                                         dropdown-empty-value="0"
                                         dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
                                         ng-change="ReloadGrid('ReportByProduct')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 margin-top-5">
                                 <span grid-export-import-for="ReportByProduct" grid-export-template="ProfitByProduct.xlsx"></span>
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                         <div id="chartReportByProduct"></div>
                     </div>
                     @*use ng-if to reload chart*@
-                    <div class="row col-md-12 margin-top-10" ng-if="CurrentTab =='ReportByProduct'">
+                    <div class="row col-md-12 margin-top-10 table-responsive" ng-if="CurrentTab =='ReportByProduct'">
                         <table grid-data="ReportByProduct"
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@
@@ -307,18 +307,18 @@
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportByStore'}">
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportByStore'">
-                        <div class="row margin-top-30">
-                            <div class="col-md-5">
+                        <div class="row margin-top-10">
+                            <div class="col-md-5 margin-top-5">
                                 <span date-range-filter-for="ReportByStore" ></span>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
                                         ng-change="ReloadGrid('ReportByStore')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 margin-top-5">
                                 <span grid-export-import-for="ReportByStore" grid-export-template="ProfitByStore.xlsx"></span>
                             </div>
                         </div>
@@ -379,7 +379,7 @@
                         <div id="chartReportByStore"></div>
                     </div>
                     @*use ng-if to reload chart*@
-                    <div class="row col-md-12 margin-top-10" ng-if="CurrentTab =='ReportByStore'">
+                    <div class="row col-md-12 margin-top-10 table-responsive" ng-if="CurrentTab =='ReportByStore'">
                         <table grid-data="ReportByStore"
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@
@@ -426,24 +426,24 @@
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportProfit'}">
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportProfit'">
-                        <div class="row margin-top-30">
-                            <div class="col-md-5">
+                        <div class="row margin-top-10">
+                            <div class="col-md-5 margin-top-5">
                                 <span date-range-filter-for="ReportProfit" ></span>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
                                         ng-change="ReloadGrid('ReportProfit')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
-                            <div class="col-md-3">
+                            @*<div class="col-md-3">
                                 <span grid-export-import-for="ReportProfit" grid-export-template="ReportProfit.xlsx"></span>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     @*use ng-if to reload chart*@
-                    <div class="row col-md-12 margin-top-10" ng-if="CurrentTab =='ReportProfit'">
+                    <div class="row col-md-12 margin-top-10 table-responsive" ng-if="CurrentTab =='ReportProfit'">
                         <table grid-data="ReportProfit"
                                grid-data-type="function" @*table/storedprocedure*@
                                grid-data-action="getall" @*get/getall*@

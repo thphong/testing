@@ -5,27 +5,27 @@
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-8 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
-        <button class="btn btn-default" ng-click="CloseOrderDetail()">
+        <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
             <span>Trở về</span>
         </button>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row margin-top-10">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -352,29 +352,29 @@
         </div>
     </div>
 </div>
-<div class="row" style="padding-top: 5px">
+<div class="row">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
-        <button class="btn btn-default" ng-click="CloseOrderDetail()">
+        <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
             <span>Trở về</span>
         </button>

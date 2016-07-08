@@ -50,7 +50,7 @@ namespace StoreManagement.Website
 
             bundles.Add(new StyleBundle("~/Content/sbadmin").Include(
                         "~/Content/sb-admin-2.css",
-                        "~/Content/timeline.css",
+                        //"~/Content/timeline.css",
                         "~/Content/metisMenu.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/sbadminScript").Include(
@@ -76,7 +76,7 @@ namespace StoreManagement.Website
 
             bundles.Add(new ScriptBundle("~/bundles/MD5").Include(
                             "~/Scripts/MD5.js"));
-            bundles.Add(new ScriptBundle("~/bundles/CKEditor").Include(
+            bundles.Add(new Bundle("~/bundles/CKEditor").Include(
                             "~/Scripts/ckeditor/ckeditor.js"));
             bundles.Add(new ScriptBundle("~/bundles/InputMask").Include(
                             "~/Scripts/InputMask.js"));

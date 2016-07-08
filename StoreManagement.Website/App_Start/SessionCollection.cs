@@ -20,6 +20,18 @@ namespace StoreManagement.Website
             }
         }
 
+        public static bool IsLogOut
+        {
+            get
+            {
+                return HttpContext.Current.Session["IsLogOut"] == null ? false : (bool)HttpContext.Current.Session["IsLogOut"];
+            }
+            set
+            {
+                HttpContext.Current.Session["IsLogOut"] = value;
+            }
+        }
+
         public static int CurrentUserId
         {
             get

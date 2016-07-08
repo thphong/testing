@@ -154,6 +154,7 @@ E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\MySchool.Website.dl
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\MySchool.Website.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\MySchool.Website.pdb
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Antlr3.Runtime.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Configuration.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Integration.Mvc.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Integration.WebApi.dll
@@ -166,6 +167,7 @@ E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\DotNetOpenAuth.Open
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\EntityFramework.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\EntityFramework.SqlServer.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Microsoft.Extensions.Configuration.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Microsoft.Web.Infrastructure.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Microsoft.Web.WebPages.OAuth.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Newtonsoft.Json.dll
@@ -196,11 +198,13 @@ E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\StoreManagement.Dat
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\StoreManagement.Service.pdb
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Antlr3.Runtime.pdb
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.xml
+E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Configuration.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Integration.Mvc.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Autofac.Integration.WebApi.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\AutoMapper.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\EntityFramework.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\EntityFramework.SqlServer.xml
+E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Microsoft.Extensions.Configuration.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Microsoft.Web.WebPages.OAuth.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\Newtonsoft.Json.xml
 E:\Work\StoreManagement2\testing\StoreManagement.Website\bin\System.Net.Http.Extensions.xml

@@ -1,30 +1,30 @@
-﻿<div class="row" style="padding-top: 5px">
+﻿<div class="row">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="(ProductForm.ProductId == -1 || IsEditingProductDetail) && ProductForm._CanUpdate" ng-click="SaveProductForm(false)">
+        <button class="btn btn-primary margin-top-5" ng-if="(ProductForm.ProductId == -1 || IsEditingProductDetail) && ProductForm._CanUpdate" ng-click="SaveProductForm(false)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="ProductForm.ProductId == -1" ng-click="SaveProductForm(true)">
+        <button class="btn btn-primary margin-top-5" ng-if="ProductForm.ProductId == -1" ng-click="SaveProductForm(true)">
             <i class="fa fa-save white"></i>
             <span>Lưu và tiếp tục</span>
         </button>
-        <button class="btn btn-primary btn-grey" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="StopSellingProduct(ProductForm)">
+        <button class="btn btn-primary btn-grey margin-top-5" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="StopSellingProduct(ProductForm)">
             <i class="fa fa-pause white"></i>
             <span>Ngừng kinh doanh</span>
         </button>
-        <button class="btn btn-primary btn-pink" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 0 && ProductForm._CanUpdate" ng-click="EnableSellingProduct(ProductForm)">
+        <button class="btn btn-primary btn-pink margin-top-5" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 0 && ProductForm._CanUpdate" ng-click="EnableSellingProduct(ProductForm)">
             <i class="fa fa-retweet white"></i>
             <span>Cho phép KD</span>
         </button>
-        <button class="btn btn-primary" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="EditProductDetail()">
+        <button class="btn btn-primary margin-top-5" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm.IsSelling == 1 && ProductForm._CanUpdate" ng-click="EditProductDetail()">
             <i class="fa fa-edit white"></i>
             <span>Sửa</span>
         </button>
-        <button class="btn btn-danger" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm._CanDelete" ng-click="DeleteProduct(ProductForm)">
+        <button class="btn btn-danger margin-top-5" ng-if="ProductForm.ProductId != -1 && !IsEditingProductDetail && ProductForm._CanDelete" ng-click="DeleteProduct(ProductForm)">
             <i class="fa fa-trash white"></i>
             <span>Xóa</span>
         </button>
-        <button class="btn btn-default" ng-click="CloseProductDetail()">
+        <button class="btn btn-default margin-top-5" ng-click="CloseProductDetail()">
             <i class="fa fa-arrow-left"></i>
             <span>Trở về</span>
         </button>
@@ -224,7 +224,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 margin-top-10" ng-if="ProductForm.IsManageAttribute == 1">
+            <div class="col-md-12 margin-top-10 table-responsive" ng-if="ProductForm.IsManageAttribute == 1">
                 <table grid-data="ProductAttributes"
                        grid-data-type="table" @*table/storedprocedure*@
                        grid-data-action="getall" @*get/getall*@

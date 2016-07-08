@@ -20,28 +20,28 @@
                     <span grid-export-import-for="Products" grid-export-template="Products.xlsx"></span>
                 </div>
             </div>
-            <div class="row" style="padding-bottom: 10px; padding-top: 25px">
-                <div class="col-md-3">
+            <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                <div class="col-md-3 margin-top-5">
                     <span grid-filter-for="Products" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus" ng-change="ReloadGrid('Products')">
                         <option selected="selected" value="1">Hàng đang kinh doanh</option>
                         <option value="2">Hàng đã ngừng kinh doanh</option>
                         <option value="3">Hàng đã xóa</option>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('Products')"
                             dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                             dropdown-name-field="ProducerName" dropdown-empty-text="Tất cả nhà sản xuất" ng-change="ReloadGrid('Products')"
                             dropdown-condition="[IsActive]  = 1"></select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')">
                         <option value="0">Tất cả hàng hóa</option>
                         <option value="1">Chưa nhập giá bán</option>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 table-responsive">
                     <table grid-data="Products"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
@@ -132,7 +132,6 @@
                         <div class="col-md-9 pull-left">
                             <span grid-paging-for="Products"></span>
                         </div>
-
                         <div class="col-md-3 pull-right">
                             <span grid-page-size-for="Products"></span>
                         </div>

@@ -19,11 +19,13 @@
             $scope.ListMenu = configMenuList.GetListData();
         }
 
-        $scope.SetStoreId = function () {
-            AjaxSync(g_setStoreIdUrl, '{ "storedId": ' + $scope.CurrentStore + '}');
-            location.reload();
+        $scope.SetStoreId = function (storeId) {
+            if ($scope.CurrentStore != storeId) {
+                AjaxSync(g_setStoreIdUrl, '{ "storedId": ' + storeId + '}');
+                location.reload();
+            }
         }
-        
+
         $scope.LogIn = function () {
             if (FValidation.CheckControls("")) {
                 var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
@@ -53,12 +55,21 @@
         $scope.LoginInfo =
         {
             LoginId: "",
-            Password : ""
+            Password: ""
         };
 
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
+            
+            if (window.location.href.toLowerCase().indexOf("/account/login?auto") >= 0) {
+                if ($scope.LoginInfo.LoginId && $scope.LoginInfo.Password) {
+                    var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
+                    if (result) {
+                        location.reload();
+                    }
+                }
+            }
         }
 
     }]);

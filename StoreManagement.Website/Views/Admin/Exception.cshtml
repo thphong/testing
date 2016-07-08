@@ -5,18 +5,18 @@
 
 <div id="ExceptionController" ng-controller="ExceptionController">
     <div class="container-fluid">
-        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-            <div class="col-md-5">
+        <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+            <div class="col-md-5 margin-top-5">
                 <span grid-filter-for="Exceptions" place-holder-message="Tìm kiếm"></span>
             </div>
-            <div class="col-md-2">
-                <select class="form-control input-sm width-90" ng-model="AdditionalFilter.ExceptionType" ng-change="ReloadGrid('Exceptions')">
+            <div class="col-md-2 margin-top-5">
+                <select class="form-control input-sm" ng-model="AdditionalFilter.ExceptionType" ng-change="ReloadGrid('Exceptions')">
                     <option selected="selected" value="0">Chưa fix</option>
                     <option value="1">Đã fix</option>
                 </select>
             </div>
-            <div class="col-md-5 pull-right text-right">
-                <button class="btn btn-success btn-primary" data-toggle="modal" 
+            <div class="col-md-5 pull-right text-right margin-top-5">
+                <button class="btn btn-success btn-primary" data-toggle="modal"
                         data-target="#exceptionModal"
                         ng-if="ExceptionFormConfig._CanCreate">
                     <i class="fa fa-bug white"></i>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive">
                 <table grid-data="Exceptions"
                        grid-data-type="table" @*table/storedprocedure*@
                        grid-data-action="get" @*get/getall*@
@@ -44,16 +44,16 @@
                             <th grid-defined-colum="Hero.UserName, Hero"><span>Hero</span></th>
                             <th grid-defined-colum="Remarks"><span>Remarks</span></th>
                             <th></th>
-                            <th grid-defined-colum="Id" class="none-display"></th>                          
+                            <th grid-defined-colum="Id" class="none-display"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @*Dataset must have grid id*@
                         <tr ng-repeat="item in DataSet.Exceptions.Data">
                             <td ng-bind="item.ObjectName"></td>
-                            <td style="max-width: 200px; word-break: break-all;" 
+                            <td style="max-width: 200px; word-break: break-all;"
                                 ng-bind="item.ErrorMessage"></td>
-                            <td style="max-width: 200px; word-break: break-all;" 
+                            <td style="max-width: 200px; word-break: break-all;"
                                 ng-bind="item.Data"></td>
                             <td style="max-width: 200px; word-break: break-all;"
                                 ng-bind="item.Source"></td>
@@ -105,7 +105,7 @@
                         <div class="form-group col-md-12">
                             <label class="col-sm-4 control-label ">Object </label>
                             <div class="col-sm-7">
-                                <input class="form-control" ng-model="ExceptionForm.ObjectName" 
+                                <input class="form-control" ng-model="ExceptionForm.ObjectName"
                                        check-empty="" check-empty-message="Vui lòng nhập chức năng bị lỗi."
                                        check-length="100" check-length-message="Chiều dài tối ta là {0}."
                                        check-under="check-bug" />

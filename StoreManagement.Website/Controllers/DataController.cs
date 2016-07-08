@@ -128,6 +128,9 @@ namespace StoreManagement.Website.Controllers
 
                 var store = dataService.GetObject(SessionCollection.CurrentUserId, "T_Master_Stores", "", storedId.ToString());
                 SessionCollection.ProductGroup = (int)store["ProductGroup"];
+                SessionCollection.StoreName = store["StoreName"].ToString();
+                SessionCollection.StorePhone = store["PhoneNumber"].ToString();
+                SessionCollection.StoreAddress = store["Address"].ToString();
 
                 return Json(true);
             }

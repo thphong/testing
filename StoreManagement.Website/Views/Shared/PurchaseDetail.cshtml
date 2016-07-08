@@ -5,27 +5,27 @@
         <span ng-bind="PurchaseForm.PurchaseCode"> </span>
     </div>
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
-        <button class="btn btn-default" ng-click="ClosePurchaseDetail()">
+        <button class="btn btn-default margin-top-5" ng-click="ClosePurchaseDetail()">
             <i class="fa fa-arrow-left"></i>
             <span>Trở về</span>
         </button>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row margin-top-10">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -302,29 +302,29 @@
     @Html.Partial("SupplierModal")
 </div>
 
-<div class="row" style="padding-top: 5px">
+<div class="row">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
             <i class="fa fa-plus white"></i>
             <span>Tạo phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
             <i class="fa fa-print white"></i>
             <span>In phiếu nhập</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
-        <button class="btn btn-default" ng-click="ClosePurchaseDetail()">
+        <button class="btn btn-default margin-top-5" ng-click="ClosePurchaseDetail()">
             <i class="fa fa-arrow-left"></i>
             <span>Trở về</span>
         </button>

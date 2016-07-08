@@ -18,11 +18,11 @@ namespace StoreManagement.Website.Controllers
         {
             if (SessionCollection.IsLogIn)
             {
-                return RedirectToAction("General", "Admin");
+                return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account", new { auto = true });
             }
         }
     }

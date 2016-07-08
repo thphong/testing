@@ -5,11 +5,11 @@
 
 <div id="DataLogController" ng-controller="DataLogController">
     <div class="container-fluid">
-        <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-            <div class="col-md-5">
+        <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+            <div class="col-md-5 margin-top-5">
                 <span grid-filter-for="DataChanges" place-holder-message="Tìm kiếm"></span>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 margin-top-5">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.Table" dropdown-master-table="T_System_Log_Config" dropdown-value-field="TableName"
                         dropdown-name-field="Desciption" dropdown-empty-text="Tất cả" 
                         ng-change="ReloadGrid('DataChanges')"
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive">
                 <table grid-data="DataChanges"
                        grid-data-type="table" @*table/storedprocedure*@
                        grid-data-action="get" @*get/getall*@

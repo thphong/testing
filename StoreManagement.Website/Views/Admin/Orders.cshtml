@@ -24,17 +24,17 @@
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px; padding-top: 10px">
-                <div class="col-md-5">
+                <div class="col-md-5 col-xs-12 margin-top-5">
                     <span grid-filter-for="Orders" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
                 </div>
-                <div class="col-md-2">
-                    <select class="form-control input-sm width-90" ng-model="AdditionalFilter.OrderType" ng-change="ReloadGrid('Orders')">
+                <div class="col-md-2 col-xs-12 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.OrderType" ng-change="ReloadGrid('Orders')">
                         <option selected="selected" value="1">Đơn hàng</option>
                         <option value="2">Đơn hàng đã xóa</option>
                         <option value="3">Đơn hàng còn nợ</option>
                     </select>
                 </div>
-                <div class="col-md-5 text-right">
+                <div class="col-md-5 col-xs-12 margin-top-5 text-right">
                     @if (!String.IsNullOrWhiteSpace(@ViewBag.DateRangeCode))
                     {
                         <span date-range-filter-for="Orders" date-range-init-code="@ViewBag.DateRangeCode"></span>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 table-responsive">
                     <table grid-data="Orders"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
