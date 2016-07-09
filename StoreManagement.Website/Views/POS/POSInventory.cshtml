@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-3">
                         <select class="form-control input-sm width-45" ng-model="AdditionalPOSFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                                dropdown-name-field="GroupName" dropdown-empty-text="--Tất cả nhóm hàng--" ng-change="ReloadGrid('InventoryProduct')"
+                                dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryProduct')"
                                 dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
 
                         <select class="form-control input-sm width-45" ng-model="AdditionalPOSFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">

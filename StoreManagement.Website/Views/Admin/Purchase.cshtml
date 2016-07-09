@@ -10,7 +10,12 @@
     <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowPurchaseDetail}">
         <div ng-if="!IsShowPurchaseDetail">
             <div class="row" style="padding-top: 5px">
-                <div class="col-md-offset-6 col-md-4 pull-right text-right">
+                <div class="col-md-6">
+                    <h4 class="dashboard-title">
+                        <i class="fa-truck fa"></i>&nbsp;Nhập kho
+                    </h4>
+                </div>
+                <div class="col-md-4 pull-right text-right">
                     <button class="btn btn-success btn-primary" ng-click="AddPurchase()"
                             ng-if="PurchaseFormConfig._CanCreate">
                         <i class="fa fa-desktop white"></i>
@@ -30,17 +35,18 @@
                         <option value="3">Phiếu nhập còn nợ</option>
                     </select>
                 </div>
-                <div class="col-md-5 text-right margin-top-5">
+                <div class="col-md-5 margin-top-5">
                     <span date-range-filter-for="Purchases" date-range-init-code="2"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 table-responsive">
-                    <table grid-data="Purchases"
-                           grid-data-type="table" @*table/storedprocedure*@
-                           grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_Purchase" @*table name or stored procedure name*@
-                           grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.PurchaseType}} = 1)
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table grid-data="Purchases"
+                               grid-data-type="table" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="T_Trans_Purchase" @*table name or stored procedure name*@
+                               grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.PurchaseType}} = 1)
                                                     or ({{AdditionalFilter.PurchaseType}} = 2 and  [IsActive] = 0)
                                                     or ({{AdditionalFilter.PurchaseType}} = 3 and [Debt] > 0 and [IsActive] = 1))
                                                and ([StoreId] = {{CurrentStore}})
@@ -48,79 +54,80 @@
                                                and  (convert(date, [PurchaseDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
                                                                                   and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
                                                       or [PurchaseDate] is null)"
-                           @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[PurchaseCode] ASC" @*must have [fieldname] for each colum field*@
-                           grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
-                           class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th grid-defined-colum="!PurchaseId" class="none-display"></th>
-                                <th grid-defined-colum="PurchaseCode"><span>Mã hóa đơn</span></th>
-                                <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                <th grid-defined-colum="StatusId.StatusName">
-                                    <span style="display: inline-block">
-                                        <select class="form-control width-90" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
-                                                dropdown-name-field="StatusName" dropdown-empty-text="--Trạng thái--" dropdown-empty-value="0"
-                                                ng-change="ReloadGrid('Purchases')"></select>
-                                    </span>
-                                </th>
-                                <th grid-defined-colum="PurchaseDate"><span>Ngày nhập</span></th>
-                                <th grid-defined-colum="Purchaser.UserName, PurchaserName"><span>Người nhập</span></th>
-                                <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
-                                <th grid-defined-colum="Debt"><span>Nợ</span></th>
-                                <th></th>
-                                <th grid-defined-colum="!StatusId.DisplayClass" class="none-display"></th>
-                                <th grid-defined-colum="!Notes" class="none-display"></th>
-                                <th grid-defined-colum="!SupplierId.SupplierName" class="none-display"></th>
-                                <th grid-defined-colum="!IsActive" class="none-display"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.Purchases.Data">
-                                <td>
-                                    <a href="#" ng-bind="item.PurchaseCode" ng-click="ShowPurchaseDetail(item)"></a>
-                                    <span ng-if="item.Notes" title="{{item.Notes}}" class="badge badge-primary"
-                                          data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fa fa-info"></i>
-                                    </span>
-                                </td>
-                                <td ng-bind="item.StoreCode"></td>
-                                <td>
-                                    <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
-                                </td>
-                                <td ng-bind="item.PurchaseDate"></td>
-                                <td ng-bind="item.PurchaserName"></td>
-                                <td ng-bind="item.Quantity"></td>
-                                <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
-                                <td ng-bind="item.Debt  | currency:'':0"></td>
-                                <td>
-                                    <a class="grey margin-left-10" ng-click="PrintPurchase(item)">
-                                        <i class="fa-print fa"></i>
-                                    </a>
-                                    <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeletePurchase(item)">
-                                        <i class="fa-trash fa"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr ng-if="!DataSet.Purchases.HasRecord()">
-                                @*Edit colspan*@
-                                <td colspan="9" align="center"> Không có dữ liệu! </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="9" align="left">
-                                    <div style="float: left;">
-                                        <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Purchases.TotalItems"></span>
-                                        <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                        <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.Debt | currency:'':0"></span> đ</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                               @*must have [fieldname] for each colum field*@
+                               grid-sort-condition="[PurchaseCode] ASC" @*must have [fieldname] for each colum field*@
+                               grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="!PurchaseId" class="none-display"></th>
+                                    <th grid-defined-colum="PurchaseCode"><span>Mã hóa đơn</span></th>
+                                    <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
+                                    <th grid-defined-colum="StatusId.StatusName">
+                                        <span style="display: inline-block">
+                                            <select class="form-control width-90" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
+                                                    dropdown-name-field="StatusName" dropdown-empty-text="Trạng thái" dropdown-empty-value="0"
+                                                    ng-change="ReloadGrid('Purchases')"></select>
+                                        </span>
+                                    </th>
+                                    <th grid-defined-colum="PurchaseDate"><span>Ngày nhập</span></th>
+                                    <th grid-defined-colum="Purchaser.UserName, PurchaserName"><span>Người nhập</span></th>
+                                    <th grid-defined-colum="Quantity"><span>SL</span></th>
+                                    <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                                    <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                    <th></th>
+                                    <th grid-defined-colum="!StatusId.DisplayClass" class="none-display"></th>
+                                    <th grid-defined-colum="!Notes" class="none-display"></th>
+                                    <th grid-defined-colum="!SupplierId.SupplierName" class="none-display"></th>
+                                    <th grid-defined-colum="!IsActive" class="none-display"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.Purchases.Data">
+                                    <td>
+                                        <a href="#" ng-bind="item.PurchaseCode" ng-click="ShowPurchaseDetail(item)"></a>
+                                        <span ng-if="item.Notes" title="{{item.Notes}}" class="badge badge-primary"
+                                              data-toggle="tooltip" data-placement="bottom">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </td>
+                                    <td ng-bind="item.StoreCode"></td>
+                                    <td>
+                                        <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
+                                    </td>
+                                    <td ng-bind="item.PurchaseDate"></td>
+                                    <td ng-bind="item.PurchaserName"></td>
+                                    <td ng-bind="item.Quantity"></td>
+                                    <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
+                                    <td ng-bind="item.Debt  | currency:'':0"></td>
+                                    <td>
+                                        <a class="grey margin-left-10" ng-click="PrintPurchase(item)">
+                                            <i class="fa-print fa"></i>
+                                        </a>
+                                        <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeletePurchase(item)">
+                                            <i class="fa-trash fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!DataSet.Purchases.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" align="left">
+                                        <div style="float: left;">
+                                            <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Purchases.TotalItems"></span>
+                                            <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                            <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.Debt | currency:'':0"></span> đ</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                     <div class="row">
                         <div class="col-md-9 pull-left">
                             <span grid-paging-for="Purchases"></span>

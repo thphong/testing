@@ -31,9 +31,9 @@
                     </div>
                     <div class="row">
                         <div class="tab-content no-border active">
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabCostType == 'tab-list')}">
-                                <div ng-if="CurrentTabCostType == 'tab-list'">
-                                    <div class="col-md-12 margin-top-10 table-responsive">
+                            <div class="tab-pane" ng-class="{'active' : (CurrentTabCostType == 'tab-list')}">
+                                <div class="col-md-12 margin-top-10" ng-if="CurrentTabCostType == 'tab-list'">
+                                    <div class="table-responsive">
                                         <table grid-data="CostTypes"
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@

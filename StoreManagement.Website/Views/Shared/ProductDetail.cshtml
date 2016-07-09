@@ -118,7 +118,7 @@
                 <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProductGroupName || 'Chưa chọn nhóm hàng'"> </div>
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                            dropdown-name-field="GroupName" dropdown-empty-text="--Chọn nhóm hàng--" dropdown-empty-value=""
+                            dropdown-name-field="GroupName" dropdown-empty-text="Chọn nhóm hàng" dropdown-empty-value=""
                             dropdown-condition="[IsActive] = 1 and [ParentId] = {{CurrentProductGroup}}"
                             check-empty="" check-empty-message="Vui lòng chọn nhóm hàng." 
                             ng-show="IsEditingProductDetail"></select>
@@ -136,7 +136,7 @@
                 <div ng-if="!IsEditingProductDetail" ng-bind="ProductForm.ProducerName || 'Chưa chọn nhà sản xuất'"> </div>
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
-                            dropdown-name-field="ProducerName" dropdown-empty-text="--Chọn nhà sản xuất--" dropdown-empty-value=""
+                            dropdown-name-field="ProducerName" dropdown-empty-text="Chọn nhà sản xuất" dropdown-empty-value=""
                             dropdown-condition="[IsActive] = 1"
                             ng-show="IsEditingProductDetail"></select>
                 </div>
@@ -224,52 +224,54 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 margin-top-10 table-responsive" ng-if="ProductForm.IsManageAttribute == 1">
-                <table grid-data="ProductAttributes"
-                       grid-data-type="table" @*table/storedprocedure*@
-                       grid-data-action="getall" @*get/getall*@
-                       grid-data-object="T_Trans_Product_Attribute" @*table name or stored procedure name*@
-                       grid-filter-condition="[ProductId] = {{ProductForm.ProductId}} or [ProductId] = {{ProductForm.OldProductId}}" @*must have [fieldname] for each colum field*@
-                       grid-sort-condition="" @*must have [fieldname] for each colum field*@
-                       class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th grid-defined-colum="AttributeId" class="none-display"></th>
-                            <th grid-defined-colum="AttributeId.AttributeName">Thuộc tính</th>
-                            <th grid-defined-colum="Value" style="width: 70%"><span>Giá trị</span></th>
-                            <th ng-if="ProductForm.ProductId == -1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @*Dataset must have grid id*@
-                        <tr ng-repeat="item in DataSet.ProductAttributes.Data">
-                            <td>
-                                <span ng-if="ProductForm.ProductId != -1" ng-bind="item.AttributeName"></span>
-                                <select class="form-control" ng-show="ProductForm.ProductId == -1"
-                                        ng-init="item.AttributeId = item.AttributeId + ''"
-                                        ng-model="item.AttributeId" dropdown-master-table="T_Master_Attibutes" dropdown-value-field="AttributeId"
-                                        dropdown-name-field="AttributeName" dropdown-empty-text="--Chọn thuộc tính--" dropdown-empty-value=""
-                                        dropdown-condition="[IsActive] = 1"
-                                        check-empty="" check-empty-message="Vui lòng chọn thuộc tính."></select>
-                            </td>
-                            <td>
-                                <span ng-if="ProductForm.ProductId != -1" ng-bind="item.Value"></span>
-                                <input ng-if="ProductForm.ProductId == -1" class="form-control" ng-model="item.Value"
-                                       check-empty="" check-empty-message="Vui lòng nhập giá trị thuộc tính."
-                                       check-length="200" check-length-message="Chiều dài tối đa là {0}." />
-                            </td>
-                            <td ng-if="ProductForm.ProductId == -1">
-                                <a class="red margin-left-10" title="Xóa thuộc tính"
-                                   ng-click="DeleteProductAttribute(item)">
-                                    <i class="fa-trash fa"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr ng-if="ProductForm.ProductId == -1">
-                            <td colspan="3"> <button class="btn btn-primary btn-tiny" ng-click="AddProductAttribute()"> <i class="fa fa-plus"></i> </button> </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-md-12 margin-top-10">
+                <div class="table-responsive" ng-if="ProductForm.IsManageAttribute == 1">
+                    <table grid-data="ProductAttributes"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="getall" @*get/getall*@
+                           grid-data-object="T_Trans_Product_Attribute" @*table name or stored procedure name*@
+                           grid-filter-condition="[ProductId] = {{ProductForm.ProductId}} or [ProductId] = {{ProductForm.OldProductId}}" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="AttributeId" class="none-display"></th>
+                                <th grid-defined-colum="AttributeId.AttributeName">Thuộc tính</th>
+                                <th grid-defined-colum="Value" style="width: 70%"><span>Giá trị</span></th>
+                                <th ng-if="ProductForm.ProductId == -1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.ProductAttributes.Data">
+                                <td>
+                                    <span ng-if="ProductForm.ProductId != -1" ng-bind="item.AttributeName"></span>
+                                    <select class="form-control" ng-show="ProductForm.ProductId == -1"
+                                            ng-init="item.AttributeId = item.AttributeId + ''"
+                                            ng-model="item.AttributeId" dropdown-master-table="T_Master_Attibutes" dropdown-value-field="AttributeId"
+                                            dropdown-name-field="AttributeName" dropdown-empty-text="Chọn thuộc tính" dropdown-empty-value=""
+                                            dropdown-condition="[IsActive] = 1"
+                                            check-empty="" check-empty-message="Vui lòng chọn thuộc tính."></select>
+                                </td>
+                                <td>
+                                    <span ng-if="ProductForm.ProductId != -1" ng-bind="item.Value"></span>
+                                    <input ng-if="ProductForm.ProductId == -1" class="form-control" ng-model="item.Value"
+                                           check-empty="" check-empty-message="Vui lòng nhập giá trị thuộc tính."
+                                           check-length="200" check-length-message="Chiều dài tối đa là {0}." />
+                                </td>
+                                <td ng-if="ProductForm.ProductId == -1">
+                                    <a class="red margin-left-10" title="Xóa thuộc tính"
+                                       ng-click="DeleteProductAttribute(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="ProductForm.ProductId == -1">
+                                <td colspan="3"> <button class="btn btn-primary btn-tiny" ng-click="AddProductAttribute()"> <i class="fa fa-plus"></i> </button> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

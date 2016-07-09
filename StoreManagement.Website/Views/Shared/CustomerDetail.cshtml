@@ -135,52 +135,55 @@
         </div>
     </div>
 </div>
-<div class="row col-md-12 table-responsive">
-    <table grid-data="ListOrders"
-           grid-data-type="table" @*table/storedprocedure*@
-           grid-data-action="get" @*get/getall*@
-           grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
-           grid-filter-condition="[Customer] = {{CustomerForm.CustomerId}}" @*must have [fieldname] for each colum field*@
-           grid-sort-condition="[OrderId] ASC" @*must have [fieldname] for each colum field*@
-           grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
-           class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th><span>STT</span></th>
-                <th grid-defined-colum="OrderCode"><span>Mã hóa đơn</span></th>
-                <th grid-defined-colum="OrderStatus.StatusName"><span>Loại đơn hàng</span></th>
-                <th grid-defined-colum="SoldDate"><span>Ngày mua</span></th>
-                <th grid-defined-colum="NumOfProduct"><span>SL hàng hóa</span></th>
-                <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
-                <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
-                <th grid-defined-colum="OrderStatus.DisplayClass" style="display: none"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @*Dataset must have grid id*@
-            <tr ng-repeat="item in DataSet.ListOrders.Data">
-                <td ng-bind="item.RowNum"></td>
-                <td ng-bind="item.OrderCode"></td>
-                <td> <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span> </td>
-                <td ng-bind="item.SoldDate"></td>
-                <td ng-bind="item.NumOfProduct"></td>
-                <td ng-bind="item.SumMoney | currency:'':0"></td>
-                <td ng-bind="item.DebtMoney | currency:'':0"></td>
-            </tr>
-            <tr ng-if="!DataSet.ListOrders.HasRecord()">
-                @*Edit colspan*@
-                <td colspan="7" align="center"> Không có dữ liệu! </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 <div class="row">
-    <div class="col-md-9 pull-left">
-        <span grid-paging-for="ListOrders"></span>
-    </div>
-
-    <div class="col-md-3 pull-right">
-        <span grid-page-size-for="ListOrders"></span>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table grid-data="ListOrders"
+                   grid-data-type="table" @*table/storedprocedure*@
+                   grid-data-action="get" @*get/getall*@
+                   grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
+                   grid-filter-condition="[Customer] = {{CustomerForm.CustomerId}}" @*must have [fieldname] for each colum field*@
+                   grid-sort-condition="[OrderId] ASC" @*must have [fieldname] for each colum field*@
+                   grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
+                   class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th><span>STT</span></th>
+                        <th grid-defined-colum="OrderCode"><span>Mã hóa đơn</span></th>
+                        <th grid-defined-colum="OrderStatus.StatusName"><span>Loại đơn hàng</span></th>
+                        <th grid-defined-colum="SoldDate"><span>Ngày mua</span></th>
+                        <th grid-defined-colum="NumOfProduct"><span>SL hàng hóa</span></th>
+                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                        <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                        <th grid-defined-colum="OrderStatus.DisplayClass" style="display: none"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Dataset must have grid id*@
+                    <tr ng-repeat="item in DataSet.ListOrders.Data">
+                        <td ng-bind="item.RowNum"></td>
+                        <td ng-bind="item.OrderCode"></td>
+                        <td> <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span> </td>
+                        <td ng-bind="item.SoldDate"></td>
+                        <td ng-bind="item.NumOfProduct"></td>
+                        <td ng-bind="item.SumMoney | currency:'':0"></td>
+                        <td ng-bind="item.DebtMoney | currency:'':0"></td>
+                    </tr>
+                    <tr ng-if="!DataSet.ListOrders.HasRecord()">
+                        @*Edit colspan*@
+                        <td colspan="7" align="center"> Không có dữ liệu! </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-9 pull-left">
+                <span grid-paging-for="ListOrders"></span>
+            </div>
+            <div class="col-md-3 pull-right">
+                <span grid-page-size-for="ListOrders"></span>
+            </div>
+        </div>
     </div>
 </div>
 

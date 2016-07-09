@@ -47,9 +47,9 @@
                     </div>
                     <div class="row">
                         <div class="tab-content no-border active">
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-product-group')}">
-                                <div ng-if="(CurrentTabProductGroup == 'tab-list-product-group')">
-                                    <div class="col-md-12 margin-top-10 table-responsive">
+                            <div class="tab-pane" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-product-group')}">
+                                <div class="col-md-12 margin-top-10" ng-if="(CurrentTabProductGroup == 'tab-list-product-group')">
+                                    <div class="table-responsive">
                                         <table grid-data="ProductGroups"
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@
@@ -83,7 +83,7 @@
                                                     <td >
                                                         <span ng-if="!item.IsEditing" ng-bind="item.ParentName"></span>
                                                         <select class="form-control" ng-show="item.IsEditing" ng-model="item.ParentId" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                                                                dropdown-name-field="GroupName" dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
+                                                                dropdown-name-field="GroupName" dropdown-empty-text="Chọn bộ danh mục" dropdown-empty-value=""
                                                                 dropdown-condition="[IsParent] = 1 and [IsActive] = 1"
                                                                 check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
                                                                 check-under="PG{{item.ProductGroupId}}"></select>
@@ -126,9 +126,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-parent-group')}">
-                                <div ng-if="(CurrentTabProductGroup == 'tab-list-parent-group')">
-                                    <div class="col-md-12 margin-top-10 table-responsive">
+                            <div class="tab-pane" ng-class="{'active' : (CurrentTabProductGroup == 'tab-list-parent-group')}">
+                                <div class="col-md-12 margin-top-10" ng-if="(CurrentTabProductGroup == 'tab-list-parent-group')">
+                                    <div class="table-responsive">
                                         <table grid-data="ProductParentGroups"
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@
@@ -210,7 +210,7 @@
                                         <label class="col-md-4 control-label text-right">Bộ danh mục</label>
                                         <div class="col-md-8">
                                             <select class="form-control" ng-model="ProductGroupForm.ParentId" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
-                                                    dropdown-name-field="GroupName" dropdown-empty-text="--Chọn bộ danh mục--" dropdown-empty-value=""
+                                                    dropdown-name-field="GroupName" dropdown-empty-text="Chọn bộ danh mục" dropdown-empty-value=""
                                                     dropdown-condition="[IsParent] = 1 and [IsActive] = 1"
                                                     check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
                                                     check-under="ProductGroup"></select>

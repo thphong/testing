@@ -11,58 +11,59 @@
             </div>
             <div class="col-md-2 margin-top-5">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.Table" dropdown-master-table="T_System_Log_Config" dropdown-value-field="TableName"
-                        dropdown-name-field="Desciption" dropdown-empty-text="Tất cả" 
+                        dropdown-name-field="Desciption" dropdown-empty-text="Tất cả"
                         ng-change="ReloadGrid('DataChanges')"
                         dropdown-empty-value=""
                         dropdown-condition="[IsLog]  = 1"></select>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 table-responsive">
-                <table grid-data="DataChanges"
-                       grid-data-type="table" @*table/storedprocedure*@
-                       grid-data-action="get" @*get/getall*@
-                       grid-data-object="V_System_Data_Log" @*table name or stored procedure name*@
-                       grid-filter-condition="''{{AdditionalFilter.Table}}'' = '''' or 
-                                               ''{{AdditionalFilter.Table}}'' = [TableName]"
-                       @*must have [fieldname] for each colum field*@
-                       grid-sort-condition="[ModifiedDate] DESC" @*must have [fieldname] for each colum field*@
-                       class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th grid-defined-colum="TableName" style="width: 20%"><span>TableName</span></th>
-                            <th grid-defined-colum="KeyValue" style="width: 10%"><span>KeyValue</span></th>
-                            <th grid-defined-colum="UserName" style="width: 15%"><span>UserName</span></th>
-                            <th grid-defined-colum="ModifiedDate" style="width: 10%"><span>ModifiedDate</span></th>
-                            <th style="width: 5%"><span>Version</span></th>
-                            <th grid-defined-colum="Data" style="width: 40%"><span>Data</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @*Dataset must have grid id*@
-                        <tr ng-repeat="item in DataSet.DataChanges.Data">
-                            <td ng-bind="item.TableName"></td>
-                            <td ng-bind="item.KeyValue"></td>
-                            <td ng-bind="item.UserName"></td>
-                            <td ng-bind="item.ModifiedDate"></td>
-                            <td ng-bind="item.Version"></td>
-                            <td style="max-width: 200px; word-break: break-all;" 
-                                ng-bind-html="ConvertTrustHtml(item.Data)"></td>
-                        </tr>
-                        <tr ng-if="!DataSet.DataChanges.HasRecord()">
-                            @*Edit colspan*@
-                            <td colspan="5" align="center"> Không có dữ liệu! </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table grid-data="DataChanges"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="get" @*get/getall*@
+                           grid-data-object="V_System_Data_Log" @*table name or stored procedure name*@
+                           grid-filter-condition="''{{AdditionalFilter.Table}}'' = '''' or
+                    ''{{AdditionalFilter.Table}}'' = [TableName]"
+                           @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[ModifiedDate] DESC" @*must have [fieldname] for each colum field*@
+                           class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="TableName" style="width: 20%"><span>TableName</span></th>
+                                <th grid-defined-colum="KeyValue" style="width: 10%"><span>KeyValue</span></th>
+                                <th grid-defined-colum="UserName" style="width: 15%"><span>UserName</span></th>
+                                <th grid-defined-colum="ModifiedDate" style="width: 10%"><span>ModifiedDate</span></th>
+                                <th style="width: 5%"><span>Version</span></th>
+                                <th grid-defined-colum="Data" style="width: 40%"><span>Data</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in DataSet.DataChanges.Data">
+                                <td ng-bind="item.TableName"></td>
+                                <td ng-bind="item.KeyValue"></td>
+                                <td ng-bind="item.UserName"></td>
+                                <td ng-bind="item.ModifiedDate"></td>
+                                <td ng-bind="item.Version"></td>
+                                <td style="max-width: 200px; word-break: break-all;"
+                                    ng-bind-html="ConvertTrustHtml(item.Data)"></td>
+                            </tr>
+                            <tr ng-if="!DataSet.DataChanges.HasRecord()">
+                                @*Edit colspan*@
+                                <td colspan="5" align="center"> Không có dữ liệu! </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="row">
                     <div class="col-md-9 pull-left">
                         <span grid-paging-for="DataChanges"></span>
                     </div>
-
                     <div class="col-md-3 pull-right">
                         <span grid-page-size-for="DataChanges"></span>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>

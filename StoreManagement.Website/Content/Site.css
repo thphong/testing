@@ -706,3 +706,8 @@ div.col-value
     width: 54%;
     display: inline-flex;
 }
+
+#page-wrapper
+{
+    padding: 0px !important;
+}
