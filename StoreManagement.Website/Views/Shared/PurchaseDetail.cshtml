@@ -88,7 +88,7 @@
                                 <td>
                                     <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Cost | currency:'':0"></span>
                                     <input ng-if="PurchaseForm._CanUpdate"
-                                           class="form-control" ng-model="item.Cost"
+                                           class="form-control min-width-100" ng-model="item.Cost"
                                            check-empty="" check-empty-message="Vui lòng nhập giá vốn cho sản phẩm."
                                            ng-change="ChangeCost(item)"
                                            check-under="check-purchase" />
@@ -97,7 +97,7 @@
                                 <td>
                                     <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Price | currency:'':0"></span>
                                     <input ng-if="PurchaseForm._CanUpdate"
-                                           class="form-control" ng-model="item.Price"
+                                           class="form-control min-width-100" ng-model="item.Price"
                                            check-empty="" check-empty-message="Vui lòng nhập giá bán cho sản phẩm."
                                            check-under="check-purchase" />
                                 </td>

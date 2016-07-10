@@ -52,7 +52,7 @@
                             </tr>
                             <tr ng-if="!DataSet.DataChanges.HasRecord()">
                                 @*Edit colspan*@
-                                <td colspan="5" align="center"> Không có dữ liệu! </td>
+                                <td colspan="6" align="center"> Không có dữ liệu! </td>
                             </tr>
                         </tbody>
                     </table>
@@ -61,7 +61,7 @@
                     <div class="col-md-9 pull-left">
                         <span grid-paging-for="DataChanges"></span>
                     </div>
-                    <div class="col-md-3 pull-right">
+                    <div class="col-md-3">
                         <span grid-page-size-for="DataChanges"></span>
                     </div>
                 </div>

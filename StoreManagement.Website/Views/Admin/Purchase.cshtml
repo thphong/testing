@@ -65,7 +65,7 @@
                                     <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                                     <th grid-defined-colum="StatusId.StatusName">
                                         <span style="display: inline-block">
-                                            <select class="form-control width-90" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
+                                            <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
                                                     dropdown-name-field="StatusName" dropdown-empty-text="Trạng thái" dropdown-empty-value="0"
                                                     ng-change="ReloadGrid('Purchases')"></select>
                                         </span>
@@ -133,7 +133,7 @@
                             <span grid-paging-for="Purchases"></span>
                         </div>
 
-                        <div class="col-md-3 pull-right">
+                        <div class="col-md-3">
                             <span grid-page-size-for="Purchases"></span>
                         </div>
                     </div>

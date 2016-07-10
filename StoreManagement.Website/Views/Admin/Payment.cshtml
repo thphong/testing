@@ -83,7 +83,7 @@
                                                 <th grid-defined-colum="PaidDate"><span>Ngày chi</span></th>
                                                 <th grid-defined-colum="CostTypeId.CostTypeName">
                                                     <span style="display: inline-block">
-                                                        <select class="form-control" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
+                                                        <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
                                                                 dropdown-name-field="CostTypeName" dropdown-empty-text="Loại chi phí" dropdown-empty-value="0"
                                                                 dropdown-condition="[IsActive] = 1"
                                                                 ng-change="ReloadGrid('Costs')"></select>
@@ -141,7 +141,7 @@
                                     <div class="col-md-9 pull-left">
                                         <span grid-paging-for="Costs"></span>
                                     </div>
-                                    <div class="col-md-3 pull-right">
+                                    <div class="col-md-3">
                                         <span grid-page-size-for="Costs"></span>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                                                 <th grid-defined-colum="CreatedBy.UserName, Cashier"><span>Thu ngân</span></th>
                                                 <th grid-defined-colum="OrderId.PaymentType.PaymentName">
                                                     <span style="display: inline-block">
-                                                        <select class="form-control" ng-model="AdditionalFilter.PaymentType" dropdown-master-table="T_Master_PaymentType" dropdown-value-field="PaymentId"
+                                                        <select class="form-control min-width-100" ng-model="AdditionalFilter.PaymentType" dropdown-master-table="T_Master_PaymentType" dropdown-value-field="PaymentId"
                                                                 dropdown-name-field="PaymentName" dropdown-empty-text="Hình thức thu" dropdown-empty-value="0"
                                                                 ng-change="ReloadGrid('Payments')"></select>
                                                     </span>
@@ -241,7 +241,7 @@
                                         <span grid-paging-for="Payments"></span>
                                     </div>
 
-                                    <div class="col-md-3 pull-right">
+                                    <div class="col-md-3">
                                         <span grid-page-size-for="Payments"></span>
                                     </div>
                                 </div>
@@ -297,7 +297,7 @@
                                                 <td ng-bind="item.CostAmount | currency:'':0"></td>
                                                 <td ng-bind="item.Pending | currency:'':0"></td>
                                                 <td>
-                                                    <input ng-readonly="!item.IsEditingReceive && !item.IsEditingGive" class="form-control check-currency"
+                                                    <input ng-readonly="!item.IsEditingReceive && !item.IsEditingGive" class="form-control check-currency min-width-110"
                                                            @*check-currency*@ ng-model="item.Amount"
                                                            check-empty=""
                                                            check-empty-message="Vui lòng nhập số tiền."
@@ -346,7 +346,7 @@
                                         <span grid-paging-for="CollectMoneys"></span>
                                     </div>
 
-                                    <div class="col-md-3 pull-right">
+                                    <div class="col-md-3">
                                         <span grid-page-size-for="CollectMoneys"></span>
                                     </div>
                                 </div>
