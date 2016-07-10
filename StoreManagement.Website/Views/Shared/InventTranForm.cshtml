@@ -20,6 +20,13 @@
 <div class="row">
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Danh sách hàng hóa
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
             <div class="col-md-12">
                 <input id="txtSearchProduct" class="form-control" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, true)" 
                        placeholder="Nhập mã hoặc tên hàng hóa"
@@ -201,10 +208,10 @@
             <div class="hr"></div>
         </div>
         <div class="row margin-top-10">
-            <div class="col-md-9">
+            <div class="col-xs-9">
                 <label class="control-label">SL mặt hàng được chuyển</label>
             </div>
-            <div class="col-md-3">
+            <div class="col-xs-3">
                 <span ng-bind="InventTranForm.NumProducts"></span>
             </div>
         </div>

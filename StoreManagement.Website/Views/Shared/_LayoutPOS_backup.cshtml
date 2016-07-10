@@ -77,45 +77,21 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="LoadMenuController">
             <div class="navbar-header">
-                <a class="navbar-brand white" href="#">Quản lý cửa hàng: @StoreManagement.Website.SessionCollection.StoreName</a>
+                <a class="navbar-brand white" href="#">Quản lý cửa hàng</a>
             </div>
-            <div class="navbar-brand white text-center col-xs-7" style="font-size: 11px">
+            <span class="navbar-brand white text-center" style="margin-left: 30%; font-size: 14px">
                 <a href="#" class="white" data-toggle="modal" data-target="#reportPOSModal"> Báo cáo </a> |
                 <a href="#" class="white" data-toggle="modal" data-target="#inventoryPOSModal"> Tồn Kho </a> |
                 <a href="@Url.Action("General", "Admin")" target="_blank" class="white"> Quản lý </a> |
                 <a href="#" class="white" data-toggle="modal" data-target="#annoucementPOSModal"> Thông báo </a>
-            </div>
+            </span>
             @if (StoreManagement.Website.SessionCollection.IsLogIn)
             {
             <!-- /.navbar-header -->
-                <ul class="nav navbar-top-links navbar-right text-right">
-                    <!-- /.dropdown -->
+                <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-shopping-cart white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts"
-                            grid-data="AllStores"
-                            grid-data-type="table" @*table/storedprocedure*@
-                            grid-data-action="getall" @*get/getall*@
-                            grid-data-object="T_Master_Stores" @*table name or stored procedure name*@
-                            grid-sort-condition="[StoreCode] ASC">
-                            <tmp grid-defined-colum="StoreId" class="none-display"></tmp>
-                            <tmp grid-defined-colum="StoreName" class="none-display"></tmp>
-
-                            <li ng-repeat-start="item in DataSet.AllStores.Data">
-                                <a href="#" ng-click="SetStoreId(item.StoreId)">
-                                    <i class="fa fa-shopping-cart fa-fw"></i> <span ng-bind="item.StoreName"></span>
-                                </a>
-                            </li>
-                            <li ng-repeat-end class="divider" ng-if="!$last"></li>
-                        </ul>
-                        <!-- /.dropdown-alerts -->
-                    </li>
-                    <!-- /.dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
+                        <a class="dropdown-toggle white" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
@@ -130,6 +106,13 @@
                     </li>
                     <!-- /.dropdown -->
                 </ul>
+                <div class="pull-right text-right margin-top-10 width-15">
+                    <div class="col-md-6 white margin-top-10">Cửa hàng</div>
+                    <select class="form-control width-50" ng-model="CurrentStore" ng-change="SetStoreId()"
+                            dropdown-master-table="T_Master_Stores"
+                            dropdown-value-field="StoreId"
+                            dropdown-name-field="StoreCode"></select>
+                </div>
             }
             else
             {

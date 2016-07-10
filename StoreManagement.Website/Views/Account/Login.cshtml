@@ -1,5 +1,5 @@
 ﻿<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog"  style="padding-top: 40px">
+    <div class="modal-dialog" style="padding-top: 40px">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="text-center">Đăng nhập</h1>
@@ -7,14 +7,21 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <input type="text" class="form-control input-lg" 
-                               check-empty="" check-empty-message="Vui lòng nhập tài khoản đăng nhập." 
+                        <input type="text" class="form-control input-lg"
+                               check-empty="" check-empty-message="Vui lòng nhập tài khoản đăng nhập."
                                ng-model="LoginInfo.LoginId" placeholder="Tài khoản">
                     </div>
                     <div class="form-group col-md-12">
-                        <input type="password" class="form-control input-lg" 
+                        <input type="password" class="form-control input-lg"
                                check-empty="" check-empty-message="Vui lòng nhập mật khẩu."
                                ng-model="LoginInfo.Password" placeholder="Mật khẩu">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <input type="checkbox" id="chbRemeber"
+                               ng-model="LoginInfo.Remember"
+                               ng-checked="LoginInfo.Remember">
+                        <label class="font-weigth-normal" for="chbRemeber">Ghi nhớ tài khoản</label>
+
                     </div>
                     <div class="form-group col-md-12">
                         <button class="btn btn-primary btn-lg btn-block" ng-click="LogIn()">Đăng nhập</button>

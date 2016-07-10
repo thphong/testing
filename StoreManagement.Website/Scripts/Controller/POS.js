@@ -78,7 +78,7 @@ mdlCommon.controller('POSController',
             $scope.ReloadGrid("Products");
         }
 
-        $scope.IsShowingPOSCustomer = false;
+        $scope.IsShowingPOSCustomer = true;
         $scope.IsShowingPOSSummary = true;
         $scope.CurrentDate = new Date();
         $scope.AdditionalPOSFilter = {

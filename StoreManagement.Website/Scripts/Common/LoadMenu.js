@@ -30,11 +30,18 @@
             if (FValidation.CheckControls("")) {
                 var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
                 if (result) {
-
                     if (typeof (Storage) !== "undefined") {
                         // Store
-                        localStorage.setItem("SM_LoginId", $scope.LoginInfo.LoginId);
-                        localStorage.setItem("SM_Password", $scope.LoginInfo.Password);
+                        if ($scope.LoginInfo.Remember) {
+                            localStorage.setItem("SM_LoginId", $scope.LoginInfo.LoginId);
+                            localStorage.setItem("SM_Password", $scope.LoginInfo.Password);
+                            localStorage.setItem("SM_Remember", $scope.LoginInfo.Remember);
+                        }
+                        else {
+                            localStorage.setItem("SM_LoginId", "");
+                            localStorage.setItem("SM_Password", "");
+                            localStorage.setItem("SM_Remember", $scope.LoginInfo.Remember);
+                        }
                     }
 
                     location.reload();
@@ -55,13 +62,14 @@
         $scope.LoginInfo =
         {
             LoginId: "",
-            Password: ""
+            Password: "",
+            Remember: false
         };
 
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
-            
+            $scope.LoginInfo.Remember = localStorage.getItem("SM_Remember") == "true";
             if (window.location.href.toLowerCase().indexOf("/account/login?auto") >= 0) {
                 if ($scope.LoginInfo.LoginId && $scope.LoginInfo.Password) {
                     var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
