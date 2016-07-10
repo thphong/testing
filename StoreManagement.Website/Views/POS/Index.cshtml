@@ -249,7 +249,7 @@
                                    check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
                                    check-under="check-order" />
                         </div>
-                        <div class="col-xs-9 col-xs-offset-3 margin-top-5">
+                        <div class="col-xs-12 text-center margin-top-5">
                             <button class="btn btn-default btn-sm" ng-click="CancelOrder()">
                                 <i class="fa fa-undo"> </i>
                                 Hủy
@@ -274,7 +274,7 @@
                     </h4>
                     <div class="hr"></div>
                 </div>
-                <div class="col-md-12" ng-show="IsShowingPOSCustomer">
+                <div class="col-xs-12" ng-show="IsShowingPOSCustomer">
                     <div class="row margin-top-10">
                         <div class="col-xs-4">
                             <label class="control-label">Khách hàng</label>
@@ -321,23 +321,23 @@
             </div>
         </div>
         <div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"
-             style="display: block; width: 700px; left:-1000px" role="tooltip">
+             style="display: block; width: 700px; left:-5000px" role="tooltip">
             <div style="top: 50%;" class="arrow"></div>
             <h3 class="popover-title">Giảm giá theo chương trình '{{DiscountForm.PromotionName}}'</h3>
             <div class="popover-content">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-xs-5">
                         <label> Lượng giảm </label>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-xs-7">
                         <span ng-bind="DiscountForm.Discount | currency:'':0"> </span>
                     </div>
                 </div>
                 <div class="row margin-top-5">
-                    <div class="col-md-5">
+                    <div class="col-xs-5">
                         <label> Đơn vị giảm </label>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-xs-7">
                         <input id="rdIsDiscountPercentYes" type="radio" disabled />
                         <label class="font-weigth-normal" for="rdIsDiscountPercentYes">%</label>
                         &nbsp;&nbsp;
