@@ -70,6 +70,7 @@ namespace StoreManagement.Website.Controllers
         [HttpPost]
         public ActionResult Logout()
         {
+            dataService.Logout(SessionCollection.CurrentUserId);
             SessionCollection.ClearSession();
             SessionCollection.IsLogOut = true;
             return Json(true);

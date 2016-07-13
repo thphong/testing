@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManagement.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -32,6 +33,13 @@ namespace StoreManagement.Website
             //get session
             //SessionCollection.CurrentUserId = 1;
             //SessionCollection.CurrentStore = 1;
+
+        }
+
+        protected void Session_End()
+        {
+            var dataService = DependencyResolver.Current.GetService<DataService>();
+            dataService.Logout(SessionCollection.CurrentUserId);
         }
     }
 }

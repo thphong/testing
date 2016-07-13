@@ -1,6 +1,6 @@
 ﻿<!-- Customer Modal -->
 <div id="inventoryPOSModal" class="modal fade " role="dialog">
-    <div class="modal-dialog" style="width:90%">
+    <div class="modal-dialog" style="width:95%">
         <!-- Modal content-->
         <div class="modal-content" ng-if="IsShownPOSInventory">
             <div class="modal-header infobox-blue white border-6">
@@ -9,16 +9,17 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2 margin-top-5">
                         <span grid-filter-for="InventoryProduct" place-holder-message="Nhập mã hoặc tên hàng hóa"></span>
                     </div>
-                    <div class="col-md-3">
-                        <select class="form-control input-sm width-45" ng-model="AdditionalPOSFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                    <div class="col-md-2 margin-top-5">
+                        <select class="form-control input-sm" ng-model="AdditionalPOSFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                 dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryProduct')"
                                 dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
-
-                        <select class="form-control input-sm width-45" ng-model="AdditionalPOSFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
-                            <option value="0">--Tất cả--</option>
+                    </div>
+                    <div class="col-md-2 margin-top-5">
+                        <select class="form-control input-sm" ng-model="AdditionalPOSFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
+                            <option value="0">Tất cả</option>
                             <option value="1">Chỉ lấy hàng tồn</option>
                             <option value="2">Hết hàng</option>
                             <option value="3">Dưới định mức</option>
@@ -26,11 +27,11 @@
                             <option value="5">Tồn kho lâu</option>
                         </select>
                     </div>
-                    <div class="col-md-1">
-                        <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProduct.xlsx"></span>
-                    </div>
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-4 margin-top-5">
                         <span date-range-filter-for="InventoryProduct" date-range-init-code="0"></span>
+                    </div>
+                    <div class="col-md-2 margin-top-5">
+                        <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProduct.xlsx"></span>
                     </div>
                 </div>
                 <div class="row form-group col-md-12 margin-top-10">
@@ -75,11 +76,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12" ng-init="Config.InventoryProduct.NumOfItemOnPage = 5;">
-                        <table grid-data="InventoryProduct"
-                               grid-data-type="table" @*table/storedprocedure*@
-                               grid-data-action="get" @*get/getall*@
-                               grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
-                               grid-filter-condition="[ProductId.IsActive] = 1
+                        <div class="table-responsive">
+                            <table grid-data="InventoryProduct"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="get" @*get/getall*@
+                                   grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
+                                   grid-filter-condition="[ProductId.IsActive] = 1
                                                 and [ProductId.IsSelling] = 1
                                                 and [StoreId] = {{CurrentStore}}
                                                 and ({{AdditionalPOSFilter.InventoryProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalPOSFilter.InventoryProductGroup}})
@@ -88,36 +90,37 @@
                                                 or ({{AdditionalPOSFilter.InventoryProductType}} = 2 and [Quantity] <= 0)
                                                 or ({{AdditionalPOSFilter.InventoryProductType}} = 3 and [Quantity] < [ProductId.AllowMin])
                                                 or ({{AdditionalPOSFilter.InventoryProductType}} = 4 and [Quantity] > [ProductId.AllowMax])
-                                                or ({{AdditionalPOSFilter.InventoryProductType}} = 5 and [Quantity] > 0 
+                                                or ({{AdditionalPOSFilter.InventoryProductType}} = 5 and [Quantity] > 0
                                                         and convert(date,[ProductId.LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'')), getdate()))))" @*must have [fieldname] for each colum field*@
-                               grid-sort-condition="[ProductId.ProductCode] ASC" @*must have [fieldname] for each colum field*@
-                               grid-sum-collection="[ProductId.Cost]*[Quantity],SumCost;[ProductId.Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
-                               class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th grid-defined-colum="!ProductId" class="none-display"></th>
-                                    <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
-                                    <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
-                                    <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                    <th grid-defined-colum="ProductId.Cost"><span>Vốn tồn kho</span></th>
-                                    <th grid-defined-colum="ProductId.Price"><span>Giá trị tồn</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @*Dataset must have grid id*@
-                                <tr ng-repeat="item in DataSet.InventoryProduct.Data">
-                                    <td ng-bind="item.ProductCode"></td>
-                                    <td ng-bind="item.ProductName"></td>
-                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
-                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
-                                    <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
-                                </tr>
-                                <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
-                                    @*Edit colspan*@
-                                    <td colspan="8" align="center"> Không có dữ liệu! </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                   grid-sort-condition="[ProductId.ProductCode] ASC" @*must have [fieldname] for each colum field*@
+                                   grid-sum-collection="[ProductId.Cost]*[Quantity],SumCost;[ProductId.Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th grid-defined-colum="!ProductId" class="none-display"></th>
+                                        <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
+                                        <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
+                                        <th grid-defined-colum="Quantity"><span>SL</span></th>
+                                        <th grid-defined-colum="ProductId.Cost"><span>Vốn tồn kho</span></th>
+                                        <th grid-defined-colum="ProductId.Price"><span>Giá trị tồn</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.InventoryProduct.Data">
+                                        <td ng-bind="item.ProductCode"></td>
+                                        <td ng-bind="item.ProductName"></td>
+                                        <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
+                                        <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
+                                        <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="row">
                             <div class="col-md-9">
                                 <span grid-paging-for="InventoryProduct"></span>
