@@ -11,6 +11,7 @@ namespace StoreManagement.Service
     public interface IDataService
     {
         Dictionary<string, object> Login(string LoginId, string Password);
+        void Logout(int userId);
 
         DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig);
         IList<Dictionary<string, object>> GetDataFromConfigurationJsonable(int userId, GridViewConfig gridConfig);

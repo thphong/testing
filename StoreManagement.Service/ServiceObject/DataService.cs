@@ -48,6 +48,13 @@ namespace StoreManagement.Service
             return null;
         }
 
+        public void Logout(int userId)
+        {
+            string statement = string.Format("exec [dbo].[USP_System_Logout] @UserId = {0}", userId);
+
+            dbFactory.GetContext().Database.SqlQuery<int>(statement).FirstOrDefault();
+        }
+
         #region Get List
         public DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig)
         {
