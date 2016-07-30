@@ -1,0 +1,237 @@
+﻿
+<div class="row margin-top-10">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Chuyển</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseInventTranDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Danh sách hàng hóa
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <input id="txtSearchProduct" class="form-control" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, true)" 
+                       placeholder="Nhập mã hoặc tên hàng hóa"
+                       check-custom="CheckNumOfProductTran" check-custom-message="Vui lòng chọn ít nhất một hàng hóa."
+                       check-under="check-inventory-tran"
+                       ng-show="InventTranForm._CanUpdate" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th style="width: 30%"><span>Hàng hóa</span></th>
+                                <th><span>SL Tồn</span></th>
+                                <th><span>SL Chuyển</span></th>
+                                <th><span>Diễn giải</span></th>
+                                <th ng-if="InventTranForm._CanUpdate"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ListProductsInventTran">
+                                <td ng-bind="item.RowNum" class="text-center text-v-middle"></td>
+                                <td class="text-v-middle">
+                                    <div class="bold" ng-bind="item.ProductCode"></div>
+                                    <a ng-bind="item.ProductName"></a>
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span ng-bind="item.Quantity"></span>
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span ng-if="!InventTranForm._CanUpdate" ng-bind="item.TranQuantity"></span>
+                                    <input ng-if="InventTranForm._CanUpdate"
+                                           class="form-control" ng-model="item.TranQuantity"
+                                           check-empty="" check-empty-message="Vui lòng nhập số lượng chuyển"
+                                           ng-change="ChangeTranQuantity(item)"
+                                           check-under="check-inventory-tran" />
+                                </td>
+                                <td>
+                                    <span ng-if="!InventTranForm._CanUpdate" ng-bind="item.Notes"></span>
+                                    <textarea ng-if="InventTranForm._CanUpdate"
+                                              class="form-control min-width-100" ng-model="item.Notes"
+                                              placeholder="Nguyên nhân điều chỉnh"></textarea>
+                                </td>
+                                <td ng-if="InventTranForm._CanUpdate" class="text-center text-v-middle">
+                                    <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductInventTran(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="ListProductsInventTran.length == 0">
+                                @*Edit colspan*@
+                                <td colspan="6" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu chuyển </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10 none-display">
+            <div class="col-md-12">
+                <table grid-data="ProductsInventTran"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="getall" @*get/getall*@
+                       grid-data-object="T_Trans_InventTran_Product" @*table name or stored procedure name*@
+                       grid-filter-condition="[InventTranId] = {{InventTranForm.InventTranId}}" @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="Id"></th>
+                            <th grid-defined-colum="InventTranId"></th>
+                            <th grid-defined-colum="ProductId"></th>
+                            <th grid-defined-colum="ProductId.ProductCode"></th>
+                            <th grid-defined-colum="ProductId.ProductName"></th>
+                            <th grid-defined-colum="Quantity"></th>
+                            <th grid-defined-colum="TranQuantity"></th>
+                            <th grid-defined-colum="Notes"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div ng-init="InitListProductsTran()"></div>
+        </div>
+    </div>
+    <div class="col-md-4 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin phiếu
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4 ">
+                <label class="control-label">Mã phiếu</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.InventTranCode" ng-if="!InventTranForm._CanUpdate"></span>
+                <input ng-if="InventTranForm._CanUpdate"
+                       class="form-control" ng-model="InventTranForm.InventTranCode" disabled="disabled"
+                       placeholder="Hệ thống tự tạo" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventTranForm.FromStoreCode">
+            <div class="col-md-4 ">
+                <label class="control-label">Cửa hàng chuyển</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.FromStoreCode" ></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4 ">
+                <label class="control-label">Cửa hàng nhận</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.ToStoreCode" ng-if="!InventTranForm._CanUpdate"></span>                
+                <select ng-show="InventTranForm._CanUpdate" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
+                        dropdown-name-field="StoreCode" dropdown-empty-text="Chọn cửa hàng" dropdown-empty-value="" 
+                        dropdown-condition="[StoreId] <> {{CurrentStore}} and [ProductGroup] = {{CurrentProductGroup}}"
+                        check-empty="" check-empty-message="Vui lòng chọn cửa hàng nhận" check-under="check-inventory-tran"
+                        ></select>
+
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventTranForm.CreatorName">
+            <div class="col-md-4">
+                <label class="control-label">Người tạo</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.CreatorName"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventTranForm.CreatedDate">
+            <div class="col-md-4">
+                <label class="control-label">Ngày tạo</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.CreatedDate"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventTranForm.TransferName">
+            <div class="col-md-4">
+                <label class="control-label">Người chuyển</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.TransferName"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventTranForm.TransferedDate">
+            <div class="col-md-4">
+                <label class="control-label">Ngày chuyển</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.TransferedDate"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ghi chú</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventTranForm.Notes" ng-if="!InventTranForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="InventTranForm.Notes" ng-if="InventTranForm._CanUpdate"
+                          placeholder="Ghi chú cho phiếu"
+                          check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                          check-under="check-inventory-tran"></textarea>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin chuyển kho
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-9">
+                <label class="control-label">SL mặt hàng được chuyển</label>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="InventTranForm.NumProducts"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top-5">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Chuyển</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseInventTranDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+

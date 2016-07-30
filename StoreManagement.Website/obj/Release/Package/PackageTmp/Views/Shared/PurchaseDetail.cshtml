@@ -1,0 +1,341 @@
+﻿
+<div class="row header-detail">
+    <div class="col-md-6 blue-dark">
+        <h4 class="bold" style="display: inline-block"> Phiếu nhập : </h4>
+        <span ng-bind="PurchaseForm.PurchaseCode"> </span>
+    </div>
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
+            <i class="fa fa-plus white"></i>
+            <span>Tạo phiếu nhập</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
+            <i class="fa fa-print white"></i>
+            <span>In phiếu nhập</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu tạm</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
+            <i class="fa fa-print white"></i>
+            <span>Lưu và in</span>
+        </button>
+        <button class="btn btn-default margin-top-5" ng-click="ClosePurchaseDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Danh sách hàng hóa
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', true, true)"
+                       class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                       check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho phiếu nhập."
+                       check-under="check-purchase"
+                       ng-show="PurchaseForm._CanUpdate" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th style="width: 30%"><span>Hàng hóa</span></th>
+                                <th style="width: 20%"><span>Số lượng</span></th>
+                                <th><span>Giá vốn</span></th>
+                                <th><span>Thành tiền</span></th>
+                                <th><span>Giá bán</span></th>
+                                <th ng-if="PurchaseForm._CanUpdate"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ListProductsPurchase">
+                                <td ng-bind="item.RowNum"></td>
+                                <td>
+                                    <div class="bold" ng-bind="item.ProductCode"></div>
+                                    <a ng-bind="item.ProductName"></a>
+                                </td>
+                                <td>
+                                    <div class="col-md-7 padding-left-right-5">
+                                        <span ng-bind="item.Quantity" ng-if="!PurchaseForm._CanUpdate"></span>
+                                        <input ng-if="PurchaseForm._CanUpdate"
+                                               class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
+                                               check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
+                                               check-under="check-purchase" />
+                                    </div>
+                                    <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="PurchaseForm._CanUpdate">
+                                        <button class="btn btn-primary btn-tiny" style="padding-bottom: 0px" ng-click="ChangeProductQuantity(item, 1)">
+                                            <i class="fa fa-sort-up" style=" font-size: 15px; margin-top: 2px"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="PurchaseForm._CanUpdate">
+                                        <button class="btn btn-primary btn-tiny" style="padding-top: 0px" ng-click="ChangeProductQuantity(item, -1)">
+                                            <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Cost | currency:'':0"></span>
+                                    <input ng-if="PurchaseForm._CanUpdate"
+                                           class="form-control min-width-100" ng-model="item.Cost"
+                                           check-empty="" check-empty-message="Vui lòng nhập giá vốn cho sản phẩm."
+                                           ng-change="ChangeCost(item)"
+                                           check-under="check-purchase" />
+                                </td>
+                                <td><span ng-bind="item.RealCost | currency:'':0"></span></td>
+                                <td>
+                                    <span ng-if="!PurchaseForm._CanUpdate" ng-bind="item.Price | currency:'':0"></span>
+                                    <input ng-if="PurchaseForm._CanUpdate"
+                                           class="form-control min-width-100" ng-model="item.Price"
+                                           check-empty="" check-empty-message="Vui lòng nhập giá bán cho sản phẩm."
+                                           check-under="check-purchase" />
+                                </td>
+                                <td ng-if="PurchaseForm._CanUpdate">
+                                    <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductPurchase(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="ListProductsPurchase.length == 0">
+                                @*Edit colspan*@
+                                <td colspan="7" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu nhập </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10 none-display">
+            <div class="col-md-12">
+                <table grid-data="ProductsPurchase"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="getall" @*get/getall*@
+                       grid-data-object="T_Trans_Purchase_Product" @*table name or stored procedure name*@
+                       grid-filter-condition="[PurchaseId] = {{PurchaseForm.PurchaseId}}" @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="Id"></th>
+                            <th grid-defined-colum="PurchaseId"></th>
+                            <th grid-defined-colum="ProductId"></th>
+                            <th grid-defined-colum="ProductId.ProductCode"></th>
+                            <th grid-defined-colum="ProductId.ProductName"></th>
+                            <th grid-defined-colum="Price"></th>
+                            <th grid-defined-colum="Cost"></th>
+                            <th grid-defined-colum="VAT"></th>
+                            <th grid-defined-colum="Quantity"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div ng-init="InitListProducts()"> </div>
+    </div>
+    <div class="col-md-4 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin hóa đơn
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4 ">
+                <label class="control-label">Mã hóa đơn</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.PurchaseCode" ng-if="!PurchaseForm._CanUpdate"></span>
+                <input ng-if="PurchaseForm._CanUpdate"
+                       class="form-control" ng-model="PurchaseForm.PurchaseCode" disabled="disabled"
+                       placeholder="Hệ thống tự tạo" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Nhà cung cấp</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.SupplierName" ng-if="!PurchaseForm._CanUpdate"></span>
+                <div class="width-90" ng-show="PurchaseForm._CanUpdate">
+                    <input class="form-control" ng-model="PurchaseForm.SupplierName"
+                           autocomplete-master-table="T_Master_Suppliers"
+                           autocomplete-colum-id="SupplierId"
+                           autocomplete-colum-code="SupplierCode"
+                           autocomplete-colum-name="SupplierName"
+                           autocomplete-condition="[IsActive] = 1"
+                           autocomplete-model-id="#txtSupplierId"
+                           placeholder="Tìm nhà cung cấp" />
+                    <input id="txtSupplierId" class="none-display" ng-model="PurchaseForm.SupplierId" />
+                </div>
+                <div class="width-10" ng-if="PurchaseForm._CanUpdate">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" 
+                            data-target="#supplierModal" ng-click="InitSupplier()"
+                            ng-if="SupplierFormConfig._CanCreate">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ngày nhập</label>
+            </div>
+            <div class="col-md-8" ng-init="InitDatePicker()">
+                <span ng-bind="PurchaseForm.PurchaseDate" ng-if="!PurchaseForm._CanUpdate"></span>
+                <input ng-show="PurchaseForm._CanUpdate"
+                       class="form-control date-picker"  ng-model="PurchaseForm.PurchaseDate"
+                       placeholder="Hôm nay" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="PurchaseForm.PurchaserName">
+            <div class="col-md-4">
+                <label class="control-label">Người nhập</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.PurchaserName"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ghi chú</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="PurchaseForm.Notes" ng-if="!PurchaseForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="PurchaseForm.Notes" ng-if="PurchaseForm._CanUpdate"
+                          placeholder="Ghi chú cho hóa đơn"
+                          check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                          check-under="check-purchase"></textarea>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin thanh toán
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Hình thức</label>
+            </div>
+            <div class="col-xs-8">
+                <input id="rdPaymentTypeCash" type="radio" ng-model="PurchaseForm.PaymentType" value="1" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
+                <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
+                &nbsp;&nbsp;
+                <input id="rdPaymentTypeBank" type="radio" ng-model="PurchaseForm.PaymentType" value="2" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
+                <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
+                &nbsp;&nbsp;
+                <input id="rdPaymentTypeCard" type="radio" ng-model="PurchaseForm.PaymentType" value="3" ng-disabled="!PurchaseForm._CanUpdate && !PurchaseForm.IsEditingPaidForDebt" />
+                <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Tiền hàng</label>
+            </div>
+            <div class="col-xs-8">
+                <span ng-bind="PurchaseForm.Price | currency:'':0"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Tiền thuế</label>
+            </div>
+            <div class="col-xs-8">
+                <span ng-bind="PurchaseForm.SumTax | currency:'':0"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Tổng cộng</label>
+            </div>
+            <div class="col-xs-8">
+                <span ng-bind="PurchaseForm.SumMoney | currency:'':0"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Thanh toán</label>
+            </div>
+            <div class="col-xs-8" ng-init="InitFilterCurrency()">
+                <span ng-bind="PurchaseForm.Paid" ng-if="!PurchaseForm._CanUpdate"></span>
+                <input class="form-control check-currency" ng-show="PurchaseForm._CanUpdate" ng-model="PurchaseForm.Paid" ng-change="ChangePaid()" />
+                <input class="form-control check-currency" ng-show="!PurchaseForm._CanUpdate && PurchaseForm.IsEditingPaidForDebt"
+                       ng-model="PurchaseForm.PaidForDebt"
+                       check-under="check-purchase"
+                       check-empty="" check-empty-message="Vui lòng nhập số tiền."
+                       check-range="0;" check-range-message="Vui lòng thanh toán số dương." />
+                <button class="btn btn-warning" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.IsActive == 1 && PurchaseForm.Debt > 0 && !PurchaseForm.IsEditingPaidForDebt" ng-click="EditPaidForDebt()">
+                    <i class="fa fa-dollar"> </i>
+                    Thanh toán nợ
+                </button>
+                <button class="btn btn-primary btn-sm margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="SavePaidForDebt()">
+                    <i class="fa fa-check"> </i>
+                </button>
+                <button class="btn btn-default btn-sm margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseForm.Debt > 0 && PurchaseForm.IsEditingPaidForDebt" ng-click="CancelPaidForDebt()">
+                    <i class="fa fa-close"> </i>
+                </button>
+            </div>
+        </div>
+        <div class="row  margin-top-10">
+            <div class="col-xs-4">
+                <label class="control-label">Còn nợ</label>
+            </div>
+            <div class="col-xs-8">
+                <span ng-bind="PurchaseForm.Debt | currency:'':0"></span>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("SupplierModal")
+</div>
+
+<div class="row">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate && PurchaseFormConfig._CanCreate" ng-click="AddPurchase()">
+            <i class="fa fa-plus white"></i>
+            <span>Tạo phiếu nhập</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="!PurchaseForm._CanUpdate" ng-click="PrintForm()">
+            <i class="fa fa-print white"></i>
+            <span>In phiếu nhập</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu tạm</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="PurchaseForm._CanUpdate" ng-click="SavePurchaseForm(2);PrintForm();">
+            <i class="fa fa-print white"></i>
+            <span>Lưu và in</span>
+        </button>
+        <button class="btn btn-default margin-top-5" ng-click="ClosePurchaseDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>

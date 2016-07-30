@@ -1,0 +1,30 @@
+﻿<div id="announcementModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title bold">Thông báo:  <span ng-bind="Announcement.Title"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 1px 15px">
+                    <div style="font-size: 11px;" class="text-right">
+                        Đăng bởi: <span ng-bind="Announcement.CreatorName"></span>
+                        - Ngày đăng: <span ng-bind="Announcement.CreatedDate"></span>
+                    </div>
+                    <div class="row">
+                        <span ng-bind-html="Announcement.Body"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

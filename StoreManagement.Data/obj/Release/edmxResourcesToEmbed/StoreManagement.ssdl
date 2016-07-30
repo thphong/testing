@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="T_System_Configuration_Data_List">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="TableName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Colums" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Condition" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="OrderColums" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="StoreManagementModelStoreContainer">
+    <EntitySet Name="T_System_Configuration_Data_List" EntityType="Self.T_System_Configuration_Data_List" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,68 @@
+﻿<!-- Customer Modal -->
+<div id="annoucementPOSModal" class="modal fade " role="dialog">
+    <div class="modal-dialog row" style="width:95%">
+        <!-- Modal content-->
+        <div class="modal-content" ng-if="IsShownPOSAnnoucement">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thông báo<span ng-if="Announcement.IsShow">: <span ng-bind="Announcement.Title"></span></span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div grid-data="Announcement"
+                             grid-data-type="table" @*table/storedprocedure*@
+                             grid-data-action="get" @*get/getall*@
+                             grid-data-object="T_Trans_Announcement_Store" @*table name or stored procedure name*@
+                             grid-filter-condition="[StoreId] = {{CurrentStore}}" @*must have [fieldname] for each colum field*@
+                             grid-sort-condition="[AnnouncementId.CreatedDate] DESC" @*must have [fieldname] for each colum field*@>
+
+                            <div grid-defined-colum="AnnouncementId.Title" class="none-display"></div>
+                            <div grid-defined-colum="AnnouncementId.Body" class="none-display"></div>
+                            <div grid-defined-colum="AnnouncementId.CreatedBy.UserName, CreatorName" class="none-display"></div>
+                            <div grid-defined-colum="AnnouncementId.CreatedDate" class="none-display"></div>
+
+                            <div ng-if="!Announcement.IsShow" ng-repeat="item in DataSet.Announcement.Data">
+                                <div class="col-md-12">
+                                    <div class="margin-top-10">
+                                        <a href="#" 
+                                           ng-click="ShowAnnouncement(item)"
+                                           ng-bind="item.Title"></a>
+                                    </div>
+                                    <div style="font-size: 11px; padding-left: 30px">
+                                        Đăng bởi: <span ng-bind="item.CreatorName"></span>
+                                        - Ngày đăng: <span ng-bind="item.CreatedDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 margin-top-30" ng-if="!DataSet.Announcement.HasRecord()">
+                                Chưa có thông báo!
+                            </div>
+                        </div>
+                        <div class="row margin-top-10" ng-if="!Announcement.IsShow">
+                            <div class="col-md-9">
+                                <span grid-paging-for="Announcement"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <span grid-page-size-for="Announcement"></span>
+                            </div>
+                        </div>
+                        <div class="row col-md-12" ng-if="Announcement.IsShow">
+                            <div style="font-size: 11px;" class="text-right">
+                                Đăng bởi: <span ng-bind="Announcement.CreatorName"></span>
+                                - Ngày đăng: <span ng-bind="Announcement.CreatedDate"></span>
+                            </div>
+                            <span ng-bind-html="Announcement.Body"></span>
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-default" ng-click="Announcement.IsShow = false;">
+                                    <i class="fa-arrow-left fa"></i>
+                                    Trở về
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

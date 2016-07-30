@@ -1,4 +1,9 @@
-﻿mdlCommon.controller('GeneralController',
+﻿//$(document).ready(function () {
+//    $("#divTestAjax").click(function () {
+//        $(this).load("/Admin/TestAjax");
+//    });
+//});
+mdlCommon.controller('GeneralController',
 ['$scope', '$filter', '$controller', '$interpolate', '$sce',
     function ($scope, $filter, $controller, $interpolate, $sce) {
         $controller('ctrlPaging', { $scope: $scope });

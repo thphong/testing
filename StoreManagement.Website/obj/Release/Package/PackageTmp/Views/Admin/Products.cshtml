@@ -1,0 +1,170 @@
+﻿@section scripts
+{
+    @Scripts.Render("~/bundles/Product")
+    @Scripts.Render("~/bundles/ProductQuanHistory")
+}
+
+<div ng-controller="ProductController">
+    @if (!String.IsNullOrWhiteSpace(@ViewBag.ProductType))
+    {
+        <div ng-init="AdditionalFilter.ProductType = '@ViewBag.ProductType'"></div>
+    }
+    <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowProductDetail}">
+        <div ng-if="!IsShowProductDetail">
+            <div class="row" style="padding-top: 5px">
+                <div class="col-md-6">
+                    <h4 class="dashboard-title">
+                        <i class="fa-barcode fa"></i>&nbsp;Hàng hóa
+                    </h4>
+                </div>
+                <div class="col-md-5 pull-right text-right" >
+                    <button class="btn btn-success btn-primary" ng-if="ProductFormConfig._CanCreate" ng-click="AddProduct()">
+                        <i class="fa fa-plus white"></i>
+                        <span>Thêm hàng hóa</span>
+                    </button>
+                    <span grid-export-import-for="Products" grid-export-template="Products.xlsx"></span>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px; padding-top: 10px">
+                <div class="col-md-3 margin-top-5">
+                    <span grid-filter-for="Products" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
+                </div>
+                <div class="col-md-2 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus" ng-change="ReloadGrid('Products')">
+                        <option selected="selected" value="1">Hàng đang kinh doanh</option>
+                        <option value="2">Hàng đã ngừng kinh doanh</option>
+                        <option value="3">Hàng đã xóa</option>
+                    </select>
+                </div>
+                <div class="col-md-2 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                            dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('Products')"
+                            dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
+                </div>
+                <div class="col-md-2 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
+                            dropdown-name-field="ProducerName" dropdown-empty-text="Tất cả nhà sản xuất" ng-change="ReloadGrid('Products')"
+                            dropdown-condition="[IsActive]  = 1"></select>
+                </div>
+                <div class="col-md-2 margin-top-5">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')">
+                        <option value="0">Tất cả hàng hóa</option>
+                        <option value="1">Chưa nhập giá bán</option>
+                        <option value="2">Chưa nhập giá mua</option>
+                        <option value="3">Hàng chưa phân loại</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table grid-data="Products"
+                               grid-data-type="table" @*table/storedprocedure*@
+                               grid-data-action="get" @*get/getall*@
+                               grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
+                               grid-filter-condition="(({{AdditionalFilter.ProductStatus}} = 1 and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1)
+                                                or ({{AdditionalFilter.ProductStatus}} = 2 and [ProductId.IsSelling] = 0 and [ProductId.IsActive] = 1)
+                                                or ({{AdditionalFilter.ProductStatus}} = 3 and [ProductId.IsActive] = 0))
+                                                and ({{AdditionalFilter.ProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalFilter.ProductGroup}})
+                                                and ({{AdditionalFilter.Producer}} = 0 or [ProductId.ProducerId] = {{AdditionalFilter.Producer}})
+                                                and (({{AdditionalFilter.ProductType}} = 0)
+                                                or ({{AdditionalFilter.ProductType}} = 1 and ([ProductId.Price] is null or [ProductId.Price] <= 0))
+                                                or ({{AdditionalFilter.ProductType}} = 2 and ([ProductId.Cost] is null or [ProductId.Cost] <= 0))
+                                                or ({{AdditionalFilter.ProductType}} = 3 and [ProductId.ProductGroup] is null))
+                                            and [StoreId] = {{CurrentStore}}" @*must have [fieldname] for each colum field*@
+                               grid-sort-condition="[ProductId.ProductName] ASC" @*must have [fieldname] for each colum field*@
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th grid-defined-colum="!ProductId" style="display: none"></th>
+                                    <th grid-defined-colum="ProductId.ProductName" style="width: 30%"><span>Tên hàng hóa</span></th>
+                                    <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
+                                    <th grid-defined-colum="Quantity"><span>SL</span></th>
+                                    <th grid-defined-colum="ProductId.Price"><span>Giá bán</span></th>
+                                    <th grid-defined-colum="ProductId.ProductGroup.GroupName"><span>Nhóm hàng</span></th>
+                                    <th grid-defined-colum="ProductId.ProducerId.ProducerName"><span>Nhà sản xuất</span></th>
+                                    <th><span>Thẻ kho</span></th>
+                                    <th><span>Hình</span></th>
+                                    <th></th>
+                                    <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
+                                    <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*Dataset must have grid id*@
+                                <tr ng-repeat="item in DataSet.Products.Data" ng-click="ClickOnItem(item)">
+                                    <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
+                                    <td ng-bind="item.ProductCode"></td>
+                                    <td>
+                                        <span ng-bind="item.Quantity"></span>
+                                        <span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>
+                                    </td>
+                                    <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
+                                    <td ng-bind="item.GroupName"></td>
+                                    <td ng-bind="item.ProducerName"></td>
+                                    <td>
+                                        <a class="blue margin-left-10" ng-click="ShowProductQuanHistory(item)">
+                                            <i class="fa-search-plus fa"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <img id="imgProduct" class="file-preview-image"
+                                             src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                             alt="Chưa upload ảnh"
+                                             style="width:auto;height:30px;" />
+                                    </td>
+                                    <td>
+                                        <a class="blue margin-left-10" title="Copy hàng hóa" ng-click="CopyProduct(item)">
+                                            <i class="fa-copy fa"></i>
+                                        </a>
+                                        <a class="pink margin-left-10" title="Ngừng kinh doanh hàng hóa" ng-click="StopSellingProduct(item)" ng-if="item._CanUpdate && item.IsSelling == 1">
+                                            <i class="fa-pause fa"></i>
+                                        </a>
+                                        <a class="pink margin-left-10" title="Cho phép kinh doanh hàng hóa" ng-click="EnableSellingProduct(item)" ng-if="item._CanUpdate && item.IsSelling == 0">
+                                            <i class="fa-retweet fa"></i>
+                                        </a>
+                                        <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProduct(item)" ng-if="item._CanDelete">
+                                            <i class="fa-trash fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!DataSet.Products.HasRecord()">
+                                    @*Edit colspan*@
+                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <span grid-paging-for="Products"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <span grid-page-size-for="Products"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid none-display" ng-class="{'active-content' : IsShowProductDetail}">
+        <div ng-if="IsShowProductDetail">
+            @Html.Partial("ProductDetail")
+        </div>
+    </div>
+    <div>
+        @Html.Partial("ProductPriceHistoryModal")
+    </div>
+    <div>
+        @Html.Partial("ProductGroupModal")
+    </div>
+    <div>
+        @Html.Partial("ProducerModal")
+    </div>
+    <div>
+        @Html.Partial("AttributeModal")
+    </div>
+    <div>
+        @Html.Partial("ProductQuantityHistory")
+    </div>
+</div>

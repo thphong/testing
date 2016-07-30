@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Quản lý cửa hàng</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/javascript">
+        var g_loginUrl = '@Url.Action("Login", "Account")';
+        var g_logoutUrl = '@Url.Action("Logout", "Account")';
+        var g_getDataListUrl = '@Url.Action("GetDataList", "Data")';
+        var g_countDataListUrl = '@Url.Action("CountDataList", "Data")';
+        var g_sumDataListUrl = '@Url.Action("SumDataList", "Data")';
+        var g_saveObjectUrl = '@Url.Action("SaveObject", "Data")';
+        var g_saveComplexObjectUrl = '@Url.Action("SaveComplexObject", "Data")';
+        var g_saveListObjectUrl = '@Url.Action("SaveListObject", "Data")';
+        var g_getObjectUrl = '@Url.Action("GetObject", "Data")';
+        var g_deleteObjectUrl = '@Url.Action("DeleteObject", "Data")';
+        var g_checkCanCreateObjectUrl = '@Url.Action("CheckCanCreate", "Data")';
+        var g_checkFieldUrl = '@Url.Action("CheckField", "Data")';
+        var g_currentUserId = '@StoreManagement.Website.SessionCollection.CurrentUserId';
+        var g_currentUserName = '@Html.Raw(@StoreManagement.Website.SessionCollection.UserName)';
+        var g_currentStoreId = '@StoreManagement.Website.SessionCollection.CurrentStore';
+        var g_currentStoreProductGroup = '@StoreManagement.Website.SessionCollection.ProductGroup';
+        var g_storeName = '@Html.Raw(StoreManagement.Website.SessionCollection.StoreName)';
+        var g_storeAddress = '@Html.Raw(StoreManagement.Website.SessionCollection.StoreAddress)';
+        var g_storePhone = '@Html.Raw(@StoreManagement.Website.SessionCollection.StorePhone)';
+        var g_Rules = {};
+        var g_exportExcelAjaxUrl = '@Url.Action("ExportExcelWithTemplateAjax", "Data")';
+        var g_exportExcelUrl = '@Url.Action("ExportExcelWithTemplate", "Data")';
+        var g_saveProductImageUrl = '@Url.Action("SaveProductImage", "Data")';
+        var g_setStoreIdUrl = '@Url.Action("SetStoreId", "Data")';
+        var g_getAllRulesUrl = '@Url.Action("GetAllRules", "Data")';
+
+    </script>
+
+    @Styles.Render("~/Content/jqueryui")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/fontawesome")
+    @Styles.Render("~/Content/sbadmin")
+    @Styles.Render("~/Content/C3Chart")
+    @Styles.Render("~/Content/FileInput")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/masterpage")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sbadminScript")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/C3Chart")
+    @Scripts.Render("~/bundles/FileInput")
+    @Scripts.Render("~/bundles/MD5")
+    @Scripts.Render("~/bundles/CKEditor")
+    @Scripts.Render("~/bundles/InputMask")
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        if (g_currentUserId > 0) {
+            AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
+                g_Rules = result;
+            });
+        }
+    </script>
+</head>
+<body ng-app="mdlCommon">
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="LoadMenuController">
+            <div class="navbar-header">
+                <a class="navbar-brand white" href="#">Quản lý cửa hàng</a>
+            </div>
+            <span class="navbar-brand white text-center" style="margin-left: 30%; font-size: 14px">
+                <a href="#" class="white" data-toggle="modal" data-target="#reportPOSModal"> Báo cáo </a> |
+                <a href="#" class="white" data-toggle="modal" data-target="#inventoryPOSModal"> Tồn Kho </a> |
+                <a href="@Url.Action("General", "Admin")" target="_blank" class="white"> Quản lý </a> |
+                <a href="#" class="white" data-toggle="modal" data-target="#annoucementPOSModal"> Thông báo </a>
+            </span>
+            @if (StoreManagement.Website.SessionCollection.IsLogIn)
+            {
+            <!-- /.navbar-header -->
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle white" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="@Url.Action("Info", "Account")"><i class="fa fa-user fa-fw"></i> Thông tin</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" ng-click="LogOut()"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <div class="pull-right text-right margin-top-10 width-15">
+                    <div class="col-md-6 white margin-top-10">Cửa hàng</div>
+                    <select class="form-control width-50" ng-model="CurrentStore" ng-change="SetStoreId()"
+                            dropdown-master-table="T_Master_Stores"
+                            dropdown-value-field="StoreId"
+                            dropdown-name-field="StoreCode"></select>
+                </div>
+            }
+            else
+            {
+                @RenderBody()
+            }
+        </nav>
+        <!-- Page Content -->
+        @if (StoreManagement.Website.SessionCollection.IsLogIn)
+        {
+            <form method="post" enctype="multipart/form-data">
+                @RenderBody()
+            </form>
+                <!-- /.container-fluid -->
+        }
+    </div>
+</body>
+</html>

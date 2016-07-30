@@ -1,0 +1,6 @@
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Release\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Release\StoreManagement.Common.pdb
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Release\DocumentFormat.OpenXml.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.csprojResolveAssemblyReference.cache
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.pdb

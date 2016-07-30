@@ -1,0 +1,90 @@
+﻿<!-- Customer Modal -->
+<div id="productQuanHisModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content" ng-if="IsShownProductQuanHistoryModal">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thẻ kho ( <span ng-bind="ProductQuanHistoryForm.ProductCode"></span> - <span ng-bind="ProductQuanHistoryForm.ProductName"></span> ) </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        Tổng tồn kho : <span class="bold" ng-bind="ProductQuanHistoryForm.Quantity"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="tabbable" style="padding-top: 10px">
+                        <ul class="nav nav-tabs padding-left-18">
+                            <li ng-repeat="store in ListStores" ng-class="{'active' : SelectedStoreId == store.StoreId}" ng-click="SelectStore(store)">
+                                <a data-toggle="tab">
+                                    <span ng-bind="store.StoreCode"></span>
+                                    <span class="badge badge-primary" ng-bind="store.Quantity"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row margin-top-10">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table grid-data="ProductQuanHistory"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="get" @*get/getall*@
+                                   grid-data-object="T_Trans_ProductQuantity_History" @*table name or stored procedure name*@
+                                   grid-filter-condition="[ProductId] = {{ProductQuanHistoryForm.ProductId}} and [StoreId] = {{SelectedStoreId}}" @*must have [fieldname] for each colum field*@
+                                   grid-sort-condition="[CreatedDate] DESC" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><span>STT</span></th>
+                                        <th grid-defined-colum="ReferNo"><span>Chứng từ</span></th>
+                                        <th grid-defined-colum="CreatedBy.UserName"><span>Người nhập</span></th>
+                                        <th grid-defined-colum="CreatedDate"><span>Ngày</span></th>
+                                        <th grid-defined-colum="Description"><span>Diễn giải</span></th>
+                                        <th grid-defined-colum="NumIn"><span>Nhập</span></th>
+                                        <th grid-defined-colum="NumOut"><span>Xuất</span></th>
+                                        <th grid-defined-colum="NumRemain"><span>Tồn</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.ProductQuanHistory.Data">
+                                        <td ng-bind="item.RowNum"></td>
+                                        <td> <a href="#" ng-bind="item.ReferNo"></a> </td>
+                                        <td ng-bind="item.UserName"></td>
+                                        <td ng-bind="item.CreatedDate"></td>
+                                        <td ng-bind="item.Description"></td>
+                                        <td ng-bind="item.NumIn"></td>
+                                        <td ng-bind="item.NumOut"></td>
+                                        <td ng-bind="item.NumRemain"></td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.ProductQuanHistory.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span grid-paging-for="ProductQuanHistory"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <span grid-page-size-for="ProductQuanHistory"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer margin-top-30">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Trở về
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

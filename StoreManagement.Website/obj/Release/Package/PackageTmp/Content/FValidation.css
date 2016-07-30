@@ -1,0 +1,36 @@
+/*******************Tootip************************/
+div.FValidationToolTip
+{
+	/*******Tooltip mode*********/
+    position: absolute;
+    padding: 7px 3px 7px 3px;
+    background-color: #428bca;    
+    width: 20%;
+    display: none;
+    /*font: 11px Arial;*/
+    color: White;
+    border-radius: 2px 2px 2px 2px;
+    opacity: 0.82;
+    filter: alpha(opacity = 82);
+    z-index:1100;
+	/*******Display follow control immediately*********/
+    /*color: Red;*/
+}
+/*******************Warning Style************************/
+.onwarn
+{
+    /*border: 1px solid #e2b21a !important;*/
+}
+input.onwarn[type=checkbox], input.onwarn[type=radio]
+{
+    /*outline: 1px solid #e2b21a !important;*/
+}
+/*******************Error Style************************/
+.onerr
+{
+    /*border: 1px solid #e2001a !important;*/
+}
+input.onerr[type=checkbox], input.onerr[type=radio]
+{
+    /*outline: 1px solid #e2001a !important;*/
+}

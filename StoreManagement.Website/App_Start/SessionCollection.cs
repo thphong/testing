@@ -181,5 +181,17 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["DefaultController"] = value;
             }
         }
+
+        public static string LastUrl
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session["LastUrl"];
+            }
+            set
+            {
+                HttpContext.Current.Session["LastUrl"] = value;
+            }
+        }
     }
 }

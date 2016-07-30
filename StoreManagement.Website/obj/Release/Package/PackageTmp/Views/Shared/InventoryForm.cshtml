@@ -1,0 +1,247 @@
+﻿
+<div class="row margin-top-10">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Cân bằng</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseInventoryDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Danh sách hàng hóa
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <input id="txtSearchProduct" class="form-control" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', true, true)" 
+                       placeholder="Nhập mã hoặc tên hàng hóa"
+                       check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn ít nhất một hàng hóa."
+                       check-under="check-inventory"
+                       ng-show="InventoryForm._CanUpdate" />
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th style="width: 30%"><span>Hàng hóa</span></th>
+                                <th><span>Tồn hệ thống</span></th>
+                                <th><span>Tồn thực tế</span></th>
+                                <th><span>Chênh lệch</span></th>
+                                <th><span>Diễn giải</span></th>
+                                <th ng-if="InventoryForm._CanUpdate"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ListProductsInventory">
+                                <td ng-bind="item.RowNum" class="text-center text-v-middle"></td>
+                                <td class="text-v-middle">
+                                    <div class="bold" ng-bind="item.ProductCode"></div>
+                                    <a ng-bind="item.ProductName"></a>
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span ng-bind="item.Quantity" class="bold"></span>
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span ng-if="!InventoryForm._CanUpdate" ng-bind="item.RealQuantity"></span>
+                                    <input ng-if="InventoryForm._CanUpdate"
+                                           class="form-control" ng-model="item.RealQuantity"
+                                           check-empty="" check-empty-message="Vui lòng nhập tồn thực tế"
+                                           ng-change="ChangeQuantity(item)"
+                                           check-under="check-inventory" />
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span class="label label-xlg"
+                                          ng-class="{'label-primary' : item.Diff == 0, 'label-danger' : item.Diff < 0, 'label-warning' : item.Diff > 0 }"
+                                          ng-bind="item.Diff"></span>
+                                </td>
+                                <td>
+                                    <span ng-if="!InventoryForm._CanUpdate" ng-bind="item.Notes"></span>
+                                    <textarea ng-if="InventoryForm._CanUpdate"
+                                              class="form-control min-width-100" ng-model="item.Notes"
+                                              placeholder="Nguyên nhân điều chỉnh"
+                                              check-empty="" check-empty-message="Vui lòng nhập nguyên nhân điều chỉnh"
+                                              ng-disabled="!item.Diff"
+                                              check-under="check-inventory"></textarea>
+                                </td>
+                                <td ng-if="InventoryForm._CanUpdate" class="text-center text-v-middle">
+                                    <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductInventory(item)">
+                                        <i class="fa-trash fa"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="ListProductsInventory.length == 0">
+                                @*Edit colspan*@
+                                <td colspan="7" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu kiểm kê </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10 none-display">
+            <div class="col-md-12">
+                <table grid-data="ProductsInventory"
+                       grid-data-type="table" @*table/storedprocedure*@
+                       grid-data-action="getall" @*get/getall*@
+                       grid-data-object="T_Trans_Inventory_Product" @*table name or stored procedure name*@
+                       grid-filter-condition="[InventoryId] = {{InventoryForm.InventoryId}}" @*must have [fieldname] for each colum field*@
+                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
+                    <thead>
+                        <tr>
+                            <th grid-defined-colum="Id"></th>
+                            <th grid-defined-colum="InventoryId"></th>
+                            <th grid-defined-colum="ProductId"></th>
+                            <th grid-defined-colum="ProductId.ProductCode"></th>
+                            <th grid-defined-colum="ProductId.ProductName"></th>
+                            <th grid-defined-colum="Quantity"></th>
+                            <th grid-defined-colum="RealQuantity"></th>
+                            <th grid-defined-colum="Notes"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div ng-init="InitListProducts()"></div>
+        </div>
+    </div>
+    <div class="col-md-4 form-group">
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin phiếu
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4 ">
+                <label class="control-label">Mã phiếu</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.InventoryCode" ng-if="!InventoryForm._CanUpdate"></span>
+                <input ng-if="InventoryForm._CanUpdate"
+                       class="form-control" ng-model="InventoryForm.InventoryCode" disabled="disabled"
+                       placeholder="Hệ thống tự tạo" />
+
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventoryForm.CreatorName">
+            <div class="col-md-4">
+                <label class="control-label">Người tạo</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.CreatorName"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventoryForm.CreatedDate">
+            <div class="col-md-4">
+                <label class="control-label">Ngày tạo</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.CreatedDate"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventoryForm.BalancerName">
+            <div class="col-md-4">
+                <label class="control-label">Người cân bằng</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.BalancerName"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="InventoryForm.BalancedDate">
+            <div class="col-md-4">
+                <label class="control-label">Ngày cân bằng</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.BalancedDate" ></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-md-4">
+                <label class="control-label">Ghi chú</label>
+            </div>
+            <div class="col-md-8">
+                <span ng-bind="InventoryForm.Notes" ng-if="!InventoryForm._CanUpdate"></span>
+                <textarea class="form-control" ng-model="InventoryForm.Notes" ng-if="InventoryForm._CanUpdate"
+                          placeholder="Ghi chú cho phiếu"
+                          check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                          check-under="check-inventory"></textarea>
+
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <h4 class="blue">
+                <i class="fa fa-info-circle"></i>
+                Thông tin kiểm kê
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-9">
+                <label class="control-label">SL mặt hàng được kiểm kê</label>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="InventoryForm.NumProducts"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-9">
+                <label class="control-label">SL mặt hàng có chênh lệch</label>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="InventoryForm.NumDiffs"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-9">
+                <label class="control-label">SL mặt hàng chưa nhập đủ</label>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="InventoryForm.NumMore"></span>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-xs-9">
+                <label class="control-label">SL mặt hàng chưa xuất hết</label>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="InventoryForm.NumLess"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top-5">
+    <div class="col-md-6 pull-right text-right">
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(1)">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary" ng-if="InventoryForm._CanUpdate" ng-click="SaveInventoryForm(2)">
+            <i class="fa fa-check white"></i>
+            <span>Cân bằng</span>
+        </button>
+        <button class="btn btn-default" ng-click="CloseInventoryDetail()">
+            <i class="fa fa-arrow-left"></i>
+            <span>Trở về</span>
+        </button>
+    </div>
+</div>

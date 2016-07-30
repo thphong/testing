@@ -1,0 +1,153 @@
+﻿
+@Scripts.Render("~/bundles/CostType")
+<!-- Customer Modal -->
+<div id="costTypeModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content" ng-if="IsShownCostTypeModal">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title bold">Quản lý loại chi phí </h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 1px 15px; border: 1px solid #C5D0DC">
+                    <div class="row">
+                        <div class="tabbable" style="padding-top: 10px">
+                            <ul class="nav nav-tabs padding-left-18">
+                                <li ng-click="SetCurrentTabCostType('tab-list')" ng-class="{'active' : (CurrentTabCostType == 'tab-list')}">
+                                    <a data-toggle="tab">
+                                        <i class="blue fa-list fa"></i>
+                                        <span>Danh sách loại chi phí</span>
+                                    </a>
+                                </li>
+                                <li ng-click="SetCurrentTabCostType('tab-add-new')" ng-class="{'active' : (CurrentTabCostType == 'tab-add-new')}">
+                                    <a data-toggle="tab">
+                                        <i class="blue fa-plus fa"></i>
+                                        <span>Tạo mới loại chi phí</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tab-content no-border active">
+                            <div class="tab-pane" ng-class="{'active' : (CurrentTabCostType == 'tab-list')}">
+                                <div class="col-md-12 margin-top-10" ng-if="CurrentTabCostType == 'tab-list'">
+                                    <div class="table-responsive">
+                                        <table grid-data="CostTypes"
+                                               grid-data-type="table" @*table/storedprocedure*@
+                                               grid-data-action="get" @*get/getall*@
+                                               grid-data-object="T_Master_CostTypes" @*table name or stored procedure name*@
+                                               grid-filter-condition="[IsActive] = 1" @*must have [fieldname] for each colum field*@
+                                               grid-sort-condition="[CostTypeName] ASC" @*must have [fieldname] for each colum field*@
+                                               class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th grid-defined-colum="CostTypeId" style="display: none"></th>
+                                                    <th grid-defined-colum="CostTypeName" style="width: 40%"><span>Tên loại chi phí</span></th>
+                                                    <th grid-defined-colum="Notes" style="width: 40%"><span>Ghi chú</span></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @*Dataset must have grid id*@
+                                                <tr ng-repeat="item in DataSet.CostTypes.Data">
+                                                    <td>
+                                                        <span ng-if="!item.IsEditing" ng-bind="item.CostTypeName"></span>
+                                                        <input ng-if="item.IsEditing" class="form-control" ng-model="item.CostTypeName"
+                                                               check-empty="" check-empty-message="Vui lòng nhập tên loại chi phí."
+                                                               check-length="200" check-length-message="Chiều dài tối đa là {0}."
+                                                               check-under="CT{{item.CostTypeId}}" />
+                                                    </td>
+                                                    <td>
+                                                        <span ng-if="!item.IsEditing" ng-bind="item.Notes"></span>
+                                                        <input ng-if="item.IsEditing" class="form-control" ng-model="item.Notes"
+                                                               check-length="500" check-length-message="Chiều dài tối đa là {0}."
+                                                               check-under="CT{{item.CostTypeId}}" />
+                                                    </td>
+                                                    <td>
+                                                        <a class="blue margin-left-10" title="Cập nhật loại chi phí"
+                                                           ng-click="EditCostType(item)" ng-if="!item.IsEditing">
+                                                            <i class="fa-edit fa"></i>
+                                                        </a>
+                                                        <a class="red margin-left-10" title="Xóa loại chi phí"
+                                                           ng-click="DeleteCostType(item)" ng-if="!item.IsEditing">
+                                                            <i class="fa-trash fa"></i>
+                                                        </a>
+                                                        <a class="blue margin-left-10" title="Lưu loại chi phí"
+                                                           ng-click="SaveCostType(item)" ng-if="item.IsEditing">
+                                                            <i class="fa-save fa"></i>
+                                                        </a>
+
+                                                        <a class="blue margin-left-10" title="Xóa loại chi phí"
+                                                           ng-click="UndoCostType(item)" ng-if="item.IsEditing">
+                                                            <i class="fa-undo fa"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-if="!DataSet.CostTypes.HasRecord()">
+                                                    @*Edit colspan*@
+                                                    <td colspan="2" align="center"> Không có dữ liệu! </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <span grid-paging-for="CostTypes"></span>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <span grid-page-size-for="CostTypes"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane col-md-12" ng-class="{'active' : (CurrentTabCostType == 'tab-add-new')}">
+                                <div ng-if="CurrentTabCostType == 'tab-add-new'">
+                                    <div class="row margin-top-10">
+                                        <label class="col-md-4 control-label text-right">Tên loại chi phí </label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" ng-model="CostTypeForm.CostTypeName"
+                                                   placeholder="Nhập tên loại chi phí"
+                                                   check-empty="" check-empty-message="Vui lòng nhập tên loại chi phí."
+                                                   check-length="200" check-length-message="Chiều dài tối đa là {0}."
+                                                   check-under="CostType" />
+                                        </div>
+                                    </div>
+                                    <div class="row margin-top-10">
+                                        <label class="col-md-4 control-label text-right">Ghi chú </label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" ng-model="CostTypeForm.Notes"
+                                                   placeholder="Nhập ghi chú"
+                                                   check-length="500" check-length-message="Chiều dài tối đa là {0}."
+                                                   check-under="CostType" />
+                                        </div>
+                                    </div>
+                                    <div class="row padding-20 text-center">
+                                        <button type="button" class="btn btn-primary" ng-click="SaveCostTypeForm(false)">
+                                            <i class="fa-check fa"></i>
+                                            Lưu
+                                        </button>
+                                        <button type="button" class="btn btn-primary" ng-click="SaveCostTypeForm(true)">
+                                            <i class="fa-save fa"></i>
+                                            Lưu và tiếp tục
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

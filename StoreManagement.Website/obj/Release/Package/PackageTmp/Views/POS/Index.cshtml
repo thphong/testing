@@ -1,0 +1,359 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPOS.cshtml";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/Order")
+    @Scripts.Render("~/bundles/CustomerModal")
+    @Scripts.Render("~/bundles/ProductList")
+    @Scripts.Render("~/bundles/Print")
+    @Scripts.Render("~/bundles/POS")
+}
+
+<div id="OrderController" ng-controller="OrderController">
+    <div class="container-fluid">
+        <div class="row col-md-7">
+            <div class="row ">
+                <div class="col-xs-4 margin-top-10">
+                    <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                            dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" dropdown-empty-value="0" ng-change="ReloadGrid('Products')"
+                            dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
+                </div>
+                <div class="col-xs-8 margin-top-10">
+                    <button class="btn btn-success btn-sm" ng-click="SortByCreatedDate()">
+                        Hàng mới
+                    </button>
+                    <button class="btn btn-success btn-sm" ng-click="SortByNumSelling()">
+                        Hàng bán chạy
+                    </button>
+                </div>
+            </div>
+            <div class="row col-md-12" grid-data="Products"
+                 grid-data-type="table"
+                 grid-data-action="get"
+                 grid-data-object="T_Trans_Product_Store"
+                 grid-filter-condition="([StoreId] = {{CurrentStore}} and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1
+                                     and ([ProductId.AllowNegative] = 1 or [Quantity] > 0)
+                                     and ([ProductId.Cost] > 0 and [ProductId.Price] > 0)
+                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductId.ProductGroup]))"
+                 grid-sort-condition="[ProductId.ProductName] ASC">
+
+                <div grid-defined-colum="ProductId" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductName" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductCode" class="none-display"></div>
+                <div grid-defined-colum="ProductId.Price" class="none-display"></div>
+                <div grid-defined-colum="ProductId.Cost" class="none-display"></div>
+                <div grid-defined-colum="Quantity" class="none-display"></div>
+                <div grid-defined-colum="ProductId.VAT" class="none-display"></div>
+                <div grid-defined-colum="#ProductId.CreatedDate" class="none-display"></div>
+                <div grid-defined-colum="#NumSelling" class="none-display"></div>
+                <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-3 col-xs-4 col-lg-3" ng-repeat="item in DataSet.Products.Data">
+                        <div style="margin-top: 20px">
+                            <a href="#" class="thumbnail" ng-click="SelectProduct(item)">
+                                <img id="imgProduct" class="file-preview-image"
+                                     src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                     alt="Chưa upload ảnh"
+                                     style="width:auto;height:110px;" />
+
+                            </a>
+                            <div class="text-center" style="margin-top: -12px">
+                                <div ng-bind="item.ProductName"></div>
+                                <div> Mã: <span ng-bind="item.ProductCode"></span></div>
+                                <div class="bold">
+                                    <span ng-bind="item.Price | currency:'':0"></span> |
+                                    SL: <span ng-bind="item.Quantity"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 margin-top-30" ng-if="!DataSet.Products.HasRecord()">
+                    Chưa có hàng hóa! Vui lòng kiểm tra với chủ cửa hàng, có thể hàng hóa không cho bán âm, có thể hàng hóa chưa được nhập giá vốn, giá bán.
+                </div>
+                <div class="col-md-12 text-center">
+                    <span grid-paging-for="Products"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-5" ng-init="OrderForm.IsPOS = true;">
+            <div class="row col-md-12 margin-top-10">
+                <h4 class="blue">
+                    <i class="fa fa-info-circle"></i>
+                    Danh sách hàng hóa
+                </h4>
+                <div class="hr"></div>
+            </div>
+            <div class="row margin-top-10">
+                <div class="col-md-12">
+                    <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false)"
+                           class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                           check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
+                           check-under="check-order"
+                           ng-show="OrderForm._CanUpdate" />
+                </div>
+            </div>
+            <div class="row margin-top-10">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%"><span>Hàng hóa</span></th>
+                                    <th style="width: 30%"><span>Số lượng</span></th>
+                                    <th><span>Giá bán</span></th>
+                                    <th><span>Thành tiền</span></th>
+                                    <th ng-if="OrderForm._CanUpdate"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in ListProductsOrder">
+                                    <td>
+                                        <span ng-bind="item.ProductName + ' (' + item.ProductCode + ')'"></span>
+                                        <div class="red-sm-label row" ng-if="item.MaxQuantity != undefined">
+                                            (Còn tồn <span ng-bind="item.MaxQuantity"></span>)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-7 padding-left-right-5">
+                                            <span ng-bind="item.Quantity" ng-if="!OrderForm._CanUpdate"></span>
+                                            <input ng-if="OrderForm._CanUpdate"
+                                                   class="form-control" ng-model="item.Quantity" ng-change="ChangeProductQuantity(item, 0)"
+                                                   check-empty="" check-empty-message="Vui lòng nhập số lượng cho sản phẩm."
+                                                   check-range=";{{item.AllowNegative == 0 ? item.MaxQuantity : ''}}" check-range-message="Số lượng vượt quá lượng tồn kho {{item.MaxQuantity}}"
+                                                   check-under="check-order" />
+                                        </div>
+                                        <div class="col-md-3 padding-left-right-5 margin-top-5" ng-if="OrderForm._CanUpdate">
+                                            <button class="btn btn-primary btn-tiny" style="padding-bottom: 0px" ng-click="ChangeProductQuantity(item, 1)">
+                                                <i class="fa fa-sort-up" style=" font-size: 15px; margin-top: 2px"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2 padding-left-right-5 margin-top-5" ng-if="OrderForm._CanUpdate">
+                                            <button class="btn btn-primary btn-tiny" style="padding-top: 0px" ng-click="ChangeProductQuantity(item, -1)">
+                                                <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="item.Price | currency:'':0"></span>
+                                    </td>
+                                    <td><span ng-bind="item.RealPrice | currency:'':0"></span></td>
+                                    <td ng-if="OrderForm._CanUpdate">
+                                        <a class="red margin-left-10" title="Xóa hàng hóa" ng-click="DeleteProductOrder(item)">
+                                            <i class="fa-trash fa"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="ListProductsOrder.length == 0">
+                                    <td colspan="5" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row none-display">
+                <div class="col-md-12">
+                    <table grid-data="ProductsOrder"
+                           grid-data-type="table"
+                           grid-data-action="getall"
+                           grid-data-object="T_Trans_Order_Product"
+                           grid-filter-condition="[OrderId] = {{OrderForm.OrderId}}"
+                           grid-sort-condition="[Id] ASC">
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="Id"></th>
+                                <th grid-defined-colum="OrderId"></th>
+                                <th grid-defined-colum="ProductId"></th>
+                                <th grid-defined-colum="ProductId.ProductCode"></th>
+                                <th grid-defined-colum="ProductId.ProductName"></th>
+                                <th grid-defined-colum="Price"></th>
+                                <th grid-defined-colum="Quantity"></th>
+                                <th grid-defined-colum="Discount"></th>
+                                <th grid-defined-colum="IsDiscountPercent"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div ng-init="InitListProducts()"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 class="blue" ng-click="IsShowingPOSSummary = !IsShowingPOSSummary;">
+                        <i class="fa fa-info-circle"></i>
+                        Thông tin thanh toán
+                        <i class="fa fa-arrow-circle-down" ng-if="IsShowingPOSSummary" style="cursor: pointer"> </i>
+                        <i class="fa fa-arrow-circle-up" ng-if="!IsShowingPOSSummary" style="cursor: pointer"> </i>
+                    </h4>
+                    <div class="hr"></div>
+                </div>
+                <div class="col-xs-12" ng-show="IsShowingPOSSummary">
+                    <div class="row margin-top-10">
+                        <div class="col-xs-4">
+                            <label class="control-label">Hình thức</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input id="rdPaymentTypeCash" type="radio" ng-model="OrderForm.PaymentType" value="1" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
+                            <label class="font-weigth-normal" for="rdPaymentTypeCash">Tiền mặt</label>
+                            &nbsp;&nbsp;
+                            <input id="rdPaymentTypeBank" type="radio" ng-model="OrderForm.PaymentType" value="2" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
+                            <label class="font-weigth-normal" for="rdPaymentTypeBank">CK</label>
+                            &nbsp;&nbsp;
+                            <input id="rdPaymentTypeCard" type="radio" ng-model="OrderForm.PaymentType" value="3" ng-disabled="!OrderForm._CanUpdate && !OrderForm.IsEditingPaidForDebt" />
+                            <label class="font-weigth-normal" for="rdPaymentTypeCard">Thẻ</label>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-xs-3">
+                            <label class="control-label">Tiền hàng</label>
+                        </div>
+                        <div class="col-xs-3">
+                            <span ng-bind="OrderForm.Price | currency:'':0"></span>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="control-label">Giảm giá</label>
+                        </div>
+                        <div class="col-xs-3">
+                            <span ng-bind="OrderForm.DiscountAmmount | currency:'':0"></span>
+                            <span class="help-button pull-right" ng-if="OrderForm.Customer > 0"
+                                  ng-click="ShowDiscount($event, OrderForm)">
+                                <i class="fa fa-gift"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-xs-3">
+                            <label class="control-label">Tổng cộng</label>
+                        </div>
+                        <div class="col-xs-3">
+                            <span ng-bind="OrderForm.SumMoney | currency:'':0"></span>
+                        </div>
+                        <div class="col-xs-3">
+                            <label ng-if="OrderForm.DebtMoney > 0" class="control-label">Còn nợ</label>
+                            <label ng-if="OrderForm.ExtraMoney > 0" class="control-label">Tiền thừa</label>
+                        </div>
+                        <div class="col-xs-3">
+                            <span ng-if="OrderForm.DebtMoney > 0" ng-bind="OrderForm.DebtMoney | currency:'':0"></span>
+                            <span ng-if="OrderForm.ExtraMoney > 0" ng-bind="OrderForm.ExtraMoney | currency:'':0"></span>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-xs-3">
+                            <label class="control-label">Khách trả</label>
+                        </div>
+                        <div class="col-xs-9 col-md-4" ng-init="InitFilterCurrency()">
+                            <input class="form-control check-currency" ng-if="OrderForm._CanUpdate" ng-model="OrderForm.Paid" ng-change="ChangePaid()"
+                                   check-custom="CheckAllowCredit" check-custom-message="Hệ thống đang ở chế độ không cho phép bán nợ."
+                                   check-under="check-order" />
+                        </div>
+                        <div class="col-xs-12 text-center margin-top-5">
+                            <button class="btn btn-default btn-sm" ng-click="CancelOrder()">
+                                <i class="fa fa-undo"> </i>
+                                Hủy
+                            </button>
+                            <button class="btn btn-primary btn-sm" ng-click="SavePOSOrder()">
+                                <i class="fa fa-save"> </i>
+                                Lưu (F2)
+                            </button>
+                            <button class="btn btn-primary btn-sm" ng-click="SavePrintPOSOrder()">
+                                <i class="fa fa-print"> </i>
+                                Lưu & In (F3)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <h4 class="blue" ng-click="IsShowingPOSCustomer = !IsShowingPOSCustomer;">
+                        <i class="fa fa-info-circle"></i>
+                        Thông tin hóa đơn
+                        <i class="fa fa-arrow-circle-down" ng-if="IsShowingPOSCustomer" style="cursor: pointer"> </i>
+                        <i class="fa fa-arrow-circle-up" ng-if="!IsShowingPOSCustomer" style="cursor: pointer"> </i>
+                    </h4>
+                    <div class="hr"></div>
+                </div>
+                <div class="col-xs-12" ng-show="IsShowingPOSCustomer">
+                    <div class="row margin-top-10">
+                        <div class="col-xs-4">
+                            <label class="control-label">Khách hàng</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <span ng-bind="OrderForm.CustomerName" ng-if="!OrderForm._CanUpdate"></span>
+                            <div class="width-90" ng-show="OrderForm._CanUpdate">
+                                <input class="form-control" ng-model="OrderForm.CustomerName"
+                                       autocomplete-master-table="T_Master_Customers"
+                                       autocomplete-colum-id="CustomerId"
+                                       autocomplete-colum-code="CustomerCode"
+                                       autocomplete-colum-name="CustomerName"
+                                       autocomplete-colum-additional="IsWholeSale"
+                                       autocomplete-condition="[IsActive] = 1"
+                                       autocomplete-model-id="#txtCustomerId"
+                                       autocomplete-model-additional="#txtIsWholeSale"
+                                       placeholder="Tìm khách hàng" />
+                                <input id="txtCustomerId" class="none-display" ng-model="OrderForm.Customer" />
+                                <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
+                            </div>
+                            <div class="width-10" ng-if="OrderForm._CanUpdate">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
+                                        ng-if="CustomerFormConfig._CanCreate">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-xs-4">
+                            <label class="control-label">Ghi chú</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <span ng-bind="OrderForm.Notes" ng-if="!OrderForm._CanUpdate"></span>
+                            <textarea class="form-control" ng-model="OrderForm.Notes" ng-if="OrderForm._CanUpdate"
+                                      placeholder="Ghi chú cho đơn hàng"
+                                      check-length="500" check-length-message="Chiều dài tối ta là {0}."
+                                      check-under="check-order"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"
+             style="display: block; width: 700px; left:-5000px" role="tooltip">
+            <div style="top: 50%;" class="arrow"></div>
+            <h3 class="popover-title">Giảm giá theo chương trình '{{DiscountForm.PromotionName}}'</h3>
+            <div class="popover-content">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <label> Lượng giảm </label>
+                    </div>
+                    <div class="col-xs-7">
+                        <span ng-bind="DiscountForm.Discount | currency:'':0"> </span>
+                    </div>
+                </div>
+                <div class="row margin-top-5">
+                    <div class="col-xs-5">
+                        <label> Đơn vị giảm </label>
+                    </div>
+                    <div class="col-xs-7">
+                        <input id="rdIsDiscountPercentYes" type="radio" disabled />
+                        <label class="font-weigth-normal" for="rdIsDiscountPercentYes">%</label>
+                        &nbsp;&nbsp;
+                        <input id="rdIsDiscountPercentNo" type="radio" checked="checked" disabled />
+                        <label class="font-weigth-normal" for="rdIsDiscountPercentNo">VNĐ</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("CustomerModal")
+        @Html.Partial("POSReport")
+        @Html.Partial("POSInventory")
+        @Html.Partial("POSAnnounement")
+        <div class="none-display" id="divPrint">
+            <span bind-html-compile="PrintTemplate">
+            </span>
+        </div>
+    </div>
+</div>

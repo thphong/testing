@@ -1,12 +1,4 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Inventory")
-    @Scripts.Render("~/bundles/ProductQuanHistory")
-    @Scripts.Render("~/bundles/ProductList")
-    @Scripts.Render("~/bundles/Print")
-}
-
-<div id="InventoryController" ng-controller="InventoryController">
+﻿<div id="InventoryController" ng-controller="InventoryController">
     @if (!String.IsNullOrWhiteSpace(@ViewBag.InventoryProductType))
     {
         <div ng-init="AdditionalFilter.InventoryProductType = '@ViewBag.InventoryProductType'"></div>

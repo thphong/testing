@@ -31,27 +31,27 @@ namespace StoreManagement.Website.Controllers
             }
             else
             {
-                string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-                string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
-                if (controllerName != "Account" && controllerName != "POS")
-                {
-                    var gridConfig = new GridViewConfig
-                    {
-                        GridDataObject = "dbo.UFN_System_Get_Menu",
-                        GridDataType = "function",
-                        GridParameters = SessionCollection.CurrentUserId.ToString(),
-                        GridDataAction = "count",
-                        FilterBy = controllerName + "/" + actionName
+                //string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+                //string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                //if (controllerName != "Account" && controllerName != "POS")
+                //{
+                //    var gridConfig = new GridViewConfig
+                //    {
+                //        GridDataObject = "dbo.UFN_System_Get_Menu",
+                //        GridDataType = "function",
+                //        GridParameters = SessionCollection.CurrentUserId.ToString(),
+                //        GridDataAction = "count",
+                //        FilterBy = controllerName + "/Partial" + actionName
 
-                    };
+                //    };
 
-                    int count = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
+                //    int count = dataService.CountDataFromConfiguration(SessionCollection.CurrentUserId, gridConfig);
 
-                    if (count <= 0)
-                    {
-                        return RedirectToAction("Error", "Account"); 
-                    }
-                }
+                //    if (count <= 0)
+                //    {
+                //        return RedirectToAction("Error", "Account"); 
+                //    }
+                //}
 
                 return View();
             }

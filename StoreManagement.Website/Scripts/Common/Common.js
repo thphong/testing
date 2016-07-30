@@ -1,4 +1,5 @@
 ﻿var mdlCommon = angular.module('mdlCommon', ['ngSanitize']);
+var mdlMenu = angular.module('mdlMenu', ['ngSanitize']);
 
 function ShowErrorMessage(message) {
     if ($('.FNotifications').length == 0) {

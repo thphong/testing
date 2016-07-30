@@ -89,10 +89,7 @@ namespace StoreManagement.Website
                         "~/Scripts/Common/jquery.showLoading.min.js",
                         "~/Scripts/Common/AngularTranslationService.js",
                         "~/Scripts/Common/LoadMenu.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/DataList").Include(
-                        "~/Scripts/DataService/DataList.js"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/Customer").Include(
                         "~/Scripts/Controller/Customer.js"));
             bundles.Add(new ScriptBundle("~/bundles/CustomerModal").Include(
@@ -140,7 +137,6 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/POS.js"));
             bundles.Add(new ScriptBundle("~/bundles/Announcement").Include(
                         "~/Scripts/Controller/Announcement.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/ProductQuanHistory").Include(
                         "~/Scripts/Controller/ProductQuanHistory.js"));
 

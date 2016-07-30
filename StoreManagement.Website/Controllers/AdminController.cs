@@ -14,82 +14,118 @@ namespace StoreManagement.Website.Controllers
         {
         }
 
-        // GET: Admin
+        [HttpGet]
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult General()
         {
             return CheckSession();
         }
 
+        
+        [HttpGet]
+        public ActionResult General()
+        {
+            SessionCollection.LastUrl = "/Admin/General";
+            return PartialView("General");
+        }
+
+        
+        [HttpGet]
         public ActionResult Orders(string DateRangeCode, string Status)
         {
             ViewBag.DateRangeCode = DateRangeCode;
             ViewBag.Status = Status;
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Orders";
+            return PartialView("Orders");
         }
 
+        
+        [HttpGet]
         public ActionResult Products(string ProductType)
         {
+            SessionCollection.LastUrl = "/Admin/Products";
             ViewBag.ProductType = ProductType;
-            return CheckSession();
+            return PartialView("Products");
         }
 
-
+        
+        [HttpGet]
         public ActionResult Customers()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Customers";
+            return PartialView("Customers");
         }
 
+        
+        [HttpGet]
         public ActionResult Purchase()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Purchase";
+            return PartialView("Purchase");
         }
 
+        
+        [HttpGet]
         public ActionResult Inventory(string InventoryProductType)
         {
+            SessionCollection.LastUrl = "/Admin/Inventory";
             ViewBag.InventoryProductType = InventoryProductType;
-            return CheckSession();
+            return PartialView("Inventory");
         }
 
+        
+        [HttpGet]
         public ActionResult Revenue(string DateRangeCode)
         {
+            SessionCollection.LastUrl = "/Admin/Revenue";
             ViewBag.DateRangeCode = DateRangeCode;
-            return CheckSession();
+            return PartialView("Revenue");
         }
 
+        
+        [HttpGet]
         public ActionResult Payment()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Payment";
+            return PartialView("Payment");
         }
 
+        
+        [HttpGet]
         public ActionResult Profit(string DateRangeCode)
         {
+            SessionCollection.LastUrl = "/Admin/Profit";
             ViewBag.DateRangeCode = DateRangeCode;
-            return CheckSession();
+            return PartialView("Profit");
         }
 
+        
+        [HttpGet]
         public ActionResult Setting()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Setting";
+            return PartialView("Setting");
         }
 
+        
+        [HttpGet]
         public ActionResult Exception()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Exception";
+            return PartialView("Exception");
         }
-
+                
+        [HttpGet]
         public ActionResult LogData()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/LogData";
+            return PartialView("LogData");
         }
-
+        
+        [HttpGet]
         public ActionResult Announcement()
         {
-            return CheckSession();
+            SessionCollection.LastUrl = "/Admin/Announcement";
+            return PartialView("Announcement");
         }
     }
 }

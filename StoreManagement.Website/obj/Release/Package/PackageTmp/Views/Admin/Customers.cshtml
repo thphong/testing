@@ -1,0 +1,330 @@
+﻿@section scripts
+{
+    @Scripts.Render("~/bundles/Customer")
+    @Scripts.Render("~/bundles/CustomerModal")
+    @Scripts.Render("~/bundles/SupplierModal")
+}
+
+<div ng-controller="CustomerController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="tabbable" style="padding-top: 10px">
+                <ul class="nav nav-tabs padding-left-18">
+                    <li class="active" ng-click="SetCurrentTab('Customers')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-user fa"></i>
+                            <span>Khách hàng</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('SaleCustomers')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-user fa"></i>
+                            <span>Khách hàng Sỉ</span>
+                        </a>
+                    </li>
+                    <li class="" ng-click="SetCurrentTab('Suppliers')">
+                        <a data-toggle="tab">
+                            <i class="blue fa-truck fa"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="tab-content no-border active">
+                <div class="tab-pane active" ng-class="{active : (CurrentTab =='Customers') && !IsShowCustomerDetail }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='Customers') && !IsShowCustomerDetail">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+                            <div class="col-md-5 margin-top-5">
+                                <span grid-filter-for="Customers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
+                            </div>
+                            <div class="col-md-2 col-xl-12 margin-top-5">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.CustomerType" ng-change="ReloadGrid('Customers')">
+                                    <option value="0">Tất cả</option>
+                                    <option value="1">KH từng mua hàng</option>
+                                    <option value="2">KH còn nợ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 pull-right text-right margin-top-5">
+                                <button class="btn btn-success btn-primary" data-toggle="modal"
+                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
+                                        ng-if="CustomerFormConfig._CanCreate">
+                                    <i class="fa fa-plus white"></i>
+                                    <span>Tạo KH</span>
+                                </button>
+                                <span grid-export-import-for="Customers" grid-export-template="Customers.xlsx"></span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table grid-data="Customers"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="get" @*get/getall*@
+                                   grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
+                                   grid-filter-condition="[IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
+                                                or ({{AdditionalFilter.CustomerType}} = 1 and  [LastTimeVisited] is not null)
+                                                or ({{AdditionalFilter.CustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
+                                   grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
+                                   grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th grid-defined-colum="!CustomerId" class="none-display"></th>
+                                        <th grid-defined-colum="CustomerCode"><span>Mã KH</span></th>
+                                        <th grid-defined-colum="CustomerName"><span>Tên KH</span></th>
+                                        <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
+                                        <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
+                                        <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.Customers.Data">
+                                        <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerCode"></a> </td>
+                                        <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerName"></a></td>
+                                        <td ng-bind="item.Phone"></td>
+                                        <td ng-bind="item.Address"></td>
+                                        <td ng-bind="item.LastTimeVisited"></td>
+                                        <td ng-bind="item.SumMoney | currency:'':0"></td>
+                                        <td ng-bind="item.Debt | currency:'':0"></td>
+                                        <td>
+                                            <a class="red margin-left-10" ng-click="DeleteCustomer(item, 0)" ng-if="item._CanDelete">
+                                                <i class="fa-trash fa"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.Customers.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" align="left">
+                                            <div style="float: left;">
+                                                <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.Customers.TotalItems"></span>
+                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.Debt | currency:'':0"></span> đ</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span grid-paging-for="Customers"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span grid-page-size-for="Customers"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane" ng-class="{active : (CurrentTab =='SaleCustomers') && !IsShowCustomerDetail }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='SaleCustomers') && !IsShowCustomerDetail">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+                            <div class="col-md-5 margin-top-5">
+                                <span grid-filter-for="SaleCustomers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
+                            </div>
+                            <div class="col-md-2 margin-top-5">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.SaleCustomerType" ng-change="ReloadGrid('SaleCustomers')">
+                                    <option selected="selected" value="0">Tất cả</option>
+                                    <option value="1">KH từng mua hàng</option>
+                                    <option value="2">KH còn nợ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 pull-right text-right margin-top-5">
+                                <button class="btn btn-success btn-primary" data-toggle="modal"
+                                        data-target="#customerModal" ng-click="SetIsSaleCustomer('1')"
+                                        ng-if="CustomerFormConfig._CanCreate">
+                                    <i class="fa fa-plus white"></i>
+                                    <span>Tạo KH Sỉ</span>
+                                </button>
+                                <span grid-export-import-for="SaleCustomers" grid-export-template="Customers.xlsx"></span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table grid-data="SaleCustomers"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="get" @*get/getall*@
+                                   grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
+                                   grid-filter-condition="[IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
+                                                or ({{AdditionalFilter.SaleCustomerType}} = 1 and  [LastTimeVisited] is not null)
+                                                or ({{AdditionalFilter.SaleCustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
+                                   grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
+                                   grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th grid-defined-colum="!CustomerId" class="none-display"></th>
+                                        <th grid-defined-colum="CustomerCode"><span>Mã KH</span></th>
+                                        <th grid-defined-colum="CustomerName"><span>Tên KH</span></th>
+                                        <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
+                                        <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
+                                        <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.SaleCustomers.Data">
+                                        <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerCode"></a> </td>
+                                        <td> <a href="#" ng-click="ShowCustomerDetail(item)" ng-bind="item.CustomerName"></a></td>
+                                        <td ng-bind="item.Phone"></td>
+                                        <td ng-bind="item.Address"></td>
+                                        <td ng-bind="item.LastTimeVisited"></td>
+                                        <td ng-bind="item.SumMoney | currency:'':0"></td>
+                                        <td ng-bind="item.Debt | currency:'':0"></td>
+                                        <td>
+                                            <a class="red margin-left-10" ng-click="DeleteCustomer(item, 1)" ng-if="item._CanDelete">
+                                                <i class="fa-trash fa"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.SaleCustomers.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" align="left">
+                                            <div style="float: left;">
+                                                <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.SaleCustomers.TotalItems"></span>
+                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.Debt | currency:'':0"></span> đ</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span grid-paging-for="SaleCustomers"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span grid-page-size-for="SaleCustomers"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" ng-class="{active : ((CurrentTab =='Customers' || CurrentTab =='SaleCustomers') && IsShowCustomerDetail) }">
+                    <div class="col-md-12" ng-if="((CurrentTab =='Customers' || CurrentTab =='SaleCustomers') && IsShowCustomerDetail)">
+                        @Html.Partial("CustomerDetail")
+                    </div>
+                </div>
+                <div class="tab-pane" ng-class="{active : (CurrentTab =='Suppliers') && !IsShowSupplierDetail }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='Suppliers') && !IsShowSupplierDetail">
+                        <div class="row" style="padding-bottom: 10px; padding-top: 5px">
+                            <div class="col-md-5 margin-top-5">
+                                <span grid-filter-for="Suppliers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ nhà cung cấp"></span>
+                            </div>
+                            <div class="col-md-2 margin-top-5">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.SupplierType" ng-change="ReloadGrid('Suppliers')">
+                                    <option selected="selected" value="0">Tất cả</option>
+                                    <option value="1">NCC từng nhập hàng</option>
+                                    <option value="2">Còn nợ NCC</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 pull-right text-right margin-top-5">
+                                <button class="btn btn-success btn-primary" data-toggle="modal"
+                                        data-target="#supplierModal" ng-click="InitSupplier()"
+                                        ng-if="SupplierFormConfig._CanCreate">
+                                    <i class="fa fa-plus white"></i>
+                                    <span>Tạo NCC</span>
+                                </button>
+                                <span grid-export-import-for="Suppliers" grid-export-template="Suppliers.xlsx"></span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table grid-data="Suppliers"
+                                   grid-data-type="table" @*table/storedprocedure*@
+                                   grid-data-action="get" @*get/getall*@
+                                   grid-data-object="T_Master_Suppliers" @*table name or stored procedure name*@
+                                   grid-filter-condition="[IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
+                                                or ({{AdditionalFilter.SupplierType}} = 1 and  [LastTimeProvided] is not null)
+                                                or ({{AdditionalFilter.SupplierType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
+                                   grid-sort-condition="[SupplierCode] ASC" @*must have [fieldname] for each colum field*@
+                                   grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                                   class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th grid-defined-colum="!SupplierId" class="none-display"></th>
+                                        <th grid-defined-colum="SupplierCode"><span>Mã NCC</span></th>
+                                        <th grid-defined-colum="SupplierName"><span>Tên NCC</span></th>
+                                        <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
+                                        <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
+                                        <th grid-defined-colum="LastTimeProvided"><span>Lần cuối mua hàng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*Dataset must have grid id*@
+                                    <tr ng-repeat="item in DataSet.Suppliers.Data">
+                                        <td> <a href="#" ng-click="ShowSupplierDetail(item)" ng-bind="item.SupplierCode"></a> </td>
+                                        <td> <a href="#" ng-click="ShowSupplierDetail(item)" ng-bind="item.SupplierName"></a></td>
+                                        <td ng-bind="item.Phone"></td>
+                                        <td ng-bind="item.Address"></td>
+                                        <td ng-bind="item.LastTimeProvided"></td>
+                                        <td ng-bind="item.SumMoney | currency:'':0"></td>
+                                        <td ng-bind="item.Debt | currency:'':0"></td>
+                                        <td>
+                                            <a class="red margin-left-10" ng-click="DeleteSupplier(item)" ng-if="item._CanDelete">
+                                                <i class="fa-trash fa"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!DataSet.Suppliers.HasRecord()">
+                                        @*Edit colspan*@
+                                        <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" align="left">
+                                            <div style="float: left;">
+                                                <span>Số nhà cung cấp: </span><span class="total-highlight" ng-bind="DataSet.Suppliers.TotalItems"></span>
+                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.Debt | currency:'':0"></span> đ</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span grid-paging-for="Suppliers"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span grid-page-size-for="Suppliers"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" ng-class="{active : (CurrentTab =='Suppliers' && IsShowSupplierDetail) }">
+                    <div class="col-md-12" ng-if="(CurrentTab =='Suppliers' && IsShowSupplierDetail)">
+                        @Html.Partial("SupplierDetail")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("CustomerModal")
+    @Html.Partial("SupplierModal")
+</div>
+
+

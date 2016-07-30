@@ -3,7 +3,12 @@ var _ListGridIds = [];
 var _DropdownConfigs = {};
 var _GridConfigData = {};
 
-
+function clearGlobalSession() {
+    _CurrentGridId = "";
+    _ListGridIds = [];
+    _DropdownConfigs = {};
+    _GridConfigData = {};
+}
 //Control for Gridview
 
 mdlCommon.directive('gridPagingFor', function () {
@@ -163,13 +168,12 @@ mdlCommon.directive('gridData', function () {
             window._ListGridIds.push(window._CurrentGridId);
 
             _GridConfigData[window._CurrentGridId] = new GridViewConfig(window._CurrentGridId);
-
             element.after('<span ng-init="InitVisibleGrid(\'' + window._CurrentGridId + '\');"></span>');
-
         }
         else {
             alert("Grid with id '" + window._CurrentGridId + "' is duplicted, please change to new id");
         }
+        
     }
     return directive;
 });
@@ -405,7 +409,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.StoreName = g_storeName;
     $scope.StoreAddress = g_storeAddress;
     $scope.StorePhone = g_storePhone;
-    $scope.RULES = g_Rules;
+    $scope.RULES = {};
+
+    if (g_currentUserId > 0) {
+        AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
+            $scope.RULES = result;
+        });
+    }
 
     /*begin configurable*/
     //Number of displayed index in the paging. It should be odd number
@@ -796,6 +806,30 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
                 });
             });
         }, 10);
+    }
+
+    $scope.LoadViewBody = function (url) {
+        clearGlobalSession();
+        $("i.img-loading").show();
+        url = $interpolate(url)($scope);
+        
+        var menuScope = angular.element(document.getElementById("LoadMenuController")).scope();        
+        menuScope.$apply(function () {
+            if (url.indexOf("?") > 0) {
+                menuScope.CurrentUrl = url.substr(url, url.indexOf("?"));
+            }
+            else {
+                menuScope.CurrentUrl = url;
+            }
+        });
+
+        var scope = angular.element(document.getElementById("mdlCommon")).scope();
+        if (scope.SrcView != url) {
+            $("#bodyView").hide();
+            //scope.$apply(function () {
+                scope.SrcView = url;
+            //});
+        }
     }
 }]);
 

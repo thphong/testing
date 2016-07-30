@@ -29,7 +29,6 @@ namespace StoreManagement.Website
 
         protected void Session_Start()
         {
-
             //get session
             //SessionCollection.CurrentUserId = 1;
             //SessionCollection.CurrentStore = 1;

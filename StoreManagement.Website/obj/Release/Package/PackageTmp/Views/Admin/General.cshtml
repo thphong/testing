@@ -1,0 +1,324 @@
+﻿@section scripts
+{
+    @Scripts.Render("~/bundles/General")
+}
+
+<div ng-controller="GeneralController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="dashboard-title">
+                    <i class="fa-signal fa"></i>&nbsp;Hoạt động hôm nay
+                </h4>
+            </div>
+            <div class="col-md-3 col-xs-12 margin-top-10">
+                <div class="col-md-12 report-box infobox-green">
+                    <div class="infobox-icon">
+                        <i class="fa fa-signal"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title"> <span>Doanh thu </span></div>
+                        <span class="infobox-data-number center" ng-bind="GeneralInfo.Revenue | currency:'':0"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-12 margin-top-10">
+                <div class="col-md-12 report-box infobox-blue">
+                    <div class="infobox-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-subtitle">
+                            <span>Số đơn hàng:</span>
+                            <a href="@Url.Action("Orders", "Admin", new { DateRangeCode = 0, Status = 2})"
+                               class="white" ng-bind="GeneralInfo.NumOrder"></a>
+                        </div>
+                        <div class="infobox-subtitle">
+                            <span>Số hàng hóa:</span>
+                            <a href="@Url.Action("Orders", "Admin", new { DateRangeCode = 0 , Status = 2})"
+                               class="white" ng-bind="GeneralInfo.NumSoldProduct"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-12 margin-top-10">
+                <div class="col-md-12 report-box infobox-red">
+                    <div class="infobox-icon">
+                        <i class="fa fa-trash-o"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title">
+                            <span>Đơn hàng bị xóa</span>
+                        </div>
+                        <div class="infobox-data-number text-center">
+                            <span ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-12 margin-top-10 none-display">
+                <div class="col-md-12 report-box infobox-orange">
+                    <div class="infobox-icon">
+                        <i class="fa fa-cloud"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-title">
+                            <span>Đơn hàng web</span>
+                        </div>
+                        <div class="infobox-data-number text-center">
+                            <span>0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding: 20px 6px; margin: 20px -18px;">
+            <div class="col-md-4 col-sm-12" style="z-index: 9;">
+                <div class="widget-box bd-blue">
+                    <div class="widget-header infobox-blue">
+                        <h4 class="col-md-8 widget-title">
+                            <i class="fa-signal fa"></i>
+                            Hoạt động
+                        </h4>
+                        <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-sm btn-outline"
+                                    data-toggle="dropdown" style="padding: 5px 3px; color: white !important">
+                                <span ng-bind="Revenue.DateRangeText"></span>
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="#" ng-click="ChangeDateRange(1, 'Tuần này')">Tuần này</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(4, 'Tuần trước')">Tuần trước</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(2, 'Tháng này')">Tháng này</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(5, 'Tháng trước')">Tháng trước</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="widget-body" style="border: none; min-height: 144px;" >
+                        <div class="widget-main" ng-if="CanViewProfit">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Doanh thu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Lãi gộp
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Profit | currency:'':0"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Số đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Quantity"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Doanh thu/đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-if="Revenue.Data.Quantity > 0"
+                                       ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0">860,000</a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Đơn hàng bị xóa
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-main" ng-if="!CanViewProfit">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Doanh thu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Số đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}"
+                                       ng-bind="Revenue.Data.Quantity"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Doanh thu/đơn hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-if="Revenue.Data.Quantity > 0"
+                                       ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0">860,000</a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Đơn hàng bị xóa
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="widget-box bd-orange">
+                    <div class="widget-header infobox-orange">
+                        <h4 class="widget-title">
+                            <i class="fa-tags fa"></i>
+                            Thông tin kho
+                        </h4>
+                    </div>
+
+                    <div class="widget-body" style="border: none; min-height: 144px;">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Tồn kho lâu
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 5})"
+                                       ng-bind="GeneralInfo.LongInventory"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Hết hàng
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 2})"
+                                       ng-bind="GeneralInfo.OutOfQuantity"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Dưới định mức
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 3})"
+                                       ng-bind="GeneralInfo.UnderMin"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Vượt định mức
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Inventory", "Admin", new { InventoryProductType = 4})"
+                                       ng-bind="GeneralInfo.OverMax"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="widget-box bd-green">
+                    <div class="widget-header infobox-green">
+                        <h4 class="widget-title">
+                            <i class="fa-barcode fa"></i>
+                            Thông tin hàng hóa
+                        </h4>
+                    </div>
+                    <div class="widget-body" style="border: none; min-height: 144px;">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-xs-7 info">
+                                    Số hàng hóa
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Products", "Admin")"
+                                       ng-bind="GeneralInfo.TotalProduct"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Chưa làm giá bán
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 1})"
+                                       ng-bind="GeneralInfo.NotInputPrice"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Chưa nhập giá mua
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 2})"
+                                       ng-bind="GeneralInfo.NotInputCost"></a>
+                                </div>
+                                <div class="col-xs-7 info">
+                                    Hàng chưa phân loại
+                                </div>
+                                <div class="col-xs-5 data text-right">
+                                    <a href="@Url.Action("Products", "Admin", new { ProductType = 3})"
+                                       ng-bind="GeneralInfo.NotInputGroup"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="widget-box">
+                    <div class="widget-header gray" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #ccc;">
+                        <h4 class="widget-title">
+                            <i class="fa-signal fa"></i>
+                            Biểu đồ doanh số tuần
+                        </h4>
+                    </div>
+                    <div id="chartContainer" class="widget-body" style="border: none; min-height: 155px;">
+                        <div class="widget-main">
+                            <div id="chartReportByDay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="widget-box">
+                    <div class="widget-header gray" style="border-bottom: 1px solid #ccc;">
+                        <h4 class="widget-title">
+                            <i class="fa-soundcloud fa"></i>
+                            Thông báo
+                        </h4>
+                    </div>
+                    <div class="widget-body" style="border: none; min-height: 155px; display: inline-block">
+                        <div class="widget-main">
+                            <div grid-data="Announcement"
+                                 grid-data-type="table" @*table/storedprocedure*@
+                                 grid-data-action="get10" @*get/getall*@
+                                 grid-data-object="T_Trans_Announcement_Store" @*table name or stored procedure name*@
+                                 grid-filter-condition="[StoreId] = {{CurrentStore}}" @*must have [fieldname] for each colum field*@
+                                 grid-sort-condition="[AnnouncementId.CreatedDate] DESC" @*must have [fieldname] for each colum field*@>
+
+                                <div grid-defined-colum="AnnouncementId.Title" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.Body" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.CreatedBy.UserName, CreatorName" class="none-display"></div>
+                                <div grid-defined-colum="AnnouncementId.CreatedDate" class="none-display"></div>
+
+                                <div ng-repeat="item in DataSet.Announcement.Data">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <a href="#" data-toggle="modal" data-target="#announcementModal" 
+                                               ng-click="ShowAnnouncement(item)"
+                                               ng-bind="item.Title"></a>
+                                        </div>
+                                        <div class="text-right" style="font-size: 11px">
+                                            Đăng bởi: <span ng-bind="item.CreatorName"></span>
+                                            - Ngày đăng: <span ng-bind="item.CreatedDate"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top-30" ng-if="!DataSet.Announcement.HasRecord()">
+                                    Chưa có thông báo!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("AnnouncementModal")
+            </div>
+        </div>
+    </div>
+</div>

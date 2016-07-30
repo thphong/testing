@@ -25,9 +25,16 @@ namespace StoreManagement.Website.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult Info()
         {
-            return CheckSession();
+            return PartialView("Info");
+        }
+
+        [HttpGet]
+        public ActionResult POSInfo()
+        {
+            return View("Index");
         }
 
         public ActionResult Error()

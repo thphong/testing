@@ -1,0 +1,65 @@
+﻿<!-- Customer Modal -->
+<div id="PrintTermModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content" ng-if="IsShownTemplateTermsModal">
+            <div class="modal-header infobox-blue white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title bold">Các thông tin có thể hiển thị trên hóa đơn</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 1px 15px; border: 1px solid #C5D0DC">
+                    <div class="row margin-top-10">
+                        <div class="col-md-7">
+                            <span grid-filter-for="TemplateTerms" place-holder-message="Nhập diễn giải cần tìm"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 margin-top-10">
+                            <div class="table-responsive">
+                                <table grid-data="TemplateTerms"
+                                       grid-data-type="table" @*table/storedprocedure*@
+                                       grid-data-action="get" @*get/getall*@
+                                       grid-data-object="T_Master_PrintTerms" @*table name or stored procedure name*@
+                                       grid-filter-condition="" @*must have [fieldname] for each colum field*@
+                                       grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@
+                                       grid-sum-collection="" @*must have [fieldname] for each colum field*@
+                                       class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th grid-defined-colum="Term"><span>Thông tin từ hệ thống</span></th>
+                                            <th grid-defined-colum="Description"><span>Diễn giải</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*Dataset must have grid id*@
+                                        <tr ng-repeat="item in DataSet.TemplateTerms.Data">
+                                            <td ng-bind="item.Term"></td>
+                                            <td ng-bind="item.Description"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="col-md-9">
+                                <span grid-paging-for="TemplateTerms"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span grid-page-size-for="TemplateTerms"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

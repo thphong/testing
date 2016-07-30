@@ -1,0 +1,45 @@
+﻿.notifications {
+  position: fixed;
+  z-index: 9999;
+}
+
+.alert .close {
+    float: right;
+    top: 5px !important;
+    font-size: 21px !important;
+    color: #000 !important;
+    filter: alpha(opacity=20) !important;
+    opacity: .2 !important;
+}
+
+.notifications .alert
+{
+    padding: 10px !important;
+}
+
+/* Positioning */ 
+.notifications.top-right {
+  right: 10px;
+  top: 25px;
+}
+
+.notifications.top-left {
+  left: 10px;
+  top: 25px;
+}
+
+.notifications.bottom-left {
+  left: 10px;
+  bottom: 25px;
+}
+
+.notifications.bottom-right {
+  right: 10px;
+  bottom: 25px;
+}
+
+/* Notification Element */
+.notifications > div {
+  position: relative;
+  margin: 5px 0px;
+}

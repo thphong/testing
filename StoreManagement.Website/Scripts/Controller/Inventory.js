@@ -1,4 +1,4 @@
-﻿function CheckNumOfProduct() {
+﻿function CheckNumOfProductInven() {
     var scope = angular.element(document.getElementById("InventoryController")).scope();
     var len = scope.ListProductsInventory.length;
     return len > 0;
