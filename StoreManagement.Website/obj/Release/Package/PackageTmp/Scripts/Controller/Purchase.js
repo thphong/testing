@@ -213,6 +213,8 @@ mdlCommon.controller('PurchaseController',
             $scope.IsShowPurchaseDetail = true;
             $scope.PurchaseForm._CanUpdate = purchase._CanUpdate;
             $scope.PurchaseForm._CanDelete = purchase._CanDelete;
+            $scope.ReloadGrid("ProductsPurchase");
+            $scope.InitListProducts();
             //Load Product purchase
             //$scope.ReloadGrid('ProductsPurchase');
             //FValidation.ClearAllError();

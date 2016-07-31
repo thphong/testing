@@ -143,7 +143,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid none-display" ng-class="{'active-content' : IsShowOrderDetail}">
         <div ng-show="IsShowOrderDetail" ng-include src="'@Url.Action("OrderDetail", "Admin")'">
         </div>
     </div>

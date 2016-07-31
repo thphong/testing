@@ -342,7 +342,8 @@ mdlCommon.controller('InventoryController',
             $scope.InventoryForm._CanUpdate = inventory._CanUpdate;
             $scope.InventoryForm._CanDelete = inventory._CanDelete;
             $scope.IsShowInventoryDetail = true;
-
+            $scope.ReloadGrid("ProductsInventory");
+            $scope.InitListProducts();
             //Load Product Inventory
             //$scope.ReloadGrid('ProductsInventory');
             //FValidation.ClearAllError();
@@ -371,6 +372,9 @@ mdlCommon.controller('InventoryController',
             $scope.InventTranForm._CanDelete = tran._CanDelete;
             $scope.IsShowInventTranDetail = true;
 
+
+            $scope.ReloadGrid("ProductsInventTran");
+            $scope.InitListProductsTran();
             //Load Product InventTran
             //$scope.ReloadGrid('ProductsInventTran');
             //FValidation.ClearAllError();

@@ -385,6 +385,8 @@ mdlCommon.controller('OrderController',
             $scope.GetOrderDetail(order);
             $scope.OrderForm._CanUpdate = order._CanUpdate;
             $scope.OrderForm._CanDelete = order._CanDelete;
+            $scope.ReloadGrid("ProductsOrder");
+            $scope.InitListProducts();
         }
 
         $scope.GetOrderDetail = function (order) {
