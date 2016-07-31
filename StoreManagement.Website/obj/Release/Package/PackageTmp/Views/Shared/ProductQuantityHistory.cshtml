@@ -1,4 +1,15 @@
-﻿<!-- Customer Modal -->
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#productQuanHisModal').on('hide.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownProductQuanHistoryModal(false);
+            });
+        });
+    });
+</script>
+<!-- Customer Modal -->
 <div id="productQuanHisModal" class="modal fade " role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -67,7 +78,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row">
+                        <div class="row col-md-12">
                             <div class="col-md-9">
                                 <span grid-paging-for="ProductQuanHistory"></span>
                             </div>

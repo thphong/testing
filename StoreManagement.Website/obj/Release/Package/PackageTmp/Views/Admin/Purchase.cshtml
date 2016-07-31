@@ -1,12 +1,4 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Purchase")
-    @Scripts.Render("~/bundles/SupplierModal")
-    @Scripts.Render("~/bundles/ProductList")
-    @Scripts.Render("~/bundles/Print")
-}
-
-<div id="PurchaseController" ng-controller="PurchaseController">
+﻿<div id="PurchaseController" ng-controller="PurchaseController">
     <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowPurchaseDetail}">
         <div ng-if="!IsShowPurchaseDetail">
             <div class="row" style="padding-top: 5px">
@@ -143,8 +135,7 @@
     </div>
 
     <div class="container-fluid none-display" ng-class="{'active-content' : IsShowPurchaseDetail}">
-        <div ng-if="IsShowPurchaseDetail">
-            @Html.Partial("PurchaseDetail")
+        <div ng-show="IsShowPurchaseDetail" ng-include src="'@Url.Action("PurchaseDetail", "Admin")'">
         </div>
     </div>
 

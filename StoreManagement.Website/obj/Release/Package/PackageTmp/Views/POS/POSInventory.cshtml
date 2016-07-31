@@ -1,4 +1,21 @@
-﻿<!-- Customer Modal -->
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#inventoryPOSModal').on('show.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownPOSInventory(true);
+            });
+        }).on('hide.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownPOSInventory(false);
+            });
+        });
+    });
+</script>
+<!-- Customer Modal -->
 <div id="inventoryPOSModal" class="modal fade " role="dialog">
     <div class="modal-dialog" style="width:95%">
         <!-- Modal content-->
@@ -54,15 +71,6 @@
                                 <div class="infobox-content">SL tồn kho</div>
                             </div>
                         </div>
-                        <div class="infobox infobox-orange">
-                            <div class="infobox-icon">
-                                <i class="fa-refresh fa"></i>
-                            </div>
-                            <div class="infobox-data">
-                                <span class="infobox-data-number infobox-orange" ng-bind="DataSet.InventoryProduct.Sums.SumCost | currency:'':0"></span>
-                                <div class="infobox-content">Tổng vốn tồn kho</div>
-                            </div>
-                        </div>
                         <div class="infobox infobox-red">
                             <div class="infobox-icon">
                                 <i class="fa-shopping-cart fa"></i>
@@ -101,7 +109,6 @@
                                         <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
                                         <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
                                         <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                        <th grid-defined-colum="ProductId.Cost"><span>Vốn tồn kho</span></th>
                                         <th grid-defined-colum="ProductId.Price"><span>Giá trị tồn</span></th>
                                     </tr>
                                 </thead>
@@ -111,7 +118,6 @@
                                         <td ng-bind="item.ProductCode"></td>
                                         <td ng-bind="item.ProductName"></td>
                                         <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></td>
-                                        <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
                                         <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
                                     </tr>
                                     <tr ng-if="!DataSet.InventoryProduct.HasRecord()">

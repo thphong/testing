@@ -9,16 +9,6 @@
     return true;
 }
 
-$(document).ready(function () {
-    $('#productPriceHistoryModal').on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPriceHisModal(false);
-        });
-    });
-});
-
 mdlCommon.controller('ProductController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {

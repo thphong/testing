@@ -323,8 +323,9 @@
             </div>
         </div>
     </div>
-
-    @Html.Partial("CustomerModal")
+    
+    <div ng-include src="'@Url.Action("CustomerModal", "Admin")'">
+    </div>
 </div>
 
 <div id="divDiscount" class="popover fade" ng-class="{'in': DiscountForm.IsShowing, 'right' : DiscountForm.CurrentProduct.ProductId, 'left' : !DiscountForm.CurrentProduct.ProductId}"

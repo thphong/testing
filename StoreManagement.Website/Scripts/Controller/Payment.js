@@ -1,14 +1,4 @@
-﻿$(document).ready(function () {
-    $('#receiveHistoryModal').on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownReceiveHistoryModal(false);
-        });
-    });
-});
-
-mdlCommon.controller('PaymentController',
+﻿mdlCommon.controller('PaymentController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         $controller('ctrlPaging', { $scope: $scope });

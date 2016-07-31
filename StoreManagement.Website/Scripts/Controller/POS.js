@@ -1,46 +1,4 @@
 ﻿$(document).ready(function () {
-    $('#reportPOSModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSReport(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSReport(false);
-        });
-    });
-
-    $('#inventoryPOSModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSInventory(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSInventory(false);
-        });
-    });
-
-    $('#annoucementPOSModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSAnnoucement(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPOSAnnoucement(false);
-        });
-    });
-
     $("#OrderController").keydown(function (event) {
         var controllerId = $(this).attr("id");
         var scope = angular.element(document.getElementById(controllerId)).scope();
@@ -59,7 +17,6 @@
             }
         }
     });
-
 });
 
 

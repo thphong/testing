@@ -312,7 +312,8 @@
                         </div>
                     </div>
                 </div>
-                @Html.Partial("AnnouncementModal")
+                <div ng-include src="'@Url.Action("AnnouncementModal", "Admin")'">
+                </div>
             </div>
         </div>
     </div>

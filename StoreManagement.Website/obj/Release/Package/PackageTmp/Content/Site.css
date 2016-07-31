@@ -685,30 +685,26 @@ button.btn-tiny {
     font-size: 14px !important;
 }
 
-.text-v-middle{
+.text-v-middle {
     vertical-align: middle !important;
 }
 
-.form-control[readonly][date-picker-for]
-{
+.form-control[readonly][date-picker-for] {
     background-color: #fff !important;
 }
 
-div.col-name
-{
+div.col-name {
     font-weight: bold;
     width: 45%;
     display: inline-flex;
 }
 
-div.col-value
-{
+div.col-value {
     width: 54%;
     display: inline-flex;
 }
 
-#page-wrapper
-{
+#page-wrapper {
     padding: 0px !important;
 }
 
@@ -722,4 +718,16 @@ div.col-value
 
 .min-width-150 {
     min-width: 150px !important;
+}
+
+i.img-loading {
+    color: #6fb3e0 !important;
+    left: 47%;
+    font-size: 50px !important;
+    position: relative;
+    margin-top: 15%;
+}
+
+.sidebar .active > a > .fa.arrow::before {
+    content: "\f100" !important;
 }

@@ -1,4 +1,21 @@
-﻿<!-- Customer Modal -->
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#annoucementPOSModal').on('show.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownPOSAnnoucement(true);
+            });
+        }).on('hide.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownPOSAnnoucement(false);
+            });
+        });
+    });
+</script>
+<!-- Customer Modal -->
 <div id="annoucementPOSModal" class="modal fade " role="dialog">
     <div class="modal-dialog row" style="width:95%">
         <!-- Modal content-->

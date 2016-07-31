@@ -1,10 +1,4 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Product")
-    @Scripts.Render("~/bundles/ProductQuanHistory")
-}
-
-<div ng-controller="ProductController">
+﻿<div ng-controller="ProductController">
     @if (!String.IsNullOrWhiteSpace(@ViewBag.ProductType))
     {
         <div ng-init="AdditionalFilter.ProductType = '@ViewBag.ProductType'"></div>
@@ -17,7 +11,7 @@
                         <i class="fa-barcode fa"></i>&nbsp;Hàng hóa
                     </h4>
                 </div>
-                <div class="col-md-5 pull-right text-right" >
+                <div class="col-md-5 pull-right text-right">
                     <button class="btn btn-success btn-primary" ng-if="ProductFormConfig._CanCreate" ng-click="AddProduct()">
                         <i class="fa fa-plus white"></i>
                         <span>Thêm hàng hóa</span>
@@ -148,23 +142,17 @@
         </div>
     </div>
     <div class="container-fluid none-display" ng-class="{'active-content' : IsShowProductDetail}">
-        <div ng-if="IsShowProductDetail">
-            @Html.Partial("ProductDetail")
+        <div ng-show="IsShowProductDetail" ng-include src="'@Url.Action("ProductDetail", "Admin")'">
         </div>
     </div>
-    <div>
-        @Html.Partial("ProductPriceHistoryModal")
+    <div ng-include src="'@Url.Action("ProductPriceHistoryModal", "Admin")'">
     </div>
-    <div>
-        @Html.Partial("ProductGroupModal")
+    <div ng-include src="'@Url.Action("ProductGroupModal", "Admin")'">
     </div>
-    <div>
-        @Html.Partial("ProducerModal")
+    <div ng-include src="'@Url.Action("ProducerModal", "Admin")'">
     </div>
-    <div>
-        @Html.Partial("AttributeModal")
+    <div ng-include src="'@Url.Action("AttributeModal", "Admin")'">
     </div>
-    <div>
-        @Html.Partial("ProductQuantityHistory")
+    <div ng-include src="'@Url.Action("ProductQuantityHistory", "Admin")'">
     </div>
 </div>

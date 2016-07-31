@@ -481,7 +481,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     }
 
     $scope.CalculatedGridPara = function (gridId) {
-        if ($scope.DataSet[gridId] == undefined) return;
+        if ($scope.DataSet[gridId] == undefined) {
+            if (window._GridConfigData[gridId] == undefined) {
+                return;
+            }
+            $scope.DataSet[gridId] = new GridViewDataSet();
+            $scope.Config[gridId] = window._GridConfigData[gridId];
+        }
 
         $scope.DataSet[gridId].TotalItems = $scope.GetNumTotalRecords(gridId);
 
@@ -601,6 +607,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.InitVisibleGrid = function (gridId) {
         //if ($('table[grid-data="' + gridId + '"]').is(":visible")) {
         $scope.ReloadGrid(gridId);
+        //alert($scope.DataSet[gridId].Data.length);
         //}
     }
 

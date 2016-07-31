@@ -1,20 +1,4 @@
-﻿$(document).ready(function () {
-    $('#costTypeModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownCostTypeModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownCostTypeModal(false);
-        });
-    });
-});
-
-mdlCommon.controller('CostTypeController',
+﻿mdlCommon.controller('CostTypeController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         //$controller('ctrlPaging', { $scope: $scope });

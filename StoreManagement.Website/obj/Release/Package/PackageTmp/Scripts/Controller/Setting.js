@@ -8,54 +8,6 @@
     }
     return true;
 }
-
-
-$(document).ready(function () {
-    $('#rolesModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownUserRolesModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownUserRolesModal(false);
-        });
-    });
-
-
-    $('#PrintTermModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownTemplateTermsModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownTemplateTermsModal(false);
-        });
-    });
-
-    $('#promotionStoreModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPromotionStoreModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownPromotionStoreModal(false);
-        });
-    });
-
-});
-
 mdlCommon.controller('SettingController',
 ['$scope', '$filter', '$controller', '$sce',
     function ($scope, $filter, $controller, $sce) {

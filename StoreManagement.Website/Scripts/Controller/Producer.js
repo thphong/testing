@@ -1,20 +1,4 @@
-﻿$(document).ready(function () {
-    $('#producerModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownProducerModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownProducerModal(false);
-        });
-    });
-});
-
-mdlCommon.controller('ProducerController',
+﻿mdlCommon.controller('ProducerController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         //$controller('ctrlPaging', { $scope: $scope });

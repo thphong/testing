@@ -1,5 +1,5 @@
 ﻿
-function CheckNumOfProduct() {
+function CheckNumOfProductPurchase() {
     var scope = angular.element(document.getElementById("PurchaseController")).scope();
     var len = scope.ListProductsPurchase.length;
     return len > 0;

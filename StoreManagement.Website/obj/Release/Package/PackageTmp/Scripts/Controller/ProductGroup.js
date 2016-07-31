@@ -1,20 +1,4 @@
-﻿$(document).ready(function () {
-    $('#productGroupModal').on('show.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownProductGroupModal(true);
-        });
-    }).on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownProductGroupModal(false);
-        });
-    });
-});
-
-mdlCommon.controller('ProductGroupController',
+﻿mdlCommon.controller('ProductGroupController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         //$controller('ctrlPaging', { $scope: $scope });

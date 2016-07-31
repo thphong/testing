@@ -1,12 +1,4 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Inventory")
-    @Scripts.Render("~/bundles/ProductQuanHistory")
-    @Scripts.Render("~/bundles/ProductList")
-    @Scripts.Render("~/bundles/Print")
-}
-
-<div id="InventoryController" ng-controller="InventoryController">
+﻿<div id="InventoryController" ng-controller="InventoryController">
     @if (!String.IsNullOrWhiteSpace(@ViewBag.InventoryProductType))
     {
         <div ng-init="AdditionalFilter.InventoryProductType = '@ViewBag.InventoryProductType'"></div>
@@ -374,8 +366,7 @@
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && IsShowInventoryDetail}">
-                    <div ng-if="(CurrentTab =='InventoryCheck') && IsShowInventoryDetail">
-                        @Html.Partial("InventoryForm")
+                    <div ng-show="(CurrentTab =='InventoryCheck') && IsShowInventoryDetail" ng-include src="'@Url.Action("InventoryForm", "Admin")'">
                     </div>
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && !IsShowInventTranDetail}">
@@ -470,15 +461,16 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && IsShowInventTranDetail}">
-                    <div ng-if="(CurrentTab =='InventTrans') && IsShowInventTranDetail">
-                        @Html.Partial("InventTranForm")
+                    <div ng-show="(CurrentTab =='InventTrans') && IsShowInventTranDetail" ng-include src="'@Url.Action("InventTranForm", "Admin")'">                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @Html.Partial("ProductQuantityHistory")
+    <div ng-include src="'@Url.Action("ProductQuantityHistory", "Admin")'">
+    </div>
     <div class="none-display" id="divPrint">
         <span bind-html-compile="PrintTemplate">
         </span>

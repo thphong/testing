@@ -2,15 +2,6 @@
     Layout = "~/Views/Shared/_LayoutPOS.cshtml";
 }
 
-@section scripts
-{
-    @Scripts.Render("~/bundles/Order")
-    @Scripts.Render("~/bundles/CustomerModal")
-    @Scripts.Render("~/bundles/ProductList")
-    @Scripts.Render("~/bundles/Print")
-    @Scripts.Render("~/bundles/POS")
-}
-
 <div id="OrderController" ng-controller="OrderController">
     <div class="container-fluid">
         <div class="row col-md-7">
@@ -91,7 +82,7 @@
                 <div class="col-md-12">
                     <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false)"
                            class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
-                           check-custom="CheckNumOfProduct" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
+                           check-custom="CheckNumOfProductOrder" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                            check-under="check-order"
                            ng-show="OrderForm._CanUpdate" />
                 </div>
@@ -347,10 +338,10 @@
                 </div>
             </div>
         </div>
-        @Html.Partial("CustomerModal")
-        @Html.Partial("POSReport")
-        @Html.Partial("POSInventory")
-        @Html.Partial("POSAnnounement")
+        <div ng-include src="'@Url.Action("CustomerModal", "Admin")'"></div>
+        <div ng-include src="'@Url.Action("POSReport", "POS")'"></div>
+        <div ng-include src="'@Url.Action("POSInventory", "POS")'"></div>
+        <div ng-include src="'@Url.Action("POSAnnounement", "POS")'"></div>
         <div class="none-display" id="divPrint">
             <span bind-html-compile="PrintTemplate">
             </span>

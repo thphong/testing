@@ -1,11 +1,4 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Customer")
-    @Scripts.Render("~/bundles/CustomerModal")
-    @Scripts.Render("~/bundles/SupplierModal")
-}
-
-<div ng-controller="CustomerController">
+﻿<div ng-controller="CustomerController">
     <div class="container-fluid">
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
@@ -219,8 +212,8 @@
                     </div>
                 </div>
                 <div class="tab-pane" ng-class="{active : ((CurrentTab =='Customers' || CurrentTab =='SaleCustomers') && IsShowCustomerDetail) }">
-                    <div class="col-md-12" ng-if="((CurrentTab =='Customers' || CurrentTab =='SaleCustomers') && IsShowCustomerDetail)">
-                        @Html.Partial("CustomerDetail")
+                    <div class="col-md-12" ng-show="((CurrentTab =='Customers' || CurrentTab =='SaleCustomers') && IsShowCustomerDetail)"
+                         ng-include src="'@Url.Action("CustomerDetail", "Admin")'">
                     </div>
                 </div>
                 <div class="tab-pane" ng-class="{active : (CurrentTab =='Suppliers') && !IsShowSupplierDetail }">
@@ -316,15 +309,16 @@
                     </div>
                 </div>
                 <div class="tab-pane" ng-class="{active : (CurrentTab =='Suppliers' && IsShowSupplierDetail) }">
-                    <div class="col-md-12" ng-if="(CurrentTab =='Suppliers' && IsShowSupplierDetail)">
-                        @Html.Partial("SupplierDetail")
+                    <div class="col-md-12" ng-show="(CurrentTab =='Suppliers' && IsShowSupplierDetail)" ng-include src="'@Url.Action("SupplierDetail", "Admin")'">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @Html.Partial("CustomerModal")
-    @Html.Partial("SupplierModal")
+    <div ng-include src="'@Url.Action("CustomerModal", "Admin")'">
+    </div>
+    <div ng-include src="'@Url.Action("SupplierModal", "Admin")'">
+    </div>
 </div>
 
 

@@ -18,5 +18,23 @@ namespace StoreManagement.Website.Controllers
         {
             return CheckSession();
         }
+
+        [HttpGet]
+        public ActionResult POSReport()
+        {
+            return PartialView("POSReport");
+        }
+
+        [HttpGet]
+        public ActionResult POSInventory()
+        {
+            return PartialView("POSInventory");
+        }
+
+        [HttpGet]
+        public ActionResult POSAnnounement()
+        {
+            return PartialView("POSAnnounement");
+        }
     }
 }

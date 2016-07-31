@@ -1,11 +1,21 @@
-﻿mdlCommon.controller('LoadMenuController',
-['$scope', '$filter', '$controller', '$interpolate',
-    function ($scope, $filter, $controller, $interpolate) {
-        $controller('ctrlPaging', { $scope: $scope });
+﻿angular.element(document).ready(function () {
+    angular.bootstrap(document.getElementById('mdlMenu'), ['mdlMenu']);
+    angular.bootstrap(document.getElementById('mdlCommon'), ['mdlCommon']);
+});
 
+mdlMenu.controller('LoadMenuController',
+['$scope', '$filter', '$controller', '$interpolate', '$location',
+    function ($scope, $filter, $controller, $interpolate, $location) {
+        //$controller('ctrlPaging', { $scope: $scope });
 
         $scope.CurrentStore = g_currentStoreId;
+        $scope.CurrentUser = g_currentUserId;
         $scope.CurrentUrl = window.location.pathname.toLowerCase();
+        $scope.CurrentUserName = g_currentUserName;
+        $scope.CurrentProductGroup = g_currentStoreProductGroup;
+        $scope.StoreName = g_storeName;
+        $scope.StoreAddress = g_storeAddress;
+        $scope.StorePhone = g_storePhone;
 
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
@@ -14,9 +24,18 @@
         configMenuList.GridParametersExpression = "{{CurrentUser}}";
         configMenuList.OrderBy = "DisplayOrder";
 
+        var configListStores = new GridViewConfig("");
+        configListStores.GridDataAction = "getall";
+        configListStores.GridDataType = "table";
+        configListStores.GridDataObject = "T_Master_Stores";
+        configListStores.GridDefinedColums = "StoreId;StoreName";
+        configListStores.GridSortCondition = "StoreName ASC";
+
         if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);
             $scope.ListMenu = configMenuList.GetListData();
+
+            $scope.ListStores = configListStores.GetListData();
         }
 
         $scope.SetStoreId = function (storeId) {
@@ -66,6 +85,28 @@
             Remember: false
         };
 
+        $scope.HasLoadFinished = false;
+        $scope.LoadViewBody = function (url) {
+            clearGlobalSession();
+            $scope.CurrentUrl = url;
+            $("i.img-loading").show();
+            var scope = angular.element(document.getElementById("mdlCommon")).scope();
+            if (scope.SrcView != url) {
+                $("#bodyView").hide();
+                scope.$apply(function () {
+                    scope.SrcView = url;
+                });
+            }
+
+            if (!$scope.HasLoadFinished) {
+                scope.$on('$includeContentLoaded', function () {
+                    $("i.img-loading").hide();
+                    $("#bodyView").show();
+                });
+                $scope.HasLoadFinished = true;
+            }
+        }
+
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
@@ -80,4 +121,20 @@
             }
         }
 
+        $(document).ready(function () {
+
+            if (window.location.pathname.toLowerCase().indexOf("/account/posinfo") >= 0) {
+                $("#linkUserInfo").click();
+            }
+            else {
+                if ($("li.active a.left-menu").length > 0) {
+                    $("li.active a.left-menu").first().click();
+                }
+                else {
+                    $("a.left-menu").first().click();
+                }
+            }
+        });
+
     }]);
+

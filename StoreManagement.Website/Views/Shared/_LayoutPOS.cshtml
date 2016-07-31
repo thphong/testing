@@ -76,10 +76,13 @@
                 <div class="navbar-header">
                     <a class="navbar-brand white" href="#">Quản lý cửa hàng: @StoreManagement.Website.SessionCollection.StoreName</a>
                 </div>
-                <div class="navbar-brand white text-center col-xs-7" style="font-size: 11px">
+                <div class="navbar-brand white text-center col-xs-7 col-md-4" style="font-size: 11px">
                     <a href="#" class="white" data-toggle="modal" data-target="#reportPOSModal"> Báo cáo </a> |
                     <a href="#" class="white" data-toggle="modal" data-target="#inventoryPOSModal"> Tồn Kho </a> |
-                    <a href="@Url.Action("Index", "Admin")" target="_blank" class="white"> Quản lý </a> |
+                    @if (StoreManagement.Website.SessionCollection.DefaultAction.ToLower().Equals("admin")) {
+                        <a href="@Url.Action("Index", "Admin")" target="_blank" class="white"> Quản lý </a> 
+                        <span>|</span>
+                    }
                     <a href="#" class="white" data-toggle="modal" data-target="#annoucementPOSModal"> Thông báo </a>
                 </div>
                 @if (StoreManagement.Website.SessionCollection.IsLogIn)

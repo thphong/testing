@@ -28,7 +28,6 @@
         var g_storeName = '@Html.Raw(StoreManagement.Website.SessionCollection.StoreName)';
         var g_storeAddress = '@Html.Raw(StoreManagement.Website.SessionCollection.StoreAddress)';
         var g_storePhone = '@Html.Raw(@StoreManagement.Website.SessionCollection.StorePhone)';
-        var g_Rules = {};
         var g_exportExcelAjaxUrl = '@Url.Action("ExportExcelWithTemplateAjax", "Data")';
         var g_exportExcelUrl = '@Url.Action("ExportExcelWithTemplate", "Data")';
         var g_saveProductImageUrl = '@Url.Action("SaveProductImage", "Data")';
@@ -56,121 +55,129 @@
     @Scripts.Render("~/bundles/C3Chart")
     @Scripts.Render("~/bundles/FileInput")
     @Scripts.Render("~/bundles/MD5")
-    @*@Scripts.Render("~/bundles/CKEditor")*@
     <script src="@Url.Content("~/Scripts/ckeditor/ckeditor.js")" type="text/javascript"></script>
     @Scripts.Render("~/bundles/InputMask")
 
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/General")
+    @Scripts.Render("~/bundles/Announcement")
+    @Scripts.Render("~/bundles/Customer")
+    @Scripts.Render("~/bundles/CustomerModal")
+    @Scripts.Render("~/bundles/SupplierModal")
+    @Scripts.Render("~/bundles/Exception")
+    @Scripts.Render("~/bundles/ProductGroup")
+    @Scripts.Render("~/bundles/Producer")
+    @Scripts.Render("~/bundles/Attribute")
+    @Scripts.Render("~/bundles/Inventory")
+    @Scripts.Render("~/bundles/ProductQuanHistory")
+    @Scripts.Render("~/bundles/ProductList")
+    @Scripts.Render("~/bundles/Print")
+    @Scripts.Render("~/bundles/DataLog")
+    @Scripts.Render("~/bundles/Order")
+    @Scripts.Render("~/bundles/POS")
+    @Scripts.Render("~/bundles/Payment")
+    @Scripts.Render("~/bundles/CostType")
+    @Scripts.Render("~/bundles/Product")
+    @Scripts.Render("~/bundles/Profit")
+    @Scripts.Render("~/bundles/Purchase")
+    @Scripts.Render("~/bundles/Revenue")
+    @Scripts.Render("~/bundles/Setting")
+    @Scripts.Render("~/bundles/User")
 
-    <script type="text/javascript">
-        if (g_currentUserId > 0) {
-            AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
-                g_Rules = result;
-            });
-        }
-    </script>
 </head>
-<body ng-app="mdlCommon">
-    <div id="wrapper">
+<body>
+    <div id="wrapper" >
         <!-- Navigation -->
-        <nav ng-controller="LoadMenuController" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle white" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar white"></span>
-                    <span class="icon-bar white"></span>
-                    <span class="icon-bar white"></span>
-                </button>
-                <a class="navbar-brand white" href="#">Quản lý cửa hàng: @StoreManagement.Website.SessionCollection.StoreName</a>
-            </div>
-            @if (StoreManagement.Website.SessionCollection.IsLogIn)
+        <div id="mdlMenu">
+            <nav id="LoadMenuController" ng-controller="LoadMenuController" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <span ng-init="CurrentUrl = '@StoreManagement.Website.SessionCollection.LastUrl'"></span>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle white" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar white"></span>
+                        <span class="icon-bar white"></span>
+                        <span class="icon-bar white"></span>
+                    </button>
+                    <a class="navbar-brand white" href="#">Quản lý cửa hàng: @StoreManagement.Website.SessionCollection.StoreName</a>
+                </div>
+                @if (StoreManagement.Website.SessionCollection.IsLogIn)
             {
             <!-- /.navbar-header -->
-                <ul class="nav navbar-top-links navbar-right text-right">
-                    <!-- /.dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-shopping-cart white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts"
-                            grid-data="AllStores"
-                            grid-data-type="table" @*table/storedprocedure*@
-                            grid-data-action="getall" @*get/getall*@
-                            grid-data-object="T_Master_Stores" @*table name or stored procedure name*@
-                            grid-sort-condition="[StoreCode] ASC">
-                            <tmp grid-defined-colum="StoreId" class="none-display"></tmp>
-                            <tmp grid-defined-colum="StoreName" class="none-display"></tmp>
-                                      
-                            <li ng-repeat-start="item in DataSet.AllStores.Data">
-                                <a href="#" ng-click="SetStoreId(item.StoreId)">
-                                     <i class="fa fa-shopping-cart fa-fw"></i> <span ng-bind="item.StoreName"></span>
-                                </a>
-                            </li>
-                            <li ng-repeat-end class="divider" ng-if="!$last"></li>
-                        </ul>
-                        <!-- /.dropdown-alerts -->
-                    </li>
-                    <!-- /.dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="@Url.Action("Info", "Account")"><i class="fa fa-user fa-fw"></i> Thông tin</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#" ng-click="LogOut()"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-user -->
-                    </li>
-                    <!-- /.dropdown -->
-                </ul>
-            <!-- /.navbar-top-links -->
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            <li class="sidebar-shortcuts">
-                                <div class="input-group custom-search-form">
-                                    <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 90%; margin: 7px 10px; font-weight: bold;">
-                                        <i class="fa fa-desktop" style="margin-right: 12px;"></i>POS - Bán hàng
+                    <ul class="nav navbar-top-links navbar-right text-right">
+                        <!-- /.dropdown -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-shopping-cart white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li ng-repeat-start="item in ListStores">
+                                    <a href="#" ng-click="SetStoreId(item.StoreId)">
+                                        <i class="fa fa-shopping-cart fa-fw"></i> <span ng-bind="item.StoreName"></span>
                                     </a>
-                                </div>
-                                <!-- /input-group -->
-                            </li>
-                            <li ng-class="{'active' : (menu.Url.toLowerCase() == CurrentUrl)}" ng-repeat="menu in ListMenu">
-                                <a href="{{menu.Url}}">
-                                    <i class="{{menu.CssClass}}"></i>
-                                    <span ng-bind="menu.Menu"></span>
-                                    <span ng-if="menu.Url.toLowerCase() == CurrentUrl" class="fa arrow"></span>
-                                </a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li ng-repeat-end class="divider" ng-if="!$last"></li>
+                            </ul>
+                            <!-- /.dropdown-alerts -->
+                        </li>
+                        <!-- /.dropdown -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a href="#" id="linkUserInfo" ng-click="LoadViewBody('@Url.Action("Info", "Account")')"><i class="fa fa-user fa-fw"></i> Thông tin</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#" ng-click="LogOut()"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
+                                </li>
+                            </ul>
+                            <!-- /.dropdown-user -->
+                        </li>
+                        <!-- /.dropdown -->
+                    </ul>
+            <!-- /.navbar-top-links -->
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse">
+                            <ul class="nav" id="side-menu">
+                                <li class="sidebar-shortcuts">
+                                    <div class="input-group custom-search-form">
+                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 90%; margin: 7px 10px; font-weight: bold;">
+                                            <i class="fa fa-desktop" style="margin-right: 12px;"></i>POS - Bán hàng
+                                        </a>
+                                    </div>
+                                    <!-- /input-group -->
+                                </li>
+                                <li ng-class="{'active' : (menu.Url == CurrentUrl)}" ng-repeat="menu in ListMenu">
+                                    <a href="#" action="{{menu.Url}}" class="left-menu" ng-click="LoadViewBody(menu.Url)">
+                                        <i class="{{menu.CssClass}}"></i>
+                                        <span ng-bind="menu.Menu"></span>
+                                        <span ng-if="menu.Url == CurrentUrl" class="fa arrow"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.sidebar-collapse -->
                     </div>
-                    <!-- /.sidebar-collapse -->
-                </div>
             <!-- /.navbar-static-side -->
             }
             else
             {
-                @RenderBody()
+                    @RenderBody()
             }
-        </nav>
+            </nav>
+        </div>
         @if (StoreManagement.Website.SessionCollection.IsLogIn)
         {
         <!-- Page Content -->
             <div id="page-wrapper">
-                <div id="body" @*class="container-fluid"*@>
-                    @*<div class="row">
-                        <div class="col-lg-12">*@
-                            <form method="post" enctype="multipart/form-data">
-                                @RenderBody()
-                            </form>
-                        @*</div>
-                    </div>*@
-                    <!-- /.row -->
+                <div id="body" >
+                    <form id="mdlCommon" method="post" enctype="multipart/form-data">
+                        <div id="bodyView" ng-include src="SrcView">
+                            @RenderBody()
+                        </div>
+                        <i class="fa fa-refresh white loading img-loading"></i>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
             </div>

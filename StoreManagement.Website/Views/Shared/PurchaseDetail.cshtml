@@ -307,8 +307,8 @@
             </div>
         </div>
     </div>
-
-    @Html.Partial("SupplierModal")
+    <div ng-include src="'@Url.Action("SupplierModal", "Admin")'">
+    </div>
 </div>
 
 <div class="row">

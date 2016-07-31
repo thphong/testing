@@ -1,18 +1,9 @@
-﻿@section scripts
-{
-    @Scripts.Render("~/bundles/Order")
-    @Scripts.Render("~/bundles/CustomerModal")
-    @Scripts.Render("~/bundles/ProductList")
-    @Scripts.Render("~/bundles/Print")
-    @Scripts.Render("~/bundles/POS")
-}
-
-<div id="OrderController" ng-controller="OrderController">
+﻿<div id="OrderController" ng-controller="OrderController">
     @if (!String.IsNullOrWhiteSpace(@ViewBag.Status))
     {
         <div ng-init="AdditionalFilter.Status = '@ViewBag.Status'"></div>
     }
-    <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowOrderDetail}">
+    <div class="container-fluid" >
         <div ng-if="!IsShowOrderDetail">
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-6">
@@ -152,13 +143,14 @@
         </div>
     </div>
 
-    <div class="container-fluid none-display" ng-class="{'active-content' : IsShowOrderDetail}">
-        <div ng-if="IsShowOrderDetail">
-            @Html.Partial("OrderDetail")
+    <div class="container-fluid">
+        <div ng-show="IsShowOrderDetail" ng-include src="'@Url.Action("OrderDetail", "Admin")'">
         </div>
     </div>
     <div class="none-display" id="divPrint">
-        <span bind-html-compile="PrintTemplate">
-        </span>
+        <div>
+            <span bind-html-compile="PrintTemplate">
+            </span>
+        </div>
     </div>
 </div>

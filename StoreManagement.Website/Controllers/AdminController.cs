@@ -47,7 +47,138 @@ namespace StoreManagement.Website.Controllers
             return PartialView("Products");
         }
 
-        
+        [HttpGet]
+        public ActionResult ProductDetail()
+        {
+            return PartialView("ProductDetail");
+        }
+
+        [HttpGet]
+        public ActionResult ProductPriceHistoryModal()
+        {
+            return PartialView("ProductPriceHistoryModal");
+        }
+
+        [HttpGet]
+        public ActionResult ProductGroupModal()
+        {
+            return PartialView("ProductGroupModal");
+        }
+
+        [HttpGet]
+        public ActionResult ProducerModal()
+        {
+            return PartialView("ProducerModal");
+        }
+
+        [HttpGet]
+        public ActionResult AttributeModal()
+        {
+            return PartialView("AttributeModal");
+        }
+
+        [HttpGet]
+        public ActionResult ProductQuantityHistory()
+        {
+            return PartialView("ProductQuantityHistory");
+        }
+
+        [HttpGet]
+        public ActionResult SupplierModal()
+        {
+            return PartialView("SupplierModal");
+        }
+
+        [HttpGet]
+        public ActionResult CustomerModal()
+        {
+            return PartialView("CustomerModal");
+        }
+
+        [HttpGet]
+        public ActionResult PurchaseDetail()
+        {
+            return PartialView("PurchaseDetail");
+        }
+
+        [HttpGet]
+        public ActionResult PromotionStore()
+        {
+            return PartialView("PromotionStore");
+        }
+
+        [HttpGet]
+        public ActionResult PrintTermModal()
+        {
+            return PartialView("PrintTermModal");
+        }
+
+        [HttpGet]
+        public ActionResult RolesModal()
+        {
+            return PartialView("RolesModal");
+        }
+
+        [HttpGet]
+        public ActionResult UserModal()
+        {
+            return PartialView("UserModal");
+        }
+
+        [HttpGet]
+        public ActionResult CostModal()
+        {
+            return PartialView("CostModal");
+        }
+
+        [HttpGet]
+        public ActionResult CostTypeModal()
+        {
+            return PartialView("CostTypeModal");
+        }
+
+        [HttpGet]
+        public ActionResult ReceiveHistoryModal()
+        {
+            return PartialView("ReceiveHistoryModal");
+        }
+
+        [HttpGet]
+        public ActionResult OrderDetail()
+        {
+            return PartialView("OrderDetail");
+        }
+
+        [HttpGet]
+        public ActionResult InventTranForm()
+        {
+            return PartialView("InventTranForm");
+        }
+
+        [HttpGet]
+        public ActionResult InventoryForm()
+        {
+            return PartialView("InventoryForm");
+        }
+
+        [HttpGet]
+        public ActionResult AnnouncementModal()
+        {
+            return PartialView("AnnouncementModal");
+        }
+
+        [HttpGet]
+        public ActionResult SupplierDetail()
+        {
+            return PartialView("SupplierDetail");
+        }
+
+        [HttpGet]
+        public ActionResult CustomerDetail()
+        {
+            return PartialView("CustomerDetail");
+        }
+
         [HttpGet]
         public ActionResult Customers()
         {

@@ -1,14 +1,4 @@
-﻿$(document).ready(function () {
-    $('#productQuanHisModal').on('hide.bs.modal', function (e) {
-        var modalId = $(this).attr("id");
-        var scope = angular.element(document.getElementById(modalId)).scope();
-        scope.$apply(function () {
-            scope.SetShownProductQuanHistoryModal(false);
-        });
-    });
-});
-
-mdlCommon.controller('ProductQuanHistoryController',
+﻿mdlCommon.controller('ProductQuanHistoryController',
 ['$scope', '$filter', '$interpolate', '$controller',
     function ($scope, $filter, $interpolate, $controller) {
 

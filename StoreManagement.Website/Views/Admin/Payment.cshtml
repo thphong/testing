@@ -351,10 +351,12 @@
             </div>
         </div>
     </div>
-    @Html.Partial("CostModal")
-    @Html.Partial("CostTypeModal")
-    @Html.Partial("ReceiveHistoryModal")
-
+    <div ng-include src="'@Url.Action("CostModal", "Admin")'">
+    </div>
+    <div ng-include src="'@Url.Action("CostTypeModal", "Admin")'">
+    </div>
+    <div ng-include src="'@Url.Action("ReceiveHistoryModal", "Admin")'">
+    </div>
     <div class="none-display" id="divPrint">
         <span bind-html-compile="PrintTemplate">
         </span>

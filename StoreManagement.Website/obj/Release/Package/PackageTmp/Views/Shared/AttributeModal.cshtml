@@ -1,5 +1,20 @@
-﻿
-@Scripts.Render("~/bundles/Attribute")
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#attributeModal').on('show.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownAttributeModal(true);
+            });
+        }).on('hide.bs.modal', function (e) {
+            var modalId = $(this).attr("id");
+            var scope = angular.element(document.getElementById(modalId)).scope();
+            scope.$apply(function () {
+                scope.SetShownAttributeModal(false);
+            });
+        });
+    });
+</script>
 <!-- Customer Modal -->
 <div id="attributeModal" class="modal fade " role="dialog" >
     <div class="modal-dialog modal-lg">

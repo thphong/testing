@@ -135,8 +135,7 @@
     </div>
 
     <div class="container-fluid none-display" ng-class="{'active-content' : IsShowPurchaseDetail}">
-        <div ng-if="IsShowPurchaseDetail">
-            @Html.Partial("PurchaseDetail")
+        <div ng-show="IsShowPurchaseDetail" ng-include src="'@Url.Action("PurchaseDetail", "Admin")'">
         </div>
     </div>
 
