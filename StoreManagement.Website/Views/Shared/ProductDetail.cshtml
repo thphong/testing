@@ -225,7 +225,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 margin-top-10">
-                <div class="table-responsive" ng-if="ProductForm.IsManageAttribute == 1">
+                <div class="table-responsive" ng-show="ProductForm.IsManageAttribute == 1">
                     <table grid-data="ProductAttributes"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="getall" @*get/getall*@
@@ -236,6 +236,7 @@
                         <thead>
                             <tr>
                                 <th grid-defined-colum="AttributeId" class="none-display"></th>
+                                <th grid-defined-colum="ProductId" class="none-display"></th>
                                 <th grid-defined-colum="AttributeId.AttributeName">Thuộc tính</th>
                                 <th grid-defined-colum="Value" style="width: 70%"><span>Giá trị</span></th>
                                 <th ng-if="ProductForm.ProductId == -1"></th>

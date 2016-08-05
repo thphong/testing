@@ -41,7 +41,7 @@
                 <div grid-defined-colum="#NumSelling" class="none-display"></div>
                 <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
 
-                <div class="col-md-12 row">
+                <div class="col-md-12 row" ng-init="Config.Products.NumOfItemOnPage = 12">
                     <div class="col-md-3 col-xs-4 col-lg-3" ng-repeat="item in DataSet.Products.Data">
                         <div style="margin-top: 20px">
                             <a href="#" class="thumbnail" ng-click="SelectProduct(item)">
@@ -51,7 +51,7 @@
                                      style="width:auto;height:110px;" />
 
                             </a>
-                            <div class="text-center" style="margin-top: -12px">
+                            <div class="text-center" style="margin-top: -12px;height: 100px;">
                                 <div ng-bind="item.ProductName"></div>
                                 <div> Mã: <span ng-bind="item.ProductCode"></span></div>
                                 <div class="bold">

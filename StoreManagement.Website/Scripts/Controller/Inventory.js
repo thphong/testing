@@ -194,7 +194,7 @@ mdlCommon.controller('InventoryController',
                         Diff: "",
                         Notes: ""
                     }
-                    $scope.ListProductsInventory.push(item);
+                    $scope.ListProductsInventory.splice(0, 0, item);
                 }
                 $scope.SummarizeInventory();
             }
@@ -207,6 +207,7 @@ mdlCommon.controller('InventoryController',
                 for (var i = 0 ; i < $scope.ListProductsInventTran.length ; i++) {
                     if ($scope.ListProductsInventTran[i].ProductId == product.ProductId) {
                         ShowErrorMessage("Bạn đã chọn hàng hóa này trong phiếu chuyển kho");
+
                         hasExist = true;
                         break;
                     }
@@ -223,7 +224,7 @@ mdlCommon.controller('InventoryController',
                         TranQuantity: "",
                         Notes: ""
                     }
-                    $scope.ListProductsInventTran.push(item);
+                    $scope.ListProductsInventTran.splice(0, 0, item);
                 }
                 $scope.SummarizeInventTran();
             }

@@ -258,7 +258,7 @@ mdlCommon.controller('ProductController',
 
         //Product Attrubute
         $scope.InitProductAttribute = function () {
-            $scope.DataSet.ProductAttributes.Data = [{ AttributeId: '', Value: '' }];
+            $scope.DataSet.ProductAttributes.Data = [{ AttributeId: '', Value: '', ProductId: $scope.ProductForm.ProductId }];
         }
 
         $scope.AddProductAttribute = function () {
