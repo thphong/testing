@@ -173,6 +173,8 @@ mdlCommon.controller('ProductController',
             FValidation.ClearAllError();
             $scope.ResetProductForm();
             $scope.ProductForm.isCombo = isCombo;
+            $scope.DataSet.ProductAttributes.Data = [];
+            $scope.DataSet.ProductChildren.Data = [];
         }
 
         $scope.CloseProductDetail = function () {
