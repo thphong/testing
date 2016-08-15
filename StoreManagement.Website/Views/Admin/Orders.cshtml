@@ -3,7 +3,7 @@
     {
         <div ng-init="AdditionalFilter.Status = '@ViewBag.Status'"></div>
     }
-    <div class="container-fluid" >
+    <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowOrderDetail}">
         <div ng-if="!IsShowOrderDetail">
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-6">

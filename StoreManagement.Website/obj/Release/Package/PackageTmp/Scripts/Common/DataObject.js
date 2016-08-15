@@ -146,6 +146,15 @@ function ObjectDataConfig(tableName, $scope) {
                 data += "<<>>";
             }
             data += this.GetCombinedData(this.ListObjectData[i]);
+            if (this.ListObjectData[i]["Version"] != undefined) {
+                this.ListObjectData[i]["Version"]++;
+            }
+            else if (this.ListObjectData[i]["version"] != undefined) {
+                this.ListObjectData[i]["version"]++;
+            }
+            else {
+                this.ListObjectData[i]["Version"] = 1;
+            }
         }
         var result = AjaxSync(g_saveComplexObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + this.GetCombinedData(this.ObjectData) + '", subObject: "' + this.SubTableName + '", listData: "' + data + '"}');
 
@@ -164,6 +173,15 @@ function ObjectDataConfig(tableName, $scope) {
                 data += "<<>>";
             }
             data += this.GetCombinedData(this.ListObjectData[i]);
+            if (this.ListObjectData[i]["Version"] != undefined) {
+                this.ListObjectData[i]["Version"]++;
+            }
+            else if (this.ListObjectData[i]["version"] != undefined) {
+                this.ListObjectData[i]["version"]++;
+            }
+            else {
+                this.ListObjectData[i]["Version"] = 1;
+            }
         }
         var result = AjaxSync(g_saveListObjectUrl, '{ tableName: "' + this.TableName + '", data: "' + data + '"}');
         return result;

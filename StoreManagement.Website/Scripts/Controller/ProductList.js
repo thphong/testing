@@ -3,14 +3,14 @@ mdlCommon.controller('ProductListController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         
-        $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice) {
+        $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice, includeCombo) {
             $(elementId).autocomplete({
                 minLength: 0,
                 source: function (request, response) {
                     var configList = new GridViewConfig("");
                     configList.GridDataAction = "get10";
                     configList.GridDataObject = "T_Trans_Product_Store";
-                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Cost;ProductId.Price;ProductId.VAT;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive";
+                    configList.GridDefinedColums = "ProductId;ProductId.ProductCode;ProductId.ProductName;Quantity;ProductId.Cost;ProductId.Price;ProductId.VAT;ProductId.AllowNegative;#ProductId.IsSelling;#ProductId.IsActive;#ProductId.IsCombo";
                     configList.GridFilterCondition = "T_Trans_Product_Store.StoreId = " + g_currentStoreId + " and ProductId.IsSelling = 1 and ProductId.IsActive = 1 and (ProductId.ProductCode like N''%" + request.term + "%'' or ProductId.ProductName like N''%" + request.term + "%'')";
                     configList.GridSortCondition = "ProductId.ProductCode ASC";
 
@@ -20,6 +20,10 @@ mdlCommon.controller('ProductListController',
 
                     if (!includeNotPrice) {
                         configList.GridFilterCondition += " and (ProductId.Cost > 0 and ProductId.Price > 0)";
+                    }
+
+                    if (!includeCombo) {
+                        configList.GridFilterCondition += " and (ProductId.IsCombo = 0)";
                     }
 
                     var listData = configList.GetListData();

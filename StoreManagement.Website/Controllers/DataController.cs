@@ -91,11 +91,11 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveComplexObject(string tableName, string data, string subObject, string listData)
+        public ActionResult SaveComplexObject(string tableName, string data, string subObject, string listData, string associatedColumn = "")
         {
             try
             {
-                int id = dataService.SaveComplexObject(SessionCollection.CurrentUserId, tableName, data, subObject, listData);
+                int id = dataService.SaveComplexObject(SessionCollection.CurrentUserId, tableName, data, subObject, listData, associatedColumn);
                 return Json(id);
             }
             catch (Exception ex)

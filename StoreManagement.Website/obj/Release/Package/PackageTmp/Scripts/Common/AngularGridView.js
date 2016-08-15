@@ -588,6 +588,17 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         $scope.CalculatedGridPara(gridId);
     }
 
+    $scope.RemoveGrid = function (gridId) {
+        //_ListGridIds = [];
+        for (var i = 0; i < _ListGridIds.length; i++) {
+            if (gridId == _ListGridIds[i]) {
+                _ListGridIds.splice(i, 1);
+            }
+        }
+        _GridConfigData[gridId] = null;
+        $scope.Config[gridId] = null;
+    }
+
     $scope.ReloadDropdown = function (dropdownId) {
         //Evaluate condition before send to execute in DB
         var config = $scope.ConfigDropdown[dropdownId];

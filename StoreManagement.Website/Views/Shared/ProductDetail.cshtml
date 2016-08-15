@@ -237,17 +237,18 @@
                             <tr>
                                 <th grid-defined-colum="AttributeId" class="none-display"></th>
                                 <th grid-defined-colum="ProductId" class="none-display"></th>
+                                <th grid-defined-colum="Id" class="none-display"></th>
                                 <th grid-defined-colum="AttributeId.AttributeName">Thuộc tính</th>
                                 <th grid-defined-colum="Value" style="width: 70%"><span>Giá trị</span></th>
-                                <th ng-if="ProductForm.ProductId == -1"></th>
+                                <th ng-if="IsEditingProductDetail"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @*Dataset must have grid id*@
                             <tr ng-repeat="item in DataSet.ProductAttributes.Data">
                                 <td>
-                                    <span ng-if="ProductForm.ProductId != -1" ng-bind="item.AttributeName"></span>
-                                    <select class="form-control" ng-show="ProductForm.ProductId == -1"
+                                    <span ng-if="!IsEditingProductDetail" ng-bind="item.AttributeName"></span>
+                                    <select class="form-control" ng-show="IsEditingProductDetail"
                                             ng-init="item.AttributeId = item.AttributeId + ''"
                                             ng-model="item.AttributeId" dropdown-master-table="T_Master_Attibutes" dropdown-value-field="AttributeId"
                                             dropdown-name-field="AttributeName" dropdown-empty-text="Chọn thuộc tính" dropdown-empty-value=""
@@ -255,19 +256,19 @@
                                             check-empty="" check-empty-message="Vui lòng chọn thuộc tính."></select>
                                 </td>
                                 <td>
-                                    <span ng-if="ProductForm.ProductId != -1" ng-bind="item.Value"></span>
-                                    <input ng-if="ProductForm.ProductId == -1" class="form-control" ng-model="item.Value"
+                                    <span ng-if="!IsEditingProductDetail" ng-bind="item.Value"></span>
+                                    <input ng-if="IsEditingProductDetail" class="form-control" ng-model="item.Value"
                                            check-empty="" check-empty-message="Vui lòng nhập giá trị thuộc tính."
                                            check-length="200" check-length-message="Chiều dài tối đa là {0}." />
                                 </td>
-                                <td ng-if="ProductForm.ProductId == -1">
+                                <td ng-if="IsEditingProductDetail">
                                     <a class="red margin-left-10" title="Xóa thuộc tính"
                                        ng-click="DeleteProductAttribute(item)">
                                         <i class="fa-trash fa"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr ng-if="ProductForm.ProductId == -1">
+                            <tr ng-if="IsEditingProductDetail">
                                 <td colspan="3"> <button class="btn btn-primary btn-tiny" ng-click="AddProductAttribute()"> <i class="fa fa-plus"></i> </button> </td>
                             </tr>
                         </tbody>

@@ -103,6 +103,11 @@ mdlCommon.controller('PurchaseController',
                 if ($scope.ListProductsPurchase[i].ProductId == product.ProductId) {
                     $scope.ListProductsPurchase[i].Quantity++;
                     $scope.ListProductsPurchase[i].RealCost = $scope.ListProductsPurchase[i].Quantity * $scope.ListProductsPurchase[i].Cost;
+
+                    var item = $scope.ListProductsPurchase[i];
+                    $scope.ListProductsPurchase.splice(i, 1);
+                    $scope.ListProductsPurchase.splice(0, 0, item);
+
                     hasExist = true;
                     break;
                 }
@@ -121,7 +126,7 @@ mdlCommon.controller('PurchaseController',
                     Quantity: 1,
                     RealCost: product.Cost
                 }
-                $scope.ListProductsPurchase.push(item);
+                $scope.ListProductsPurchase.splice(0, 0, item);
             }
             $scope.Summarize();
         }

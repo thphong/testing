@@ -20,7 +20,7 @@ namespace StoreManagement.Service
 
         Dictionary<string, object> GetObject(int userId, string tableName, string columName, string columValue);
         int SaveObject(int userId, string tableName, string objectData);
-        int SaveComplexObject(int userId, string tableName, string objectData, string subTableName, string subObjectData);
+        int SaveComplexObject(int userId, string tableName, string objectData, string subTableName, string subObjectData, string associatedColumn = "");
         void SaveListObject(int userId, string tableName, string objectData);
         void DeleteObject(int userId, string tableName, int keyValue, bool isHardDelete);
         bool CheckCanCreate(int userId, string tableName);

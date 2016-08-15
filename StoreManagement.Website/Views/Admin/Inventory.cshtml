@@ -111,6 +111,7 @@
                                            grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
                                            grid-filter-condition="[ProductId.IsActive] = 1
                                                 and [ProductId.IsSelling] = 1
+                                                and [ProductId.IsCombo] = 0
                                                 and [StoreId] = {{CurrentStore}}
                                                 and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
                                                 and ({{AdditionalFilter.InventoryProductType}} = 0

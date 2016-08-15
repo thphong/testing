@@ -54,6 +54,12 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpGet]
+        public ActionResult ComboDetail()
+        {
+            return PartialView("ComboDetail");
+        }
+
+        [HttpGet]
         public ActionResult ProductPriceHistoryModal()
         {
             return PartialView("ProductPriceHistoryModal");

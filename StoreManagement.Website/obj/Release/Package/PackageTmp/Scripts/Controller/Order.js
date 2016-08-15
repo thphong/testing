@@ -162,6 +162,11 @@ mdlCommon.controller('OrderController',
                             $scope.ListProductsOrder[i].RealPrice = $scope.ListProductsOrder[i].Quantity * parseInt($scope.ListProductsOrder[i].Price * (100 - $scope.ListProductsOrder[i].Discount) / 100);
                         }
                     }
+
+                    var item = $scope.ListProductsOrder[i];
+                    $scope.ListProductsOrder.splice(i, 1);
+                    $scope.ListProductsOrder.splice(0, 0, item);
+
                     hasExist = true;
                     break;
                 }
@@ -183,7 +188,7 @@ mdlCommon.controller('OrderController',
                     Discount: 0,
                     IsDiscountPercent: 1
                 }
-                $scope.ListProductsOrder.push(item);
+                $scope.ListProductsOrder.splice(0, 0, item);
             }
             $scope.Summarize();
 

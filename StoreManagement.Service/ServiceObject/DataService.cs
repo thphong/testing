@@ -156,15 +156,15 @@ namespace StoreManagement.Service
             dbFactory.GetContext().Database.ExecuteSqlCommand(statement);
         }
 
-        public int SaveComplexObject(int userId, string tableName, string objectData, string subTableName, string subObjectData)
+        public int SaveComplexObject(int userId, string tableName, string objectData, string subTableName, string subObjectData, string associatedColumn = "")
         {
             objectData = objectData.Replace("'", "''");
             subObjectData = subObjectData.Replace("'", "''");
-            string statement = string.Format("exec [dbo].[USP_System_Data_ComplexObject_Update] @TableName = '{0}', @Data = N'{1}', @SubTableName = '{2}', @DataList = N'{3}', @UserId = {4}"
-                    , tableName, objectData, subTableName, subObjectData, userId);
+            string statement = string.Format("exec [dbo].[USP_System_Data_ComplexObject_Update] @TableName = '{0}', @Data = N'{1}', @SubTableName = '{2}', @DataList = N'{3}', @UserId = {4}, @AssociatedColumn = '{5}'"
+                    , tableName, objectData, subTableName, subObjectData, userId, associatedColumn);
 
             int result = dbFactory.GetContext().Database.SqlQuery<int>
-                    (statement).LastOrDefault();
+                    (statement).FirstOrDefault();
             return result;
         }
 

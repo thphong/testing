@@ -6,12 +6,6 @@
             scope.$apply(function () {
                 scope.SetShownPOSInventory(true);
             });
-        }).on('hide.bs.modal', function (e) {
-            var modalId = $(this).attr("id");
-            var scope = angular.element(document.getElementById(modalId)).scope();
-            scope.$apply(function () {
-                scope.SetShownPOSInventory(false);
-            });
         });
     });
 </script>
@@ -48,7 +42,7 @@
                         <span date-range-filter-for="InventoryProduct" date-range-init-code="0"></span>
                     </div>
                     <div class="col-md-2 margin-top-5">
-                        <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProduct.xlsx"></span>
+                        <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProductPOS.xlsx"></span>
                     </div>
                 </div>
                 <div class="row form-group col-md-12 margin-top-10">
@@ -91,6 +85,7 @@
                                    grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
                                    grid-filter-condition="[ProductId.IsActive] = 1
                                                 and [ProductId.IsSelling] = 1
+                                                and [ProductId.IsCombo] = 0
                                                 and [StoreId] = {{CurrentStore}}
                                                 and ({{AdditionalPOSFilter.InventoryProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalPOSFilter.InventoryProductGroup}})
                                                 and ({{AdditionalPOSFilter.InventoryProductType}} = 0
