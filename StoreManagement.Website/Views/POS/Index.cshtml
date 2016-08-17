@@ -272,7 +272,7 @@
                         </div>
                         <div class="col-xs-8">
                             <span ng-bind="OrderForm.CustomerName" ng-if="!OrderForm._CanUpdate"></span>
-                            <div class="width-90" ng-show="OrderForm._CanUpdate">
+                            <div @*class="width-90"*@ ng-show="OrderForm._CanUpdate">
                                 <input class="form-control" ng-model="OrderForm.CustomerName"
                                        autocomplete-master-table="T_Master_Customers"
                                        autocomplete-colum-id="CustomerId"
@@ -286,7 +286,7 @@
                                 <input id="txtCustomerId" class="none-display" ng-model="OrderForm.Customer" />
                                 <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
                             </div>
-                            <div class="width-10" ng-if="OrderForm._CanUpdate">
+                            <div class="width-10" ng-if="OrderForm._CanUpdate && false">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
                                         ng-if="CustomerFormConfig._CanCreate">

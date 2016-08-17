@@ -239,8 +239,8 @@ function GetIntFromCurrency(value)
 }
 
 
-var alertTime = 4 * 60 * 1000;
-var reloadTime = 5 * 60 * 1000;
+var alertTime = 175 * 60 * 1000;
+var reloadTime = 180 * 60 * 1000;
 
 setTimeout(function () {
     if (confirm("Phiên làm việc của bạn sắp hết, vui lòng nhấn 'Ok' để tải lại trang")) {
