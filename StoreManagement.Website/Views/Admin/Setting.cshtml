@@ -61,7 +61,7 @@
                                            grid-data-type="table" @*table/storedprocedure*@
                                            grid-data-action="get" @*get/getall*@
                                            grid-data-object="T_Master_User" @*table name or stored procedure name*@
-                                           grid-filter-condition="" @*must have [fieldname] for each colum field*@
+                                           grid-filter-condition="[IsDeveloper] is null or [IsDeveloper] = 0" @*must have [fieldname] for each colum field*@
                                            grid-sort-condition="[UserName] ASC" @*must have [fieldname] for each colum field*@
                                            grid-sum-collection="" @*must have [fieldname] for each colum field*@
                                            class="table table-striped table-bordered">

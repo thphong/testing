@@ -237,5 +237,59 @@ namespace StoreManagement.Service
             }
             return result;
         }
+
+        public IList<Dictionary<string, object>> ExecuteSQL(int userId, string sql)
+        {
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            DataTable dt;
+
+            DataSet retVal = new DataSet();
+            SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;
+            SqlCommand cmdReport = new SqlCommand(sql, sqlConn);
+            SqlDataAdapter daReport = new SqlDataAdapter(cmdReport);
+            using (cmdReport)
+            {
+                cmdReport.CommandType = CommandType.Text;
+                daReport.Fill(retVal);
+            }
+            if (retVal.Tables.Count > 0)
+            {
+                dt = retVal.Tables[0];
+
+                Dictionary<string, object> row;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    row = new Dictionary<string, object>();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        if (dr[col] == DBNull.Value)
+                        {
+                            row.Add(col.ColumnName, "");
+                        }
+                        else
+                        {
+                            if (dr[col] is DateTime)
+                            {
+                                row.Add(col.ColumnName, ((DateTime)dr[col]).ToString("yyyy-MM-dd hh:mm:ss"));
+                            }
+                            else
+                            {
+                                row.Add(col.ColumnName, dr[col]);
+                            }
+                        }
+                    }
+                    rows.Add(row);
+                }
+            }
+            else
+            {
+                Dictionary<string, object> row = new Dictionary<string, object>();
+                row.Add("Result", "SQL được thực thi thành công!");
+                rows.Add(row);
+            }
+            
+            return rows;
+        }
+
     }
 }

@@ -273,5 +273,22 @@ namespace StoreManagement.Website.Controllers
                 return Json("#error:" + ex.Message);
             }
         }
+
+        [HttpPost]
+        public ActionResult ExecuteSQL(string sql)
+        {
+            try
+            {
+                if (SessionCollection.IsDeveloper)
+                {
+                    return Json(dataService.ExecuteSQL(SessionCollection.CurrentUserId, sql));
+                }
+                throw new Exception("You are not developer!");
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
     }
 }

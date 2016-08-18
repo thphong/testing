@@ -1,0 +1,43 @@
+﻿<div ng-controller="SQLController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" >
+                <div class="row" style="padding: 20px;">
+                    <textarea class="form-control" rows="16" ng-model="SQLForm.SQLStatement"></textarea>
+                </div>
+                <div class="row text-center">
+                    <button class="btn btn-success btn-primary"
+                            ng-click="ExecuteSQL()">
+                        <i class="fa fa-gavel white"></i>
+                        <span>Thực thi</span>
+                    </button> 
+                    <button class="btn btn-success btn-primary"
+                            ng-click="CancelSQL()">
+                        <i class="fa fa-eraser white"></i>
+                        <span>Hủy</span>
+                    </button> 
+                </div>
+                <div class="table-responsive margin-top-10">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="header in SQLForm.HeaderResult"><span ng-bind="header"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*Dataset must have grid id*@
+                            <tr ng-repeat="item in SQLForm.DataResult">
+                                <td ng-repeat="header in SQLForm.HeaderResult" >
+                                    <span ng-bind="item[header]" ></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

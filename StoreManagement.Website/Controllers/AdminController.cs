@@ -257,7 +257,14 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.LastUrl = "/Admin/LogData";
             return PartialView("LogData");
         }
-        
+
+        [HttpGet]
+        public ActionResult SQL()
+        {
+            SessionCollection.LastUrl = "/Admin/SQL";
+            return PartialView("SQL");
+        }
+
         [HttpGet]
         public ActionResult Announcement()
         {

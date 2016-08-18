@@ -65,6 +65,7 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.StoreAddress = result["StoreAddress"].ToString();
                 SessionCollection.DefaultAction = result["DefaultAction"].ToString();
                 SessionCollection.DefaultController = result["DefaultController"].ToString();
+                SessionCollection.IsDeveloper = (bool)result["IsDeveloper"];
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }

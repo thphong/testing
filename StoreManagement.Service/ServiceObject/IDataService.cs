@@ -27,5 +27,6 @@ namespace StoreManagement.Service
         bool CheckField(int userId, string field);
 
         Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig);
+        IList<Dictionary<string, object>> ExecuteSQL(int userId, string sql);
     }
 }

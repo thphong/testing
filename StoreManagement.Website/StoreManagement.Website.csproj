@@ -687,6 +687,7 @@
     <Content Include="Scripts\Controller\Purchase.js" />
     <Content Include="Scripts\Controller\Revenue.js" />
     <Content Include="Scripts\Controller\Setting.js" />
+    <Content Include="Scripts\Controller\SQL.js" />
     <Content Include="Scripts\Controller\SupplierModal.js" />
     <Content Include="Scripts\Controller\User.js" />
     <Content Include="Scripts\d3.js" />
@@ -796,6 +797,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\ComboDetail.cshtml" />
+    <Content Include="Views\Admin\SQL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -89,9 +89,9 @@ mdlMenu.controller('LoadMenuController',
         $scope.LoadViewBody = function (url) {
             clearGlobalSession();
             $scope.CurrentUrl = url;
-            $("i.img-loading").show();
             var scope = angular.element(document.getElementById("mdlCommon")).scope();
             if (scope.SrcView != url) {
+                $("i.img-loading").show();
                 $("#bodyView").hide();
                 scope.$apply(function () {
                     scope.SrcView = url;

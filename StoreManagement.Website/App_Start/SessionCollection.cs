@@ -193,5 +193,17 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["LastUrl"] = value;
             }
         }
+
+        public static bool IsDeveloper
+        {
+            get
+            {
+                return HttpContext.Current.Session["IsDeveloper"] != null ? (bool)HttpContext.Current.Session["IsDeveloper"] : false;
+            }
+            set
+            {
+                HttpContext.Current.Session["IsDeveloper"] = value;
+            }
+        }
     }
 }
