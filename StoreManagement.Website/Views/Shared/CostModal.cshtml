@@ -58,7 +58,7 @@
                             <select class="form-control"
                                     ng-model="CostForm.PaidBy" dropdown-master-table="T_Master_User" 
                                     dropdown-value-field="UserId" dropdown-name-field="UserName"
-                                    dropdown-condition="[IsActive] = 1"></select>
+                                    dropdown-condition="[IsActive] = 1 and ([IsDeveloper] is null or [IsDeveloper] = 0 or [UserId] = {{CurrentUser}})"></select>
                         </div>
                     </div>
                 </div>
