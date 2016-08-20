@@ -26,11 +26,21 @@ mdlCommon.controller('ProductController',
         $controller('ProductListController', { $scope: $scope });
 
         $scope.CurrentTab = "Products";
+        $scope.SelectedProductId = -1;
 
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
                 $scope.IsShowProductDetail = false;
+            }
+        }
+
+        $scope.SelectProductId = function (product) {
+            if ($scope.SelectedProductId == product.ProductId) {
+                $scope.SelectedProductId = -1;
+            }
+            else {
+                $scope.SelectedProductId = product.ProductId;
             }
         }
 
