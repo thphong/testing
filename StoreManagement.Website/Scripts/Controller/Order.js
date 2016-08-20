@@ -46,9 +46,9 @@ mdlCommon.controller('OrderController',
             Customer: "",
             CustomerName: "",
             CustomerIsWholeSale: "",
-            SoldDate: "",
+            SoldDate: $filter('date')(new Date(), "dd-MM-yyyy hh:mm:ss"),
             Cashier: $scope.CurrentUser,
-            CashierName: "",
+            CashierName: $scope.CurrentUserName,
             Notes: "",
             OrderStatus: 1,
             PaymentType: 1,
@@ -78,9 +78,9 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.Customer = "";
             $scope.OrderForm.CustomerName = "";
             $scope.OrderForm.CustomerIsWholeSale = "";
-            $scope.OrderForm.SoldDate = "";
+            $scope.OrderForm.SoldDate = $filter('date')(new Date(), "dd-MM-yyyy hh:mm:ss");
             $scope.OrderForm.Cashier = $scope.CurrentUser;
-            $scope.OrderForm.CashierName = "";
+            $scope.OrderForm.CashierName = $scope.CurrentUserName;
             $scope.OrderForm.Notes = "";
             $scope.OrderForm.OrderStatus = 1;
             $scope.OrderForm.PaymentType = 1;
