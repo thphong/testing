@@ -100,6 +100,7 @@
                                                 <th><span>Thẻ kho</span></th>
                                                 <th><span>Hình</span></th>
                                                 <th></th>
+                                                <th grid-defined-colum="!ProductId.ProductImageUrl" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
                                             </tr>
@@ -128,7 +129,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <img id="imgProduct" class="file-preview-image"
-                                                         src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                                         src="@Url.Action("GetFile", "Data")?url={{item.ProductImageUrl}}"
                                                          alt="Chưa upload ảnh"
                                                          style="width:auto;height:30px;" />
                                                 </td>
@@ -267,6 +268,7 @@
                                                 <th grid-defined-colum="ProductId.Price"><span>Giá bán</span></th>
                                                 <th><span>Hình</span></th>
                                                 <th></th>
+                                                <th grid-defined-colum="!ProductId.ProductImageUrl" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
                                             </tr>
@@ -287,7 +289,7 @@
                                                 <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
                                                 <td class="text-center">
                                                     <img id="imgProduct" class="file-preview-image"
-                                                         src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                                         src="@Url.Action("GetFile", "Data")?url={{item.ProductImageUrl}}"
                                                          alt="Chưa upload ảnh"
                                                          style="width:auto;height:30px;" />
                                                 </td>

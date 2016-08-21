@@ -291,12 +291,12 @@
                 <input id="fileImage" type="file" data-show-upload="false"
                        check-file-size="1048576"
                        check-file-size-message="Kích thước file không được quá 1MB"
-                       check-file-type="png"
-                       check-file-type-message="Vui lòng upload file png" />
+                       check-file-type="png;jpg;gif;jpeg"
+                       check-file-type-message="Vui lòng upload file png, jpg, gif, jpeg." />
             </div>
             <div class="col-md-6">
                 <img id ="imgProduct" class="file-preview-image"
-                     src="@Url.Action("GetProductImage", "Data")?productId={{ProductForm.ProductId}}"
+                     src="@Url.Action("GetFile", "Data")?url={{ProductForm.ProductImageUrl}}"
                      alt="Chưa upload ảnh"
                      style="width:auto;height:160px;" />
             </div>

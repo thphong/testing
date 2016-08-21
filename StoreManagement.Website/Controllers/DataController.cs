@@ -223,17 +223,32 @@ namespace StoreManagement.Website.Controllers
             DataTable data = dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, SessionCollection.ExportConfig);
             return File(Common.Export.ExportExcel.ExportToCSVFileOpenXML(data), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", SessionCollection.ExportConfig.GridId + ".xlsx");
         }
-
+        
         [HttpPost]
-        public ActionResult SaveProductImage(string productId)
+        public ActionResult SaveFile(string objectName, string objectId, string PKField, string fieldName)
         {
             try
             {
                 if (Request.Files.Count > 0)
                 {
+                    //~/Resource/ProductImage/
                     var file = Request.Files[0];
-                    string path = Server.MapPath(ConfigurationManager.AppSettings["ProductImagePath"] + productId + ".png");
+                    var folderName = ConfigurationManager.AppSettings["ResourcePath"]
+                        + "/" + DateTime.Today.Year + "/" + DateTime.Today.Month;
+
+                    if (!Directory.Exists(Server.MapPath(folderName)))
+                        Directory.CreateDirectory(Server.MapPath(folderName));
+
+                    var filename = folderName + "/" + DateTime.Now.ToString("hhmmss") + objectName + "_" + fieldName + "_" + objectId
+                        + Path.GetExtension(file.FileName);
+                    string path = Server.MapPath(filename);
+
                     file.SaveAs(path);
+
+                    //Save url in object
+                    dataService.SaveObject(SessionCollection.CurrentUserId, objectName, string.Format("{0}::{1},,{2}::{3},,Version::-1", PKField, objectId, fieldName, filename));
+
+                    return Json(filename);
                 }
 
                 return Json(true);
@@ -243,25 +258,26 @@ namespace StoreManagement.Website.Controllers
                 return Json("#error:" + ex.Message);
             }
         }
-        
-        public ActionResult GetProductImage(string productId)
+
+        public ActionResult GetFile(string url)
         {
             try
             {
-                return File(ConfigurationManager.AppSettings["ProductImagePath"] + productId + ".png", "image/png");
+                return File(url, "image/png");
             }
             catch (Exception ex)
             {
                 return Json("#error:" + ex.Message);
             }
         }
-
+        
         [HttpPost]
         public ActionResult GetAllRules()
         {
             try
             {
-                var config = new GridViewConfig() {
+                var config = new GridViewConfig()
+                {
                     GridDataObject = "T_System_Rule",
                     GridDefinedColums = "RuleName;Value",
                     GridDataAction = "getall"

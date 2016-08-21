@@ -37,6 +37,7 @@
                 <div grid-defined-colum="ProductId.Cost" class="none-display"></div>
                 <div grid-defined-colum="Quantity" class="none-display"></div>
                 <div grid-defined-colum="ProductId.VAT" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductImageUrl" class="none-display"></div>
                 <div grid-defined-colum="#ProductId.CreatedDate" class="none-display"></div>
                 <div grid-defined-colum="#NumSelling" class="none-display"></div>
                 <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
@@ -46,7 +47,7 @@
                         <div style="margin-top: 20px">
                             <a href="#" class="thumbnail" ng-click="SelectProduct(item)">
                                 <img id="imgProduct" class="file-preview-image"
-                                     src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                     src="@Url.Action("GetFile", "Data")?url={{item.ProductImageUrl}}"
                                      alt="Chưa upload ảnh"
                                      style="width:auto;height:110px;" />
 
