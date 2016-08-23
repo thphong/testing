@@ -4,8 +4,8 @@
 });
 
 mdlMenu.controller('LoadMenuController',
-['$scope', '$filter', '$controller', '$interpolate', '$location',
-    function ($scope, $filter, $controller, $interpolate, $location) {
+['$scope', '$filter', '$controller', '$interpolate', '$location', '$sce',
+    function ($scope, $filter, $controller, $interpolate, $location, $sce) {
         //$controller('ctrlPaging', { $scope: $scope });
 
         $scope.CurrentStore = g_currentStoreId;
@@ -16,6 +16,10 @@ mdlMenu.controller('LoadMenuController',
         $scope.StoreName = g_storeName;
         $scope.StoreAddress = g_storeAddress;
         $scope.StorePhone = g_storePhone;
+        $scope.Language = {
+            Code: "VN",
+            Resource: gENResource
+        };
 
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
@@ -34,7 +38,7 @@ mdlMenu.controller('LoadMenuController',
         if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);
             $scope.ListMenu = configMenuList.GetListData();
-
+            
             $scope.ListStores = configListStores.GetListData();
         }
 

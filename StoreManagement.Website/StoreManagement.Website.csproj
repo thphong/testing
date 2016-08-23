@@ -664,6 +664,7 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\spinner.gif" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\Common\DataObject.js" />
+    <Content Include="Scripts\Common\Language.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Announcement.js" />
     <Content Include="Scripts\Controller\Attribute.js" />

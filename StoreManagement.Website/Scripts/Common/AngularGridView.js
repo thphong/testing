@@ -351,7 +351,30 @@ mdlCommon.directive('datePickerFor', function () {
     return directive;
 });
 
+
 mdlCommon.directive('bindHtmlCompile', ['$compile', function ($compile) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            scope.$watch(function () {
+                return scope.$eval(attrs.bindHtmlCompile);
+            }, function (value) {
+                // In case value is a TrustedValueHolderType, sometimes it
+                // needs to be explicitly called into a string in order to
+                // get the HTML string.
+                element.html(value && value.toString());
+                // If scope is provided use it, otherwise use parent scope
+                var compileScope = scope;
+                if (attrs.bindHtmlScope) {
+                    compileScope = scope.$eval(attrs.bindHtmlScope);
+                }
+                $compile(element.contents())(compileScope);
+            });
+        }
+    };
+}]);
+
+mdlMenu.directive('bindHtmlCompile', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -665,7 +688,9 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.SetFilterRangeDate = function (option, gridId) {
 
         var curr = new Date(); // get current date
-        var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
+        var dayOfWeek = curr.getDay();
+        if (dayOfWeek == 0) dayOfWeek = 7;
+        var first = curr.getDate() - dayOfWeek + 1; // First day is the day of the month - the day of the week        
         var last = first + 6; // last day is the first day + 6
         var y = curr.getFullYear(), m = curr.getMonth();
         var quarter = Math.floor(curr.getMonth() / 3);

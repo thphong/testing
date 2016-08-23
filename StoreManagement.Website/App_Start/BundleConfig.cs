@@ -82,6 +82,7 @@ namespace StoreManagement.Website
                             "~/Scripts/InputMask.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
+                        "~/Scripts/Common/Language.js",
                         "~/Scripts/Common/Common.js",
                         "~/Scripts/Common/DataObject.js",
                         "~/Scripts/Common/AngularGridView.js",

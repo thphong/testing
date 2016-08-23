@@ -87,14 +87,17 @@ mdlCommon.controller('POSController',
             }
         }
 
+        $scope.IsShownPOSReport = false;
         $scope.SetShownPOSReport = function (isShown) {
             $scope.IsShownPOSReport = isShown;
         }
 
+        $scope.IsShownPOSInventory = false;
         $scope.SetShownPOSInventory = function (isShown) {
             $scope.IsShownPOSInventory = isShown;
         }
 
+        $scope.IsShownPOSAnnoucement = false;
         $scope.SetShownPOSAnnoucement = function (isShown) {
             $scope.IsShownPOSAnnoucement = isShown;
         }
