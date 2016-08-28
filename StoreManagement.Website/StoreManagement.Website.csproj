@@ -749,7 +749,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout_backup.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Admin\General.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
@@ -794,7 +793,6 @@
     <Content Include="Views\Shared\AnnouncementModal.cshtml" />
     <Content Include="Views\POS\POSAnnounement.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_LayoutPOS_backup.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\ComboDetail.cshtml" />

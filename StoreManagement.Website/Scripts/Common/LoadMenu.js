@@ -18,7 +18,8 @@ mdlMenu.controller('LoadMenuController',
         $scope.StorePhone = g_storePhone;
         $scope.Language = {
             Code: "VN",
-            Resource: gENResource
+            SelectedLanguage: "Tiếng Việt",
+            Resource: gVNResource
         };
 
         var configMenuList = new GridViewConfig("");
@@ -38,7 +39,7 @@ mdlMenu.controller('LoadMenuController',
         if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);
             $scope.ListMenu = configMenuList.GetListData();
-            
+
             $scope.ListStores = configListStores.GetListData();
         }
 
@@ -110,6 +111,29 @@ mdlMenu.controller('LoadMenuController',
                 $scope.HasLoadFinished = true;
             }
         }
+
+        $scope.ChangeLanguage = function (code) {
+            if (code != $scope.Language.Code) {
+                $scope.Language.Code = code;
+                if (code == "VN") {
+                    $scope.Language.Resource = gVNResource;
+                    $scope.Language.SelectedLanguage = gVNResource.Vietnamese;
+                }
+                if (code == "EN") {
+                    $scope.Language.Resource = gENResource;
+                    $scope.Language.SelectedLanguage = gENResource.English;
+
+                }
+
+                var scope = angular.element($("#mdlCommon").find("[ng-controller]").first()).scope();
+                if (scope) {
+                    scope.$apply(function () {
+                        scope.ChangeLanguage(code);
+                    });
+                }
+            }
+        }
+        $scope.ChangeLanguage(g_defaultLang);
 
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");

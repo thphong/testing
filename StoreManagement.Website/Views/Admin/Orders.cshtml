@@ -8,26 +8,27 @@
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-6">
                     <h4 class="dashboard-title">
-                        <i class="fa-shopping-cart fa"></i>&nbsp;Đơn hàng
+                        <i class="fa-shopping-cart fa"></i>
+                        <span ng-bind="Language.Resource.Orders"></span>
                     </h4>
                 </div>
                 <div class="col-md-4 pull-right text-right">
                     <button class="btn btn-success btn-primary" ng-click="AddOrder()" ng-if="OrderFormConfig._CanCreate">
                         <i class="fa fa-desktop white"></i>
-                        <span>Bán hàng</span>
+                        <span ng-bind="Language.Resource.MakeOrder"></span>
                     </button>
                     <span grid-export-import-for="Orders" grid-export-template="Orders.xlsx"></span>
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px; padding-top: 10px">
                 <div class="col-md-5 col-xs-12 margin-top-5">
-                    <span grid-filter-for="Orders" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
+                    <span grid-filter-for="Orders" place-holder-message="{{Language.Resource.PlaceholderOrder}}"></span>
                 </div>
                 <div class="col-md-2 col-xs-12 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.OrderType" ng-change="ReloadGrid('Orders')">
-                        <option selected="selected" value="1">Đơn hàng</option>
-                        <option value="2">Đơn hàng đã xóa</option>
-                        <option value="3">Đơn hàng còn nợ</option>
+                        <option selected="selected" value="1" ng-bind="Language.Resource.Orders"></option>
+                        <option value="2" ng-bind="Language.Resource.RemovedOrder"></option>
+                        <option value="3" ng-bind="Language.Resource.DebtOrders"></option>
                     </select>
                 </div>
                 <div class="col-md-5 col-xs-12 margin-top-5">
@@ -64,20 +65,20 @@
                                 <tr>
                                     <th grid-defined-colum="!OrderId" class="none-display"></th>
                                     <th grid-defined-colum="!Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
-                                    <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
-                                    <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                    <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
-                                    <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
-                                    <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
+                                    <th grid-defined-colum="OrderCode"><span ng-bind="Language.Resource.OrderCode"></span></th>
+                                    <th grid-defined-colum="StoreId.StoreCode"><span ng-bind="Language.Resource.Store"></span></th>
+                                    <th grid-defined-colum="SoldDate"><span ng-bind="Language.Resource.SoldDate"></span></th>
+                                    <th grid-defined-colum="Cashier.UserName, CashierName"><span ng-bind="Language.Resource.Cashier"></span></th>
+                                    <th grid-defined-colum="Customer.CustomerName"><span ng-bind="Language.Resource.Customers"></span></th>
                                     <th grid-defined-colum="OrderStatus.StatusName">
                                         <span style="display: inline-block">
                                             <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId"
-                                                    dropdown-name-field="StatusName" dropdown-empty-text="Trạng thái" dropdown-empty-value="0"
+                                                    dropdown-name-field="StatusName" dropdown-empty-text="{{Language.Resource.Status}}" dropdown-empty-value="0"
                                                     ng-change="ReloadGrid('Orders')"></select>
                                         </span>
                                     </th>
-                                    <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
-                                    <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                                    <th grid-defined-colum="SumMoney"><span ng-bind="Language.Resource.SumMoney"></span></th>
+                                    <th grid-defined-colum="DebtMoney"><span ng-bind="Language.Resource.Debit"></span></th>
                                     <th></th>
                                     <th grid-defined-colum="!OrderStatus.DisplayClass" class="none-display"></th>
                                     <th grid-defined-colum="!Notes" class="none-display"></th>
@@ -114,16 +115,16 @@
                                 </tr>
                                 <tr ng-if="!DataSet.Orders.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="9" align="center"> <span ng-bind="Language.Resource.NoDataFound"></span> </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="9" align="left">
                                         <div style="float: left;">
-                                            <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
-                                            <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                            <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
+                                            <span ng-bind="Language.Resource.SumOrder"></span>: <span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
+                                            <span ng-bind="Language.Resource.SumMoney"></span>: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                            <span ng-bind="Language.Resource.Debit"></span>: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
                                         </div>
                                     </td>
                                 </tr>

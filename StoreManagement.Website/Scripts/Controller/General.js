@@ -32,8 +32,8 @@ mdlCommon.controller('GeneralController',
                         bindto: '#chartReportByDay',
                         data: { x: 'x', columns: [], type: "bar", order: null },
                         axis: {
-                            x: { label: 'Ngày', type: 'category' } //this needed to load string x value
-                            , y: { label: 'Doanh thu' }
+                            x: { label: $scope.Language.Resource.Day, type: 'category' } //this needed to load string x value
+                            , y: { label: $scope.Language.Resource.Revenue }
                         },
                         bar: { width: { ratio: 0.5 } }
                     });
@@ -54,8 +54,8 @@ mdlCommon.controller('GeneralController',
             $scope.ConfigList.EvaluateFieldExpression($interpolate, $scope);
             var listData = $scope.ConfigList.GetListData();
             var listName = ['x'];
-            var thisWeek = ['Tuần này'];
-            var lastWeek = ['Tuần trước'];
+            var thisWeek = [$scope.Language.Resource.ThisWeek];
+            var lastWeek = [$scope.Language.Resource.LastWeek];
             for (var i = 0; i < listData.length; i++) {
                 thisWeek.push(listData[i].Revenue);
                 lastWeek.push(listData[i].LastRevenue);
@@ -74,7 +74,7 @@ mdlCommon.controller('GeneralController',
         $scope.Revenue =
         {
             Data: {},
-            DateRangeText: "Tuần này"
+            DateRangeText: $scope.Language.Resource.ThisWeek
         }
 
         $scope.ShowRevenue = function()

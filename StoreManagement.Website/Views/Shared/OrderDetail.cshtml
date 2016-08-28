@@ -1,33 +1,33 @@
 ﻿
 <div class="row header-detail">
     <div class="col-md-4 blue-dark">
-        <h4 class="bold" style="display: inline-block"> Đơn hàng : </h4>
+        <h4 class="bold" style="display: inline-block"> <span ng-bind="Language.Resource.Order"></span> : </h4>
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-8 pull-right text-right">
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
-            <span>Tạo đơn hàng</span>
+            <span ng-bind="Language.Resource.MakeOrder2"></span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
-            <span>In đơn hàng</span>
+            <span ng-bind="Language.Resource.PrintOrder"></span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
-            <span>Lưu tạm</span>
+            <span ng-bind="Language.Resource.TempSave"></span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
-            <span>Lưu</span>
+            <span ng-bind="Language.Resource.Save"></span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
-            <span>Lưu và in</span>
+            <span ng-bind="Language.Resource.SaveAndPrint"></span>
         </button>
         <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
-            <span>Trở về</span>
+            <span ng-bind="Language.Resource.Back"></span>
         </button>
     </div>
 </div>
@@ -37,8 +37,8 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <h4 class="blue">
-                <i class="fa fa-info-circle"></i>
-                Danh sách hàng hóa
+                <i class="fa fa-info-circle margin-left-10"></i>                
+                <span ng-bind="Language.Resource.ListProducts"></span>
             </h4>
             <div class="hr"></div>
         </div>

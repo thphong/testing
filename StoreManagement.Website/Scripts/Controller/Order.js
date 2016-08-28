@@ -190,7 +190,7 @@ mdlCommon.controller('OrderController',
                 }
                 $scope.ListProductsOrder.splice(0, 0, item);
             }
-            $scope.Summarize();
+            $scope.Summarize(true);
 
             //Calculate for POS
             $scope.CalCulatePromotion();
@@ -215,7 +215,7 @@ mdlCommon.controller('OrderController',
                 product.RealPrice = product.Quantity * parseInt(product.Price * (100 - product.Discount) / 100);
             }
 
-            $scope.Summarize();
+            $scope.Summarize(true);
 
             //Calculate for POS
             $scope.CalCulatePromotion();
@@ -237,7 +237,7 @@ mdlCommon.controller('OrderController',
 
                 ShowSuccessMessage("Sản phẩm được xóa khỏi đơn hàng thành công!");
 
-                $scope.Summarize();
+                $scope.Summarize(true);
 
                 //Calculate for POS
                 $scope.CalCulatePromotion();
@@ -308,10 +308,10 @@ mdlCommon.controller('OrderController',
                 }
             }
 
-            $scope.Summarize();
+            $scope.Summarize(true);
         }
 
-        $scope.Summarize = function () {
+        $scope.Summarize = function (isEditing) {
             var sum = 0;
             var initSum = 0;
             for (var i = 0 ; i < $scope.ListProductsOrder.length ; i++) {
@@ -330,9 +330,11 @@ mdlCommon.controller('OrderController',
             }
             $scope.OrderForm.SumMoney = $scope.OrderForm.Price - $scope.OrderForm.DiscountAmmount;
             $scope.OrderForm.TotalDiscount = initSum - $scope.OrderForm.SumMoney;
-            $scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
-            $scope.OrderForm.DebtMoney = 0;
-            $scope.OrderForm.ExtraMoney = 0;
+            if (isEditing) {
+                $scope.OrderForm.Paid = $scope.OrderForm.SumMoney;
+                $scope.OrderForm.DebtMoney = 0;
+                $scope.OrderForm.ExtraMoney = 0;
+            }
         }
 
         $scope.ChangePaid = function () {
@@ -402,7 +404,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.CustomerName = order.CustomerName;
             $scope.OrderForm.CashierName = order.CashierName;
         }
-
+        
         $scope.InitListProducts = function () {
             $scope.ListProductsOrder = $scope.DataSet.ProductsOrder.Data;
             var len = $scope.ListProductsOrder.length;
@@ -419,7 +421,7 @@ mdlCommon.controller('OrderController',
                 item.RowNum = i + 1;
             }
 
-            $scope.Summarize();
+            $scope.Summarize(false);
         }
 
         $scope.ExposeFunctionAfterSavingCustomer = function () {

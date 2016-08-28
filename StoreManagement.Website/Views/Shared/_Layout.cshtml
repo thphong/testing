@@ -35,6 +35,7 @@
         var g_setStoreIdUrl = '@Url.Action("SetStoreId", "Data")';
         var g_getAllRulesUrl = '@Url.Action("GetAllRules", "Data")';
         var g_executeSQLUrl = '@Url.Action("ExecuteSQL", "Data")';
+        var g_defaultLang = 'EN';
 
     </script>
 
@@ -109,6 +110,24 @@
             {
             <!-- /.navbar-header -->
                     <ul class="nav navbar-top-links navbar-right text-right">
+                        <li class="dropdown" >
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="white" ng-bind="Language.SelectedLanguage"></i>  <i class="fa fa-caret-down white"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li ng-if="Language.Code != 'VN'">
+                                    <a href="#" id="linkUserInfo" ng-click="ChangeLanguage('VN')">
+                                        <span ng-bind="Language.Resource.Vietnamese"></span>
+                                    </a>
+                                </li>
+                                <li ng-if="Language.Code != 'EN'">
+                                    <a href="#" ng-click="ChangeLanguage('EN')">
+                                        <span ng-bind="Language.Resource.English"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- /.dropdown-user -->
+                        </li>
                         <!-- /.dropdown -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -152,7 +171,7 @@
                             <ul class="nav" id="side-menu">
                                 <li class="sidebar-shortcuts">
                                     <div class="input-group custom-search-form">
-                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="{{Language.POSDesc}}" style="width: 90%; margin: 7px 10px; font-weight: bold;">
+                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="{{Language.Resource.POSDesc}}" style="width: 90%; margin: 7px 10px; font-weight: bold;">
                                             <i class="fa fa-desktop" style="margin-right: 12px;"></i> <span ng-bind="Language.Resource.POS"></span>
                                         </a>
                                     </div>

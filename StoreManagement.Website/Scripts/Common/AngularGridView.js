@@ -70,7 +70,7 @@ mdlCommon.directive('gridPageSizeFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridPageSizeFor;
-        element.append('<div class="input-group">  <span class="input-group-addon"> <span> Số dòng</span> / <span > Tổng</span> <span ng-bind="DataSet.' + gridId + '.TotalItems"></span> : </span>'
+        element.append('<div class="input-group">  <span class="input-group-addon"> <span ng-bind="Language.Resource.NumRow"></span> / <span ng-bind="Language.Resource.Total"></span> <span ng-bind="DataSet.' + gridId + '.TotalItems"></span> : </span>'
            + '<select class="form-control input-sm" ng-model="Config.' + gridId + '.NumOfItemOnPage" ng-change="GridChangeNumRowsOnPage(\'' + gridId + '\')" data-ng-options="num as num for num in ListNumOfItem" style="width: auto">'
            + '</select> '
            + '</div>');
@@ -86,7 +86,7 @@ mdlCommon.directive('gridExportImportFor', function () {
         var template = attributes.gridExportTemplate;
         element.append('<button class="btn btn-success btn-primary" ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
                     + '<i class="fa fa-download white"></i>'
-                    + '<span>Xuất Excel</span>'
+                    + '<span ng-bind="Language.Resource.ExportExcel"></span>'
                     + '</button>');
     }
     return directive;
@@ -403,17 +403,17 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         var gridId = attributes.dateRangeFilterFor;
         element.html(
         ' <input type="text" class="form-control input-sm width-20" readonly date-picker-for="' + gridId + '" ng-model="FilterRangeDate.StartDate"'
-        + 'placeholder="Từ ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
+        + 'placeholder="{{Language.Resource.FromDate}}" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
         + ' <input type="text" class="form-control input-sm width-20" readonly date-picker-for="' + gridId + '" ng-model="FilterRangeDate.EndDate"'
-        + 'placeholder="Đến ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')">Tuần</button>'
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')">Quí</button>'
+        + 'placeholder="{{Language.Resource.ToDate}}" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')"> <span ng-bind="Language.Resource.Week"></span></button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')"> <span ng-bind="Language.Resource.Month"></span></button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')"> <span ng-bind="Language.Resource.Quarter"></span></button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{4:\'clicked\', 5:\'clicked\', 6:\'clicked\'}[RangeDateCode]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>'
         + ' <ul class="dropdown-menu dropdown-menu-right" role="menu">'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')">Tuần trước</a></li>'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')">Tháng trước</a></li>'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')"> <span ng-bind="Language.Resource.LastWeek"></span></a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')"> <span ng-bind="Language.Resource.LastMonth"></span></a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')"> <span ng-bind="Language.Resource.LastQuarter"></span></a></li>'
         + ' </ul>'
         );
         if (attributes.dateRangeInitCode) {
@@ -433,6 +433,23 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.StoreAddress = g_storeAddress;
     $scope.StorePhone = g_storePhone;
     $scope.RULES = {};
+    $scope.Language = {
+        Code: "",
+        Resource: {}
+    };
+
+    $scope.ChangeLanguage = function (code) {
+        if (code != $scope.Language.Code) {
+            $scope.Language.Code = code;
+            if (code == "VN") {
+                $scope.Language.Resource = gVNResource;
+            }
+            if (code == "EN") {
+                $scope.Language.Resource = gENResource;
+            }
+        }
+    }
+    $scope.ChangeLanguage(g_defaultLang);
 
     if (g_currentUserId > 0) {
         AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
