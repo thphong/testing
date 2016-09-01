@@ -718,8 +718,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
                 $scope.FilterRangeDate.EndDate = formatDate(curr);
                 break;
             case 1: //This week
-                $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first)));
-                $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last)));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date((new Date()).setDate(first)));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date((new Date()).setDate(last)));
                 break;
             case 2: //This month
                 $scope.FilterRangeDate.StartDate = formatDate(new Date(y, m, 1));
