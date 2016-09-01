@@ -2,12 +2,12 @@
     <div class="container-fluid">
         <div class="row" style="padding-bottom: 10px; padding-top: 5px">
             <div class="col-md-5 margin-top-5">
-                <span grid-filter-for="Exceptions" place-holder-message="Tìm kiếm"></span>
+                <span grid-filter-for="Exceptions" place-holder-message="{{Language.Resource.Search}}"></span>
             </div>
             <div class="col-md-2 margin-top-5">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.ExceptionType" ng-change="ReloadGrid('Exceptions')">
-                    <option selected="selected" value="0">Chưa fix</option>
-                    <option value="1">Đã fix</option>
+                    <option selected="selected" value="0" ng-bind="Language.Resource.NotFix"></option>
+                    <option value="1" ng-bind="Language.Resource.AlreadyFix"></option>
                 </select>
             </div>
             <div class="col-md-5 pull-right text-right margin-top-5">
@@ -15,7 +15,7 @@
                         data-target="#exceptionModal"
                         ng-if="ExceptionFormConfig._CanCreate">
                     <i class="fa fa-bug white"></i>
-                    <span>Tạo Bug</span>
+                    <span ng-bind="Language.Resource.CreateBug"></span>
                 </button>
             </div>
         </div>
@@ -31,13 +31,13 @@
                        class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th grid-defined-colum="ObjectName"><span>Object</span></th>
-                            <th grid-defined-colum="ErrorMessage"><span>Message</span></th>
-                            <th grid-defined-colum="Data"><span>Data</span></th>
-                            <th grid-defined-colum="Source"><span>Source</span></th>
-                            <th grid-defined-colum="CreatedBy.UserName, Logger"><span>Logged By</span></th>
-                            <th grid-defined-colum="Hero.UserName, Hero"><span>Hero</span></th>
-                            <th grid-defined-colum="Remarks"><span>Remarks</span></th>
+                            <th grid-defined-colum="ObjectName"><span ng-bind="Language.Resource.Object"></span></th>
+                            <th grid-defined-colum="ErrorMessage"><span ng-bind="Language.Resource.Message"></span></th>
+                            <th grid-defined-colum="Data"><span ng-bind="Language.Resource.Data"></span></th>
+                            <th grid-defined-colum="Source"><span ng-bind="Language.Resource.Source"></span></th>
+                            <th grid-defined-colum="CreatedBy.UserName, Logger"><span ng-bind="Language.Resource.LoggedBy"></span></th>
+                            <th grid-defined-colum="Hero.UserName, Hero"><span ng-bind="Language.Resource.Hero"></span></th>
+                            <th grid-defined-colum="Remarks"><span ng-bind="Language.Resource.Remarks"></span></th>
                             <th></th>
                             <th grid-defined-colum="Id" class="none-display"></th>
                         </tr>
@@ -57,20 +57,20 @@
                             <td>
                                 <span ng-if="!item._CanUpdate" ng-bind="item.Remarks"></span>
                                 <input class="form-control" ng-if="item._CanUpdate" ng-model="item.Remarks"
-                                       check-empty="" check-empty-message="Vui lòng nhập ghi chú."
+                                       check-empty="" check-empty-message="{{Language.Resource.MessageEnterNote}}"
                                        check-under="Ex{{item.Id}}" />
                             </td>
                             <td>
                                 <button class="btn btn-primary"
                                         ng-if="item._CanUpdate"
                                         ng-click="ResolveBug(item)">
-                                    Resolve
+                                    <span ng-bind="Language.Resource.Resolve"></span>
                                 </button>
                             </td>
                         </tr>
                         <tr ng-if="!DataSet.Exceptions.HasRecord()">
                             @*Edit colspan*@
-                            <td colspan="8" align="center"> Không có dữ liệu! </td>
+                            <td colspan="8" align="center" ng-bind="Language.Resource.NoDataFound"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -93,47 +93,47 @@
             <div class="modal-content">
                 <div class="modal-header infobox-blue white border-6">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Tạo mới Bug </h4>
+                    <h4 class="modal-title" ng-bind="Language.Resource.CreateBug"></h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Object </label>
+                            <label class="col-sm-4 control-label " ng-bind="Language.Resource.Object"> </label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.ObjectName"
-                                       check-empty="" check-empty-message="Vui lòng nhập chức năng bị lỗi."
-                                       check-length="100" check-length-message="Chiều dài tối ta là {0}."
+                                       check-empty="" check-empty-message="{{Language.Resource.MessageEnterFunction}}"
+                                       check-length="100" check-length-message="{{Language.Resource.MessageMaxLength}}"
                                        check-under="check-bug" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Error Message </label>
+                            <label class="col-sm-4 control-label " ng-bind="Language.Resource.Message"> </label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.ErrorMessage"
-                                       check-empty="" check-empty-message="Vui lòng mô tả lỗi"
-                                       check-length="1000" check-length-message="Chiều dài tối ta là {0}."
+                                       check-empty="" check-empty-message="{{Language.Resource.MessageEnterErrorDes}}"
+                                       check-length="1000" check-length-message="{{Language.Resource.MessageMaxLength}}"
                                        check-under="check-bug" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Data </label>
+                            <label class="col-sm-4 control-label " ng-bind="Language.Resource.Data"> </label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.Data"
-                                       check-empty="" check-empty-message="Vui lòng nhập dữ liệu gây ra lỗi."
+                                       check-empty="" check-empty-message="{{Language.Resource.MessageEnterData}}"
                                        check-under="check-bug" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Source </label>
+                            <label class="col-sm-4 control-label " ng-bind="Language.Resource.Source"> </label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.Source"
-                                       check-length="100" check-length-message="Chiều dài tối ta là {0}."
+                                       check-length="100" check-length-message="{{Language.Resource.MessageMaxLength}}."
                                        check-under="check-bug" />
                             </div>
                         </div>
@@ -142,11 +142,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         <i class="fa-undo fa"></i>
-                        Trở về
+                        <span ng-bind="Language.Resource.Back"></span>
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="SaveBug()">
                         <i class="fa-save fa"></i>
-                        Lưu
+                        <span ng-bind="Language.Resource.Save"></span>
                     </button>
                 </div>
             </div>
