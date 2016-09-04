@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <h4 class="dashboard-title">
                     <i class="fa-signal fa"></i>
-                    <span ng-bind="Language.Resource.TodayActivity"></span>
+                    <span>Hoạt động hôm nay</span>
                 </h4>
             </div>
             <div class="col-md-3 col-xs-12 margin-top-10">
@@ -13,7 +13,7 @@
                         <i class="fa fa-signal"></i>
                     </div>
                     <div class="infobox-data">
-                        <div class="infobox-title"> <span ng-bind="Language.Resource.Revenue"></span></div>
+                        <div class="infobox-title"> <span>Doanh số</span></div>
                         <span class="infobox-data-number center" ng-bind="GeneralInfo.Revenue | currency:'':0"></span>
                     </div>
                 </div>
@@ -25,12 +25,12 @@
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-subtitle">
-                            <span ng-bind="Language.Resource.NumOrder"></span>:
+                            <span>Số đơn hàng</span>:
                             <a href="#" ng-click="LoadViewBody('@Url.Action("Orders", "Admin", new { DateRangeCode = 0, Status = 2})')"
                                class="white" ng-bind="GeneralInfo.NumOrder"></a>
                         </div>
                         <div class="infobox-subtitle">
-                            <span ng-bind="Language.Resource.NumProduct"></span>:
+                            <span>Số hàng hóa</span>:
                             <a href="#" ng-click="LoadViewBody('@Url.Action("Orders", "Admin", new { DateRangeCode = 0 , Status = 2})')"
                                class="white" ng-bind="GeneralInfo.NumSoldProduct"></a>
                         </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-title">
-                            <span ng-bind="Language.Resource.RemovedOrder"></span>
+                            <span>Đơn hàng bị xóa</span>
                         </div>
                         <div class="infobox-data-number text-center">
                             <span ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></span>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="infobox-data">
                         <div class="infobox-title">
-                            <span ng-bind="Language.Resource.Discount"></span>
+                            <span>Giảm giá</span>
                         </div>
                         <div class="infobox-data-number text-center">
                             <span ng-bind="GeneralInfo.Discount | currency:'':0"></span>
@@ -75,7 +75,7 @@
                     <div class="widget-header infobox-blue">
                         <h4 class="col-md-8 widget-title">
                             <i class="fa-signal fa"></i>
-                            <span ng-bind="Language.Resource.Activity"></span> 
+                            <span>Hoạt động</span> 
                         </h4>
                         <div class="col-md-4 text-right">
                             <button type="button" class="btn btn-sm btn-outline"
@@ -95,35 +95,35 @@
                         <div class="widget-main" ng-if="CanViewProfit">
                             <div class="row">
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.Revenue"></span> 
+                                    <span>Doanh số</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}')"
                                        ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.Profit"></span> 
+                                    <span>Lợi nhuận</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}')"
                                        ng-bind="Revenue.Data.Profit | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.NumOrder"></span> 
+                                    <span>Số đơn hàng</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Profit", "Admin")?DateRangeCode={{RangeDateCode}}')"
                                        ng-bind="Revenue.Data.Quantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.Revenue"></span>/<span ng-bind="Language.Resource.NumOrder"></span> 
+                                    Doanh số/Số đơn hàng
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a ng-if="Revenue.Data.Quantity > 0"
                                        ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.RemovedOrder"></span>
+                                    <span>Đơn hàng bị xóa</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
@@ -133,21 +133,21 @@
                         <div class="widget-main" ng-if="!CanViewProfit">
                             <div class="row">
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.Revenue"></span> 
+                                    <span>Doanh số</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}')"
                                        ng-bind="Revenue.Data.Revenue | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.NumOrder"></span> 
+                                    <span>Số đơn hàng</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Revenue", "Admin")?DateRangeCode={{RangeDateCode}}')"
                                        ng-bind="Revenue.Data.Quantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.Revenue"></span>/<span ng-bind="Language.Resource.NumOrder"></span> 
+                                    Doanh số/Số đơn hàng
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a ng-if="Revenue.Data.Quantity > 0"

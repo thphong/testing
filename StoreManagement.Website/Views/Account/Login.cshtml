@@ -2,29 +2,29 @@
     <div class="modal-dialog" style="padding-top: 40px">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="text-center" ng-bind="Language.Resource.Login"></h1>
+                <h1 class="text-center">Đăng nhập</h1>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control input-lg"
-                               check-empty="" check-empty-message="{{Language.Resource.MessageEnterAccount}}"
-                               ng-model="LoginInfo.LoginId" placeholder="{{Language.Resource.Account}}">
+                               check-empty="" check-empty-message="Vui lòng nhập tài khoản đăng nhập."
+                               ng-model="LoginInfo.LoginId" placeholder="Tài khoản">
                     </div>
                     <div class="form-group col-md-12">
                         <input type="password" class="form-control input-lg"
-                               check-empty="" check-empty-message="{{Language.Resource.MessageEnterPassword}}"
-                               ng-model="LoginInfo.Password" placeholder="{{Language.Resource.Password}}">
+                               check-empty="" check-empty-message="Vui lòng nhập mật khẩu."
+                               ng-model="LoginInfo.Password" placeholder="Mật khẩu">
                     </div>
                     <div class="form-group col-md-12">
                         <input type="checkbox" id="chbRemeber"
                                ng-model="LoginInfo.Remember"
                                ng-checked="LoginInfo.Remember">
-                        <label class="font-weigth-normal" for="chbRemeber" ng-bind="Language.Resource.RememberPassword"></label>
+                        <label class="font-weigth-normal" for="chbRemeber">Ghi nhớ tài khoản</label>
 
                     </div>
                     <div class="form-group col-md-12">
-                        <button class="btn btn-primary btn-lg btn-block" ng-click="LogIn()" ng-bind="Language.Resource.Login"></button>
+                        <button class="btn btn-primary btn-lg btn-block" ng-click="LogIn()">Đăng nhập</button>
                     </div>
                 </div>
             </div>
