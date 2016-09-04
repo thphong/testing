@@ -1,33 +1,33 @@
 ﻿
 <div class="row header-detail">
     <div class="col-md-4 blue-dark">
-        <h4 class="bold" style="display: inline-block"> <span ng-bind="Language.Resource.Order"></span> : </h4>
+        <h4 class="bold" style="display: inline-block"> Đơn hàng : </h4>
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-8 pull-right text-right">
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
-            <span ng-bind="Language.Resource.MakeOrder2"></span>
+            <span>Tạo đơn hàng</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
-            <span ng-bind="Language.Resource.PrintOrder"></span>
+            <span>In đơn hàng</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
-            <span ng-bind="Language.Resource.TempSave"></span>
+            <span>Lưu tạm</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
-            <span ng-bind="Language.Resource.Save"></span>
+            <span>Lưu</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
-            <span ng-bind="Language.Resource.SaveAndPrint"></span>
+            <span>Lưu và in</span>
         </button>
         <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
-            <span ng-bind="Language.Resource.Back"></span>
+            <span>Trở về</span>
         </button>
     </div>
 </div>
@@ -38,15 +38,15 @@
         <div class="row margin-top-10">
             <h4 class="blue">
                 <i class="fa fa-info-circle margin-left-10"></i>                
-                <span ng-bind="Language.Resource.ListProducts"></span>
+                <span>Danh sách hàng hóa</span>
             </h4>
             <div class="hr"></div>
         </div>
         <div class="row margin-top-10">
             <div class="col-md-12">
                 <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false, true)"
-                       class="form-control" placeholder="{{Language.Resource.PlaceholderOrderDetail}}"
-                       check-custom="CheckNumOfProductOrder" check-custom-message="{{Language.Resource.MessageSelectProduct}}"
+                       class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
+                       check-custom="CheckNumOfProductOrder" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                        check-under="check-order"
                        ng-show="OrderForm._CanUpdate" />
             </div>
@@ -57,12 +57,12 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th ng-bind="Language.Resource.STT"></th>
-                                <th><span ng-bind="Language.Resource.ProductCode"></span></th>
-                                <th style="width: 30%"><span ng-bind="Language.Resource.ProductName"></span></th>
-                                <th style="width: 20%"><span ng-bind="Language.Resource.Quantity"></span></th>
-                                <th style="width: 15%"><span ng-bind="Language.Resource.Price"></span></th>
-                                <th><span ng-bind="Language.Resource.SumPrice"></span></th>
+                                <th>STT</th>
+                                <th><span>Mã hàng</span></th>
+                                <th style="width: 30%"><span>Tên hàng hóa</span></th>
+                                <th style="width: 20%"><span>Số lượng</span></th>
+                                <th style="width: 15%"><span>Giá bán</span></th>
+                                <th><span>Thành tiền</span></th>
                                 <th ng-if="OrderForm._CanUpdate"></th>
                             </tr>
                         </thead>
@@ -73,7 +73,7 @@
                                 <td>
                                     <span ng-bind="item.ProductName"></span>
                                     <div class="red-sm-label row" ng-if="item.MaxQuantity != undefined">
-                                        (<span ng-bind="Language.Resource.Remain"></span> <span ng-bind="item.MaxQuantity"></span>)
+                                        (Còn tồn <span ng-bind="item.MaxQuantity"></span>)
                                     </div>
                                 </td>
                                 <td>
@@ -365,27 +365,27 @@
     <div class="col-md-6 pull-right text-right">
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
-            <span ng-bind="Language.Resource.MakeOrder2"></span>
+            <span>Tạo đơn hàng</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
-            <span ng-bind="Language.Resource.PrintOrder"></span>
+            <span>In đơn hàng</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
-            <span ng-bind="Language.Resource.TempSave"></span>
+            <span>Lưu tạm</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
-            <span ng-bind="Language.Resource.Save"></span>
+            <span>Lưu</span>
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
-            <span  ng-bind="Language.Resource.SaveAndPrint"></span>
+            <span >Lưu và in</span>
         </button>
         <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
-            <span ng-bind="Language.Resource.Back"></span>
+            <span>Trở về</span>
         </button>
     </div>
 </div>

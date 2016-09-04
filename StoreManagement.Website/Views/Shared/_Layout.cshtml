@@ -102,7 +102,7 @@
                         <span class="icon-bar white"></span>
                     </button>
                     <a class="navbar-brand white" href="#">
-                        <span ng-bind="Language.Resource.StoreManagement"></span>
+                        <span>Quản lý cửa hàng</span>
                         : @StoreManagement.Website.SessionCollection.StoreName
                     </a>
                 </div>
@@ -110,7 +110,7 @@
             {
             <!-- /.navbar-header -->
                     <ul class="nav navbar-top-links navbar-right text-right">
-                        <li class="dropdown" >
+                        @*<li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="white" ng-bind="Language.SelectedLanguage"></i>  <i class="fa fa-caret-down white"></i>
                             </a>
@@ -126,8 +126,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <!-- /.dropdown-user -->
-                        </li>
+                        </li>*@
                         <!-- /.dropdown -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -151,13 +150,13 @@
                             <ul class="dropdown-menu dropdown-user">
                                 <li>
                                     <a href="#" id="linkUserInfo" ng-click="LoadViewBody('@Url.Action("Info", "Account")')"><i class="fa fa-user fa-fw"></i> 
-                                        <span ng-bind="Language.Resource.Info"></span>
+                                        <span>Thông tin</span>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="#" ng-click="LogOut()"><i class="fa fa-sign-out fa-fw"></i> 
-                                        <span ng-bind="Language.Resource.Exit"></span>
+                                        <span>Thoát</span>
                                     </a>
                                 </li>
                             </ul>
@@ -171,8 +170,8 @@
                             <ul class="nav" id="side-menu">
                                 <li class="sidebar-shortcuts">
                                     <div class="input-group custom-search-form">
-                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="{{Language.Resource.POSDesc}}" style="width: 90%; margin: 7px 10px; font-weight: bold;">
-                                            <i class="fa fa-desktop" style="margin-right: 12px;"></i> <span ng-bind="Language.Resource.POS"></span>
+                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 90%; margin: 7px 10px; font-weight: bold;">
+                                            <i class="fa fa-desktop" style="margin-right: 12px;"></i> <span>POS - Bán hàng</span>
                                         </a>
                                     </div>
                                     <!-- /input-group -->
@@ -180,7 +179,7 @@
                                 <li ng-class="{'active' : (menu.Url == CurrentUrl)}" ng-repeat="menu in ListMenu">
                                     <a href="#" action="{{menu.Url}}" class="left-menu" ng-click="LoadViewBody(menu.Url)">
                                         <i class="{{menu.CssClass}}"></i>
-                                        <span bind-html-compile="menu.Text"></span>
+                                        <span bind-html-compile="menu.Menu"></span>
                                         <span ng-if="menu.Url == CurrentUrl" class="fa arrow"></span>
                                     </a>
                                 </li>

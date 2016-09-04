@@ -16,11 +16,11 @@ mdlMenu.controller('LoadMenuController',
         $scope.StoreName = g_storeName;
         $scope.StoreAddress = g_storeAddress;
         $scope.StorePhone = g_storePhone;
-        $scope.Language = {
-            Code: "VN",
-            SelectedLanguage: "Tiếng Việt",
-            Resource: gVNResource
-        };
+        //$scope.Language = {
+        //    Code: "VN",
+        //    SelectedLanguage: "Tiếng Việt",
+        //    Resource: gVNResource
+        //};
 
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
@@ -112,28 +112,28 @@ mdlMenu.controller('LoadMenuController',
             }
         }
 
-        $scope.ChangeLanguage = function (code) {
-            if (code != $scope.Language.Code) {
-                $scope.Language.Code = code;
-                if (code == "VN") {
-                    $scope.Language.Resource = gVNResource;
-                    $scope.Language.SelectedLanguage = gVNResource.Vietnamese;
-                }
-                if (code == "EN") {
-                    $scope.Language.Resource = gENResource;
-                    $scope.Language.SelectedLanguage = gENResource.English;
+        //$scope.ChangeLanguage = function (code) {
+        //    if (code != $scope.Language.Code) {
+        //        $scope.Language.Code = code;
+        //        if (code == "VN") {
+        //            $scope.Language.Resource = gVNResource;
+        //            $scope.Language.SelectedLanguage = gVNResource.Vietnamese;
+        //        }
+        //        if (code == "EN") {
+        //            $scope.Language.Resource = gENResource;
+        //            $scope.Language.SelectedLanguage = gENResource.English;
 
-                }
+        //        }
 
-                var scope = angular.element($("#mdlCommon").find("[ng-controller]").first()).scope();
-                if (scope) {
-                    scope.$apply(function () {
-                        scope.ChangeLanguage(code);
-                    });
-                }
-            }
-        }
-        $scope.ChangeLanguage(g_defaultLang);
+        //        var scope = angular.element($("#mdlCommon").find("[ng-controller]").first()).scope();
+        //        if (scope) {
+        //            scope.$apply(function () {
+        //                scope.ChangeLanguage(code);
+        //            });
+        //        }
+        //    }
+        //}
+        //$scope.ChangeLanguage(g_defaultLang);
 
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");

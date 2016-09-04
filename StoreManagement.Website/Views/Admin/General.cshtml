@@ -84,10 +84,10 @@
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><a href="#" ng-click="ChangeDateRange(1, Language.Resource.ThisWeek)" ng-bind="Language.Resource.ThisWeek"></a></li>
-                                <li><a href="#" ng-click="ChangeDateRange(4, Language.Resource.LastWeek)" ng-bind="Language.Resource.LastWeek"></a></li>
-                                <li><a href="#" ng-click="ChangeDateRange(2, Language.Resource.ThisMonth)" ng-bind="Language.Resource.ThisMonth"></a></li>
-                                <li><a href="#" ng-click="ChangeDateRange(5, Language.Resource.LastMonth)" ng-bind="Language.Resource.LastMonth"></a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(1, 'Tuần này')">Tuần này</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(4, 'Tuần trước')">Tuần trước</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(2, 'Tháng này')">Tháng này</a></li>
+                                <li><a href="#" ng-click="ChangeDateRange(5, 'Tháng trước')">Tháng trước</a></li>
                             </ul>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                        ng-bind="(Revenue.Data.Revenue / Revenue.Data.Quantity) | currency:'':0"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.RemovedOrder"></span>
+                                    <span>Đơn hàng bị xóa</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a ng-bind="Revenue.Data.ReturnAmount | currency:'':0"></a>
@@ -169,7 +169,7 @@
                     <div class="widget-header infobox-orange">
                         <h4 class="widget-title">
                             <i class="fa-tags fa"></i>                            
-                            <span ng-bind="Language.Resource.InventoryInfo"></span>
+                            <span>Thông tin kho</span>
                         </h4>
                     </div>
 
@@ -177,28 +177,28 @@
                         <div class="widget-main">
                             <div class="row">
                                 <div class="col-xs-7 info">                                    
-                                    <span ng-bind="Language.Resource.LongWaiting"></span>
+                                    <span>Tồn kho lâu</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 5})')"
                                        ng-bind="GeneralInfo.LongInventory"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.OutOfStore"></span>
+                                    <span>Hết hàng</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 2})')"
                                        ng-bind="GeneralInfo.OutOfQuantity"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.UnderLimit"></span>
+                                    <span>Dưới định mức</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 3})')"
                                        ng-bind="GeneralInfo.UnderMin"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.OverLimit"></span>
+                                    <span>Vượt định mức</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 4})')"
@@ -214,35 +214,35 @@
                     <div class="widget-header infobox-green">
                         <h4 class="widget-title">
                             <i class="fa-barcode fa"></i>                            
-                            <span ng-bind="Language.Resource.ProductInfo"></span>
+                            <span>Thông tin hàng hóa</span>
                         </h4>
                     </div>
                     <div class="widget-body" style="border: none; min-height: 144px;">
                         <div class="widget-main">
                             <div class="row">
                                 <div class="col-xs-7 info">                                    
-                                    <span ng-bind="Language.Resource.NumProduct"></span>
+                                    <span>Số hàng hóa</span>
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin")')"
                                        ng-bind="GeneralInfo.TotalProduct"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.NotYetPrice"></span>                                    
+                                    <span>Chưa nhập giá bán</span>                                    
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin", new { ProductType = 1})')"
                                        ng-bind="GeneralInfo.NotInputPrice"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.NotYetCost"></span>  
+                                    <span>Chưa nhập giá mua</span>  
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin", new { ProductType = 2})')"
                                        ng-bind="GeneralInfo.NotInputCost"></a>
                                 </div>
                                 <div class="col-xs-7 info">
-                                    <span ng-bind="Language.Resource.NotYetGroup"></span> 
+                                    <span>Hàng chưa phân loại</span> 
                                 </div>
                                 <div class="col-xs-5 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin", new { ProductType = 3})')"
@@ -261,7 +261,7 @@
                     <div class="widget-header gray" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #ccc;">
                         <h4 class="widget-title">
                             <i class="fa-signal fa"></i>                            
-                            <span ng-bind="Language.Resource.ChartRevenueWeek"></span> 
+                            <span>Biểu đồ doanh số tuần</span> 
                         </h4>
                     </div>
                     <div id="chartContainer" class="widget-body" style="border: none; min-height: 155px;">
@@ -276,7 +276,7 @@
                     <div class="widget-header gray" style="border-bottom: 1px solid #ccc;">
                         <h4 class="widget-title">
                             <i class="fa-soundcloud fa"></i>                            
-                            <span ng-bind="Language.Resource.Announcement"></span> 
+                            <span>Thông báo</span> 
                         </h4>
                     </div>
                     <div class="widget-body" style="border: none; min-height: 155px; display: inline-block">
@@ -307,7 +307,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 margin-top-30" ng-if="!DataSet.Announcement.HasRecord()">                                    
-                                    <span ng-bind="Language.Resource.NoAnnouncement"></span> 
+                                    <span>Chưa có thông báo!</span> 
                                 </div>
                             </div>
                         </div>
