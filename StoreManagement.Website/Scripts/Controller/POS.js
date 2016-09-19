@@ -46,6 +46,7 @@ mdlCommon.controller('POSController',
         //Form
         $scope.CancelOrder = function () {
             $scope.ResetOrderForm();
+            $scope.ResetDiscountForm();
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
         }
 
