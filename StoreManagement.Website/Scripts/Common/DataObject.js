@@ -61,7 +61,7 @@ function GridViewConfig(gridId) {
         AjaxAsync(g_exportExcelAjaxUrl, '{ template : "' + template + '", objectData : ' + JSON.stringify(objectData) + ', gridConfig: ' + JSON.stringify(this) + '}',
             function () {
                 window.location = g_exportExcelUrl;
-        });
+            });
     }
 
     this.NormalizeColumName = function (columName) {
@@ -131,8 +131,7 @@ function ObjectDataConfig(tableName, $scope) {
 
         this.ReloadMasterData(this.TableName);
 
-        if (this.ObjectData.Version != undefined && result > 0)
-        {
+        if (this.ObjectData.Version != undefined && result > 0) {
             this.ObjectData.Version++;
         }
 
@@ -260,6 +259,18 @@ function ObjectDataConfig(tableName, $scope) {
         return result;
     }
 
+    this.InitFields = function (fromObject, toObject) {
+        for (var key in fromObject) {
+            toObject[key] = fromObject[key];
+        }
+    }
+
+    this.ResetFields = function (fromObject, toObject) {
+        for (var key in toObject) {
+            toObject[key] = fromObject[key];
+        }
+    }
+
     this.CopyFields = function (fromObject, toObject) {
         for (var key in fromObject) {
             var value = fromObject[key];
@@ -273,6 +284,7 @@ function ObjectDataConfig(tableName, $scope) {
             }
         }
     }
+
 
     this.ReloadMasterData = function (tableName) {
         this.$scope.ReloadMasterDrodowns(tableName);
