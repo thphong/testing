@@ -25,7 +25,7 @@ mdlCommon.controller('POSController',
     function ($scope, $filter, $controller, $interpolate, $sce) {
 
         $scope.SortByCreatedDate = function () {
-            $scope.Config.Products.GridSortCondition = "ProductId.CreatedDate DESC";
+            $scope.Config.Products.GridSortCondition = "[CreatedDate] DESC";
             $scope.ReloadGrid("Products");
 
         }

@@ -23,24 +23,24 @@
             <div class="row col-md-12" grid-data="Products"
                  grid-data-type="table"
                  grid-data-action="get"
-                 grid-data-object="T_Trans_Product_Store"
-                 grid-filter-condition="([StoreId] = {{CurrentStore}} and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1
-                                     and ([ProductId.AllowNegative] = 1 or [Quantity] > 0)
-                                     and ([ProductId.Cost] > 0 and [ProductId.Price] > 0)
-                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductId.ProductGroup]))"
-                 grid-sort-condition="[ProductId.ProductName] ASC">
+                 grid-data-object="T_Trans_Products"
+                 grid-filter-condition="([StoreId] = {{CurrentStore}} and [IsSelling] = 1 and [IsActive] = 1
+                                     and ([AllowNegative] = 1 or [Quantity] > 0)
+                                     and ([Cost] > 0 and [Price] > 0)
+                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductGroup]))"
+                 grid-sort-condition="[ProductName] ASC">
 
                 <div grid-defined-colum="ProductId" class="none-display"></div>
-                <div grid-defined-colum="ProductId.ProductName" class="none-display"></div>
-                <div grid-defined-colum="ProductId.ProductCode" class="none-display"></div>
-                <div grid-defined-colum="ProductId.Price" class="none-display"></div>
-                <div grid-defined-colum="ProductId.Cost" class="none-display"></div>
+                <div grid-defined-colum="ProductName" class="none-display"></div>
+                <div grid-defined-colum="ProductCode" class="none-display"></div>
+                <div grid-defined-colum="Price" class="none-display"></div>
+                <div grid-defined-colum="Cost" class="none-display"></div>
                 <div grid-defined-colum="Quantity" class="none-display"></div>
-                <div grid-defined-colum="ProductId.VAT" class="none-display"></div>
-                <div grid-defined-colum="ProductId.ProductImageUrl" class="none-display"></div>
-                <div grid-defined-colum="#ProductId.CreatedDate" class="none-display"></div>
+                <div grid-defined-colum="VAT" class="none-display"></div>
+                <div grid-defined-colum="ProductImageUrl" class="none-display"></div>
+                <div grid-defined-colum="#CreatedDate" class="none-display"></div>
                 <div grid-defined-colum="#NumSelling" class="none-display"></div>
-                <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
+                <div grid-defined-colum="AllowNegative" class="none-display"></div>
 
                 <div class="col-md-12 row" ng-init="Config.Products.NumOfItemOnPage = 12">
                     <div class="col-md-3 col-xs-4 col-lg-3" ng-repeat="item in DataSet.Products.Data">
@@ -273,7 +273,7 @@
                         </div>
                         <div class="col-xs-8">
                             <span ng-bind="OrderForm.CustomerName" ng-if="!OrderForm._CanUpdate"></span>
-                            <div @*class="width-90"*@ ng-show="OrderForm._CanUpdate">
+                            <div class="width-90" ng-show="OrderForm._CanUpdate">
                                 <input class="form-control" ng-model="OrderForm.CustomerName"
                                        autocomplete-master-table="T_Master_Customers"
                                        autocomplete-colum-id="CustomerId"
@@ -287,7 +287,7 @@
                                 <input id="txtCustomerId" class="none-display" ng-model="OrderForm.Customer" />
                                 <input id="txtIsWholeSale" class="none-display" ng-model="OrderForm.CustomerIsWholeSale" />
                             </div>
-                            <div class="width-10" ng-if="OrderForm._CanUpdate && false">
+                            <div class="width-10" ng-if="OrderForm._CanUpdate">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#customerModal" ng-click="SetIsSaleCustomer('0')"
                                         ng-if="CustomerFormConfig._CanCreate">

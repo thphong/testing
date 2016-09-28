@@ -29,6 +29,7 @@ mdlCommon.controller('CustomerModalController',
             IsWholeSale: 0,
             Gender: "M",
             IsActive: 1,
+            StoreId: $scope.CurrentStore,
             _CanUpdate: true,
             _CanDelete: true,
             Version : 0
@@ -46,6 +47,7 @@ mdlCommon.controller('CustomerModalController',
             $scope.CustomerForm.IsWholeSale = 0;
             $scope.CustomerForm.Gender = "M";
             $scope.CustomerForm.IsActive = 1;
+            $scope.CustomerForm.StoreId = $scope.CurrentStore;
             $scope.CustomerForm._CanUpdate = 1;
             $scope.CustomerForm._CanDelete = 1;
             $scope.CustomerForm.Version = 0;

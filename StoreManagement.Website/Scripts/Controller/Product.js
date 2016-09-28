@@ -83,6 +83,9 @@ mdlCommon.controller('ProductController',
             ProductImageUrl: "",
             Version: 0,
             isCombo: 0,
+            StoreId: $scope.CurrentStore,
+            Quantity: 0,
+            NumSelling: 0,
             _CanUpdate: true,
             _CanDelete: true
         };
@@ -118,6 +121,9 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm._CanDelete = true;
             $scope.ProductForm.Version = 0;
             $scope.ProductForm.isCombo = 0;
+            $scope.ProductForm.StoreId = $scope.CurrentStore;
+            $scope.ProductForm.Quantity = 0;
+            $scope.ProductForm.NumSelling = 0;
         };
 
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
