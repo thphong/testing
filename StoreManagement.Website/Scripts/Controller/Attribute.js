@@ -18,7 +18,8 @@
             AttributeId: "-1",
             AttributeName: "",
             IsActive: "1",
-            Version: 0
+            Version: 0,
+            StoreId: $scope.CurrentStore
         };
 
         $scope.ResetAttributeForm = function () {
@@ -26,6 +27,7 @@
             $scope.AttributeForm.AttributeName = "";
             $scope.AttributeForm.IsActive = "1";
             $scope.AttributeForm.Version = 0;
+            $scope.AttributeForm.StoreId = $scope.CurrentStore;
         };
 
         $scope.AttributeFormConfig = new ObjectDataConfig("T_Master_Attibutes", $scope);

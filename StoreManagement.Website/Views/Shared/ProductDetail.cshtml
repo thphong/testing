@@ -137,7 +137,7 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProducerId" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                             dropdown-name-field="ProducerName" dropdown-empty-text="Chọn nhà sản xuất" dropdown-empty-value=""
-                            dropdown-condition="[IsActive] = 1"
+                            dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                             ng-show="IsEditingProductDetail"></select>
                 </div>
                 <div class="width-10">
@@ -252,7 +252,7 @@
                                             ng-init="item.AttributeId = item.AttributeId + ''"
                                             ng-model="item.AttributeId" dropdown-master-table="T_Master_Attibutes" dropdown-value-field="AttributeId"
                                             dropdown-name-field="AttributeName" dropdown-empty-text="Chọn thuộc tính" dropdown-empty-value=""
-                                            dropdown-condition="[IsActive] = 1"
+                                            dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                                             check-empty="" check-empty-message="Vui lòng chọn thuộc tính."></select>
                                 </td>
                                 <td>
