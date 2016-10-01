@@ -34,7 +34,8 @@
             IsActive: "1",
             IsParent: "0",
             ParentId: "",
-            Version: 0
+            Version: 0,
+            StoreId: $scope.CurrentStore
         };
 
         $scope.ResetProductGroupForm = function () {
@@ -44,6 +45,7 @@
             $scope.ProductGroupForm.IsParent = "0";
             $scope.ProductGroupForm.ParentId = "";
             $scope.ProductGroupForm.Version = 0;
+            $scope.ProductGroupForm.StoreId = $scope.CurrentStore;
         };
 
         $scope.ProductGroupFormConfig = new ObjectDataConfig("T_Master_ProductGroups", $scope);

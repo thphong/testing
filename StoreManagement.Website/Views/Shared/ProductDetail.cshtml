@@ -119,7 +119,7 @@
                 <div class="width-90">
                     <select class="form-control" ng-model="ProductForm.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Chọn nhóm hàng" dropdown-empty-value=""
-                            dropdown-condition="[IsActive] = 1 and [ParentId] = {{CurrentProductGroup}}"
+                            dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                             check-empty="" check-empty-message="Vui lòng chọn nhóm hàng." 
                             ng-show="IsEditingProductDetail"></select>
                 </div>

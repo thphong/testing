@@ -289,30 +289,7 @@
                                            check-length="500" check-length-message="Chiều dài tối ta là {0}."
                                            ng-disabled="!StoreForm.IsEditing" />
                                 </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <div class="col-md-3">
-                                    <label class="control-label">Bộ danh mục</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="width-90">
-                                        <select class="form-control" ng-model="StoreForm.ProductGroup"
-                                                dropdown-master-table="T_Master_ProductGroups"
-                                                dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName"
-                                                dropdown-empty-text="Chọn bộ danh mục" dropdown-empty-value=""
-                                                dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
-                                                check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
-                                                ng-disabled="!StoreForm.IsEditing || StoreForm.StoreId > 0"></select>
-                                    </div>
-                                    <div class="width-10">
-                                        <button class="btn btn-primary btn-sm" title="Quản lý nhóm hàng"
-                                                ng-if="StoreForm.IsEditing && StoreForm.StoreId == -1"
-                                                data-toggle="modal" data-target="#productGroupModal">
-                                            ...
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                             <div class="row margin-top-10">
                                 <div class="col-md-3">
                                     <label class="control-label">Mã số thuế</label>
@@ -365,10 +342,8 @@
                                                 <th grid-defined-colum="StoreName"><span>Tên cửa hàng</span></th>
                                                 <th grid-defined-colum="PhoneNumber"><span>Số điện thoại</span></th>
                                                 <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
-                                                <th grid-defined-colum="ProductGroup.GroupName"><span>Bộ danh mục</span></th>
                                                 <th style="width: 10%"></th>
                                                 <th grid-defined-colum="StoreId" class="none-display"></th>
-                                                <th grid-defined-colum="ProductGroup" class="none-display"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -401,17 +376,6 @@
                                                            check-under="check-store{{item.StoreId}}" />
                                                 </td>
                                                 <td>
-                                                    <span ng-bind="item.GroupName"></span>
-                                                    @*<select class="form-control" ng-init="item.ProductGroup = item.ProductGroup + ''" ng-model="item.ProductGroup"
-                                                        dropdown-master-table="T_Master_ProductGroups"
-                                                        dropdown-value-field="ProductGroupId" dropdown-name-field="GroupName"
-                                                        dropdown-empty-text="Chọn bộ danh mục" dropdown-empty-value=""
-                                                        dropdown-condition="[IsActive] = 1 and [IsParent] = 1"
-                                                        check-empty="" check-empty-message="Vui lòng chọn bộ danh mục."
-                                                        check-under="check-store{{item.StoreId}}"
-                                                        ng-if="false"></select>*@
-                                                </td>
-                                                <td>
                                                     <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
                                                        title="Chỉnh sửa" ng-click="item.IsEditing = true;">
                                                         <i class="fa-edit fa"></i>
@@ -428,7 +392,7 @@
                                             </tr>
                                             <tr ng-if="!DataSet.Stores.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="6" align="center"> Không có dữ liệu! </td>
+                                                <td colspan="5" align="center"> Không có dữ liệu! </td>
                                             </tr>
                                         </tbody>
                                     </table>

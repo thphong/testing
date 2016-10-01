@@ -59,7 +59,6 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.CurrentUserId = (int)result["UserId"];
                 SessionCollection.UserName = result["UserName"].ToString();
                 SessionCollection.CurrentStore = (int)result["CurrentStore"];
-                SessionCollection.ProductGroup = (int)result["ProductGroup"];
                 SessionCollection.StoreName = result["StoreName"].ToString();
                 SessionCollection.StorePhone = result["StorePhone"].ToString();
                 SessionCollection.StoreAddress = result["StoreAddress"].ToString();

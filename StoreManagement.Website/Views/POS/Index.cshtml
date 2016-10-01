@@ -9,7 +9,7 @@
                 <div class="col-xs-4 margin-top-10">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" dropdown-empty-value="0" ng-change="ReloadGrid('Products')"
-                            dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
+                            dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                 </div>
                 <div class="col-xs-8 margin-top-10">
                     <button class="btn btn-success btn-sm" ng-click="SortByCreatedDate()">

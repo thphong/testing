@@ -428,7 +428,6 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentUserName = g_currentUserName;
     $scope.CurrentStore = g_currentStoreId;
-    $scope.CurrentProductGroup = g_currentStoreProductGroup;
     $scope.StoreName = g_storeName;
     $scope.StoreAddress = g_storeAddress;
     $scope.StorePhone = g_storePhone;

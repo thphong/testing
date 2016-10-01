@@ -12,7 +12,6 @@ mdlMenu.controller('LoadMenuController',
         $scope.CurrentUser = g_currentUserId;
         $scope.CurrentUrl = window.location.pathname.toLowerCase();
         $scope.CurrentUserName = g_currentUserName;
-        $scope.CurrentProductGroup = g_currentStoreProductGroup;
         $scope.StoreName = g_storeName;
         $scope.StoreAddress = g_storeAddress;
         $scope.StorePhone = g_storePhone;

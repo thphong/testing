@@ -148,7 +148,7 @@
                 <span ng-bind="InventTranForm.ToStoreCode" ng-if="!InventTranForm._CanUpdate"></span>                
                 <select ng-show="InventTranForm._CanUpdate" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                         dropdown-name-field="StoreCode" dropdown-empty-text="Chọn cửa hàng" dropdown-empty-value="" 
-                        dropdown-condition="[StoreId] <> {{CurrentStore}} and [ProductGroup] = {{CurrentProductGroup}}"
+                        dropdown-condition="[StoreId] <> {{CurrentStore}}"
                         check-empty="" check-empty-message="Vui lòng chọn cửa hàng nhận" check-under="check-inventory-tran"
                         ></select>
 
