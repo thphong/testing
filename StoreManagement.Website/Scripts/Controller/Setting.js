@@ -183,6 +183,7 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
+        $scope.CanAddStore = $scope.StoreFormConfig.CheckField('ADD_STORE');
         $scope.StoreFormConfig.CheckCanCreateObject();
         $scope.LoadStoreForm = function () {
             if ($scope.StoreForm.StoreId <= 0) {
@@ -241,7 +242,7 @@ mdlCommon.controller('SettingController',
         ///////////////////////////////////////////////////////////
         $scope.TemplateForm =
         {
-            TemplateId: 1,
+            TemplateId: "0",
             TemplateName: "",
             DefaultBody: "",
             RuntimeBody: "",
@@ -310,49 +311,6 @@ mdlCommon.controller('SettingController',
             html = html.replace(/}/g, '}}');
             return $sce.trustAsHtml(html);
         };
-
-        /*$scope.SampleData =
-        {
-            Ten_Cua_Hang: "Thegioididong",
-            Dia_Chi_Cua_Hang: "P3, Q.11, TP. HCM",
-            SDT_Cua_Hang: "083-333-444",
-            Ngay_Xuat: "23-06-2016",
-            Ngay_Thang_Nam: formatDate(new Date()),
-            Ghi_Chu: "Đã nhận đủ hàng!",
-            Ma_Don_Hang: "PX00010",
-            Nhan_Vien_Thu_Ngan: "Thu thủy",
-            Ma_Khach_Hang: "",
-            Khach_Hang: "Thành Phong",
-            Dia_Chi_Khach_Hang: "",
-            STT: "1",
-            Ma_Hang: "HH00016",
-            Ten_Hang_Hoa: "Áo thun thái - xanh",
-            So_Luong: "2",
-            Don_Gia_Sau_Giam_Gia: "100,000",
-            Thanh_Tien: "200,000",
-            Tong_So_Luong: "2",
-            Tong_Tien_Hang: "200,000",
-            Giam_Gia_Tren_Hoa_Don: "10,000",
-            Giam_Gia_PT_Tren_Hoa_Don: "",
-            Tong_Thanh_Toan: "190,000",
-            Da_Thanh_Toan: "190,000",
-            Chua_Thanh_Toan: "0",
-            Tien_Thua: "",
-            Ma_Phieu_Nhap: "PN100012",
-            Nha_Cung_Cap: "Cty SX Thái Tuấn",
-            Ngay_Nhap: "19-05-2016",
-            Nhan_Vien_Nhap_Hang: "Tuấn Vũ",
-            Tong_Tien_Thue: "0",
-            Ma_Phieu_Chi: "PC1000017",
-            Ngay_Chi: "20-05-2016",
-            Nguoi_Chi: "Thanh Thủy",
-            Ten_Chi_Phi: "Tiền điện tháng 10",
-            Loai_Chi_Phi: "Tiền điện nước",
-            Ngay_Chuyen: "16-05-2016",
-            Nhan_Vien_Chuyen_Hang: "Thành Phong",
-            Tu_Kho: "Thegiodidong",
-            Den_Kho: "Dienmayxanh"
-        }*/
 
         //Promotion
         $scope.SelectedPromotion = {

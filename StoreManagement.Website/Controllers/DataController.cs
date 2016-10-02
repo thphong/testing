@@ -127,7 +127,6 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.CurrentStore = storedId;
 
                 var store = dataService.GetObject(SessionCollection.CurrentUserId, "T_Master_Stores", "", storedId.ToString());
-                SessionCollection.ProductGroup = (int)store["ProductGroup"];
                 SessionCollection.StoreName = store["StoreName"].ToString();
                 SessionCollection.StorePhone = store["PhoneNumber"].ToString();
                 SessionCollection.StoreAddress = store["Address"].ToString();
@@ -280,7 +279,8 @@ namespace StoreManagement.Website.Controllers
                 {
                     GridDataObject = "T_System_Rule",
                     GridDefinedColums = "RuleName;Value",
-                    GridDataAction = "getall"
+                    GridDataAction = "getall",
+                    GridFilterCondition = "StoreId = 0 or StoreId = " + SessionCollection.CurrentStore
                 };
                 return Json(dataService.GetRules(SessionCollection.CurrentUserId, config));
             }

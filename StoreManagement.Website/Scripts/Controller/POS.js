@@ -64,7 +64,7 @@ mdlCommon.controller('POSController',
 
             if ($scope.OrderForm.OrderId > 0) {
                 $scope.GetListPrintTerm("Order");
-                $scope.GetPrintTemplate("ORDER_POS");
+                $scope.GetPrintTemplate("ORDER_POS", $scope.CurrentStore);
 
                 setTimeout(function () {
                     $scope.PrintData("divPrint");

@@ -112,7 +112,7 @@
 
         $scope.PrintForm = function () {
             $scope.GetListPrintTerm("Cost");
-            $scope.GetPrintTemplate("COST");
+            $scope.GetPrintTemplate("COST", $scope.CurrentStore);
 
             setTimeout(function () {
                 $scope.PrintData("divPrint");
