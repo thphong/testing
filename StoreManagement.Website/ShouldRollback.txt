@@ -1,1 +1,505 @@
 + Add customer in POS
+
+drop table [StoreManagement].[dbo].[T_Trans_Product_Store]
+delete dbo.T_Trans_Combo_Products
+delete dbo.T_Trans_Inventory_Product
+delete dbo.T_Trans_Order_Product
+delete dbo.T_Trans_ProductPrice_History
+delete dbo.T_Trans_ProductQuantity_History
+delete dbo.T_Trans_Purchase_Product
+delete dbo.T_Trans_InventTran_Product
+delete [dbo].[T_Trans_Products]
+
+
+update [dbo].[T_System_Object_Field_Filter]
+set ObjectName  = 'T_Trans_Products'
+where ObjectName  = 'T_Trans_Product_Store'
+
+delete [dbo].[T_System_Object_Freze_Condition]
+where TableName = 'T_Trans_Product_Store'
+
+delete [dbo].[T_System_Role_Object_Mapping]
+where ObjectName = 'T_Trans_Product_Store'
+
+delete dbo.T_Trans_Payment
+delete dbo.T_Trans_Order_Product
+delete dbo.T_Trans_Orders
+delete [dbo].[T_Master_Customers]
+
+delete dbo.T_Trans_Purchase_Payment
+delete dbo.T_Trans_Purchase_Product
+delete dbo.T_Trans_Purchase
+delete [dbo].[T_Master_Suppliers]
+
+delete [dbo].[T_Master_Attibutes]
+
+insert into [T_System_Object_Field_Filter]
+  ([ObjectName]
+      ,[ColumName]
+      ,[IsActive]
+      ,[Version]
+      ,[CreatedBy]
+      ,[CreatedDate]
+      ,[ModifiedBy]
+      ,[ModifiedDate])
+select 'T_Master_Customers',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+union
+select 'T_Master_Suppliers',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+union
+select 'T_Master_Attibutes',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+union
+select 'T_Master_Producers',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+union
+select 'T_Master_ProductGroups',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+union
+select 'T_Master_User',[ColumName],1,1,1,getdate(),1,getdate()
+FROM [dbo].[T_System_Object_Field_Filter]
+where ObjectName = 'T_Trans_Products'
+
+
+insert into [dbo].[T_System_Role_Menu_Mapping]
+(MenuId, RoleId, Version, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
+values(10, 5, 1, 1, getdate(), 1, getdate(), 1)
+
+insert into [dbo].[T_System_Role_Object_Mapping]
+(ObjectName, Role, CanSelect, CanUpdate, CanDelete, IsActive, Version, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate)
+values ('T_System_Role', 5, 1, 0, 0, 1,1,1,getdate(),1,getdate()),
+values ('T_Trans_User_Store', 5, 1, 1, 1, 1,1,1,getdate(),1,getdate())
+
+insert into [dbo].[T_System_Role_Object_Mapping]
+(ObjectName, Role, CanSelect, CanUpdate, CanDelete, IsActive, Version, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate)
+values ('T_Master_User', 5, 1, 1, 1, 1,1,1,getdate(),1,getdate())
+
+
+update T_Master_User
+set StoreId = 1
+
+ALTER TABLE [dbo].[T_Trans_Products] DROP CONSTRAINT [FK_T_Trans_Products_T_Master_Stores]
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products] DROP CONSTRAINT [FK_T_Trans_Products_T_Master_ProductGroups]
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products] DROP CONSTRAINT [FK_T_Trans_Products_T_Master_Producers]
+GO
+
+/****** Object:  Table [dbo].[T_Trans_Products]    Script Date: 9/28/2016 9:10:21 PM ******/
+DROP TABLE [dbo].[T_Trans_Products]
+GO
+
+/****** Object:  Table [dbo].[T_Trans_Products]    Script Date: 9/28/2016 9:10:21 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[T_Trans_Products](
+	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [nvarchar](500) NOT NULL,
+	[ProductCode] [varchar](32) NOT NULL,
+	[Price] [money] NULL,
+	[Cost] [money] NULL,
+	[ProductGroup] [int] NULL,
+	[ProducerId] [int] NULL,
+	[TrackInventory] [bit] NOT NULL,
+	[AllowNegative] [bit] NOT NULL,
+	[VAT] [int] NULL,
+	[AllowMin] [int] NULL,
+	[AllowMax] [int] NULL,
+	[IsManageAsSerial] [bit] NOT NULL,
+	[IsManageAttribute] [bit] NOT NULL,
+	[Description] [nvarchar](4000) NULL,
+	[IsSelling] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[LastBoughtDate] [datetime] NULL,
+	[isCombo] [bit] NOT NULL,
+	[ProductImageUrl] [varchar](500) NULL,
+	[StoreId] [int] NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[NumSelling] [int] NOT NULL,
+ CONSTRAINT [PK_T_Trans_Products] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products]  WITH CHECK ADD  CONSTRAINT [FK_T_Trans_Products_T_Master_Producers] FOREIGN KEY([ProducerId])
+REFERENCES [dbo].[T_Master_Producers] ([ProducerId])
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products] CHECK CONSTRAINT [FK_T_Trans_Products_T_Master_Producers]
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products]  WITH CHECK ADD  CONSTRAINT [FK_T_Trans_Products_T_Master_ProductGroups] FOREIGN KEY([ProductGroup])
+REFERENCES [dbo].[T_Master_ProductGroups] ([ProductGroupId])
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products] CHECK CONSTRAINT [FK_T_Trans_Products_T_Master_ProductGroups]
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products]  WITH CHECK ADD  CONSTRAINT [FK_T_Trans_Products_T_Master_Stores] FOREIGN KEY([StoreId])
+REFERENCES [dbo].[T_Master_Stores] ([StoreId])
+GO
+
+ALTER TABLE [dbo].[T_Trans_Products] CHECK CONSTRAINT [FK_T_Trans_Products_T_Master_Stores]
+GO
+
+-------------------------------------------------------------
+
+ALTER TABLE [dbo].[T_Master_Customers] DROP CONSTRAINT [FK_T_Master_Customers_T_Master_Stores]
+GO
+
+ALTER TABLE [dbo].[T_Master_Customers] DROP CONSTRAINT [DF_T_Master_Customers_IsWholeSale]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Customers]    Script Date: 9/28/2016 10:22:53 PM ******/
+DROP TABLE [dbo].[T_Master_Customers]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Customers]    Script Date: 9/28/2016 10:22:53 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[T_Master_Customers](
+	[CustomerId] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerCode] [varchar](50) NOT NULL,
+	[CustomerName] [nvarchar](300) NOT NULL,
+	[Phone] [varchar](50) NULL,
+	[Email] [varchar](50) NULL,
+	[Address] [nvarchar](500) NULL,
+	[Birthday] [date] NULL,
+	[Gender] [char](1) NULL,
+	[Notes] [nvarchar](500) NULL,
+	[IsWholeSale] [bit] NOT NULL,
+	[LastTimeVisited] [datetime] NULL,
+	[SumMoney] [money] NULL,
+	[Debt] [money] NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_Customers] PRIMARY KEY CLUSTERED 
+(
+	[CustomerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[T_Master_Customers] ADD  CONSTRAINT [DF_T_Master_Customers_IsWholeSale]  DEFAULT ((0)) FOR [IsWholeSale]
+GO
+
+ALTER TABLE [dbo].[T_Master_Customers]  WITH CHECK ADD  CONSTRAINT [FK_T_Master_Customers_T_Master_Stores] FOREIGN KEY([StoreId])
+REFERENCES [dbo].[T_Master_Stores] ([StoreId])
+GO
+
+ALTER TABLE [dbo].[T_Master_Customers] CHECK CONSTRAINT [FK_T_Master_Customers_T_Master_Stores]
+GO
+
+--------------------------------------------------------------------------------------------
+
+ALTER TABLE [dbo].[T_Master_Suppliers] DROP CONSTRAINT [FK_T_Master_Suppliers_T_Master_Stores]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Suppliers]    Script Date: 9/28/2016 10:34:04 PM ******/
+DROP TABLE [dbo].[T_Master_Suppliers]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Suppliers]    Script Date: 9/28/2016 10:34:04 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[T_Master_Suppliers](
+	[SupplierId] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierCode] [varchar](50) NOT NULL,
+	[SupplierName] [nvarchar](300) NOT NULL,
+	[Phone] [varchar](50) NULL,
+	[Email] [varchar](50) NULL,
+	[Address] [nvarchar](500) NULL,
+	[TaxCode] [varchar](50) NULL,
+	[Notes] [nvarchar](500) NULL,
+	[LastTimeProvided] [datetime] NULL,
+	[SumMoney] [money] NULL,
+	[Debt] [money] NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_Providers] PRIMARY KEY CLUSTERED 
+(
+	[SupplierId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[T_Master_Suppliers]  WITH CHECK ADD  CONSTRAINT [FK_T_Master_Suppliers_T_Master_Stores] FOREIGN KEY([StoreId])
+REFERENCES [dbo].[T_Master_Stores] ([StoreId])
+GO
+
+ALTER TABLE [dbo].[T_Master_Suppliers] CHECK CONSTRAINT [FK_T_Master_Suppliers_T_Master_Stores]
+GO
+
+
+
+-----------------------------------------------------------------
+
+ALTER TABLE [dbo].[T_Master_Producers] DROP CONSTRAINT [FK_T_Master_Producers_T_Master_Stores]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Producers]    Script Date: 10/1/2016 7:14:41 PM ******/
+DROP TABLE [dbo].[T_Master_Producers]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Producers]    Script Date: 10/1/2016 7:14:41 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[T_Master_Producers](
+	[ProducerId] [int] IDENTITY(1,1) NOT NULL,
+	[ProducerName] [nvarchar](200) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_Producers] PRIMARY KEY CLUSTERED 
+(
+	[ProducerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[T_Master_Producers]  WITH CHECK ADD  CONSTRAINT [FK_T_Master_Producers_T_Master_Stores] FOREIGN KEY([StoreId])
+REFERENCES [dbo].[T_Master_Stores] ([StoreId])
+GO
+
+ALTER TABLE [dbo].[T_Master_Producers] CHECK CONSTRAINT [FK_T_Master_Producers_T_Master_Stores]
+GO
+
+------------------------------------------------------------------------
+
+
+DROP TABLE [dbo].[T_Master_Attibutes]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Attibutes]    Script Date: 10/1/2016 7:30:32 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[T_Master_Attibutes](
+	[AttributeId] [int] IDENTITY(1,1) NOT NULL,
+	[AttributeName] [nvarchar](200) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_Attibutes] PRIMARY KEY CLUSTERED 
+(
+	[AttributeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+-------------------------------------------------------------------
+
+DROP TABLE [dbo].[T_Master_Stores]
+GO
+
+/****** Object:  Table [dbo].[T_Master_Stores]    Script Date: 10/1/2016 7:57:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[T_Master_Stores](
+	[StoreId] [int] IDENTITY(1,1) NOT NULL,
+	[StoreCode] [nvarchar](100) NOT NULL,
+	[StoreName] [nvarchar](500) NOT NULL,
+	[PresenterName] [nvarchar](100) NULL,
+	[PhoneNumber] [varchar](50) NULL,
+	[MobileNumber] [varchar](50) NULL,
+	[Website] [nvarchar](500) NULL,
+	[Address] [nvarchar](500) NULL,
+	[Description] [nvarchar](1000) NULL,
+	[TaxCode] [varchar](100) NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+ CONSTRAINT [PK_T_Master_Stores] PRIMARY KEY CLUSTERED 
+(
+	[StoreId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+----------------------------------------------------------------------
+
+DROP TABLE [dbo].[T_Master_ProductGroups]
+GO
+
+/****** Object:  Table [dbo].[T_Master_ProductGroups]    Script Date: 10/1/2016 7:59:25 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[T_Master_ProductGroups](
+	[ProductGroupId] [int] IDENTITY(1,1) NOT NULL,
+	[GroupName] [nvarchar](200) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_ProductGroups] PRIMARY KEY CLUSTERED 
+(
+	[ProductGroupId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+------------------------------------------------------------------------------------
+
+ALTER TABLE [dbo].[T_Master_User] DROP CONSTRAINT [FK_T_Master_User_T_Master_Stores]
+GO
+
+/****** Object:  Table [dbo].[T_Master_User]    Script Date: 10/2/2016 11:02:44 AM ******/
+DROP TABLE [dbo].[T_Master_User]
+GO
+
+/****** Object:  Table [dbo].[T_Master_User]    Script Date: 10/2/2016 11:02:44 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[T_Master_User](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[LoginId] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+	[UserName] [nvarchar](100) NOT NULL,
+	[Email] [varchar](100) NULL,
+	[Phone] [varchar](50) NULL,
+	[DefaultAction] [varchar](50) NULL,
+	[DefaultController] [varchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsLogin] [bit] NULL,
+	[Version] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[IsDeveloper] [bit] NULL,
+	[StoreId] [int] NOT NULL,
+ CONSTRAINT [PK_T_Master_User] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[T_Master_User]  WITH CHECK ADD  CONSTRAINT [FK_T_Master_User_T_Master_Stores] FOREIGN KEY([StoreId])
+REFERENCES [dbo].[T_Master_Stores] ([StoreId])
+GO
+
+ALTER TABLE [dbo].[T_Master_User] CHECK CONSTRAINT [FK_T_Master_User_T_Master_Stores]
+GO
+
+--------------------------------------------------------------------
+Trigger_ComboOrder_CheckContraint
+Trigger_InventoryProduct_CheckContraint
+Trigger_InventTranProduct_CheckContraint
+Trigger_InventTranProduct_Validate
+Trigger_Order_UpdateContraint
+Trigger_Product_CheckContraint
+Trigger_Product_Combo
+Trigger_Product_RecalculateCombo
+Trigger_ProductOrder_CheckContraint
+Trigger_Purchase_CheckContraint
+Trigger_PurchaseProduct_CheckContraint
+Trigger_Store_CheckContraint
+USP_TEST_DUMMY_DATA
+UFN_Report_General
+UFN_Report_General
+USP_System_Login
+Trigger_User_SetDefaultPage

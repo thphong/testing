@@ -52,7 +52,8 @@ mdlCommon.controller('SettingController',
             UserName: "",
             Email: "",
             Phone: "",
-            IsActive: 1
+            IsActive: 1,
+            StoreId: $scope.CurrentStore
         }
 
         $scope.UserRoleForm =
@@ -71,6 +72,7 @@ mdlCommon.controller('SettingController',
             $scope.UserForm.Email = "";
             $scope.UserForm.Phone = "";
             $scope.UserForm.IsActive = 1;
+            $scope.UserForm.StoreId = $scope.CurrentStore;
         }
 
         $scope.ResetUserModal = function () {

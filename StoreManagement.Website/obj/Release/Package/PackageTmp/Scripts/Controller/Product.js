@@ -26,11 +26,21 @@ mdlCommon.controller('ProductController',
         $controller('ProductListController', { $scope: $scope });
 
         $scope.CurrentTab = "Products";
+        $scope.SelectedProductId = -1;
 
         $scope.SetCurrentTab = function (tab) {
             if (tab != $scope.CurrentTab) {
                 $scope.CurrentTab = tab;
                 $scope.IsShowProductDetail = false;
+            }
+        }
+
+        $scope.SelectProductId = function (product) {
+            if ($scope.SelectedProductId == product.ProductId) {
+                $scope.SelectedProductId = -1;
+            }
+            else {
+                $scope.SelectedProductId = product.ProductId;
             }
         }
 
@@ -70,6 +80,7 @@ mdlCommon.controller('ProductController',
             IsCost: 0,
             LastReferNo: "",
             LastComment: "",
+            ProductImageUrl: "",
             Version: 0,
             isCombo: 0,
             _CanUpdate: true,
@@ -102,6 +113,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.IsCost = 0;
             $scope.ProductForm.LastReferNo = "";
             $scope.ProductForm.LastComment = "";
+            $scope.ProductForm.ProductImageUrl = "";
             $scope.ProductForm._CanUpdate = true;
             $scope.ProductForm._CanDelete = true;
             $scope.ProductForm.Version = 0;
@@ -249,17 +261,21 @@ mdlCommon.controller('ProductController',
                     //Save file
                     var formData = new FormData();
                     formData.append('file', $('[type="file"]:visible')[0].files[0]);
-                    formData.append('productId', productId);
-
+                    formData.append('objectName', 'T_Trans_Products');
+                    formData.append('objectId', productId);
+                    formData.append('PKField', 'ProductId');
+                    formData.append('fieldName', 'ProductImageUrl');
+                    
                     $.ajax({
-                        url: g_saveProductImageUrl,
+                        url: g_saveFileUrl,
                         type: 'POST',
                         data: formData,
                         processData: false,  // tell jQuery not to process the data
                         contentType: false,  // tell jQuery not to set contentType
                         success: function (data) {
-                            var att = $(".file-preview-image:visible").attr("src")
-                            $(".file-preview-image:visible").removeAttr("src").attr("src", att + "&timestamp=" + (new Date().getTime()));
+                            var att = $(".file-preview-image:visible").attr("src");
+                            att = att.substr(0, att.indexOf("url="));
+                            $(".file-preview-image:visible").removeAttr("src").attr("src", att + "url=" + data);
                         }
                     });
                 }

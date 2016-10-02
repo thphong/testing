@@ -560,6 +560,11 @@ textarea.form-control {
     display: inline-flex;
 }
 
+.width-98 {
+    width: 98% !important;
+    display: inline-flex;
+}
+
 .width-20 {
     width: 20% !important;
     display: inline-flex !important;

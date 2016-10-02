@@ -65,7 +65,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2015 18:31:04</publishTime>
     </File>
     <File Include="bin/MySchool.Website.dll">
-      <publishTime>08/18/2016 22:46:27</publishTime>
+      <publishTime>08/21/2016 16:03:04</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>09/25/2015 18:26:21</publishTime>
@@ -194,7 +194,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/08/2016 21:14:10</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>07/30/2016 21:27:07</publishTime>
+      <publishTime>08/20/2016 12:11:15</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>11/16/2014 10:00:39</publishTime>
@@ -1559,7 +1559,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/11/2016 21:43:54</publishTime>
     </File>
     <File Include="Scripts/Controller/CustomerModal.js">
-      <publishTime>05/03/2016 15:03:51</publishTime>
+      <publishTime>08/19/2016 22:56:53</publishTime>
     </File>
     <File Include="Scripts/Controller/DataLog.js">
       <publishTime>05/03/2016 09:56:25</publishTime>
@@ -1574,7 +1574,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/03/2016 23:15:50</publishTime>
     </File>
     <File Include="Scripts/Controller/Order.js">
-      <publishTime>08/03/2016 23:12:31</publishTime>
+      <publishTime>08/20/2016 21:17:23</publishTime>
     </File>
     <File Include="Scripts/Controller/Payment.js">
       <publishTime>08/01/2016 00:37:37</publishTime>
@@ -1583,13 +1583,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 00:36:07</publishTime>
     </File>
     <File Include="Scripts/Controller/Print.js">
-      <publishTime>07/13/2016 22:04:39</publishTime>
+      <publishTime>08/20/2016 19:56:49</publishTime>
     </File>
     <File Include="Scripts/Controller/Producer.js">
       <publishTime>08/01/2016 00:30:48</publishTime>
     </File>
     <File Include="Scripts/Controller/Product.js">
-      <publishTime>08/15/2016 15:35:49</publishTime>
+      <publishTime>08/21/2016 15:18:26</publishTime>
     </File>
     <File Include="Scripts/Controller/ProductGroup.js">
       <publishTime>08/01/2016 00:20:08</publishTime>
@@ -1604,16 +1604,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2016 22:30:07</publishTime>
     </File>
     <File Include="Scripts/Controller/Purchase.js">
-      <publishTime>08/03/2016 23:17:18</publishTime>
+      <publishTime>08/19/2016 06:55:53</publishTime>
     </File>
     <File Include="Scripts/Controller/Revenue.js">
-      <publishTime>06/04/2016 10:24:23</publishTime>
+      <publishTime>08/20/2016 12:02:20</publishTime>
     </File>
     <File Include="Scripts/Controller/Setting.js">
       <publishTime>08/01/2016 00:25:24</publishTime>
     </File>
     <File Include="Scripts/Controller/SQL.js">
-      <publishTime>08/18/2016 19:59:28</publishTime>
+      <publishTime>08/21/2016 14:19:39</publishTime>
     </File>
     <File Include="Scripts/Controller/SupplierModal.js">
       <publishTime>05/03/2016 15:11:22</publishTime>
@@ -1724,7 +1724,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/30/2016 09:04:57</publishTime>
     </File>
     <File Include="Views/Admin/Inventory.cshtml">
-      <publishTime>08/13/2016 13:04:49</publishTime>
+      <publishTime>08/20/2016 20:21:31</publishTime>
     </File>
     <File Include="Views/Admin/LogData.cshtml">
       <publishTime>07/26/2016 22:22:03</publishTime>
@@ -1736,7 +1736,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 01:25:09</publishTime>
     </File>
     <File Include="Views/Admin/Products.cshtml">
-      <publishTime>08/11/2016 23:01:14</publishTime>
+      <publishTime>08/21/2016 15:22:31</publishTime>
     </File>
     <File Include="Views/Admin/Profit.cshtml">
       <publishTime>07/26/2016 22:24:06</publishTime>
@@ -1760,7 +1760,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/16/2014 19:38:58</publishTime>
     </File>
     <File Include="Views/POS/Index.cshtml">
-      <publishTime>08/17/2016 07:03:57</publishTime>
+      <publishTime>08/21/2016 15:26:59</publishTime>
     </File>
     <File Include="Views/POS/POSAnnounement.cshtml">
       <publishTime>08/01/2016 00:36:09</publishTime>
@@ -1781,10 +1781,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 00:40:52</publishTime>
     </File>
     <File Include="Views/Shared/ComboDetail.cshtml">
-      <publishTime>08/13/2016 19:32:54</publishTime>
+      <publishTime>08/21/2016 15:02:36</publishTime>
     </File>
     <File Include="Views/Shared/CostModal.cshtml">
-      <publishTime>07/09/2016 15:34:00</publishTime>
+      <publishTime>08/19/2016 22:37:18</publishTime>
     </File>
     <File Include="Views/Shared/CostTypeModal.cshtml">
       <publishTime>08/01/2016 00:39:41</publishTime>
@@ -1805,7 +1805,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/13/2016 13:16:48</publishTime>
     </File>
     <File Include="Views/Shared/OrderDetail.cshtml">
-      <publishTime>08/13/2016 12:50:56</publishTime>
+      <publishTime>08/20/2016 20:09:30</publishTime>
     </File>
     <File Include="Views/Shared/PrintTermModal.cshtml">
       <publishTime>08/01/2016 00:24:37</publishTime>
@@ -1814,7 +1814,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2016 00:31:02</publishTime>
     </File>
     <File Include="Views/Shared/ProductDetail.cshtml">
-      <publishTime>08/05/2016 21:12:10</publishTime>
+      <publishTime>08/21/2016 15:52:14</publishTime>
     </File>
     <File Include="Views/Shared/ProductGroupModal.cshtml">
       <publishTime>08/01/2016 00:20:05</publishTime>
@@ -1847,7 +1847,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2016 22:38:39</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/18/2016 22:44:17</publishTime>
+      <publishTime>08/21/2016 10:55:29</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutPOS.cshtml">
       <publishTime>07/31/2016 23:54:24</publishTime>
@@ -1865,7 +1865,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/16/2014 10:00:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/30/2016 23:59:21</publishTime>
+      <publishTime>08/21/2016 16:03:16</publishTime>
     </File>
   </ItemGroup>
 </Project>

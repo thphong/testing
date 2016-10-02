@@ -104,7 +104,7 @@ mdlCommon.controller('CustomerModalController',
             $scope.IsShowCustomerDetail = true;
             $scope.CustomerForm._CanUpdate = customer._CanUpdate;
             $scope.CustomerForm._CanDelete = customer._CanDelete;
-            //$scope.ReloadGrid('ListOrders');
+            $scope.ReloadGrid('ListOrders');
         }
 
         $scope.CloseCustomerDetail = function () {

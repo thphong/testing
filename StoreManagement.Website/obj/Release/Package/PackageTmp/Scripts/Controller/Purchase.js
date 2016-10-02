@@ -179,10 +179,10 @@ mdlCommon.controller('PurchaseController',
                 sum += parseInt(item.RealCost);
                 tax += parseInt(item.RealCost * item.VAT / 100);
             }
-            $scope.PurchaseForm.Price = sum;
+            $scope.PurchaseForm.Price = sum - tax;
             $scope.PurchaseForm.SumTax = tax;
-            $scope.PurchaseForm.SumMoney = sum + tax;
-            //$scope.PurchaseForm.Paid = sum + tax;
+            $scope.PurchaseForm.SumMoney = sum;// + tax;
+            $scope.PurchaseForm.Paid = sum;// + tax;
             $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
             if ($scope.PurchaseForm.Debt < 0) {
                 $scope.PurchaseForm.Debt = 0;

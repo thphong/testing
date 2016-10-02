@@ -7,13 +7,13 @@
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('Products')">
+                    <li class="active" ng-class="{active : (CurrentTab =='Products') }" ng-click="SetCurrentTab('Products')">
                         <a data-toggle="tab">
                             <i class="blue fa-barcode fa"></i>
                             <span>Hàng hóa</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Combos')">
+                    <li class="" ng-class="{active : (CurrentTab == 'Combos') }" ng-click="SetCurrentTab('Combos')">
                         <a data-toggle="tab">
                             <i class="blue fa-bitbucket fa"></i>
                             <span>Combo</span>
@@ -89,6 +89,7 @@
                                            class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
+                                                <th></th>
                                                 <th grid-defined-colum="!ProductId" style="display: none"></th>
                                                 <th grid-defined-colum="ProductId.ProductName" style="width: 30%"><span>Tên hàng hóa</span></th>
                                                 <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
@@ -99,13 +100,19 @@
                                                 <th><span>Thẻ kho</span></th>
                                                 <th><span>Hình</span></th>
                                                 <th></th>
+                                                <th grid-defined-colum="!ProductId.ProductImageUrl" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @*Dataset must have grid id*@
-                                            <tr ng-repeat="item in DataSet.Products.Data" ng-click="ClickOnItem(item)">
+                                            <tr ng-repeat-start="item in DataSet.Products.Data" >
+                                                <td>
+                                                    <a class="badge badge-primary" ng-click="SelectProductId(item)">
+                                                        <i class="fa-plus fa"></i>
+                                                    </a>
+                                                </td>
                                                 <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
                                                 <td ng-bind="item.ProductCode"></td>
                                                 <td>
@@ -122,7 +129,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <img id="imgProduct" class="file-preview-image"
-                                                         src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                                         src="@Url.Action("GetFile", "Data")?url={{item.ProductImageUrl}}"
                                                          alt="Chưa upload ảnh"
                                                          style="width:auto;height:30px;" />
                                                 </td>
@@ -141,9 +148,55 @@
                                                     </a>
                                                 </td>
                                             </tr>
+                                            <tr ng-repeat-end ng-if="SelectedProductId == item.ProductId">
+                                                <td colspan="10">
+                                                    <div class="row col-md-12 bold margin-top-5">Danh sách combo chứa hàng hóa</div>
+                                                    <div class="row width-98">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table grid-data="ComboOfProduct"
+                                                                       grid-data-type="table" @*table/storedprocedure*@
+                                                                       grid-data-action="get" @*get/getall*@
+                                                                       grid-data-object="T_Trans_Combo_Products" @*table name or stored procedure name*@
+                                                                       grid-filter-condition="[ProductId] = {{SelectedProductId}} and [ParentProduct.IsActive] = 1" @*must have [fieldname] for each colum field*@
+                                                                       grid-sort-condition="" @*must have [fieldname] for each colum field*@
+                                                                       class="table table-striped table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th grid-defined-colum="ParentProduct,ProductId" class="none-display"></th>
+                                                                            <th grid-defined-colum="ParentProduct.ProductCode"><span>Mã combo</span></th>
+                                                                            <th grid-defined-colum="ParentProduct.ProductName"><span>Tên combo</span></th>
+                                                                            <th grid-defined-colum="ParentProduct.Cost"><span>Giá vốn</span></th>
+                                                                            <th grid-defined-colum="ParentProduct.Price"><span>Giá bán</span></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @*Dataset must have grid id*@
+                                                                        <tr ng-repeat="item in DataSet.ComboOfProduct.Data">
+                                                                            <td><a href="#" ng-bind="item.ProductName" ng-click="SetCurrentTab('Combos');ShowProductDetail(item);"></a></td>
+                                                                            <td><span ng-bind="item.ProductName"></span></td>
+                                                                            <td><span ng-bind="item.Cost | currency:'':0"></span></td>
+                                                                            <td><span ng-bind="item.Price | currency:'':0"></span></td>
+                                                                        </tr>
+                                                                        <tr ng-if="!DataSet.ComboOfProduct.HasRecord()">
+                                                                            @*Edit colspan*@
+                                                                            <td colspan="4" align="center"> Không có dữ liệu! </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <span grid-paging-for="ComboOfProduct"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <tr ng-if="!DataSet.Products.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                                <td colspan="10" align="center"> Không có dữ liệu! </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -207,6 +260,7 @@
                                            class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
+                                                <th></th>
                                                 <th grid-defined-colum="!ProductId" style="display: none"></th>
                                                 <th grid-defined-colum="ProductId.ProductName" style="width: 30%"><span>Tên Combo</span></th>
                                                 <th grid-defined-colum="ProductId.ProductCode"><span>Mã Combo</span></th>
@@ -214,13 +268,19 @@
                                                 <th grid-defined-colum="ProductId.Price"><span>Giá bán</span></th>
                                                 <th><span>Hình</span></th>
                                                 <th></th>
+                                                <th grid-defined-colum="!ProductId.ProductImageUrl" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.IsSelling" class="none-display"></th>
                                                 <th grid-defined-colum="!ProductId.Version,ProductVersion" class="none-display"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @*Dataset must have grid id*@
-                                            <tr ng-repeat="item in DataSet.Combos.Data" ng-click="ClickOnItem(item)">
+                                            <tr ng-repeat-start="item in DataSet.Combos.Data">
+                                                <td>
+                                                    <a class="badge badge-primary" ng-click="SelectProductId(item)">
+                                                        <i class="fa-plus fa"></i>
+                                                    </a>
+                                                </td>
                                                 <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
                                                 <td ng-bind="item.ProductCode"></td>
                                                 <td>
@@ -229,7 +289,7 @@
                                                 <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
                                                 <td class="text-center">
                                                     <img id="imgProduct" class="file-preview-image"
-                                                         src="@Url.Action("GetProductImage", "Data")?productId={{item.ProductId}}"
+                                                         src="@Url.Action("GetFile", "Data")?url={{item.ProductImageUrl}}"
                                                          alt="Chưa upload ảnh"
                                                          style="width:auto;height:30px;" />
                                                 </td>
@@ -248,9 +308,57 @@
                                                     </a>
                                                 </td>
                                             </tr>
+                                            <tr ng-repeat-end ng-if="SelectedProductId == item.ProductId">
+                                                <td colspan="7">
+                                                    <div class="row col-md-12 bold margin-top-5">Danh sách hàng hóa trong combo</div>
+                                                    <div class="row width-98">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table grid-data="ProductInCombo"
+                                                                       grid-data-type="table" @*table/storedprocedure*@
+                                                                       grid-data-action="get" @*get/getall*@
+                                                                       grid-data-object="T_Trans_Combo_Products" @*table name or stored procedure name*@
+                                                                       grid-filter-condition="[ParentProduct] = {{SelectedProductId}}" @*must have [fieldname] for each colum field*@
+                                                                       grid-sort-condition="" @*must have [fieldname] for each colum field*@
+                                                                       class="table table-striped table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th grid-defined-colum="ProductId" class="none-display"></th>
+                                                                            <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
+                                                                            <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
+                                                                            <th grid-defined-colum="ProductId.Cost"><span>Giá vốn</span></th>
+                                                                            <th grid-defined-colum="ProductId.Price"><span>Giá bán</span></th>
+                                                                            <th grid-defined-colum="Quantity"><span>Số lượng</span></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @*Dataset must have grid id*@
+                                                                        <tr ng-repeat="item in DataSet.ProductInCombo.Data">
+                                                                            <td><a href="#" ng-bind="item.ProductName" ng-click="SetCurrentTab('Products');ShowProductDetail(item);"></a></td>
+                                                                            <td><span ng-bind="item.ProductName"></span></td>
+                                                                            <td><span ng-bind="item.Cost | currency:'':0"></span></td>
+                                                                            <td><span ng-bind="item.Price | currency:'':0"></span></td>
+                                                                            <td><span ng-bind="item.Quantity"></span></td>
+                                                                        </tr>
+                                                                        <tr ng-if="!DataSet.ProductInCombo.HasRecord()">
+                                                                            @*Edit colspan*@
+                                                                            <td colspan="5" align="center"> Không có dữ liệu! </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <span grid-paging-for="ProductInCombo"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <tr ng-if="!DataSet.Combos.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="6" align="center"> Không có dữ liệu! </td>
+                                                <td colspan="7" align="center"> Không có dữ liệu! </td>
                                             </tr>
                                         </tbody>
                                     </table>

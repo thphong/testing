@@ -9,7 +9,7 @@
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
@@ -21,7 +21,7 @@
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
@@ -218,7 +218,7 @@
                 <select class="form-control" ng-show="OrderForm._CanUpdate"
                         ng-model="OrderForm.Cashier" dropdown-master-table="T_Master_User" dropdown-value-field="UserId"
                         dropdown-name-field="UserName"
-                        dropdown-condition="[IsActive] = 1"></select>
+                        dropdown-condition="[IsActive] = 1 and ([IsDeveloper] is null or [IsDeveloper] = 0 or [UserId] = {{CurrentUser}})"></select>
 
             </div>
         </div>
@@ -367,7 +367,7 @@
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
@@ -379,7 +379,7 @@
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm();">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
