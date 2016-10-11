@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@{
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
     ViewBag.Title = "Hướng dẫn sử dụng";
@@ -91,3 +92,98 @@
         </div>
     </div>
 </section>
+=======
+﻿@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.Title = "Hướng dẫn sử dụng";
+}
+<link rel="stylesheet" href="@Url.Content("~/Content/home/css/document.css")">
+<script>
+    var g_docUrl = '@Url.Action("Document", "Home")';
+</script>
+<script src="@Url.Content("~/Scripts/Home/document.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    mdlDoc.controller('curController',
+        ['$scope', '$filter', '$controller', '$sce',
+    function ($scope, $filter, $controller, $sce) {
+        var page = '@ViewBag.CurrentPage';
+        //get page info
+        var pageinfo = $scope.GetPageInfo(page);
+        $scope.common.parentpage = pageinfo.parentpage;
+        $scope.common.page = pageinfo.page;
+        $scope.parentpage_title = pageinfo.parentpage_title;
+        $scope.page_title = pageinfo.page_title;
+    }]);
+</script>
+
+<input class="none-display" id="someValue" ng-model="page_title" value="@ViewBag.CurrentPage" />
+
+<section id="document" class="container main" ng-app="mdlDoc"  >
+    <div class="row-fluid" ng-controller="docController">
+        <div class="span3 widget">
+            @Html.Partial("~/Views/Home/Document/_Menu.cshtml")
+        </div>
+
+        <div class="span9" ng-controller="curController">
+            <header id="page-header" class="clearfix">
+                <h1 class="page-title" ng-bind="page_title"></h1>
+                <div id="breadcrumbs">
+                    <a href="@Url.Action("Index","Home")"><icon class="fa fa-home"></icon></a>
+                    <span class="sep">/</span> 
+                    <a href="@Url.Action("Document","Home")?page={{common.parentpage}}" ng-bind="parentpage_title"></a>
+                    <span class="sep">/</span> 
+                    <span ng-bind="page_title">/</span>
+
+                </div>
+            </header>
+
+            <!---------articles---------->
+            @if (@ViewBag.CurrentPage == "dang-ky"){@Html.Partial("~/Views/Home/Document/dangky.cshtml")}
+                                                                                                                  
+            else if (@ViewBag.CurrentPage == "tao-hang-hoa"){@Html.Partial("~/Views/Home/Document/hanghoa_tao.cshtml")}
+            else if (@ViewBag.CurrentPage == "quan-ly-hang-hoa"){@Html.Partial("~/Views/Home/Document/hanghoa_quanly.cshtml") }
+            else if (@ViewBag.CurrentPage == "quan-ly-combo"){@Html.Partial("~/Views/Home/Document/hanghoa_combo.cshtml") }
+            else if (@ViewBag.CurrentPage == "tao-combo"){@Html.Partial("~/Views/Home/Document/hanghoa_taocombo.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "pos"){@Html.Partial("~/Views/Home/Document/donhang_pos.cshtml") }
+            else if (@ViewBag.CurrentPage == "tao-don-hang"){@Html.Partial("~/Views/Home/Document/donhang_quanly.cshtml") }
+            else if (@ViewBag.CurrentPage == "quan-ly-don-hang"){@Html.Partial("~/Views/Home/Document/donhang_tao.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "quan-ly-khach-hang"){@Html.Partial("~/Views/Home/Document/khachhang_quanly.cshtml") }
+            else if (@ViewBag.CurrentPage == "quan-ly-nha-cung-cap"){@Html.Partial("~/Views/Home/Document/khachhang_nhacungcap.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "quan-ly-nhap-kho"){@Html.Partial("~/Views/Home/Document/nhapkho_quanly.cshtml") }
+            else if (@ViewBag.CurrentPage == "tao-phieu-nhap-kho"){@Html.Partial("~/Views/Home/Document/nhapkho_taophieu.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "quan-ly-ton-kho"){@Html.Partial("~/Views/Home/Document/tonkho_quanly.cshtml") }
+            else if (@ViewBag.CurrentPage == "nhap-xuat-kho"){@Html.Partial("~/Views/Home/Document/tonkho_nhapxuatkho.cshtml") }
+            else if (@ViewBag.CurrentPage == "tao-kiem-ke"){@Html.Partial("~/Views/Home/Document/tonkho_taophieukiemke.cshtml") }
+            else if (@ViewBag.CurrentPage == "xem-kiem-ke"){@Html.Partial("~/Views/Home/Document/tonkho_xemphieukiemke.cshtml") }
+            else if (@ViewBag.CurrentPage == "quan-ly-chuyen-kho"){@Html.Partial("~/Views/Home/Document/tonkho_chuyenkho.cshtml") }
+            else if (@ViewBag.CurrentPage == "tao-phieu-chuyen-kho") {@Html.Partial("~/Views/Home/Document/tonkho_taophieuchuyenkho.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "chi-phi"){@Html.Partial("~/Views/Home/Document/thuchi_chiphi.cshtml") }
+            else if (@ViewBag.CurrentPage == "tien-ban-hang") {@Html.Partial("~/Views/Home/Document/thuchi_tienbanhang.cshtml") }
+            else if (@ViewBag.CurrentPage == "nhan-tien"){@Html.Partial("~/Views/Home/Document/thuchi_nhantien.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "doanh-so"){@Html.Partial("~/Views/Home/Document/doanhso.cshtml") }
+
+            else if (@ViewBag.CurrentPage == "loi-nhuan"){@Html.Partial("~/Views/Home/Document/loinhuan.cshtml") }
+
+            <!---------/articles--------->
+            <table class="">
+                <tbody>
+                    <tr>
+                        <td style="width: 308px; float: left;">
+                            <nobr>Bài hướng dẫn này có giúp ích cho bạn không?</nobr>
+                        </td>
+                        <td style="float: left;">
+                           
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+>>>>>>> origin/master

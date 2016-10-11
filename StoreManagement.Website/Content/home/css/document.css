@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿.none-display{
     display:none;
 }
@@ -82,3 +83,89 @@
 #breadcrumbs a, #breadcrumbs a:visited {
     color: #808080;
 }
+=======
+﻿.none-display{
+    display:none;
+}
+/* widget */
+.widget {
+    margin-bottom: 40px;
+}
+
+.widget .widget-title {
+    border-bottom: 4px double #E5E5E5;
+    color: #444;
+    font-size: 15px;
+    margin: 0 0 25px;
+    position: relative;
+}
+
+.widget ul ul {
+    margin: 10px 0 0 10px;
+}
+
+.widget ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.widget li {
+    margin: 0 0 10px;
+}
+
+.menu-widget > li > .active {
+    background-color: #16A085;
+    color: white;
+    line-height: 18px;
+    padding: 10px 75px 10px 20px;
+    position: relative;
+}
+
+.widget a, .widget a:visited {
+    color: #45454C;
+    text-decoration: none;
+}
+
+.menu-widget > li > a {
+    line-height: 18px;
+    padding: 10px 75px 10px 20px;
+    position: relative;
+    display: block;
+}
+
+
+.menu-list-post {
+    border-left: 1px solid #ddd;
+    margin: 10px 0 0 20px !important;
+}
+
+.menu-list-post > li > a {
+    padding: 5px 10px 5px 25px;
+}
+
+.menu-list-post > li > .active {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-left: 2px solid #16A085;
+    color: #191919;
+    font-weight: bold;
+}
+
+/* header content */
+#page-header {
+    border-bottom: 1px solid #e6e6e6;
+    margin: 0 0 30px;
+    padding: 0 0 10px;
+    position: relative;
+}
+
+
+#breadcrumbs {
+    color: #808080;
+    font-size: 14px;
+}
+
+#breadcrumbs a, #breadcrumbs a:visited {
+    color: #808080;
+}
+>>>>>>> origin/master
