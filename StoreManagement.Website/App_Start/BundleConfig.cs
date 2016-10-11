@@ -143,6 +143,15 @@ namespace StoreManagement.Website
             bundles.Add(new ScriptBundle("~/bundles/SQL").Include(
                         "~/Scripts/Controller/SQL.js"));
 
+            //========================================
+            //Home page
+            //css
+            bundles.Add(new StyleBundle("~/Content/Home/main").Include(
+                       "~/Content/home/css/main.css"
+                       ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Home/main").Include(
+                        "~/Scripts/Home/main.js"));
         }
     }
 }

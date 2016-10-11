@@ -28,3 +28,13 @@ E:\Work\StoreManagement2\testing\StoreManagement.Data\bin\Debug\EntityFramework.
 E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache
 E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll.config
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\StoreManagement.Data.pdb
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\EntityFramework.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\EntityFramework.xml
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.csprojResolveAssemblyReference.cache
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Data\obj\Debug\StoreManagement.Data.pdb

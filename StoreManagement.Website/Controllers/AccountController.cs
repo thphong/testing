@@ -17,7 +17,7 @@ namespace StoreManagement.Website.Controllers
         {
             if (SessionCollection.IsLogIn)
             {
-                return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
+                return RedirectToAction(SessionCollection.DefaultAction, SessionCollection.DefaultController);
             }
             else
             {
@@ -81,6 +81,25 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.ClearSession();
             SessionCollection.IsLogOut = true;
             return Json(true);
+        }
+
+        [HttpPost]
+        public ActionResult Register(
+            string name, string username, string email, string password,
+            string storename, string phone, string address, string city, int productgroup
+            )
+        {
+            try
+            {
+                var result = dataService.Register(name, username, email, password,
+                                storename, phone, address, city, productgroup);
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
         }
     }
 }

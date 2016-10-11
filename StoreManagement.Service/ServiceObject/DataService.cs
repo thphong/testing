@@ -55,6 +55,41 @@ namespace StoreManagement.Service
             dbFactory.GetContext().Database.SqlQuery<int>(statement).FirstOrDefault();
         }
 
+        public Dictionary<string, object> Register(string name, string username, string email, string password,
+           string storename, string phone, string address, string city, int productgroup)
+        {
+            string statement = string.Format(@"exec [dbo].[USP_System_Register] 
+                        @name = '{0}', @username = '{1}', @mail = '{2}' , @password = '{3}', 
+                        @storename = '{4}',@phone = '{5}',@address = '{6}',@city = '{7}',@productgroup={8}
+                        ",
+                        name, username, email, password,
+                        storename, phone, address, city, productgroup);
+
+            DataSet retVal = new DataSet();
+            SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;
+            SqlCommand cmdReport = new SqlCommand(statement, sqlConn);
+            SqlDataAdapter daReport = new SqlDataAdapter(cmdReport);
+            using (cmdReport)
+            {
+                cmdReport.CommandType = CommandType.Text;
+                daReport.Fill(retVal);
+            }
+            DataTable dt = retVal.Tables[0];
+
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                return row;
+            }
+
+            return null;
+        }
+
         #region Get List
         public DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig)
         {
