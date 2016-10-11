@@ -9,21 +9,89 @@ namespace StoreManagement.Website.Controllers
 {
     public class HomeController : BaseController
     {
-        
-        public HomeController(IDataService _dataService) : base(_dataService)
+
+        public HomeController(IDataService _dataService)
+            : base(_dataService)
         {
         }
 
         public ActionResult Index()
         {
-            if (SessionCollection.IsLogIn)
+            //if (SessionCollection.IsLogIn)
+            //{
+            //    return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
+            //}
+            //else
             {
-                return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
+                //return RedirectToAction("Login", "Account", new { auto = true });
+                return View();
             }
-            else
-            {
-                return RedirectToAction("Login", "Account", new { auto = true });
-            }
+        }
+
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public ActionResult Document()
+        {
+
+            string page = "dang-ky";
+            if (!string.IsNullOrEmpty(Request.Params["page"]))
+                page = Request.Params["page"];
+            ViewBag.CurrentPage = page;
+            return View();
+        }
+
+
+        public ActionResult Products()
+        {
+            return View();
+        }
+
+        public ActionResult Clients()
+        {
+            return View();
+        }
+
+        public ActionResult News()
+        {
+            return View();
+        }
+
+        public ActionResult TermOfUse()
+        {
+            return View();
+        }
+
+        public ActionResult Support()
+        {
+            return View();
+        }
+
+        public ActionResult FAQ()
+        {
+            return View();
+        }
+
+        public ActionResult PageNotFound()
+        {
+            return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        public ActionResult RegisterSuccess()
+        {
+            return View();
         }
     }
 }

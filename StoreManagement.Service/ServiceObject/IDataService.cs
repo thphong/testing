@@ -12,6 +12,8 @@ namespace StoreManagement.Service
     {
         Dictionary<string, object> Login(string LoginId, string Password);
         void Logout(int userId);
+        Dictionary<string, object> Register(string name, string username, string email, string password,
+            string storename, string phone, string address, string city, int productgroup);
 
         DataTable GetDataFromConfiguration(int userId, GridViewConfig gridConfig);
         IList<Dictionary<string, object>> GetDataFromConfigurationJsonable(int userId, GridViewConfig gridConfig);

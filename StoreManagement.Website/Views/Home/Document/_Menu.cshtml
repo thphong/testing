@@ -1,0 +1,16 @@
+﻿<h4 class="widget-title"><span>Hướng dẫn sử dụng</span></h4>
+
+<ul class="menu-widget">
+
+    <li ng-repeat="item in menu">
+        <a  class="" href="@Url.Action("Document", "Home")?page={{item.deflt}}" ng-bind="item.title"></a>
+        <ul class="menu-list-post">
+            <li ng-repeat="p in item.pages">
+                <a ng-class="{active : (common.page ==p.page) }" href="@Url.Action("Document", "Home")?page={{p.page}}"
+                   ng-bind="p.title" >
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+</ul>
