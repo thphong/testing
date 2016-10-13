@@ -406,6 +406,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\theme-pholo.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -439,6 +440,7 @@
     <Content Include="Content\home\images\sample\clients\Thumbs.db" />
     <Content Include="Content\home\images\sample\gallery\Thumbs.db" />
     <Content Include="Content\home\js\.DS_Store" />
+    <None Include="Properties\PublishProfiles\publish_local.pubxml" />
     <None Include="Properties\PublishProfiles\StoreManagement.pubxml" />
     <Content Include="Scripts\bootstrapValidator-0.5.3.js" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />

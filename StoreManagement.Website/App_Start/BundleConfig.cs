@@ -24,6 +24,7 @@ namespace StoreManagement.Website
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/FValidation.css"));
+            bundles.Add(new StyleBundle("~/Content/themes").Include("~/Content/themes/theme-pholo.css"));
 
             bundles.Add(new StyleBundle("~/Content/jqueryui").Include(
                         "~/Content/jquery-ui.css"));

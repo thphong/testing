@@ -1,0 +1,50 @@
+﻿body.theme-pholo nav.navbar {
+    background-color: #16A085;
+}
+
+body.theme-pholo .btn-primary {
+    background-color: #16A085 !important;
+    border-color: #16A085 !important;
+    color: white !important;
+}
+
+body.theme-pholo #side-menu a
+{
+    color: #16A085;
+}
+
+body.theme-pholo .dashboard-title {
+    border-bottom: 2px #16A085 solid;
+    color: #16A085;
+}
+
+body.theme-pholo .tabbable .nav-tabs > li.active > a, .tabbable .nav-tabs > li.active > a:focus, .tabbable .nav-tabs > li.active > a:hover
+{
+    border-top: 2px solid #16A085 !important;
+}
+
+body.theme-pholo  .infobox-blue {
+    background-color: #16A085;
+}
+body.theme-pholo  .infobox {
+        background-color: #fff;
+}
+
+body.theme-pholo .blue-dark {
+    color: #16A085 !important;
+}
+
+body.theme-pholo  .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #16A085;
+    border-color: #16A085;
+}
+
+
+body.theme-pholo .btn.btn-outline {
+    border-color: #16A085 !important;
+    color: #16A085 !important;
+}
+
+body.theme-pholo .btn.btn-outline.clicked, .btn.btn-outline:hover {
+    border-color: #ffb752 !important;
+}

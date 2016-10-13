@@ -45,6 +45,7 @@
     @Styles.Render("~/Content/sbadmin")
     @Styles.Render("~/Content/C3Chart")
     @Styles.Render("~/Content/FileInput")
+    @Styles.Render("~/Content/themes")
 
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -87,7 +88,7 @@
     @Scripts.Render("~/bundles/SQL")
 
 </head>
-<body>
+<body class="theme-pholo">
     <div id="wrapper" >
         <!-- Navigation -->
         <div id="mdlMenu">
@@ -169,7 +170,7 @@
                             <ul class="nav" id="side-menu">
                                 <li class="sidebar-shortcuts">
                                     <div class="input-group custom-search-form">
-                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning" title="Nhấp vào đây để bán hàng" style="width: 90%; margin: 7px 10px; font-weight: bold;">
+                                        <a target="_blank" href="@Url.Action("Index", "POS")" class="btn btn-warning white" title="Nhấp vào đây để bán hàng" style="width: 90%; margin: 7px 10px; font-weight: bold;">
                                             <i class="fa fa-desktop" style="margin-right: 12px;"></i> <span>POS - Bán hàng</span>
                                         </a>
                                     </div>

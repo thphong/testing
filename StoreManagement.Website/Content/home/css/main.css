@@ -2,6 +2,25 @@
 .clearfix {
     *zoom: 1
 }
+.collapse{
+    display:block;
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height 0.35s ease;
+    -moz-transition: height 0.35s ease;
+    -o-transition: height 0.35s ease;
+    transition: height 0.35s ease;
+}
+
+@media (min-width:980px){
+    .nav-collapse.collapse{
+        height:auto!important;
+        overflow:visible!important
+
+    }
+}
+
 .clearfix:before,
 .clearfix:after {
     display: table;
@@ -231,7 +250,7 @@ header.navbar .navbar-inner {
 header #logo {
     width: 220px;
     height: 80px;
-    background: url(../images/logo.png) no-repeat 0 50%
+    background: url(/Content/home/images/logo.png) no-repeat 0 50%
 }
 header.navbar {
     margin-bottom: 0;
