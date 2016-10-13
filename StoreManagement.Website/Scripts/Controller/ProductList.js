@@ -11,7 +11,7 @@ mdlCommon.controller('ProductListController',
                     configList.GridDataAction = "get10";
                     configList.GridDataObject = "T_Trans_Products";
                     configList.GridDefinedColums = "ProductId;ProductCode;ProductName;Quantity;Cost;Price;VAT;AllowNegative;#IsSelling;#IsActive;#IsCombo";
-                    configList.GridFilterCondition = "StoreId = " + g_currentStoreId + " and IsSelling = 1 and IsActive = 1 and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
+                    configList.GridFilterCondition = "StoreId = " + $scope.CurrentStore + " and IsSelling = 1 and IsActive = 1 and (ProductCode like N''%" + request.term + "%'' or ProductName like N''%" + request.term + "%'')";
                     configList.GridSortCondition = "ProductCode ASC";
 
                     if (!includeNegative) {

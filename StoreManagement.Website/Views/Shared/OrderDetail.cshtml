@@ -181,7 +181,7 @@
                            autocomplete-colum-code="CustomerCode"
                            autocomplete-colum-name="CustomerName"
                            autocomplete-colum-additional="IsWholeSale"
-                           autocomplete-condition="[IsActive] = 1"
+                           autocomplete-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                            autocomplete-model-id="#txtCustomerId"
                            autocomplete-model-additional="#txtIsWholeSale"
                            placeholder="Tìm khách hàng" />

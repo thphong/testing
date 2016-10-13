@@ -19,7 +19,8 @@
             CostTypeName: "",
             Notes: "",
             IsActive: "1",
-            Version: 0
+            Version: 0,
+            StoreId: $scope.CurrentStore
         };
 
         $scope.ResetCostTypeForm = function () {
@@ -28,6 +29,7 @@
             $scope.CostTypeForm.Notes = "";
             $scope.CostTypeForm.IsActive = "1";
             $scope.CostTypeForm.Version = 0;
+            $scope.CostTypeForm.StoreId = $scope.CurrentStore;
         };
 
         $scope.CostTypeFormConfig = new ObjectDataConfig("T_Master_CostTypes", $scope);
