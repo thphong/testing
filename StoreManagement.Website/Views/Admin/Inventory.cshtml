@@ -120,7 +120,7 @@
                                                 or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [AllowMin])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [AllowMax])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 5 and [Quantity] > 0
-                                                        and convert(date,[LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'', 0)), getdate()))))" @*must have [fieldname] for each colum field*@
+                                                        and convert(date,[LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'', {{CurrentStore}})), getdate()))))" @*must have [fieldname] for each colum field*@
                                            grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
                                            grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
                                            class="table table-striped table-bordered">
