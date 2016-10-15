@@ -23,14 +23,16 @@ body.theme-pholo .tabbable .nav-tabs > li.active > a, .tabbable .nav-tabs > li.a
     border-top: 2px solid #16A085 !important;
 }
 
-body.theme-pholo  .infobox-blue {
+
+body.theme-pholo  .infobox-primary {
     background-color: #16A085;
 }
+
 body.theme-pholo  .infobox {
         background-color: #fff;
 }
 
-body.theme-pholo .blue-dark {
+body.theme-pholo .primary-color {
     color: #16A085 !important;
 }
 
@@ -47,4 +49,12 @@ body.theme-pholo .btn.btn-outline {
 
 body.theme-pholo .btn.btn-outline.clicked, .btn.btn-outline:hover {
     border-color: #ffb752 !important;
+}
+
+body.theme-pholo .tabbable .nav-tabs > li > a > i {
+    color: #16A085 !important;
+}
+
+body.theme-pholo i.img-loading{
+    color: #16A085 !important;
 }
