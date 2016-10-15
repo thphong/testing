@@ -61,6 +61,7 @@
                                         ng-change="ReloadGrid('ReportByTime')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -193,6 +194,7 @@
                                         ng-change="ReloadGrid('ReportByProduct')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -320,6 +322,7 @@
                                         ng-change="ReloadGrid('ReportByStore')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -443,6 +446,7 @@
                                         ng-change="ReloadGrid('ReportProfit')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             @*<div class="col-md-3">

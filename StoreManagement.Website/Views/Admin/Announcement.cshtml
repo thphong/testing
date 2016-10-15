@@ -89,6 +89,7 @@
                             <label class="col-sm-2 control-label">Cửa hàng</label>
                             <div class="col-sm-4">
                                 <select class="form-control" ng-model="AnnouncementForm.StoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreName" dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
                                         check-under="check-announce"></select>
                             </div>

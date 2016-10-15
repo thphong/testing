@@ -34,6 +34,7 @@ mdlMenu.controller('LoadMenuController',
         configListStores.GridDataObject = "T_Master_Stores";
         configListStores.GridDefinedColums = "StoreId;StoreName";
         configListStores.GridSortCondition = "StoreName ASC";
+        configListStores.GridFilterCondition = "[IsActive] = 1";
 
         if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);

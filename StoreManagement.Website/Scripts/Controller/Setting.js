@@ -166,7 +166,8 @@ mdlCommon.controller('SettingController',
             TaxCode: "",
             ProductGroup: "",
             IsEditing: false,
-            Version: 0
+            Version: 0,
+            IsActive: 1
         }
 
         $scope.ResetStoreForm = function () {
@@ -180,6 +181,7 @@ mdlCommon.controller('SettingController',
             $scope.StoreForm.ProductGroup = "";
             $scope.StoreForm.IsEditing = false;
             $scope.StoreForm.Version = 0;
+            $scope.StoreForm.IsActive = 1;
         }
 
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
