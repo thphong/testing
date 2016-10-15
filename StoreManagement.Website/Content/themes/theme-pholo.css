@@ -55,6 +55,9 @@ body.theme-pholo .tabbable .nav-tabs > li > a > i {
     color: #16A085 !important;
 }
 
+body.theme-pholo .badge-primary {
+    background-color: #16A085 !important;
+}
 body.theme-pholo i.img-loading{
     color: #16A085 !important;
 }
