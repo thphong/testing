@@ -298,7 +298,6 @@
     <Content Include="Content\home\images\ico\apple-touch-icon-57-precomposed.png" />
     <Content Include="Content\home\images\ico\apple-touch-icon-72-precomposed.png" />
     <Content Include="Content\home\images\ico\favicon.ico" />
-    <Content Include="Content\home\images\logo.png" />
     <Content Include="Content\home\images\portfolio\full\item1.jpg" />
     <Content Include="Content\home\images\portfolio\full\item2.jpg" />
     <Content Include="Content\home\images\portfolio\full\item3.jpg" />
@@ -412,6 +411,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\pholo-logo.png" />
+    <Content Include="Images\pholo-text.png" />
     <Content Include="Images\photo.jpg" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-sanitize.js" />

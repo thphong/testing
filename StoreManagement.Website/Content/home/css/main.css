@@ -250,12 +250,25 @@ header.navbar .navbar-inner {
 header.navbar{
     min-height:40px;
 }
+
 header #logo {
-    width: 220px;
+    width: 130px;
     height: 40px;
-    background: url(/Content/home/images/logo.png) no-repeat 0 50%;
+    background: url(/Images/pholo-text.png) no-repeat 0 50%;
     background-size: auto 30px;
 }
+
+@media (max-width:979px)
+{
+    header #logo
+    {
+        width: 40px;
+        height: 40px;
+        background: url(/Images/pholo-logo.png) no-repeat 0 50%;
+        background-size: auto 30px;
+    }
+}
+
 header.navbar {
     margin-bottom: 0;
     background-color:#16A085;
