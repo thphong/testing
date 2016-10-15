@@ -271,5 +271,12 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.LastUrl = "/Admin/Announcement";
             return PartialView("Announcement");
         }
+
+        [HttpGet]
+        public ActionResult ManageStore()
+        {
+            SessionCollection.LastUrl = "/Admin/ManageStore";
+            return PartialView("ManageStore");
+        }
     }
 }
