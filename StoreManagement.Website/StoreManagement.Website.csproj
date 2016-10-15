@@ -796,6 +796,7 @@
     <Content Include="Scripts\Controller\DataLog.js" />
     <Content Include="Scripts\Controller\Exception.js" />
     <Content Include="Scripts\Controller\General.js" />
+    <Content Include="Scripts\Controller\ManageStore.js" />
     <Content Include="Scripts\Controller\Payment.js" />
     <Content Include="Scripts\Controller\Inventory.js" />
     <Content Include="Scripts\Controller\Order.js" />
@@ -964,6 +965,7 @@
     <Content Include="Views\Home\TermOfUse.cshtml" />
     <Content Include="Views\Home\_form.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
+    <Content Include="Views\Admin\ManageStore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
