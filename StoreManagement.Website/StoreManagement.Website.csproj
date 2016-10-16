@@ -351,6 +351,8 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\sb-admin-2.css" />
+    <Content Include="Content\themes\2-colors.css" />
+    <Content Include="Content\themes\3-colors.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -411,8 +413,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\logo.png" />
-    <Content Include="Images\pholo-logo.png" />
-    <Content Include="Images\pholo-text.png" />
+    <Content Include="Images\logo\pholo-border.png" />
+    <Content Include="Images\logo\pholo.png" />
+    <Content Include="Images\logo\pholo_128.ico" />
+    <Content Include="Images\logo\pholo_16.ico" />
+    <Content Include="Images\logo\pholo_64.ico" />
+    <Content Include="Images\logo\pho_32.ico" />
     <Content Include="Images\photo.jpg" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-sanitize.js" />
