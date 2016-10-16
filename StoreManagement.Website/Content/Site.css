@@ -3,7 +3,7 @@
     height: 40px;
     background: url(/Images/logo/pholo.png) no-repeat 0 50%;
     background-size: auto 40px;
-    margin-left:10px;
+    margin-left:10px;     margin-top: 5px;
     cursor:pointer;
 }
 
