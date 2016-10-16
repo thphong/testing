@@ -278,5 +278,11 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.LastUrl = "/Admin/ManageStore";
             return PartialView("ManageStore");
         }
+
+        [HttpGet]
+        public ActionResult ExtendStoreModal()
+        {
+            return PartialView("ExtendStoreModal");
+        }
     }
 }

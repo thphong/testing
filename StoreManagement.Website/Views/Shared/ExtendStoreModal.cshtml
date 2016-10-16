@@ -1,0 +1,73 @@
+﻿<!-- Customer Modal -->
+<div id="extendStoreModal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header infobox-primary white border-6">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Kích hoạt cửa hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Người nộp tiền </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="ExtendForm.Payer" placeholder="Nhập tên người nộp (không bắt buộc)"
+                                   check-length="100" check-length-message="Chiều dài tối ta là {0}."/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Số tiền </label>
+                        <div class="col-sm-7">
+                            <input class="form-control check-currency" ng-model="ExtendForm.Amount" placeholder="Nhập số tiền (bắt buộc)"
+                                   check-empty="" check-empty-message="Vui lòng nhập số tiền."
+                                   check-range="1;" check-range-message="Vui lòng nhập số tiền là số dương"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Số tháng kích hoạt </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="ExtendForm.NumMonth" placeholder="Nhập số tháng kích hoạt (bắt buộc)"
+                                check-empty="" check-empty-message="Vui lòng nhập số tháng kích hoạt."
+                                   check-range="1;60" check-range-message="Số tháng nằm trong khoảng [1;60]." />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Hình thức nhận tiền </label>
+                        <div class="col-sm-7">
+                            <select class="form-control" ng-model="ExtendForm.PaymentType" dropdown-master-table="T_Master_PaymentType" dropdown-value-field="PaymentId"
+                                    dropdown-name-field="PaymentName"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-4 control-label ">Ghi chú </label>
+                        <div class="col-sm-7">
+                            <textarea class="form-control" ng-model="ExtendForm.Description"
+                                   check-length="500" check-length-message="Chiều dài tối ta là {0}."/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa-undo fa"></i>
+                    Trở về
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="SaveExtendForm()">
+                    <i class="fa-save fa"></i>
+                    Kích hoạt
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

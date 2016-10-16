@@ -13,24 +13,24 @@
                     <div class="widget-body" style="border: none; min-height: 144px;">
                         <div class="widget-main">
                             <div class="row">
-                                <div class="col-xs-8 info">
+                                <div class="col-xs-9 info">
                                     <span>Số cửa hàng đang hoạt động</span>
                                 </div>
-                                <div class="col-xs-4 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 5})')"
                                        ng-bind="GeneralInfo.LongInventory"></a>
                                 </div>
-                                <div class="col-xs-8 info">
-                                    <span>Số cửa hàng chờ kích hoạt</span>
+                                <div class="col-xs-9 info">
+                                    <span>Số cửa hàng đang hết hạn chờ kích hoạt</span>
                                 </div>
-                                <div class="col-xs-4 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 2})')"
                                        ng-bind="GeneralInfo.OutOfQuantity"></a>
                                 </div>
-                                <div class="col-xs-8 info">
-                                    <span>Số cửa hàng bỏ quá lâu</span>
+                                <div class="col-xs-9 info">
+                                    <span>Số cửa hàng đã ngừng hoạt động</span>
                                 </div>
-                                <div class="col-xs-4 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Inventory", "Admin", new { InventoryProductType = 3})')"
                                        ng-bind="GeneralInfo.UnderMin"></a>
                                 </div>
@@ -51,24 +51,24 @@
                     <div class="widget-body" style="border: none; min-height: 144px;">
                         <div class="widget-main">
                             <div class="row">
-                                <div class="col-xs-7 info">
+                                <div class="col-xs-9 info">
                                     <span>Tổng chi phí</span>
                                 </div>
-                                <div class="col-xs-5 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin")')"
                                        ng-bind="GeneralInfo.TotalProduct"></a>
                                 </div>
-                                <div class="col-xs-7 info">
+                                <div class="col-xs-9 info">
                                     <span>Tổng doanh thu</span>
                                 </div>
-                                <div class="col-xs-5 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin", new { ProductType = 1})')"
                                        ng-bind="GeneralInfo.NotInputPrice"></a>
                                 </div>
-                                <div class="col-xs-7 info">
+                                <div class="col-xs-9 info">
                                     <span>Tổng lợi nhuận</span>
                                 </div>
-                                <div class="col-xs-5 data text-right">
+                                <div class="col-xs-3 data text-right">
                                     <a href="#" ng-click="LoadViewBody('@Url.Action("Products", "Admin", new { ProductType = 1})')"
                                        ng-bind="GeneralInfo.NotInputPrice"></a>
                                 </div>
@@ -94,8 +94,8 @@
             <div class="col-md-2 col-xs-12 margin-top-5">
                 <select class="form-control input-sm" ng-model="AdditionalFilter.StoreStatus" ng-change="ReloadGrid('Stores')">
                     <option selected="selected" value="1">Đang hoạt động</option>
-                    <option value="2">Đang chờ kích hoạt</option>
-                    <option value="3">Đã bỏ quá lâu</option>
+                    <option value="2">Đang hết hạn chờ kích hoạt</option>
+                    <option value="3">Đã bị ngừng hoạt động</option>
                 </select>
             </div>
         </div>
@@ -106,8 +106,8 @@
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
                            grid-data-object="T_Master_Stores" @*table name or stored procedure name*@
-                           grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.StoreStatus}} = 1)
-                    or ({{AdditionalFilter.StoreStatus}} = 2 and  [IsActive] = 0)
+                           grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.StoreStatus}} = 1 and [LastWorkingDate] >= dbo.UFN_System_GetCurrentTime())
+                    or ({{AdditionalFilter.StoreStatus}} = 2 and  [IsActive] = 1 and [LastWorkingDate] < dbo.UFN_System_GetCurrentTime())
                     or ({{AdditionalFilter.StoreStatus}} = 3 and [IsActive] = 0))"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[StoreCode] ASC" @*must have [fieldname] for each colum field*@
@@ -136,17 +136,18 @@
                                 <td><span ng-bind="item.CreatedDate"></span></td>
                                 <td><span ng-bind="item.LastWorkingDate"> </span></td>
                                 <td>
-                                    <a ng-if="!item.IsEditing && item._CanUpdate" class="blue margin-left-10"
-                                       title="Chỉnh sửa" ng-click="item.IsEditing = true;">
-                                        <i class="fa-edit fa"></i>
+                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 1 || AdditionalFilter.StoreStatus == 2"
+                                       title="Thêm ngày hoạt động" ng-click="OpenExtendStore(item.StoreId)" 
+                                       data-toggle="modal" data-target="#extendStoreModal">
+                                        <i class="fa-plus-square fa"></i>
                                     </a>
-                                    <a ng-if="item.IsEditing && item._CanUpdate" class="blue margin-left-10"
-                                       title="Lưu" ng-click="SaveStoreItem(item);">
-                                        <i class="fa-save fa"></i>
+                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 1 || AdditionalFilter.StoreStatus == 2"
+                                       title="Tạm ngừng hoạt động" ng-click="">
+                                        <i class="fa-stop-circle fa"></i>
                                     </a>
-                                    <a ng-if="item.IsEditing" class="blue margin-left-10"
-                                       title="Hủy" ng-click="item.IsEditing = false; ReloadGrid('Stores')">
-                                        <i class="fa-undo fa"></i>
+                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 3"
+                                       title="Xóa dữ liệu cửa hàng" ng-click="">
+                                        <i class="fa-remove fa"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -178,10 +179,10 @@
         </div>
         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
             <div class="col-md-5 col-xs-12 margin-top-5">
-                <span grid-filter-for="Orders" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
+                <span grid-filter-for="Revenue" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
             </div>
             <div class="col-md-5 col-xs-12 margin-top-5">
-                <span date-range-filter-for="Orders" date-range-init-code="2"></span>
+                <span date-range-filter-for="Revenue" date-range-init-code="2"></span>
             </div>
         </div>
         <div class="row">
@@ -190,72 +191,45 @@
                     <table grid-data="Revenue"
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
-                           grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
-                           @*grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.OrderType}} = 1)
-                    or ({{AdditionalFilter.OrderType}} = 2 and  [IsActive] = 0)
-                    or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1))
-                    and ([StoreId] = {{CurrentStore}})
-                    and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
-                    and  ([SoldDate] is null or
-                           convert(date, [SoldDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
-                                                    and  dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"*@
+                           grid-data-object="T_Trans_StoreActivation" @*table name or stored procedure name*@
+                           grid-filter-condition="[IsActive] = 1"
                            @*must have [fieldname] for each colum field*@
-                           grid-sort-condition="[OrderCode] ASC" @*must have [fieldname] for each colum field*@
-                           grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[CreatedDate] DESC" @*must have [fieldname] for each colum field*@
+                           grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th grid-defined-colum="!OrderId" class="none-display"></th>
-                                <th grid-defined-colum="!Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
-                                <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
-                                <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
-                                <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
-                                <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
-                                <th grid-defined-colum="OrderStatus.StatusName">
+                                <th grid-defined-colum="StoreId.StoreCode"><span>Mã cửa hàng</span></th>
+                                <th grid-defined-colum="StoreId.StoreName"><span>Tên cửa hàng</span></th>
+                                <th grid-defined-colum="CreatedDate"><span>Ngày nhập</span></th>
+                                <th grid-defined-colum="CreatedBy.UserName, CreatorName"><span>Người nhập</span></th>
+                                <th grid-defined-colum="Payer"><span>Người giao tiền</span></th>
+                                <th grid-defined-colum="Amount"><span>Số tiền</span></th>
+                                <th grid-defined-colum="NumMonth"><span>Số tháng kích hoạt</span></th>
+                                <th grid-defined-colum="PaymentType.PaymentName">
                                     <span style="display: inline-block">
-                                        <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId"
-                                                dropdown-name-field="StatusName" dropdown-empty-text="Tình trạng" dropdown-empty-value="0"
-                                                ng-change="ReloadGrid('Orders')"></select>
+                                        <select class="form-control min-width-100" ng-model="AdditionalFilter.PaymentType" dropdown-master-table="T_Master_PaymentType" dropdown-value-field="PaymentId"
+                                                dropdown-name-field="PaymentName" dropdown-empty-text="Hình thức nhận" dropdown-empty-value="0"
+                                                ng-change="ReloadGrid('Revenue')"></select>
                                     </span>
                                 </th>
-                                <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
-                                <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
-                                <th></th>
-                                <th grid-defined-colum="!OrderStatus.DisplayClass" class="none-display"></th>
-                                <th grid-defined-colum="!Notes" class="none-display"></th>
-                                <th grid-defined-colum="!IsActive" class="none-display"></th>
+                                <th grid-defined-colum="Description"><span>Mô tả</span></th>
                             </tr>
                         </thead>
                         <tbody>
                             @*Dataset must have grid id*@
-                            <tr ng-repeat="item in DataSet.Orders.Data">
-                                <td>
-                                    <a href="#" ng-bind="item.OrderCode" ng-click="ShowOrderDetail(item)"></a>
-                                    <span ng-if="item.Notes" title="{{item.Notes}}" class="badge badge-primary"
-                                          data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fa fa-info"></i>
-                                    </span>
-                                </td>
+                            <tr ng-repeat="item in DataSet.Revenue.Data">                              
                                 <td ng-bind="item.StoreCode"></td>
-                                <td ng-bind="item.SoldDate"></td>
-                                <td ng-bind="item.CashierName"></td>
-                                <td ng-bind="item.CustomerName"></td>
-                                <td>
-                                    <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
-                                </td>
-                                <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
-                                <td ng-bind="item.DebtMoney  | currency:'':0"></td>
-                                <td>
-                                    <a class="grey margin-left-10" ng-click="PrintOrderAdmin(item, 'ORDER_ADMIN')">
-                                        <i class="fa-print fa"></i>
-                                    </a>
-                                    <a class="red margin-left-10" ng-if="item._CanDelete" ng-click="DeleteOrder(item)">
-                                        <i class="fa-trash fa"></i>
-                                    </a>
-                                </td>
+                                <td ng-bind="item.StoreName"></td>
+                                <td ng-bind="item.CreatedDate"></td>
+                                <td ng-bind="item.CreatorName"></td>
+                                <td ng-bind="item.Payer"></td>
+                                <td ng-bind="item.Amount"></td>
+                                <td ng-bind="item.NumMonth"></td>
+                                <td ng-bind="item.PaymentName"></td>
+                                <td ng-bind="item.Description"></td>
                             </tr>
-                            <tr ng-if="!DataSet.Orders.HasRecord()">
+                            <tr ng-if="!DataSet.Revenue.HasRecord()">
                                 @*Edit colspan*@
                                 <td colspan="9" align="center"> <span>Không có dữ liệu!</span> </td>
                             </tr>
@@ -264,9 +238,7 @@
                             <tr>
                                 <td colspan="9" align="left">
                                     <div style="float: left;">
-                                        Tổng hóa đơn: <span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
-                                        Tổng tiền: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                        Nợ: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
+                                        Tổng tiền: <span class="total-highlight"><span ng-bind="DataSet.Revenue.Sums.Amount | currency:'':0"></span> đ</span>
                                     </div>
                                 </td>
                             </tr>
@@ -275,10 +247,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9">
-                        <span grid-paging-for="Orders"></span>
+                        <span grid-paging-for="Revenue"></span>
                     </div>
                     <div class="col-md-3">
-                        <span grid-page-size-for="Orders"></span>
+                        <span grid-page-size-for="Revenue"></span>
                     </div>
                 </div>
             </div>
@@ -405,5 +377,8 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div ng-include src="'@Url.Action("ExtendStoreModal", "Admin")'">
     </div>
 </div>

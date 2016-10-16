@@ -26,7 +26,47 @@
 
         $scope.AdditionalFilter =
         {
-            StoreStatus : "1"
+            StoreStatus: "1",
+            PaymentType: "0"
         };
+
+        $scope.ExtendForm = {
+            StoreId: -1,
+            Amount: "",
+            Payer: "",
+            NumMonth: "",
+            PaymentType: "1",
+            Description: "",
+            IsActive: 1,
+            Version: 0
+        };
+
+        $scope.ResetExtendForm = function () {
+            $scope.ExtendForm.StoreId = -1;
+            $scope.ExtendForm.Amount = "";
+            $scope.ExtendForm.Payer = "";
+            $scope.ExtendForm.NumMonth = "";
+            $scope.ExtendForm.PaymentType = "1";
+            $scope.ExtendForm.Description = "";
+            $scope.ExtendForm.IsActive = 1;
+            $scope.ExtendForm.Version = 0;
+        };
+
+        $scope.ExtendFormConfig = new ObjectDataConfig("T_Trans_StoreActivation", $scope);
+
+        $scope.OpenExtendStore = function (storeId) {
+            $scope.ExtendForm.StoreId = storeId;
+        }
+
+        $scope.SaveExtendForm = function () {
+            if (FValidation.CheckControls()) {
+                $scope.ExtendFormConfig.SetObject($scope.ExtendForm);
+                var Id = $scope.ExtendFormConfig.SaveObject();
+                if (Id > 0) {
+                    $("button[data-dismiss='modal']:visible").click();
+                    ShowSuccessMessage("Cửa hàng được kích hoạt thành công!");
+                }
+            }
+        }
 
     }]);
