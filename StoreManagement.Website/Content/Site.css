@@ -1,4 +1,13 @@
-﻿.navbar-top-header {
+﻿#logo {
+    width: 50px;
+    height: 40px;
+    background: url(/Images/logo/pholo.png) no-repeat 0 50%;
+    background-size: auto 40px;
+    margin-left:10px;
+    cursor:pointer;
+}
+
+.navbar-top-header {
     border-radius: 0px !important;
 }
 

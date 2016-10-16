@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Quản lý cửa hàng</title>
+     <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="@Url.Content("~/Images/logo/pholo_16.ico")"  type="image/x-icon">
 
     <script type="text/javascript">
         var g_loginUrl = '@Url.Action("Login", "Account")';
@@ -94,6 +96,7 @@
         <!-- Navigation -->
         <div id="mdlMenu">
             <nav id="LoadMenuController" ng-controller="LoadMenuController" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <a id="logo" class="pull-left" href="@Url.Content("~")"></a> 
                 <span ng-init="CurrentUrl = '@StoreManagement.Website.SessionCollection.LastUrl'"></span>
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle white" data-toggle="collapse" data-target=".navbar-collapse">
