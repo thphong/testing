@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Quản lý cửa hàng</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+     <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="@Url.Content("~/Images/logo/pholo_16.ico")"  type="image/x-icon">
     <meta name="viewport" content="width=device-width" />
 
     <script type="text/javascript">
@@ -75,6 +76,7 @@
         <div id="mdlMenu">
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="LoadMenuController">
                 <div class="navbar-header">
+                    <a id="logo" class="pull-left" href="@Url.Content("~")"></a> 
                     <a class="navbar-brand white" href="#">Quản lý cửa hàng: @StoreManagement.Website.SessionCollection.StoreName</a>
                 </div>
                 <div class="navbar-brand white text-center col-xs-7 col-md-4" style="font-size: 11px">
