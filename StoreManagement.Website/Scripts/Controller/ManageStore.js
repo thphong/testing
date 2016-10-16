@@ -7,22 +7,21 @@
         $scope.ConfigList = new GridViewConfig("");
         $scope.ConfigList.GridDataAction = "getall";
         $scope.ConfigList.GridDataType = "function";
-        $scope.ConfigList.GridDataObject = "dbo.UFN_Report_General";
-        $scope.ConfigList.GridDefinedColums = "Revenue;NumOrder;NumSoldProduct;ReturnAmount;LongInventory;OutOfQuantity;UnderMin;OverMax;TotalProduct;NotInputPrice;NotInputCost;NotInputGroup";
-        $scope.ConfigList.GridParameters = $scope.CurrentUser + "," + $scope.CurrentStore;
+        $scope.ConfigList.GridDataObject = "dbo.UFN_Report_Pholo";
+        $scope.ConfigList.GridDefinedColums = "ActiveStores;PendingStores;DeactiveStores;SumCost;Revenue;Profit";
+        $scope.ConfigList.GridParameters = $scope.CurrentUser;
 
         $scope.GeneralInfo = $scope.ConfigList.GetListData()[0];
 
+        $scope.ChangeStoreType = function (type) {
+            $scope.AdditionalFilter.StoreStatus = type;
+            $scope.ReloadGrid('Stores');
+        }
         //Chart
-        $scope.SetFilterRangeDate(1, "");
-        $scope.ConfigList.GridDataObject = "dbo.UFN_Report_Revenue_By_Day";
-        $scope.ConfigList.GridDefinedColums = "Day;Revenue;LastRevenue";
-        $scope.ConfigList.GridParametersExpression = "{{CurrentUser}},dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''),dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''), {{CurrentStore}}";
-
-        //Revenue in week
-        $scope.ConfigList.GridDataObject = "dbo.UFN_Report_Profit_By_Store";
-        $scope.ConfigList.GridDefinedColums = "Quantity;Revenue;ReturnAmount;Cost;Profit";
-        $scope.ConfigList.GridParametersExpression = "{{CurrentUser}},dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''),dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''), {{CurrentStore}}";
+        //$scope.SetFilterRangeDate(1, "");
+        //$scope.ConfigList.GridDataObject = "dbo.UFN_Report_Revenue_By_Day";
+        //$scope.ConfigList.GridDefinedColums = "Day;Revenue;LastRevenue";
+        //$scope.ConfigList.GridParametersExpression = "{{CurrentUser}},dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy''),dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''), {{CurrentStore}}";
 
         $scope.AdditionalFilter =
         {
@@ -52,8 +51,25 @@
             $scope.ExtendForm.Version = 0;
         };
 
+        $scope.CostForm = {
+            CostName: "",
+            Amount: "",
+            Notes: "",
+            IsActive: 1,
+            Version: 0
+        };
+
+        $scope.ResetCostForm = function () {
+            $scope.CostForm.CostName = "";
+            $scope.CostForm.Amount = "";
+            $scope.CostForm.Notes = "";
+            $scope.CostForm.IsActive = 1;
+            $scope.CostForm.Version = 0;
+        };
+
         $scope.ExtendFormConfig = new ObjectDataConfig("T_Trans_StoreActivation", $scope);
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
+        $scope.CostFormConfig = new ObjectDataConfig("T_Trans_CostPholo", $scope);
 
         $scope.OpenExtendStore = function (storeId) {
             $scope.ExtendForm.StoreId = storeId;
@@ -80,6 +96,27 @@
                 if (storeId > 0) {
                     ShowSuccessMessage("Cửa hàng đã ngừng hoạt động!");
                     $scope.ReloadGrid('Stores');
+                }
+            }
+        }
+
+        $scope.DeletePernamentStore = function (store) {
+            if (confirm("Bạn có xóa dữ liệu của cửa hàng " + store.StoreName + "? Dữ liệu không thể khôi phục.")) {
+                if ($scope.StoreFormConfig.DeleteObject(store.StoreId)) {
+                    ShowSuccessMessage("Dữ liệu của cửa hàng đã được xóa!");
+                    $scope.ReloadGrid('Stores');
+                }
+            }
+        }
+
+        $scope.SaveCostForm = function () {
+            if (FValidation.CheckControls()) {
+                $scope.CostFormConfig.SetObject($scope.CostForm);
+                if ($scope.CostFormConfig.SaveObject()) {
+                    ShowSuccessMessage("Phiếu chi phí được lưu thành công!");
+                    $scope.ReloadGrid('Costs');
+                    $("button[data-dismiss='modal']:visible").click();
+                    $scope.ResetCostForm();
                 }
             }
         }

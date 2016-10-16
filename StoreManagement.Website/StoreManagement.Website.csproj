@@ -973,6 +973,7 @@
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Admin\ManageStore.cshtml" />
     <Content Include="Views\Shared\ExtendStoreModal.cshtml" />
+    <Content Include="Views\Shared\CostPholoModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

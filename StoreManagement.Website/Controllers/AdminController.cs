@@ -138,6 +138,12 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpGet]
+        public ActionResult CostPholoModal()
+        {
+            return PartialView("CostPholoModal");
+        }
+
+        [HttpGet]
         public ActionResult CostTypeModal()
         {
             return PartialView("CostTypeModal");
