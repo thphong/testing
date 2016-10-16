@@ -123,6 +123,7 @@
                                 <th grid-defined-colum="LastWorkingDate"><span>Ngày hết hạn</span></th>
                                 <th style="width: 10%"></th>
                                 <th grid-defined-colum="StoreId" class="none-display"></th>
+                                <th grid-defined-colum="IsActive" class="none-display"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -136,16 +137,16 @@
                                 <td><span ng-bind="item.CreatedDate"></span></td>
                                 <td><span ng-bind="item.LastWorkingDate"> </span></td>
                                 <td>
-                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 1 || AdditionalFilter.StoreStatus == 2"
+                                    <a class="blue margin-left-10"
                                        title="Thêm ngày hoạt động" ng-click="OpenExtendStore(item.StoreId)" 
                                        data-toggle="modal" data-target="#extendStoreModal">
                                         <i class="fa-plus-square fa"></i>
                                     </a>
-                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 1 || AdditionalFilter.StoreStatus == 2"
-                                       title="Tạm ngừng hoạt động" ng-click="">
+                                    <a class="blue margin-left-10" ng-if="item.IsActive == 1"
+                                       title="Tạm ngừng hoạt động" ng-click="DeactivateStore(item)">
                                         <i class="fa-stop-circle fa"></i>
                                     </a>
-                                    <a class="blue margin-left-10" ng-if="AdditionalFilter.StoreStatus == 3"
+                                    <a class="blue margin-left-10" ng-if="item.IsActive == 0"
                                        title="Xóa dữ liệu cửa hàng" ng-click="">
                                         <i class="fa-remove fa"></i>
                                     </a>
@@ -172,17 +173,17 @@
         <div class="row" style="padding-top: 5px">
             <div class="col-md-6">
                 <h4 class="dashboard-title">
-                    <i class="fa-signal fa"></i>
-                    <span>Doanh thu</span>
+                    <i class="fa-dollar fa"></i>
+                    <span>Tiền thu</span>
                 </h4>
             </div>
         </div>
         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
             <div class="col-md-5 col-xs-12 margin-top-5">
-                <span grid-filter-for="Revenue" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
+                <span grid-filter-for="Revenue" place-holder-message="Nhập mã, tên cửa hàng, người nộp hoặc người nhận tiền"></span>
             </div>
             <div class="col-md-5 col-xs-12 margin-top-5">
-                <span date-range-filter-for="Revenue" date-range-init-code="2"></span>
+                <span date-range-filter-for="Revenue,Costs" date-range-init-code="2"></span>
             </div>
         </div>
         <div class="row">
@@ -192,7 +193,9 @@
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
                            grid-data-object="T_Trans_StoreActivation" @*table name or stored procedure name*@
-                           grid-filter-condition="[IsActive] = 1"
+                           grid-filter-condition="[IsActive] = 1 and convert(date, [CreatedDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                    and  dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
+                                                  and ({{AdditionalFilter.PaymentType}} = 0 or [PaymentType] = {{AdditionalFilter.PaymentType}})"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[CreatedDate] DESC" @*must have [fieldname] for each colum field*@
                            grid-sum-collection="[Amount]" @*must have [fieldname] for each colum field*@
@@ -213,7 +216,7 @@
                                                 ng-change="ReloadGrid('Revenue')"></select>
                                     </span>
                                 </th>
-                                <th grid-defined-colum="Description"><span>Mô tả</span></th>
+                                <th grid-defined-colum="Description"><span>Ghi chú</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -224,7 +227,7 @@
                                 <td ng-bind="item.CreatedDate"></td>
                                 <td ng-bind="item.CreatorName"></td>
                                 <td ng-bind="item.Payer"></td>
-                                <td ng-bind="item.Amount"></td>
+                                <td ng-bind="item.Amount | currency:'':0"></td>
                                 <td ng-bind="item.NumMonth"></td>
                                 <td ng-bind="item.PaymentName"></td>
                                 <td ng-bind="item.Description"></td>
@@ -275,7 +278,7 @@
                 <span grid-filter-for="Orders" place-holder-message="Nhập mã đơn hàng hoặc thông tin khách hàng (mã, tên, SĐT)"></span>
             </div>
             <div class="col-md-5 col-xs-12 margin-top-5">
-                <span date-range-filter-for="Orders" date-range-init-code="2"></span>
+                <span date-range-filter-for="Costs,Revenue" date-range-init-code="2"></span>
             </div>
         </div>
         <div class="row">

@@ -696,11 +696,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         }
     }
 
-    $scope.InitFilterRangeDate = function (option, gridId) {
-        $scope.SetFilterRangeDate(($scope.RangeDateCode == 0 ? option : $scope.RangeDateCode), gridId);
+    $scope.InitFilterRangeDate = function (option, listgridIds) {
+        $scope.SetFilterRangeDate(($scope.RangeDateCode == 0 ? option : $scope.RangeDateCode), listgridIds);
     }
 
-    $scope.SetFilterRangeDate = function (option, gridId) {
+    $scope.SetFilterRangeDate = function (option, listgridIds) {
 
         var curr = new Date(); // get current date
         var dayOfWeek = curr.getDay();
@@ -748,7 +748,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
 
         //$("input[date-picker-for][ng-model='FilterRangeDate.EndDate']")
         //.datepicker("setDate", $scope.FilterRangeDate.EndDate);
-        $scope.ReloadGrid(gridId);
+        var listIds = listgridIds.split(',');
+        for (var i = 0 ; i < listIds.length; i++) {
+            $scope.ReloadGrid(listIds[i]);
+        }
     }
 
     $scope.InitAutoComplete = function (autocompleteId) {
@@ -833,13 +836,16 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         }, 10);
     }
 
-    $scope.InitDatePickerFor = function (datepickerId, gridId) {
+    $scope.InitDatePickerFor = function (datepickerId, listgridIds) {
         setTimeout(function () {
             $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ })
             .on('hide', function (e) {
                 var scope = angular.element($(this).parents("[ng-controller]")[0]).scope();
                 scope.$apply(function () {
-                    scope.ReloadGrid(gridId);
+                    var listIds = listgridIds.split(',');
+                    for (var i = 0; i < listIds.length; i++) {
+                        scope.ReloadGrid(listIds[i]);
+                    }
                 })
             });
         }, 10);

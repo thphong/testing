@@ -53,6 +53,7 @@
         };
 
         $scope.ExtendFormConfig = new ObjectDataConfig("T_Trans_StoreActivation", $scope);
+        $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
 
         $scope.OpenExtendStore = function (storeId) {
             $scope.ExtendForm.StoreId = storeId;
@@ -65,6 +66,20 @@
                 if (Id > 0) {
                     $("button[data-dismiss='modal']:visible").click();
                     ShowSuccessMessage("Cửa hàng được kích hoạt thành công!");
+                    $scope.ReloadGrid('Stores');
+                    $scope.ReloadGrid('Revenue');
+                    $scope.ResetExtendForm();
+                }
+            }
+        }
+
+        $scope.DeactivateStore = function (store) {
+            if (confirm("Bạn có muốn ngừng hoạt động cửa hàng " + store.StoreName + "?")) {
+                $scope.StoreFormConfig.SetObject({ "StoreId": store.StoreId, "IsActive": 0, "Version": store.Version });
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Cửa hàng đã ngừng hoạt động!");
+                    $scope.ReloadGrid('Stores');
                 }
             }
         }
