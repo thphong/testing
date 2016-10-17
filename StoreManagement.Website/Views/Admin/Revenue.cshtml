@@ -235,7 +235,7 @@
                                        grid-data-type="function" @*table/storedprocedure*@
                                        grid-data-action="getall" @*get/getall*@
                                        grid-data-object="dbo.UFN_Report_Revenue_By_Store" @*table name or stored procedure name*@
-                                       grid-parameters="dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                       grid-parameters="{{CurrentUser}},dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
                                             ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')"
                                        grid-sort-condition="UserName ASC" @*must have [fieldname] for each colum field*@
                                        grid-sum-collection="Revenue;NumOrders" @*must have [fieldname] for each colum field*@
@@ -486,6 +486,10 @@
                                             <td ng-bind="item.ProductName"></td>
                                             <td ng-bind="item.Revenue | currency:'':0"></td>
                                             <td ng-bind="item.Quantity"></td>
+                                        </tr>
+                                        <tr ng-if="!DataSet.ReportByProduct.HasRecord()">
+                                            @*Edit colspan*@
+                                            <td colspan="5" align="center"> Không có dữ liệu! </td>
                                         </tr>
                                     </tbody>
                                 </table>
