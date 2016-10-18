@@ -228,6 +228,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-backup.css" />
@@ -259,40 +260,36 @@
     <Content Include="Content\home\images\ads\ad2.png" />
     <Content Include="Content\home\images\ads\ad3.png" />
     <Content Include="Content\home\images\ads\ad4.png" />
+    <Content Include="Content\home\images\document\buttons_them.png" />
+    <Content Include="Content\home\images\document\combo_quanly.png" />
+    <Content Include="Content\home\images\document\combo_quanly_xemhanghoa.png" />
+    <Content Include="Content\home\images\document\combo_quanly_xemhanghoa_chon.png" />
+    <Content Include="Content\home\images\document\combo_them.png" />
+    <Content Include="Content\home\images\document\combo_them_chon.png" />
+    <Content Include="Content\home\images\document\combo_them_danhap.png" />
+    <Content Include="Content\home\images\document\combo_them_hanghoa.png" />
+    <Content Include="Content\home\images\document\dangky.png" />
+    <Content Include="Content\home\images\document\dangky_filled.png" />
+    <Content Include="Content\home\images\document\dangky_thanhcong.png" />
     <Content Include="Content\home\images\document\dangnhap.png" />
-    <Content Include="Content\home\images\document\doanhso_cuahang.png" />
-    <Content Include="Content\home\images\document\doanhso_nguoiban.png" />
-    <Content Include="Content\home\images\document\doanhso_sanpham.png" />
-    <Content Include="Content\home\images\document\doanhso_thang.png" />
-    <Content Include="Content\home\images\document\donhang_quanly.png" />
-    <Content Include="Content\home\images\document\donhang_tao.png" />
-    <Content Include="Content\home\images\document\hanghoa_quanly.png" />
-    <Content Include="Content\home\images\document\hanghoa_tao.png" />
-    <Content Include="Content\home\images\document\hanghoa_taonhomhang.png" />
-    <Content Include="Content\home\images\document\hanghoa_tao_quanlythuoctinh.png" />
-    <Content Include="Content\home\images\document\khachhang_quanly.png" />
-    <Content Include="Content\home\images\document\khachhang_tao.png" />
-    <Content Include="Content\home\images\document\loinhuan_bclailo.png" />
-    <Content Include="Content\home\images\document\loinhuan_cuahang.png" />
-    <Content Include="Content\home\images\document\loinhuan_sanpham.png" />
-    <Content Include="Content\home\images\document\loinhuan_thoigian.png" />
-    <Content Include="Content\home\images\document\nhacungcap_quanly.png" />
-    <Content Include="Content\home\images\document\nhacungcap_tao.png" />
-    <Content Include="Content\home\images\document\nhapkho_quanly.png" />
-    <Content Include="Content\home\images\document\nhapkho_tao.png" />
-    <Content Include="Content\home\images\document\pos.png" />
-    <Content Include="Content\home\images\document\thuchi_chiphi_quanly.png" />
-    <Content Include="Content\home\images\document\thuchi_chiphi_tao.png" />
-    <Content Include="Content\home\images\document\thuchi_nhantien.png" />
-    <Content Include="Content\home\images\document\thuchi_tienbanhang.png" />
-    <Content Include="Content\home\images\document\tonkho.png" />
-    <Content Include="Content\home\images\document\tonkho_chuyenkho.png" />
-    <Content Include="Content\home\images\document\tonkho_chuyenkho_tao.png" />
-    <Content Include="Content\home\images\document\tonkho_kiemke.png" />
-    <Content Include="Content\home\images\document\tonkho_kiemke_tao1.png" />
-    <Content Include="Content\home\images\document\tonkho_kiemke_tao2.png" />
-    <Content Include="Content\home\images\document\tonkho_nhapxuatton.png" />
-    <Content Include="Content\home\images\document\trangchinh.png" />
+    <Content Include="Content\home\images\document\hanghoa.png" />
+    <Content Include="Content\home\images\document\hanghoa_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_quanly_chucnang.png" />
+    <Content Include="Content\home\images\document\hanghoa_quanly_combo_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_quanly_combo_xem.png" />
+    <Content Include="Content\home\images\document\hanghoa_quanly_copy_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_quanly_thekho_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_chinhsachkho.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_motachitiet.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_nhomhang_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_nhomhang_nhap.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_nhomhang_them.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_nsx_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_thuoctinh_chon.png" />
+    <Content Include="Content\home\images\document\hanghoa_themhanghoa_thuoctinh_nhap.png" />
+    <Content Include="Content\home\images\document\tongquan.png" />
     <Content Include="Content\home\images\ico\apple-touch-icon-114-precomposed.png" />
     <Content Include="Content\home\images\ico\apple-touch-icon-144-precomposed.png" />
     <Content Include="Content\home\images\ico\apple-touch-icon-57-precomposed.png" />
@@ -974,6 +971,7 @@
     <Content Include="Views\Admin\ManageStore.cshtml" />
     <Content Include="Views\Shared\ExtendStoreModal.cshtml" />
     <Content Include="Views\Shared\CostPholoModal.cshtml" />
+    <Content Include="Views\Home\Document\lam_quen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

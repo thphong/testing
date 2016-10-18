@@ -21,6 +21,16 @@
     }]);
 </script>
 
+<section class="title">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span6">
+                <h3>Hướng dẫn sử dụng</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
 <input class="none-display" id="someValue" ng-model="page_title" value="@ViewBag.CurrentPage" />
 
 <section id="document" class="container main" ng-app="mdlDoc"  >
@@ -44,6 +54,7 @@
 
             <!---------articles---------->
             @if (@ViewBag.CurrentPage == "dang-ky"){@Html.Partial("~/Views/Home/Document/dangky.cshtml")}
+            else if (@ViewBag.CurrentPage == "lam-quen"){@Html.Partial("~/Views/Home/Document/lam_quen.cshtml")}
                                                                                                                   
             else if (@ViewBag.CurrentPage == "tao-hang-hoa"){@Html.Partial("~/Views/Home/Document/hanghoa_tao.cshtml")}
             else if (@ViewBag.CurrentPage == "quan-ly-hang-hoa"){@Html.Partial("~/Views/Home/Document/hanghoa_quanly.cshtml") }
@@ -76,7 +87,7 @@
             else if (@ViewBag.CurrentPage == "loi-nhuan"){@Html.Partial("~/Views/Home/Document/loinhuan.cshtml") }
 
             <!---------/articles--------->
-            <table class="">
+            @*<table class="">
                 <tbody>
                     <tr>
                         <td style="width: 308px; float: left;">
@@ -87,7 +98,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table>*@
         </div>
     </div>
 </section>

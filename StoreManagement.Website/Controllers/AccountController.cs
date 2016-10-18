@@ -89,11 +89,15 @@ namespace StoreManagement.Website.Controllers
             string storename, string phone, string address, string city, int productgroup
             )
         {
+            SessionCollection.ClearSession();
             try
             {
                 var result = dataService.Register(name, username, email, password,
                                 storename, phone, address, city, productgroup);
 
+                RegisterSession.UserName = username;
+                RegisterSession.Email = email;
+                RegisterSession.StoreName = storename;
                 return Json(true);
             }
             catch (Exception ex)

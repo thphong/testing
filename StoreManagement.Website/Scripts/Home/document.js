@@ -9,7 +9,8 @@ mdlDoc.controller('docController',
             {
                 parent: 'bat-dau', title: '01 - Bắt đầu', deflt: 'dang-ky',
                 pages: [
-                  { page: 'dang-ky', title: 'Đăng ký', url: '' }
+                  { page: 'dang-ky', title: 'Đăng ký', url: '' },
+                  { page: 'lam-quen', title: 'Làm quen với chương trình', url: '' }
                 ]
             },
             {

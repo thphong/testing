@@ -24,7 +24,12 @@
     list-style: none;
 }
 
-.widget li {
+
+ul.menu-widget > li{
+    border-bottom: 1px solid #16A085;
+}
+
+ul.menu-widget > li li{
     margin: 0 0 10px;
 }
 
@@ -67,7 +72,7 @@
 
 /* header content */
 #page-header {
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #16A085;
     margin: 0 0 30px;
     padding: 0 0 10px;
     position: relative;
