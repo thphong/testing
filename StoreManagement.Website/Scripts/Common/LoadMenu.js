@@ -29,7 +29,7 @@ mdlMenu.controller('LoadMenuController',
         configMenuList.OrderBy = "DisplayOrder";
 
         var configListStores = new GridViewConfig("");
-        configListStores.GridDataAction = "getall";
+        configListStores.GridDataAction = "get10";
         configListStores.GridDataType = "table";
         configListStores.GridDataObject = "T_Master_Stores";
         configListStores.GridDefinedColums = "StoreId;StoreName";
@@ -147,6 +147,51 @@ mdlMenu.controller('LoadMenuController',
                     }
                 }
             }
+        }
+
+        $scope.InitListAutoCompleteStores = function (elementId) {
+            $(elementId).autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var configList = new GridViewConfig("");
+                    configList.GridDataAction = "get10";
+                    configList.GridDataType = "table";
+                    configList.GridDataObject = "T_Master_Stores";
+                    configList.GridDefinedColums = "StoreId;StoreCode;StoreName";
+                    configList.GridSortCondition = "StoreName ASC";
+                    configList.GridFilterCondition = "[IsActive] = 1 AND (StoreCode like N''%" + request.term + "%''  OR StoreName like N''%" + request.term + "%'' )";
+
+                    var listData = configList.GetListData();
+                    if (listData.length > 0) {
+                        response(listData);
+                    }
+                    else {
+                        response(["Không tìm thấy kết quả"]);
+                    }
+                },
+                focus: function (event, ui) {
+                    $(elementId).val( ui.item.StoreName);
+                    return false;
+                },
+                select: function (event, ui) {
+                    if (ui.item.StoreCode) {
+                        $scope.SetStoreId(ui.item.StoreId);
+                    }
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                var content;
+                if (item.StoreCode) {
+                    content = "<a> <b>" + item.StoreName + " </b><br/> </a>";
+                }
+                else {
+                    content = "<a>" + item.label + "</a>";
+                }
+                return $("<li>")
+                        .append(content)
+                        .appendTo(ul);
+            };
         }
 
         $(document).ready(function () {

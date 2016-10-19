@@ -745,3 +745,7 @@ i.img-loading {
 .sidebar .active > a > .fa.arrow::before {
     content: "\f100" !important;
 }
+
+.ui-autocomplete{
+    z-index:1000;
+}
