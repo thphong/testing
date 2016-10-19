@@ -583,6 +583,9 @@
     <Content Include="Resource\ExportedTemplate\ReportByTime.xlsx" />
     <Content Include="Resource\ExportedTemplate\ReportProfit.xlsx" />
     <Content Include="Resource\ExportedTemplate\Suppliers.xlsx" />
+    <Content Include="Resource\ExportedTemplate\Combos.xlsx" />
+    <Content Include="Resource\ExportedTemplate\InventoryProductPOS.xlsx" />
+    <Content Include="Resource\ExportedTemplate\OrdersPOS.xlsx" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
