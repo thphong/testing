@@ -3,10 +3,25 @@
     ViewBag.Title = "Home Page";
 }
 
+<section class="title">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span6">
+                <h3>ĐĂNG KÝ THÀNH CÔNG</h3>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section id="register_success" class="container">
-    <h1>ĐĂNG KÝ THÀNH CÔNG</h1>
-    <p>Chúc mừng bạn đã đăng ký thàng công.</p>
+    <h3>Chúc mừng bạn đã đăng ký thàng công.</h3>
+    <div>
+        <dl class="inline">
+            <dt>Tài khoản</dt><dd>@StoreManagement.Website.RegisterSession.UserName </dd>
+            <dt>Email</dt><dd>@StoreManagement.Website.RegisterSession.Email</dd>
+            <dt>Cửa hàng</dt><dd>@StoreManagement.Website.RegisterSession.StoreName</dd>
+        </dl>
+    </div>
     <a class="btn btn-success" href="@Url.Action("Login","Account")">TIẾP TỤC ĐĂNG NHẬP</a>
 </section>
 
