@@ -59,8 +59,8 @@ namespace StoreManagement.Service
            string storename, string phone, string address, string city, int productgroup)
         {
             string statement = string.Format(@"exec [dbo].[USP_System_Register] 
-                        @name = '{0}', @username = '{1}', @mail = '{2}' , @password = '{3}', 
-                        @storename = '{4}',@phone = '{5}',@address = '{6}',@city = '{7}',@productgroup={8}
+                        @name = N'{0}', @username = N'{1}', @mail = N'{2}' , @password = N'{3}', 
+                        @storename = N'{4}',@phone = N'{5}',@address = N'{6}',@city = N'{7}',@productgroup={8}
                         ",
                         name, username, email, password,
                         storename, phone, address, city, productgroup);
