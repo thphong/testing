@@ -25,9 +25,9 @@ mdlDoc.controller('docController',
             {
                 parent: 'don-hang', title: '03 - Bán hàng', deflt: 'pos',
                 pages: [
-                  { page: 'pos', title: 'POS bán hàng', url: '' },
+                  { page: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', url: '' },
                   { page: 'tao-don-hang', title: 'Tạo đơn hàng', url: '' },
-                  { page: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', url: '' }
+                  { page: 'pos', title: 'POS bán hàng', url: '' }
                 ]
             },
             {
@@ -52,7 +52,7 @@ mdlDoc.controller('docController',
                   { page: 'xem-kiem-ke', title: 'Xem phiếu kiểm kê', url: '' },
                   { page: 'tao-kiem-ke', title: 'Tạo phiếu kiểm kê', url: '' },
                   { page: 'quan-ly-chuyen-kho', title: 'Xem phiếu chuyển kho', url: '' },
-                  { page: 'tao-chuyen-kho', title: 'Tạo phiếu kiểm kê', url: '' }
+                  { page: 'tao-phieu-chuyen-kho', title: 'Tạo phiếu chuyển kho', url: '' }
                 ]
             },
             {
@@ -74,7 +74,18 @@ mdlDoc.controller('docController',
                 pages: [
                   { page: 'loi-nhuan', title: 'Báo cáo lợi nhuận', url: '' }
                 ]
+            },
+            {
+                parent: 'thiet-lap', title: '10 - Thiết lập', deflt: 'nhan-vien',
+                pages: [
+                  { page: 'nhan-vien', title: 'Quản lý nhân viên', url: '' },
+                  { page: 'cua-hang', title: 'Thông tin cửa hàng', url: '' },
+                  { page: 'thiet-lap-ban-hang', title: 'Thiết lập bán hàng', url: '' },
+                  { page: 'mau-in', title: 'Quản lý mẫu in', url: '' },
+                  { page: 'khuyen-mai', title: 'Chương trình khuyến mãi', url: '' }
+                ]
             }
+
         ];
         //=====================
         $scope.GetPageInfo = function (page) {
