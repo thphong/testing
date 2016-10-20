@@ -3,6 +3,20 @@
     angular.bootstrap(document.getElementById('mdlCommon'), ['mdlCommon']);
 });
 
+//Control for auto complete
+mdlMenu.directive('autocompleteMasterTable', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+
+        var autocompleteId = "autocompleteId" + parseInt(Math.random() * 1000000);
+        element.attr("autocomplete-id", autocompleteId);
+        element.after('<span ng-init="InitAutoComplete(\'' + autocompleteId + '\');"></span>');
+
+    }
+    return directive;
+});
+
 mdlMenu.controller('LoadMenuController',
 ['$scope', '$filter', '$controller', '$interpolate', '$location', '$sce',
     function ($scope, $filter, $controller, $interpolate, $location, $sce) {
@@ -90,10 +104,17 @@ mdlMenu.controller('LoadMenuController',
             Remember: false
         };
 
+        $scope.DataAction =
+        {
+            Action: "",
+            Link: ""
+        };
+
         $scope.HasLoadFinished = false;
         $scope.LoadViewBody = function (url) {
             clearGlobalSession();
             $scope.CurrentUrl = url;
+            $("[data-toggle='collapse']:visible").click();
             var scope = angular.element(document.getElementById("mdlCommon")).scope();
             if (scope.SrcView != url) {
                 $("i.img-loading").show();
@@ -193,6 +214,88 @@ mdlMenu.controller('LoadMenuController',
                         .appendTo(ul);
             };
         }
+
+
+        $scope.InitAutoComplete = function (autocompleteId) {
+            var element = $('input[autocomplete-id="' + autocompleteId + '"]');
+            element.autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var configList = new GridViewConfig("");
+                    configList.GridDataAction = "get10";
+                    configList.GridDataObject = element.attr("autocomplete-master-table");
+                    configList.GridDefinedColums = element.attr("autocomplete-colum-id") + ";" + element.attr("autocomplete-colum-name");
+                    configList.GridFilterCondition = element.attr("autocomplete-colum-name") + " like N''%" + request.term + "%''";
+                    if (element.attr("autocomplete-colum-code")) {
+                        configList.GridDefinedColums += ";" + element.attr("autocomplete-colum-code");
+                        configList.GridSortCondition = element.attr("autocomplete-colum-code") + " ASC";
+                        configList.GridFilterCondition += " or " + element.attr("autocomplete-colum-code") + " like N''%" + request.term + "%''";
+                    }
+                    else {
+                        configList.GridSortCondition = element.attr("autocomplete-colum-name") + " ASC";
+                    }
+                    if (element.attr("autocomplete-condition")) {
+                        configList.GridFilterCondition = element.attr("autocomplete-condition") + " and (" + configList.GridFilterCondition + ")";
+                    }
+                    if (element.attr("autocomplete-colum-additional")) {
+                        configList.GridDefinedColums += ";" + element.attr("autocomplete-colum-additional");
+                    }
+
+                    var listData = configList.GetListData();
+                    if (listData.length > 0) {
+                        response(listData);
+                    }
+                    else {
+                        response(["Không tìm thấy kết quả"]);
+                    }
+                },
+                focus: function (event, ui) {
+                    if (ui.item[element.attr("autocomplete-colum-id")]) {
+                        $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
+                        }
+                    return false;
+                },
+                select: function (event, ui) {
+                    if (ui.item[element.attr("autocomplete-colum-id")]) {
+                        $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
+                        $(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
+                        if (element.attr("autocomplete-model-additional")) {
+                            $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
+                        }
+                    }
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                var content;
+                if (item[element.attr("autocomplete-colum-code")]) {
+                    content = "<a> <b>" + item[element.attr("autocomplete-colum-code")] + " </b><br>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+                }
+                else if (item[element.attr("autocomplete-colum-name")]) {
+                    content = "<a>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+                }
+                else {
+                    content = "<a>" + item.label + "</a>";
+                }
+
+                return $("<li>")
+                        .append(content)
+                        .appendTo(ul);
+            };
+        }
+
+        
+        $scope.$watch('DataAction.Link', function (newVal, oldVal) {
+            if (newVal) {
+                var a = $("a.left-menu[action='" + newVal + "']");
+                if (a.length == 0) {
+                    alert('Ban khong co quyen truy cap chuc nang nay?');
+                }
+                else {
+                    $scope.LoadViewBody(newVal);
+                }
+            }
+        }, false);
 
         $(document).ready(function () {
 
