@@ -126,48 +126,23 @@
             {
             <!-- /.navbar-header -->
                     <ul class="nav navbar-top-links navbar-right text-right">
-                        @*<li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="white" ng-bind="Language.SelectedLanguage"></i>  <i class="fa fa-caret-down white"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li ng-if="Language.Code != 'VN'">
-                                    <a href="#" id="linkUserInfo" ng-click="ChangeLanguage('VN')">
-                                        <span ng-bind="Language.Resource.Vietnamese"></span>
-                                    </a>
-                                </li>
-                                <li ng-if="Language.Code != 'EN'">
-                                    <a href="#" ng-click="ChangeLanguage('EN')">
-                                        <span ng-bind="Language.Resource.English"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>*@
-                        <!-- /.dropdown -->
-                        @*<li>
-                            <i class="fa fa-shopping-cart white fa-fw"></i>
-                        </li>*@
-                        @*<li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-shopping-cart white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li ng-repeat-start="item in ListStores">
-                                    <a href="#" ng-click="SetStoreId(item.StoreId)">
-                                        <i class="fa fa-shopping-cart fa-fw"></i> <span ng-bind="item.StoreName"></span>
-                                    </a>
-                                </li>
-                                <li ng-repeat-end class="divider" ng-if="!$last"></li>
-                            </ul>
-                            <!-- /.dropdown-alerts -->
-                        </li>*@
+                        <input type="text" style="border: 0px solid white" 
+                               placeholder="#Thao tac nhanh" 
+                               autocomplete-master-table="T_Master_QuickAction"
+                               autocomplete-colum-id="Code"
+                               autocomplete-colum-name="Action"
+                               autocomplete-colum-additional="Link"
+                               autocomplete-model-id="#txtQuickActionCode"
+                               autocomplete-model-additional="#txtQuickActionLink"/>
+                        <input id="txtQuickActionCode" class="none-display" ng-model="DataAction.Action"/>
+                        <input id="txtQuickActionLink" class="none-display" ng-model="DataAction.Link" />
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-shopping-cart white fa-fw"></i>  <i class="fa fa-caret-down white"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li style="padding:10px">
-                                    <b>Tìm cửa hàng</b>
+                                    <b>Cửa hàng</b>
                                     <input class="form-control" id="autoStore" ng-model="StoreName"
                                    placeholder="Chọn cửa hàng" ng-init="InitListAutoCompleteStores('#autoStore')"/>
                                 </li>
