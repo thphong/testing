@@ -7,30 +7,74 @@
 
     <div class="entry-content">
         <p>
+            Trong trang quản lý hàng hóa, nhấn vào nút <b>Thêm hàng hóa</b> để thêm hàng hóa mới như hình sau: 
+        </p>
+        <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_chon.png")" alt="chon-them-hang-hoa"  />
         </p>
 
         <p>
+            Sau đó, các thông tin liên quan tới hàng hóa như hình sau:
+        </p>
+        <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa.png")" alt="them-hang-hoa"  />
         </p>
-
         <p>
-            <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_nhomhang_chon.png")" alt="chon-nhom-hang"  />
-        </p>
-
-        <p>
-            <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_nhomhang_them.png")" alt="them-nhom-hang"  />
-        </p>
-
+            <h5><b>1. Thông tin cơ bản :</b></h5><br />
+            - <b>Tên hàng hóa</b> :  tên của hàng hóa<br />
+            - <b>Số lượng</b> : số lượng hiện tại của hàng hóa<br />
+            - <b>Theo dõi tồn kho</b>: Nếu không chọn, hàng hóa sẽ không theo dõi số lượng. 
+                Thường dùng cho các hàng hóa có tính chất dịch vụ, thuê bao. 
+                Ví dụ: dịch vụ vận chuyển…<br />
+            - <b>Cho phép bán âm </b>: Cho phép hàng hóa vẫn được bán khi số lượng tồn khô hệ thống nhỏ hơn 0. 
+                Ví dụ: khai báo hàng hóa xong chưa kịp nhập số lượng, vẫn có thể bán hàng, sau đó nhập kho sau. 
+                Lưu ý: thuộc tính này không được phép chỉnh sửa sau khi lưu hàng hóa.<br />
+            - <b>Giá vốn</b> : giá bán hiện tại của hàng hóa<br />
+            - <b>Giá bán</b> : giá vốn hiện tại của hàng hóa<br />
+            
+            - <b>Nhóm hàng hóa</b> : cho biết các hàng hóa có cùng tính chất/đặc điểm nào đó.<br />
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_nhomhang_nhap.png")" alt="nhap-nhom-hang"  />
         </p>
 
+            - <b>Nhà sản xuất</b> : nhà sản xuất<br />
+            - <b>Mã hàng hóa</b> : mã hàng hóa, có thể nhập hoặc để hệ thống tự nhập<br />
+            - <b>Thuế VAT</b> : thông tin về thuế VAT.<br />
+        </p>
+         <p>&nbsp</p>
 
+        <p>
+            <b>Quản lý nhóm hàng hóa</b><br />
+            Để quản lý các nhóm hàng hóa nhấn vào nút kế bên  thông tin <b>Nhóm hàng hóa </b> như hình sau: 
+        </p>
+        <p>
+            <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_nhomhang_chon.png")" alt="chon-nhom-hang"  />
+        </p>
+        <p>
+            Ở đây có thể thêm các nhóm hàng hóa mới bằng cách đơn giản là nhập tên nhóm hàng hóa
+        </p>
+        <p>
+            <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_nhomhang_them.png")" alt="them-nhom-hang"  />
+        </p>
+        <p>&nbsp</p>
+       
+        <p>
+            <h5><b>2. Chính sách kho :</b></h5><br />
+            Thiết lập cách thức quản lý và cảnh báo :
+        </p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_chinhsachkho.png")" alt="chinh-sach-kho"  />
         </p>
+        <p>
+            - <b>Mức tồn kho tối thiểu</b>: Ngưỡng số lượng tối thiểu để cảnh báo khi hàng hóa còn ít <br />
+            - <b>Mức tồn kho tối đa</b>:  Ngưỡng số lượng tối đa để cảnh báo khi hàng hóa còn quá nhiều <br />
+            - <b>Quản lý tồn kho theo serial</b>: Khi chọn quản lý tồn kho theo Serial, thay vì nhập số lượng hàng hóa, cần nhập các Serial của hàng hóa ở phần Nhập kho. <br />
+        </p>
+        <p>&nbsp</p>
 
+        <p>
+            <b>Quản lý kho theo thuộc tính hàng hóa ? (VD: Màu sắc, kích thước,...)</b> <br />
+        </p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_thuoctinh_chon.png")" alt="quan-ly-thuoc-tinh"  />
         </p>
@@ -38,13 +82,28 @@
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_thuoctinh_nhap.png")" alt="nhap-thuoc-tinh-hang-hoa"  />
         </p>
-
+        <p>&nbsp</p>
+        
+        <p>
+            <h5><b>3. Mô tả chi tiết :</b></h5><br />
+            Hình ảnh của hàng hóa và thông tin mô tả chi tiết vể hàng hóa.
+        </p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/hanghoa/hanghoa_themhanghoa_motachitiet.png")" alt="hinh-anh-va-mo-ta-hang-hoa"  />
         </p>
+         <p>&nbsp</p>
 
         <p>
+            <h5><b>4. Lưu kết quả :</b></h5><br />
+        </p>
+        <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/buttons_them.png")" alt="luu-ket-qua"  />
+        </p>
+        <p>
+            Trong đó : <br />
+            <b>Lưu</b> : Lưu hàng hóa và trở về trang quản lý <br />
+            <b>Lưu và tiếp tục</b> : Lưu hàng hóa và tiếp tục nhập hàng hóa mới khác <br />
+            <b>Trỡ về</b> : Trở về trang quản lý <br />
         </p>
     </div>
 </article>
