@@ -7,15 +7,51 @@
 
     <div class="entry-content">
         <p>
+            Trong trang quản lý nhập kho, nhấn vào nút <b>Tạo phiếu nhập</b> như hình sau: 
+        </p>
+        <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/nhapkho/nhapkho_them_chon.png")" alt="them-nhap-kho"  />
         </p>
-
+        <p>Một phiếu nhập hàng sẽ có các thông tin như sau:</p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/nhapkho/nhapkho_them_hanghoa.png")" alt="nhap-kho-them-hang-hoa"  />
         </p>
+        <p>
+            Mục bên trái là danh sách các hàng hóa trong phiếu nhập hàng. 
+            Có thể thêm hàng hóa bằng cách tìm kiếm bằng mã/tên hàng hóa rồi chọn để thêm như hình trên.
+            <br />
+            Mục bên phải là thông tin về phiếu nhập hàng và thông tin thanh toán<br />
+            <br />
 
+            <b>Thông tin đơn hàng</b><br />
+            - <b>Mã hóa đơn</b> :  mã của phiếu nhập hàng<br />
+            - <b>Nhà cung cấp</b> :   Có thể để trống hoặc chọn nhà cung cấp đã có. Nếu là nhà cung cấp mới thì nhấn vào nút bên cạnh để thêm.<br />
+            - <b>Ngày nhập</b> : thời điểm nhập hàng <br />
+            - <b>Ghi chú</b> :  ghi chú của phiếu nhập hàng<br />
+            <br />
+
+            <b>Thông tin thanh toán</b><br />
+            - <b>Hình thức</b> : Hình thức thanh toán <b>Tiền mặt/Chuyển khoản/Thẻ</b> <br />
+            - <b>Tiền hàng</b> : Tổng tiền của các hàng hóa<br />
+            - <b>Tiền thuế</b> : Tiền thuế đựa tính dựa vào <b>Thuế VAT</b> của các hàng hóa được chọn<br />
+            - <b>Tổng cộng</b> :  Tổng giá tiền sau khi đã tính thuế<br />
+            - <b>Thanh toán</b> :  Số tiền thanh toán cho nhà cung cấp<br />
+            - <b>Còn nợ</b> :  Số tiền nợ nhà cung cấp<br />
+        </p>
+        <p>&nbsp</p>
+
+        <p>Ví dụ một phiếu nhập kho đã điền các thông tin</p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/nhapkho/nhapkho_them_danhap.png")" alt="nhap-kho-da-dien-thong-tin"  />
+        </p>
+
+        <p>
+            <b>Lưu kết quả</b>
+        </p>
+        <p>
+            <b>Lưu tạm</b> : Lưu tạm kết quả, chưa tính lại số lượng và giá vốn cho các hàng hóa tương ứng <br />
+            <b>Lưu </b> : Lưu phiếu nhập hàng<br />
+            <b>Lưu và in ấn</b> : Lưu phiếu nhập hàng sau đó hiển thị chức năng in <br />
         </p>
     </div>
 </article>

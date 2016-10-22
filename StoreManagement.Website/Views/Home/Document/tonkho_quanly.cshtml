@@ -1,4 +1,4 @@
-﻿<article class="clearfix  post type-post status-publish format-standard hentry">
+﻿<article class="clearfix ">
 
     <!-- .entry-header -->
     <header class="entry-header">
@@ -7,13 +7,44 @@
 
     <div class="entry-content">
         <p>
+            Để xem thông tin về tồn kho vào mục <b>Tồn kho</b> như hình sau:
+            Trong mục <b>Tồn kho</b> có 4 mục nhỏ :<br />
+            - <b>Tồn kho</b> : Báo cáo tình hình tồn kho của các hàng hóa ở thời điểm hiện tại<br />
+            - <b>Xuất nhập tồn</b> : Báo cáo số lượng xuất-nhập-tồn của các hàng háng. Mô tả ở <a href="@Url.Action("Document","Home")?page=nhap-xuat-kho">đây</a>.<br />
+            - <b>Kiểm kê</b> : Quản lý kiểm kê kho. Mô tả ở <a href="@Url.Action("Document","Home")?page=xem-kiem-ke">đây</a>.<br />
+            - <b>Chuyển kho</b> : Quản lý chuyển hàng hóa giữa các cửa hàng. Mô tả ở <a href="@Url.Action("Document","Home")?page=quan-ly-chuyen-kho">đây</a>.<br />
+            Ở đây sẽ giới thiệu báo cáo tồn kho.
+        </p>
+        <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/tonkho/tonkho_chon.png")" alt="ton-kho-quan-ly"  />
         </p>
+        <p>
+            Báo cáo tồn kho cho biết các thông tin chung về kho :<br />
+            - Số các loại hàng hóa trong kho.<br />
+            - Tổng số vốn tồn kho.<br />
+            - Tổng giá trị kho.<br />
+            <br />  
+            Và các thông tin chi tiết của từng hàng hóa trong kho :<br />
+            - Số lượng<br />
+            - Vốn tồn kho.<br />
+            - Giá trị tồn.<br />
+        </p>
+        <p>&nbsp</p>
 
+        <p><b>Tìm kiếm hàng hóa</b> <br />
+            Có thể tìm kiếm hàng hóa theo mã/tên hàng hóa <br />
+            Hoặc lọc hàng hóa nhanh theo các lựa chọn có sẵn : <br />
+            - Lọc theo <b>nhóm hàng hóa</b><br />
+            - Lọc theo các thiết lập như hình sau: <br /> 
+        </p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/tonkho/tonkho_quanly.png")" alt="ton-kho-quan-ly"  />
         </p>
+        <p>&nbsp</p>
 
+        <p><b>Xem thẻ kho của hàng hóa</b><br/>
+            Có thể xem thẻ kho của hàng hóa bằng cách nhấn vào mã hoặc tên của hàng hóa. Và được sẽ như hình sau:
+        </p>
         <p>
             <img class="align-center size-full" src="@Url.Content("~/Content/home/images/document/tonkho/tonkho_thekho.png")" alt="ton-kho-the-kho"  />
         </p>
