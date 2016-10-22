@@ -404,7 +404,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.CustomerName = order.CustomerName;
             $scope.OrderForm.CashierName = order.CashierName;
         }
-        
+
         $scope.InitListProducts = function () {
             $scope.ListProductsOrder = $scope.DataSet.ProductsOrder.Data;
             var len = $scope.ListProductsOrder.length;

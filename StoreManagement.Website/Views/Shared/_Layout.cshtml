@@ -144,8 +144,15 @@
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li style="padding:10px">
                                     <b>Cửa hàng</b>
-                                    <input class="form-control" id="autoStore" ng-model="StoreName"
-                                   placeholder="Chọn cửa hàng" ng-init="InitListAutoCompleteStores('#autoStore')"/>
+                                    <input class="form-control" ng-model="StoreName"
+                                           autocomplete-master-table="T_Master_Stores"
+                                           autocomplete-colum-id="StoreId"
+                                           autocomplete-colum-code="StoreCode"
+                                           autocomplete-colum-name="StoreName"
+                                           autocomplete-model-id="#txtStoreId"
+                                           autocomplete-condition="[IsActive] = 1"
+                                           placeholder="Chọn cửa hàng"/>
+                                    <input id="txtStoreId" class="none-display" ng-model="CurrentStore" ng-change="SetStoreId()" />
                                 </li>
                             </ul>
                         </li>
