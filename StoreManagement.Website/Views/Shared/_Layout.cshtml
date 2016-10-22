@@ -127,13 +127,14 @@
             <!-- /.navbar-header -->
                     <ul class="nav navbar-top-links navbar-right text-right">
                         <input type="text" style="border: 0px solid white" 
-                               placeholder="#Thao tac nhanh" 
+                               placeholder="#Thao tác nhanh" 
                                autocomplete-master-table="T_Master_QuickAction"
                                autocomplete-colum-id="Code"
                                autocomplete-colum-name="Action"
                                autocomplete-colum-additional="Link"
                                autocomplete-model-id="#txtQuickActionCode"
-                               autocomplete-model-additional="#txtQuickActionLink"/>
+                               autocomplete-model-additional="#txtQuickActionLink"
+                               ng-model="DataAction.ActionName"/>
                         <input id="txtQuickActionCode" class="none-display" ng-model="DataAction.Action"/>
                         <input id="txtQuickActionLink" class="none-display" ng-model="DataAction.Link" />
                         <li class="dropdown">
@@ -143,8 +144,15 @@
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li style="padding:10px">
                                     <b>Cửa hàng</b>
-                                    <input class="form-control" id="autoStore" ng-model="StoreName"
-                                   placeholder="Chọn cửa hàng" ng-init="InitListAutoCompleteStores('#autoStore')"/>
+                                    <input class="form-control" ng-model="StoreName"
+                                           autocomplete-master-table="T_Master_Stores"
+                                           autocomplete-colum-id="StoreId"
+                                           autocomplete-colum-code="StoreCode"
+                                           autocomplete-colum-name="StoreName"
+                                           autocomplete-model-id="#txtStoreId"
+                                           autocomplete-condition="[IsActive] = 1"
+                                           placeholder="Chọn cửa hàng"/>
+                                    <input id="txtStoreId" class="none-display" ng-model="CurrentStore" ng-change="SetStoreId()" />
                                 </li>
                             </ul>
                         </li>
@@ -184,7 +192,7 @@
                                     <!-- /input-group -->
                                 </li>
                                 <li ng-class="{'active' : (menu.Url == CurrentUrl)}" ng-repeat="menu in ListMenu">
-                                    <a href="#" action="{{menu.Url}}" class="left-menu" ng-click="LoadViewBody(menu.Url)">
+                                    <a href="#" action="{{menu.Url}}" class="left-menu" ng-click="ResetDataAction();LoadViewBody(menu.Url)">
                                         <i class="{{menu.CssClass}}"></i>
                                         <span bind-html-compile="menu.Menu"></span>
                                         <span ng-if="menu.Url == CurrentUrl" class="fa arrow"></span>

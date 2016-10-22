@@ -57,11 +57,9 @@ mdlMenu.controller('LoadMenuController',
             $scope.ListStores = configListStores.GetListData();
         }
 
-        $scope.SetStoreId = function (storeId) {
-            if ($scope.CurrentStore != storeId) {
-                AjaxSync(g_setStoreIdUrl, '{ "storedId": ' + storeId + '}');
-                location.reload();
-            }
+        $scope.SetStoreId = function () {
+            AjaxSync(g_setStoreIdUrl, '{ "storedId": ' + $scope.CurrentStore + '}');
+            location.reload();
         }
 
         $scope.LogIn = function () {
@@ -106,9 +104,163 @@ mdlMenu.controller('LoadMenuController',
 
         $scope.DataAction =
         {
+            ActionName: "",
             Action: "",
             Link: ""
         };
+
+        $scope.ResetDataAction = function () {
+            $scope.DataAction.ActionName = "";
+            $scope.DataAction.Action = "";
+            $scope.DataAction.Link = "";
+        }
+
+        $scope.SelectQuickAction = function () {
+            var scope;
+            switch ($scope.DataAction.Action) {
+                case "LIST_ORDERS":
+                    scope = angular.element(document.getElementById("OrderController")).scope();
+                    scope.CloseOrderDetail();
+                    break;
+                case "ADD_ORDERS":
+                    scope = angular.element(document.getElementById("OrderController")).scope();
+                    scope.AddOrder();
+                    break;
+                case "LIST_CUSTOMERS":
+                    scope = angular.element(document.getElementById("CustomerController")).scope();
+                    scope.SetCurrentTab('Customers');
+                    break;
+                case "LIST_SALECUSTOMERS":
+                    scope = angular.element(document.getElementById("CustomerController")).scope();
+                    scope.SetCurrentTab('SaleCustomers');
+                    break;
+                case "LIST_SUPPLIER":
+                    scope = angular.element(document.getElementById("CustomerController")).scope();
+                    scope.SetCurrentTab('Suppliers');
+                    break;
+                case "LIST_PURCHASE":
+                    scope = angular.element(document.getElementById("PurchaseController")).scope();
+                    scope.ClosePurchaseDetail();
+                    break;
+                case "ADD_PURCHASE":
+                    scope = angular.element(document.getElementById("PurchaseController")).scope();
+                    scope.AddPurchase();
+                    break;
+                case "LIST_PRODUCTS":
+                    scope = angular.element(document.getElementById("ProductController")).scope();
+                    scope.SetCurrentTab('Products');
+                    scope.CloseProductDetail();
+                    break;
+                case "ADD_PRODUCTS":
+                    scope = angular.element(document.getElementById("ProductController")).scope();
+                    scope.SetCurrentTab('Products');
+                    scope.AddProduct(0);
+                    break;
+                case "LIST_COMBO":
+                    scope = angular.element(document.getElementById("ProductController")).scope();
+                    scope.SetCurrentTab('Combos');
+                    scope.CloseProductDetail()
+                    break;
+                case "ADD_COMBO":
+                    scope = angular.element(document.getElementById("ProductController")).scope();
+                    scope.SetCurrentTab('Combos');
+                    scope.AddProduct(1);
+                    break;
+                case "INVENTORY":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventoryProduct');
+                    break;
+                case "INVENTORY_INOUT":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventoryInOut');
+                    break;
+                case "INVENTORY_CHECK":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventoryCheck');
+                    scope.CloseInventoryDetail();
+                    break;
+                case "INVENTORY_TRAN":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventTrans');
+                    scope.CloseInventTranDetail();
+                    break;
+                case "ADD_INVENTORY_CHECK":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventoryCheck');
+                    scope.AddInventory();
+                    break;
+                case "ADD_INVENTORY_TRAN":
+                    scope = angular.element(document.getElementById("InventoryController")).scope();
+                    scope.SetCurrentTab('InventTrans');
+                    scope.AddInventTran();
+                    break;
+                case "REVENUE_BY_SELLER":
+                    scope = angular.element(document.getElementById("RevenueController")).scope();
+                    scope.SetCurrentTab('ReportBySeller');
+                    break;
+                case "REVENUE_BY_STORE":
+                    scope = angular.element(document.getElementById("RevenueController")).scope();
+                    scope.SetCurrentTab('ReportByStore');
+                    break;
+                case "REVENUE_BY_MONTH":
+                    scope = angular.element(document.getElementById("RevenueController")).scope();
+                    scope.SetCurrentTab('ReportByMonth');
+                    break;
+                case "REVENUE_BY_PRODUCT":
+                    scope = angular.element(document.getElementById("RevenueController")).scope();
+                    scope.SetCurrentTab('ReportByProduct');
+                    break;
+                case "PAYMENT":
+                    scope = angular.element(document.getElementById("PaymentController")).scope();
+                    scope.SetCurrentTab('Costs');
+                    break;
+                case "PAYMENT_ORDER":
+                    scope = angular.element(document.getElementById("PaymentController")).scope();
+                    scope.SetCurrentTab('Payments');
+                    break;
+                case "RECEIVEMENT":
+                    var scope = angular.element(document.getElementById("PaymentController")).scope();
+                    scope.SetCurrentTab('CollectMoneys');
+                    break;
+                case "PROFIT_BY_TIME":
+                    scope = angular.element(document.getElementById("ProfitController")).scope();
+                    scope.SetCurrentTab('ReportByTime');
+                    break;
+                case "PROFIT_BY_PRODUCT":
+                    scope = angular.element(document.getElementById("ProfitController")).scope();
+                    scope.SetCurrentTab('ReportByProduct');
+                    break;
+                case "PROFIT_BY_STORE":
+                    scope = angular.element(document.getElementById("ProfitController")).scope();
+                    scope.SetCurrentTab('ReportByStore');
+                    break;
+                case "PROFIT_SUMMARY":
+                    scope = angular.element(document.getElementById("ProfitController")).scope();
+                    scope.SetCurrentTab('ReportProfit');
+                    break;
+                case "SETTING_USER":
+                    scope = angular.element(document.getElementById("SettingController")).scope();
+                    scope.SetCurrentTab('Users');
+                    break;
+                case "SETTING_STORE":
+                    scope = angular.element(document.getElementById("SettingController")).scope();
+                    scope.SetCurrentTab('Stores');
+                    break;
+                case "SETTING_CONFIG":
+                    scope = angular.element(document.getElementById("SettingController")).scope();
+                    scope.SetCurrentTab('Setting');
+                    break;
+                case "SETTING_PRINT":
+                    scope = angular.element(document.getElementById("SettingController")).scope();
+                    scope.SetCurrentTab('Prints');
+                    break;
+                case "SETTING_PROMOTION":
+                    scope = angular.element(document.getElementById("SettingController")).scope();
+                    scope.SetCurrentTab('Promotion');
+                    break;
+            }
+            scope.$apply();
+        }
 
         $scope.HasLoadFinished = false;
         $scope.LoadViewBody = function (url) {
@@ -128,34 +280,12 @@ mdlMenu.controller('LoadMenuController',
                 scope.$on('$includeContentLoaded', function () {
                     $("i.img-loading").hide();
                     $("#bodyView").show();
+                    $scope.SelectQuickAction();
                 });
                 $scope.HasLoadFinished = true;
             }
         }
-
-        //$scope.ChangeLanguage = function (code) {
-        //    if (code != $scope.Language.Code) {
-        //        $scope.Language.Code = code;
-        //        if (code == "VN") {
-        //            $scope.Language.Resource = gVNResource;
-        //            $scope.Language.SelectedLanguage = gVNResource.Vietnamese;
-        //        }
-        //        if (code == "EN") {
-        //            $scope.Language.Resource = gENResource;
-        //            $scope.Language.SelectedLanguage = gENResource.English;
-
-        //        }
-
-        //        var scope = angular.element($("#mdlCommon").find("[ng-controller]").first()).scope();
-        //        if (scope) {
-        //            scope.$apply(function () {
-        //                scope.ChangeLanguage(code);
-        //            });
-        //        }
-        //    }
-        //}
-        //$scope.ChangeLanguage(g_defaultLang);
-
+                
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
@@ -169,52 +299,6 @@ mdlMenu.controller('LoadMenuController',
                 }
             }
         }
-
-        $scope.InitListAutoCompleteStores = function (elementId) {
-            $(elementId).autocomplete({
-                minLength: 0,
-                source: function (request, response) {
-                    var configList = new GridViewConfig("");
-                    configList.GridDataAction = "get10";
-                    configList.GridDataType = "table";
-                    configList.GridDataObject = "T_Master_Stores";
-                    configList.GridDefinedColums = "StoreId;StoreCode;StoreName";
-                    configList.GridSortCondition = "StoreName ASC";
-                    configList.GridFilterCondition = "[IsActive] = 1 AND (StoreCode like N''%" + request.term + "%''  OR StoreName like N''%" + request.term + "%'' )";
-
-                    var listData = configList.GetListData();
-                    if (listData.length > 0) {
-                        response(listData);
-                    }
-                    else {
-                        response(["Không tìm thấy kết quả"]);
-                    }
-                },
-                focus: function (event, ui) {
-                    $(elementId).val( ui.item.StoreName);
-                    return false;
-                },
-                select: function (event, ui) {
-                    if (ui.item.StoreCode) {
-                        $scope.SetStoreId(ui.item.StoreId);
-                    }
-                    return false;
-                }
-            })
-            .autocomplete("instance")._renderItem = function (ul, item) {
-                var content;
-                if (item.StoreCode) {
-                    content = "<a> <b>" + item.StoreName + " </b><br/> </a>";
-                }
-                else {
-                    content = "<a>" + item.label + "</a>";
-                }
-                return $("<li>")
-                        .append(content)
-                        .appendTo(ul);
-            };
-        }
-
 
         $scope.InitAutoComplete = function (autocompleteId) {
             var element = $('input[autocomplete-id="' + autocompleteId + '"]');
@@ -252,7 +336,7 @@ mdlMenu.controller('LoadMenuController',
                 focus: function (event, ui) {
                     if (ui.item[element.attr("autocomplete-colum-id")]) {
                         $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
-                        }
+                    }
                     return false;
                 },
                 select: function (event, ui) {
@@ -284,15 +368,24 @@ mdlMenu.controller('LoadMenuController',
             };
         }
 
-        
+
         $scope.$watch('DataAction.Link', function (newVal, oldVal) {
             if (newVal) {
                 var a = $("a.left-menu[action='" + newVal + "']");
                 if (a.length == 0) {
-                    alert('Ban khong co quyen truy cap chuc nang nay?');
+                    ShowErrorMessage("Bạn không có quyền truy cập chức năng này.");
                 }
                 else {
                     $scope.LoadViewBody(newVal);
+                }
+            }
+        }, false);
+
+
+        $scope.$watch('DataAction.Action', function (newVal, oldVal) {
+            if (newVal) {
+                if ($scope.CurrentUrl == $scope.DataAction.Link || $scope.DataAction.Link == "") {
+                    $scope.SelectQuickAction();
                 }
             }
         }, false);

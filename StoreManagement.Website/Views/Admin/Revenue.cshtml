@@ -1,28 +1,28 @@
-﻿<div ng-controller="RevenueController">
+﻿<div id="RevenueController" ng-controller="RevenueController">
     <div class="container-fluid">
 
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('ReportBySeller')">
+                    <li ng-click="SetCurrentTab('ReportBySeller')" ng-class="{active : (CurrentTab =='ReportBySeller') }">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Theo người bán</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportByStore')">
+                    <li ng-click="SetCurrentTab('ReportByStore')" ng-class="{active : (CurrentTab =='ReportByStore') }">
                         <a data-toggle="tab">
                             <i class="blue fa-shopping-cart fa"></i>
                             <span>Theo cửa hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportByMonth')">
+                    <li ng-click="SetCurrentTab('ReportByMonth')" ng-class="{active : (CurrentTab =='ReportByMonth') }">
                         <a data-toggle="tab">
                             <i class="blue fa-calendar fa"></i>
                             <span>Theo tháng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportByProduct')">
+                    <li ng-click="SetCurrentTab('ReportByProduct')" ng-class="{active : (CurrentTab =='ReportByProduct') }">
                         <a data-toggle="tab">
                             <i class="blue fa-laptop fa"></i>
                             <span>Sản phẩm</span>
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="tab-content no-border active">
-                <div class="tab-pane col-md-12 active" ng-class="{'active': CurrentTab =='ReportBySeller'}">
+                <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportBySeller'}">
                     @*If use ng-if, chart will be bind wrong*@
                     <div ng-show="CurrentTab =='ReportBySeller'">
                         <div class="row margin-top-10">
