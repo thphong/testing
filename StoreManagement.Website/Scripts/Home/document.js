@@ -23,10 +23,10 @@ mdlDoc.controller('docController',
                 ]
             },
             {
-                parent: 'don-hang', title: '03 - Bán hàng', deflt: 'pos',
+                parent: 'don-hang', title: '03 - Bán hàng', deflt: 'quan-ly-don-hang',
                 pages: [
                   { page: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', url: '' },
-                  { page: 'tao-don-hang', title: 'Tạo đơn hàng', url: '' },
+                  { page: 'tao-don-hang', title: 'Tạo đơn hàng/ bán hàng', url: '' },
                   { page: 'pos', title: 'POS bán hàng', url: '' }
                 ]
             },

@@ -308,6 +308,7 @@
     <Content Include="Content\home\images\document\hanghoa\hanghoa_themhanghoa_nsx_chon.png" />
     <Content Include="Content\home\images\document\hanghoa\hanghoa_themhanghoa_thuoctinh_chon.png" />
     <Content Include="Content\home\images\document\hanghoa\hanghoa_themhanghoa_thuoctinh_nhap.png" />
+    <Content Include="Content\home\images\document\hanghoa\tonkho_thekho.png" />
     <Content Include="Content\home\images\document\khachhang\khachhang.png" />
     <Content Include="Content\home\images\document\khachhang\khachhang_chinhsua.png" />
     <Content Include="Content\home\images\document\khachhang\khachhang_chon.png" />
