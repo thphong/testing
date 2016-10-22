@@ -4,31 +4,31 @@
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('Users')">
+                    <li ng-click="SetCurrentTab('Users')" ng-class="{active : (CurrentTab =='InventoryProduct') }">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Nhân viên</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Stores')">
+                    <li ng-click="SetCurrentTab('Stores')" ng-class="{active : (CurrentTab =='Stores') }">
                         <a data-toggle="tab">
                             <i class="blue fa-cog fa"></i>
                             <span>Thông tin cửa hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Setting')">
+                    <li ng-click="SetCurrentTab('Setting')" ng-class="{active : (CurrentTab =='Setting') }">
                         <a data-toggle="tab">
                             <i class="blue fa-cogs fa"></i>
                             <span>Thiết lập bán hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Prints')">
+                    <li ng-click="SetCurrentTab('Prints')" ng-class="{active : (CurrentTab =='Prints') }">
                         <a data-toggle="tab">
                             <i class="blue fa-print fa"></i>
                             <span>Quản lý mẫu in</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Promotion')">
+                    <li ng-click="SetCurrentTab('Promotion')" ng-class="{active : (CurrentTab =='Promotion') }">
                         <a data-toggle="tab">
                             <i class="blue fa-gift fa"></i>
                             <span>Khuyến mãi</span>

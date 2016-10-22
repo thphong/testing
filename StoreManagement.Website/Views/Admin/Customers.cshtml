@@ -1,21 +1,21 @@
-﻿<div ng-controller="CustomerController">
+﻿<div id="CustomerController" ng-controller="CustomerController">
     <div class="container-fluid">
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('Customers')">
+                    <li ng-click="SetCurrentTab('Customers')" ng-class="{active: CurrentTab == 'Customers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('SaleCustomers')">
+                    <li ng-click="SetCurrentTab('SaleCustomers')" ng-class="{active: CurrentTab == 'SaleCustomers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Khách hàng Sỉ</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Suppliers')">
+                    <li ng-click="SetCurrentTab('Suppliers')" ng-class="{active: CurrentTab == 'Suppliers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-truck fa"></i>
                             <span>Nhà cung cấp</span>

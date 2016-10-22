@@ -7,25 +7,25 @@
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('InventoryProduct')">
+                    <li ng-click="SetCurrentTab('InventoryProduct')" ng-class="{active : (CurrentTab =='InventoryProduct') }" >
                         <a data-toggle="tab">
                             <i class="blue fa-list-alt fa"></i>
                             <span>Tồn kho</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventoryInOut')">
+                    <li ng-click="SetCurrentTab('InventoryInOut')" ng-class="{active : (CurrentTab =='InventoryInOut') }">
                         <a data-toggle="tab">
                             <i class="blue fa-exchange fa"></i>
                             <span>Nhập xuất tồn</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventoryCheck')">
+                    <li ng-click="SetCurrentTab('InventoryCheck')" ng-class="{active : (CurrentTab =='InventoryCheck') }">
                         <a data-toggle="tab">
                             <i class="blue fa-calendar fa"></i>
                             <span>Kiểm kê</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventTrans')">
+                    <li ng-click="SetCurrentTab('InventTrans')" ng-class="{active : (CurrentTab =='InventTrans') }">
                         <a data-toggle="tab">
                             <i class="blue fa-chain fa"></i>
                             <span>Chuyển kho</span>

@@ -106,9 +106,17 @@ mdlMenu.controller('LoadMenuController',
 
         $scope.DataAction =
         {
+            ActionName: "",
             Action: "",
             Link: ""
         };
+
+        $scope.ResetDataAction = function ()
+        {
+            $scope.DataAction.ActionName = "";
+            $scope.DataAction.Action = "";
+            $scope.DataAction.Link = "";
+        }
 
         $scope.HasLoadFinished = false;
         $scope.LoadViewBody = function (url) {
@@ -128,6 +136,107 @@ mdlMenu.controller('LoadMenuController',
                 scope.$on('$includeContentLoaded', function () {
                     $("i.img-loading").hide();
                     $("#bodyView").show();
+                    switch ($scope.DataAction.Action) {
+                        case "ADD_ORDERS":
+                            var scope = angular.element(document.getElementById("OrderController")).scope();
+                            scope.AddOrder();
+                            break;
+                        case "LIST_SALECUSTOMERS":
+                            var scope = angular.element(document.getElementById("CustomerController")).scope();
+                            scope.SetCurrentTab('SaleCustomers');
+                            break;
+                        case "LIST_SUPPLIER":
+                            var scope = angular.element(document.getElementById("CustomerController")).scope();
+                            scope.SetCurrentTab('Suppliers');
+                            break;
+                        case "ADD_PURCHASE":
+                            var scope = angular.element(document.getElementById("PurchaseController")).scope();
+                            scope.AddPurchase();
+                            break;
+                        case "ADD_PRODUCTS":
+                            var scope = angular.element(document.getElementById("ProductController")).scope();
+                            scope.AddProduct(0);
+                            break;
+                        case "LIST_COMBO":
+                            var scope = angular.element(document.getElementById("ProductController")).scope();
+                            scope.SetCurrentTab('Combos');
+                            break;
+                        case "ADD_COMBO":
+                            var scope = angular.element(document.getElementById("ProductController")).scope();
+                            scope.SetCurrentTab('Combos');
+                            scope.AddProduct(1);
+                            break;
+                        case "INVENTORY_INOUT":
+                            var scope = angular.element(document.getElementById("InventoryController")).scope();
+                            scope.SetCurrentTab('InventoryInOut');
+                            break;
+                        case "INVENTORY_CHECK":
+                            var scope = angular.element(document.getElementById("InventoryController")).scope();
+                            scope.SetCurrentTab('InventoryCheck');
+                            break;
+                        case "INVENTORY_TRAN":
+                            var scope = angular.element(document.getElementById("InventoryController")).scope();
+                            scope.SetCurrentTab('InventTrans');
+                            break;
+                        case "ADD_INVENTORY_CHECK":
+                            var scope = angular.element(document.getElementById("InventoryController")).scope();
+                            scope.SetCurrentTab('InventoryCheck');
+                            scope.AddInventory();
+                            break;
+                        case "ADD_INVENTORY_TRAN":
+                            var scope = angular.element(document.getElementById("InventoryController")).scope();
+                            scope.SetCurrentTab('InventTrans');
+                            scope.AddInventTran();
+                            break;
+                        case "REVENUE_BY_STORE":
+                            var scope = angular.element(document.getElementById("RevenueController")).scope();
+                            scope.SetCurrentTab('ReportByStore');
+                            break;
+                        case "REVENUE_BY_MONTH":
+                            var scope = angular.element(document.getElementById("RevenueController")).scope();
+                            scope.SetCurrentTab('ReportByMonth');
+                            break;
+                        case "REVENUE_BY_PRODUCT":
+                            var scope = angular.element(document.getElementById("RevenueController")).scope();
+                            scope.SetCurrentTab('ReportByProduct');
+                            break;
+                        case "PAYMENT_ORDER":
+                            var scope = angular.element(document.getElementById("PaymentController")).scope();
+                            scope.SetCurrentTab('Payments');
+                            break;
+                        case "RECEIVEMENT":
+                            var scope = angular.element(document.getElementById("PaymentController")).scope();
+                            scope.SetCurrentTab('CollectMoneys');
+                            break;
+                        case "PROFIT_BY_PRODUCT":
+                            var scope = angular.element(document.getElementById("ProfitController")).scope();
+                            scope.SetCurrentTab('ReportByProduct');
+                            break;
+                        case "PROFIT_BY_STORE":
+                            var scope = angular.element(document.getElementById("ProfitController")).scope();
+                            scope.SetCurrentTab('ReportByStore');
+                            break;
+                        case "PROFIT_SUMMARY":
+                            var scope = angular.element(document.getElementById("ProfitController")).scope();
+                            scope.SetCurrentTab('ReportProfit');
+                            break;
+                        case "SETTING_STORE":
+                            var scope = angular.element(document.getElementById("SettingController")).scope();
+                            scope.SetCurrentTab('Stores');
+                            break;
+                        case "SETTING_CONFIG":
+                            var scope = angular.element(document.getElementById("SettingController")).scope();
+                            scope.SetCurrentTab('Setting');
+                            break;
+                        case "SETTING_PRINT":
+                            var scope = angular.element(document.getElementById("SettingController")).scope();
+                            scope.SetCurrentTab('Prints');
+                            break;
+                        case "SETTING_PROMOTION":
+                            var scope = angular.element(document.getElementById("SettingController")).scope();
+                            scope.SetCurrentTab('Promotion');
+                            break;
+                    }
                 });
                 $scope.HasLoadFinished = true;
             }
@@ -191,7 +300,7 @@ mdlMenu.controller('LoadMenuController',
                     }
                 },
                 focus: function (event, ui) {
-                    $(elementId).val( ui.item.StoreName);
+                    $(elementId).val(ui.item.StoreName);
                     return false;
                 },
                 select: function (event, ui) {
@@ -252,7 +361,7 @@ mdlMenu.controller('LoadMenuController',
                 focus: function (event, ui) {
                     if (ui.item[element.attr("autocomplete-colum-id")]) {
                         $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
-                        }
+                    }
                     return false;
                 },
                 select: function (event, ui) {
@@ -284,7 +393,7 @@ mdlMenu.controller('LoadMenuController',
             };
         }
 
-        
+
         $scope.$watch('DataAction.Link', function (newVal, oldVal) {
             if (newVal) {
                 var a = $("a.left-menu[action='" + newVal + "']");

@@ -48,6 +48,7 @@ mdlCommon.controller('POSController',
             $scope.ResetOrderForm();
             $scope.ResetDiscountForm();
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
+            $scope.ListPromotion = [];
         }
 
         
