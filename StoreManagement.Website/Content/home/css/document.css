@@ -87,3 +87,55 @@ ul.menu-widget > li li{
 #breadcrumbs a, #breadcrumbs a:visited {
     color: #808080;
 }
+
+
+.bold {
+    font-weight: bold;
+}
+
+.white {
+    color: #fff !important;
+}
+
+.red {
+    color: #dd5a43 !important;
+}
+
+.green {
+    color: #9abc32 !important;
+}
+
+.grey {
+    color: #777 !important;
+}
+
+.blue {
+    color: #6fb3e0 !important;
+}
+
+.blue-dark {
+    color: #307ecc !important;
+}
+
+.pink {
+    color: #c6699f !important;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+
+.badge-primary {
+    background-color: #16A085 !important;
+}
