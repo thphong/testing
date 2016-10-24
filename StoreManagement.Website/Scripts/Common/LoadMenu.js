@@ -300,9 +300,9 @@ mdlMenu.controller('LoadMenuController',
 
             if (!$scope.HasLoadFinished) {
                 scope.$on('$includeContentLoaded', function () {
+                    $("i.img-loading").hide();
+                    $("#bodyView").show();
                     if ($scope.StartLoad) {
-                        $("i.img-loading").hide();
-                        $("#bodyView").show();
                         $scope.SelectQuickAction();
                         $scope.StartLoad = false;
                     }
