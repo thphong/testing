@@ -167,7 +167,8 @@ mdlCommon.controller('SettingController',
             ProductGroup: "",
             IsEditing: false,
             Version: 0,
-            IsActive: 1
+            IsActive: 1,
+            TriggerCreateSampleData: 0
         }
 
         $scope.ResetStoreForm = function () {
@@ -182,6 +183,7 @@ mdlCommon.controller('SettingController',
             $scope.StoreForm.IsEditing = false;
             $scope.StoreForm.Version = 0;
             $scope.StoreForm.IsActive = 1;
+            $scope.StoreForm.TriggerCreateSampleData = 0;
         }
 
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
@@ -218,8 +220,8 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.DeleteDataStore = function () {
-            if (confirm("Bạn có muốn xóa toàn bộ dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
-                $scope.StoreForm.TriggerDeleteSampleData = parseInt($scope.StoreForm.Version) + 1;
+            if (confirm("Dữ liệu không thể phục hồi. Bạn có muốn xóa toàn bộ dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
+                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.TriggerCreateSampleData) + 1;
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
                 if (storeId > 0) {
@@ -230,7 +232,7 @@ mdlCommon.controller('SettingController',
 
         $scope.CreateSampleDataStore = function () {
             if (confirm("Bạn có muốn tạo dữ liệu mẫu cho cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
-                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.Version) + 1;
+                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.TriggerCreateSampleData) + 1;
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
                 if (storeId > 0) {

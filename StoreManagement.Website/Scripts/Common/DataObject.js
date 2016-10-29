@@ -287,7 +287,9 @@ function ObjectDataConfig(tableName, $scope) {
 
 
     this.ReloadMasterData = function (tableName) {
-        this.$scope.ReloadMasterDrodowns(tableName);
+        if (this.$scope.ReloadMasterDrodowns) {
+            this.$scope.ReloadMasterDrodowns(tableName);
+        }
     }
 }
 

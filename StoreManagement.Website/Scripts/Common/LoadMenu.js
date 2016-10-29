@@ -430,5 +430,27 @@ mdlMenu.controller('LoadMenuController',
             }
         });
 
+        $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
+        $scope.CreateSampleDataStore = function () {
+            $scope.StoreFormConfig.SetObject({ StoreId: $scope.CurrentStore, TriggerCreateSampleData: 1, Version: -1 });
+            var storeId = $scope.StoreFormConfig.SaveObject();
+            if (storeId > 0) {
+                ShowSuccessMessage("Dữ liệu của cửa hàng '" + $scope.StoreName + "' được tạo thành công.");
+                $('#modalCreateSampleData').modal('hide');
+                location.reload();
+            }
+        }
+
+        setTimeout(function () {
+            if (typeof (Storage) !== "undefined" && $scope.CurrentStore) {
+                // Store
+                if (!localStorage.getItem("ShowCreateSampleData" + $scope.CurrentStore)) {
+                    $("#modalCreateSampleData").modal();
+                    localStorage.setItem("ShowCreateSampleData" + $scope.CurrentStore, "1");
+                }
+            }
+
+        }, 2000);
+
     }]);
 

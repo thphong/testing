@@ -141,7 +141,7 @@
                                                 <td> <a href="#" ng-click="ShowProductQuanHistory(item)" ng-bind="item.ProductName"></a></td>
                                                 <td>
                                                     <span ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></span>
-                                                    <span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>
+                                                    @*<span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>*@
                                                 </td>
                                                 <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
                                                 <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
