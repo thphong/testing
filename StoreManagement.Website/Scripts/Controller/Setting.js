@@ -204,7 +204,7 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.SaveStoreForm = function () {
-            if (FValidation.CheckControls("")) {
+            if (FValidation.CheckControls("") && ($scope.StoreForm.StoreId > 0 || $scope.CanAddStore)) {
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
                 if (storeId > 0) {
