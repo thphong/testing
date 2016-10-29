@@ -217,6 +217,28 @@ mdlCommon.controller('SettingController',
             }
         }
 
+        $scope.DeleteDataStore = function () {
+            if (confirm("Bạn có muốn xóa toàn bộ dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
+                $scope.StoreForm.TriggerDeleteSampleData = parseInt($scope.StoreForm.Version) + 1;
+                $scope.StoreFormConfig.SetObject($scope.StoreForm);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Tất cả dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "' được xóa thành công.");
+                }
+            }
+        }
+
+        $scope.CreateSampleDataStore = function () {
+            if (confirm("Bạn có muốn tạo dữ liệu mẫu cho cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
+                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.Version) + 1;
+                $scope.StoreFormConfig.SetObject($scope.StoreForm);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "' được tạo thành công.");
+                }
+            }
+        }
+
         $scope.SaveStoreItem = function (store) {
             if (FValidation.CheckControls("check-store" + store.StoreId)) {
                 $scope.StoreFormConfig.SetObject(store);
