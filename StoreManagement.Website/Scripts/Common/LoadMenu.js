@@ -445,7 +445,7 @@ mdlMenu.controller('LoadMenuController',
         }
 
         setTimeout(function () {
-            if (typeof (Storage) !== "undefined" && $scope.CurrentStore) {
+            if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0) {
                 // Store
                 if (!localStorage.getItem("ShowCreateSampleData" + $scope.CurrentStore)) {
                     $("#modalCreateSampleData").modal();
