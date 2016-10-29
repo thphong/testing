@@ -375,6 +375,9 @@ mdlMenu.controller('LoadMenuController',
                     return false;
                 }
             })
+            .focus(function(){            
+                $(this).autocomplete("search");
+            })
             .autocomplete("instance")._renderItem = function (ul, item) {
                 var content;
                 if (item[element.attr("autocomplete-colum-code")]) {
