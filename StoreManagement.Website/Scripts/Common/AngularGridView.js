@@ -282,9 +282,10 @@ mdlCommon.directive('dropdownMasterTable', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
 
-        /*var dropdownConfig = new DropdownConfig(element, attributes);
-        _DropdownConfigs.push(dropdownConfig);
-        dropdownConfig.BindBody();*/
+        var getColumName = function (fieldName) {
+            var array = fieldName.split(".");
+            return array[array.length-1];
+        }
 
         var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
         element.attr("dropdown-id", dropdownId);
@@ -293,6 +294,8 @@ mdlCommon.directive('dropdownMasterTable', function () {
         var configList = new GridViewConfig(dropdownId);
         var valueField = attributes.dropdownValueField;
         var nameField = attributes.dropdownNameField;
+        var aliasValueField = getColumName(valueField);
+        var aliasNameField = getColumName(nameField);
         configList.GridDataAction = "getall";
         configList.GridDataObject = attributes.dropdownMasterTable;
         configList.GridDefinedColums = valueField + ";" + nameField;
@@ -310,7 +313,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
             }
             element.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
         }
-        element.append(' <option ng-repeat="item in Dropdowns.' + dropdownId + '" value="{{item.' + valueField + '}}" ng-bind="item.' + nameField + '"></option>');
+        element.append(' <option ng-repeat="item in Dropdowns.' + dropdownId + '" value="{{item.' + aliasValueField + '}}" ng-bind="item.' + aliasNameField + '"></option>');
     }
     return directive;
 });

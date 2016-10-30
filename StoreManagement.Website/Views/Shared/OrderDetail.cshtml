@@ -216,9 +216,11 @@
             <div class="col-md-8">
                 <span ng-bind="OrderForm.CashierName" ng-if="!OrderForm._CanUpdate"></span>
                 <select class="form-control" ng-show="OrderForm._CanUpdate"
-                        ng-model="OrderForm.Cashier" dropdown-master-table="T_Master_User" dropdown-value-field="UserId"
-                        dropdown-name-field="UserName"
-                        dropdown-condition="[IsActive] = 1 and ([IsDeveloper] is null or [IsDeveloper] = 0 or [UserId] = {{CurrentUser}})"></select>
+                        ng-model="OrderForm.Cashier" dropdown-master-table="T_Trans_User_Store" 
+                        dropdown-value-field="UserId"
+                        dropdown-name-field="UserId.UserName"
+                        dropdown-empty-text="Người đang đăng nhập" dropdown-empty-value="{{CurrentUser}}"
+                        dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"></select>
 
             </div>
         </div>

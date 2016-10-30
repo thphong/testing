@@ -58,6 +58,7 @@
                             <select class="form-control"
                                     ng-model="CostForm.PaidBy" dropdown-master-table="T_Trans_User_Store" 
                                     dropdown-value-field="UserId" dropdown-name-field="UserId.UserName"
+                                    dropdown-empty-text="Người đang đăng nhập" dropdown-empty-value="{{CurrentUser}}"
                                     dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"></select>
                         </div>
                     </div>
