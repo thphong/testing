@@ -29,7 +29,8 @@
                  grid-data-object="T_Trans_Products"
                  grid-filter-condition="([StoreId] = {{CurrentStore}} and [IsSelling] = 1 and [IsActive] = 1
                                      and ([AllowNegative] = 1 or [Quantity] > 0)
-                                     and ([Cost] > 0 and [Price] > 0)
+                                     and ([Cost] > 0 or dbo.UFN_System_GetRule(''ALLOW_COST_ZERO'', {{CurrentStore}}) = 1) 
+                                     and ([Price] > 0 or dbo.UFN_System_GetRule(''ALLOW_PRICE_ZERO'', {{CurrentStore}}) = 1)
                                      and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductGroup]))"
                  grid-sort-condition="[ProductName] ASC">
 
