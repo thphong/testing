@@ -6,12 +6,15 @@
     <div class="container-fluid">
         <div class="row col-md-7">
             <div class="row ">
-                <div class="col-xs-4 margin-top-10">
+                <div class="col-md-3 col-xs-12 margin-top-10">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" dropdown-empty-value="0" ng-change="ReloadGrid('Products')"
                             dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                 </div>
-                <div class="col-xs-8 margin-top-10">
+                <div class="col-md-4 col-xs-12 margin-top-10">
+                    <span grid-filter-for="Products" place-holder-message="Nhập mã hoặc tên hàng hóa"></span>
+                </div>
+                <div class="col-md-5 col-xs-12 margin-top-10">
                     <button class="btn btn-success btn-sm" ng-click="SortByCreatedDate()">
                         Hàng mới
                     </button>
@@ -81,7 +84,7 @@
             </div>
             <div class="row margin-top-10">
                 <div class="col-md-12">
-                    <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, false, true)"
+                    <input id="txtSearchProduct" ng-init="InitListAutoCompleteProducts('#txtSearchProduct', false, RULES.ALLOW_PRICE_ZERO == 1, true, RULES.ALLOW_COST_ZERO == 1)"
                            class="form-control" placeholder="Nhập mã hoặc tên hàng hóa"
                            check-custom="CheckNumOfProductOrder" check-custom-message="Vui lòng chọn hàng hóa cho đơn hàng."
                            check-under="check-order"

@@ -3,7 +3,7 @@ mdlCommon.controller('ProductListController',
 ['$scope', '$filter', '$controller',
     function ($scope, $filter, $controller) {
         
-        $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice, includeCombo) {
+        $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice, includeCombo, includeNotCost) {
             $(elementId).autocomplete({
                 minLength: 0,
                 source: function (request, response) {
@@ -19,7 +19,11 @@ mdlCommon.controller('ProductListController',
                     }
 
                     if (!includeNotPrice) {
-                        configList.GridFilterCondition += " and (Cost > 0 and Price > 0)";
+                        configList.GridFilterCondition += " and (Price > 0)";
+                    }
+
+                    if (!includeNotCost) {
+                        configList.GridFilterCondition += " and (Cost > 0)";
                     }
 
                     if (!includeCombo) {
