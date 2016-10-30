@@ -128,7 +128,7 @@ mdlCommon.controller('PurchaseController',
                 }
                 $scope.ListProductsPurchase.splice(0, 0, item);
             }
-            $scope.Summarize();
+            $scope.Summarize(true);
         }
 
         $scope.ChangeProductQuantity = function (product, num) {
@@ -142,14 +142,14 @@ mdlCommon.controller('PurchaseController',
 
             product.RealCost = product.Quantity * product.Cost;
 
-            $scope.Summarize();
+            $scope.Summarize(true);
         }
 
 
         $scope.ChangeCost = function (product) {
             product.Cost = parseInt(product.Cost);
             product.RealCost = product.Quantity * product.Cost;
-            $scope.Summarize();
+            $scope.Summarize(true);
         }
 
         $scope.DeleteProductPurchase = function (product) {
@@ -168,11 +168,11 @@ mdlCommon.controller('PurchaseController',
 
                 ShowSuccessMessage("Sản phẩm được xóa khỏi đơn hàng thành công!");
 
-                $scope.Summarize();
+                $scope.Summarize(true);
             }
         }
 
-        $scope.Summarize = function () {
+        $scope.Summarize = function (isEditing) {
             var sum = 0, tax = 0;
             for (var i = 0 ; i < $scope.ListProductsPurchase.length ; i++) {
                 var item = $scope.ListProductsPurchase[i];
@@ -182,10 +182,13 @@ mdlCommon.controller('PurchaseController',
             $scope.PurchaseForm.Price = sum - tax;
             $scope.PurchaseForm.SumTax = tax;
             $scope.PurchaseForm.SumMoney = sum;// + tax;
-            $scope.PurchaseForm.Paid = sum;// + tax;
-            $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
-            if ($scope.PurchaseForm.Debt < 0) {
-                $scope.PurchaseForm.Debt = 0;
+
+            if (isEditing) {
+                $scope.PurchaseForm.Paid = sum;// + tax;
+                $scope.PurchaseForm.Debt = $scope.PurchaseForm.SumMoney - $scope.PurchaseForm.Paid;
+                if ($scope.PurchaseForm.Debt < 0) {
+                    $scope.PurchaseForm.Debt = 0;
+                }
             }
         }
 
@@ -245,7 +248,7 @@ mdlCommon.controller('PurchaseController',
                 item.RowNum = i + 1;
             }
 
-            $scope.Summarize();
+            $scope.Summarize(false);
         }
 
         $scope.ExposeFunctionAfterSavingSupplier = function () {
@@ -307,7 +310,7 @@ mdlCommon.controller('PurchaseController',
 
         $scope.PrintForm = function () {
             $scope.GetListPrintTerm("Purchase");
-            $scope.GetPrintTemplate("PURCHASE");
+            $scope.GetPrintTemplate("PURCHASE", $scope.CurrentStore);
 
             setTimeout(function () {
                 $scope.PrintData("divPrint");

@@ -4,20 +4,28 @@
         //$controller('ctrlPaging', { $scope: $scope });
 
         $scope.Terms = {
-            Data : [],
-            IsInited : false
+            Data: [],
+            IsInited: false
         };
 
         $scope.SampleData = {};
-        
+
         $scope.TemplateFormConfig = new ObjectDataConfig("T_Master_PrintTemplates", $scope);
         $scope.PrintTemplate = "";
 
-        $scope.GetPrintTemplate = function(templateCode)
-        {
+        $scope.GetPrintTemplate = function (templateCode, storeId) {
             if (!$scope.PrintTemplate) {
-                $scope.PrintTemplate = $scope.TemplateFormConfig.GetObject(templateCode, "TemplateCode")["RuntimeBody"];
 
+
+                var configGrid = new GridViewConfig("");
+                configGrid.GridDataAction = "getall";
+                configGrid.GridDataType = "table";
+                configGrid.GridDataObject = "T_Master_PrintTemplates";
+                configGrid.GridDefinedColums = "RuntimeBody";
+                configGrid.GridFilterCondition = "[TemplateCode] = ''" + templateCode + "'' and [StoreId] = " + storeId;
+                
+                $scope.PrintTemplate = configGrid.GetListData()[0]["RuntimeBody"];
+                
                 for (var i = 0 ; i < $scope.Terms.Data.length; i++) {
                     var item = $scope.Terms.Data[i];
                     $scope.PrintTemplate = $scope.PrintTemplate.replace(item["Term"], item["ReplacedTerm"]);
@@ -26,9 +34,8 @@
                 $scope.PrintTemplate = $sce.trustAsHtml($scope.PrintTemplate);
             }
         }
-        
-        $scope.GetListPrintTerm = function (func)
-        {
+
+        $scope.GetListPrintTerm = function (func) {
             if (!$scope.Terms.IsInited) {
 
                 var configGrid = new GridViewConfig("");
@@ -44,7 +51,7 @@
 
                 for (var i = 0; i < $scope.Terms.Data.length; i++) {
                     var item = $scope.Terms.Data[i];
-                    $scope.SampleData[item["Term"].substr(1, item["Term"].length-2)] = item["SampleData"];
+                    $scope.SampleData[item["Term"].substr(1, item["Term"].length - 2)] = item["SampleData"];
                 }
                 if ($scope.Terms.Data.length > 0) {
                     $scope.Terms.IsInited = true;
@@ -70,4 +77,4 @@
             WinPrint.print();
             WinPrint.close();
         }
-}]);
+    }]);

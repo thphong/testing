@@ -17,13 +17,27 @@ namespace StoreManagement.Website
                name: "Document",
                url: "Document/{page}",
                defaults: new { controller = "Home", action = "Document", page = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+               name: "DownloadFile",
+               url: "download/{fileid}",
+               defaults: new { controller = "Data", action = "DownloadFile", fileid = UrlParameter.Optional }
            );
 
+            routes.MapRoute(
+                name: "DownloadExcelTemplate",
+                url: "template/{template}",
+                defaults: new { controller = "Data", action = "DownloadExcelTemplate", template = UrlParameter.Optional }
+            );
+
+            //=============================
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+           
         }
     }
 }

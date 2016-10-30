@@ -8,7 +8,8 @@
             <div class="row" style="padding-top: 5px">
                 <div class="col-md-6">
                     <h4 class="dashboard-title">
-                        <i class="fa-shopping-cart fa"></i>&nbsp;Đơn hàng
+                        <i class="fa-shopping-cart fa"></i>
+                        <span>Đơn hàng</span>
                     </h4>
                 </div>
                 <div class="col-md-4 pull-right text-right">
@@ -26,7 +27,7 @@
                 <div class="col-md-2 col-xs-12 margin-top-5">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.OrderType" ng-change="ReloadGrid('Orders')">
                         <option selected="selected" value="1">Đơn hàng</option>
-                        <option value="2">Đơn hàng đã xóa</option>
+                        <option value="2">Đơn hàng bị xóa</option>
                         <option value="3">Đơn hàng còn nợ</option>
                     </select>
                 </div>
@@ -72,7 +73,7 @@
                                     <th grid-defined-colum="OrderStatus.StatusName">
                                         <span style="display: inline-block">
                                             <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_OrderStatus" dropdown-value-field="StatusId"
-                                                    dropdown-name-field="StatusName" dropdown-empty-text="Trạng thái" dropdown-empty-value="0"
+                                                    dropdown-name-field="StatusName" dropdown-empty-text="Tình trạng" dropdown-empty-value="0"
                                                     ng-change="ReloadGrid('Orders')"></select>
                                         </span>
                                     </th>
@@ -114,16 +115,16 @@
                                 </tr>
                                 <tr ng-if="!DataSet.Orders.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="9" align="center"> <span>Không có dữ liệu!</span> </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="9" align="left">
                                         <div style="float: left;">
-                                            <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
-                                            <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                            <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
+                                            Tổng hóa đơn: <span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
+                                            Tổng tiền: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                            Nợ: <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.DebtMoney | currency:'':0"></span> đ</span>
                                         </div>
                                     </td>
                                 </tr>

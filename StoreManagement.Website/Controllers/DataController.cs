@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using StoreManagement.Common;
 using System.Configuration;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace StoreManagement.Website.Controllers
 {
@@ -222,7 +223,210 @@ namespace StoreManagement.Website.Controllers
             DataTable data = dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, SessionCollection.ExportConfig);
             return File(Common.Export.ExportExcel.ExportToCSVFileOpenXML(data), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", SessionCollection.ExportConfig.GridId + ".xlsx");
         }
-        
+
+        [HttpPost]
+        public ActionResult ImportExcelFile(string template)
+        {
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    //upload 
+                    JsonResult result = (JsonResult)UploadFile(1);
+                    
+                    if (result.Data is string) return result;
+                    //==============================
+                    dynamic json = result.Data;
+                    int id = json.id;
+                    string filename = json.filename;
+                    if (id == 0) throw new Exception("Không thể lưu file");
+                    
+                    //==============================
+                    //read file excel
+                    string filepath = Server.MapPath(filename);
+                    DataTable tbl =  ExcelHelper.LoadData(filepath);
+                    if (tbl == null || tbl.Rows.Count==0 ||tbl.Columns.Count==0) throw new Exception("Không thể đọc file");
+
+                    //==============================
+                    //read template info
+                    var folderName = ConfigurationManager.AppSettings["ImportedTemplatePath"];
+                    string confpath = Server.MapPath(folderName + template + ".conf");
+                    string confcontent = FileHelper.ReadFile(confpath);
+                    dynamic templateinfo = JsonConvert.DeserializeObject(confcontent);
+
+                    //==============================
+                    //kiểm tra va lấy dữ liệu
+                    bool hasError = false;
+                    DataTable convertedTable = new DataTable();
+                    DataTable errorTable = new DataTable();
+                    List<string> columnNames = new List<string>();
+                    #region convert datatble
+                    for (int c = 0; c < templateinfo.Codes.Count; c++)
+                    {
+                        string code = templateinfo.Codes[c].ToString();
+                        string name = templateinfo.Codes[c].ToString();
+
+                        DataColumn col = new DataColumn(code);
+                        convertedTable.Columns.Add(col);
+
+                        col = new DataColumn(code);
+                        errorTable.Columns.Add(col);
+
+                        columnNames.Add(name);
+                    }
+                    
+                    //kiểm tra từng dòng dữ liệu
+                    for (int r = 0; r < tbl.Rows.Count; r++)
+                    {
+                        DataRow oldrow = tbl.Rows[r];
+                        DataRow newrow = convertedTable.NewRow();
+                        DataRow errrow = errorTable.NewRow();
+                        for (int c = 0; c < templateinfo.Codes.Count; c++)
+                        {
+                            var code = templateinfo.Codes[c].ToString();
+                            var name = templateinfo.Names[c].ToString();
+                            var valid = templateinfo.Valids[c];
+
+                            string err = ""; //không có lỗi
+                            string value = "";
+                            //kiểm tra có chứa name hay không
+                            if (tbl.Columns.Contains(name))
+                            {
+                                try
+                                {
+                                    value = oldrow[name].ToString();
+                                }
+                                catch(Exception exX)
+                                {
+                                }
+                            }
+                            
+                            //===========================
+                            if (string.IsNullOrEmpty(value))
+                            {
+                                if (Convert.ToBoolean(valid.IsNotEmpty))
+                                {
+                                    err = "Không có dữ liệu";
+                                }
+
+                                try
+                                {
+                                    if (valid.DefaultValue!=null)
+                                    {
+                                        value = valid.DefaultValue.ToString();
+                                    }
+                                }
+                                catch { }
+                            }
+                            else if (Convert.ToBoolean(valid.IsInList))
+                            {
+                                List<dynamic> list = valid.InList.ToObject<List<dynamic>>();
+                                var stringList = list.ConvertAll<string>(o => o.ToString());
+                                string find =stringList.Find(s => s.CompareTo(value)==0);
+                                if (string.IsNullOrEmpty(find))
+                                {
+                                    err = "Giá trị không hợp lệ. Giá trị phải là : " + string.Join(",", list);
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(err)) hasError = true;
+                            //============================
+                            newrow[code] = value;
+                            errrow[code] = err;
+
+
+                        }
+
+                        convertedTable.Rows.Add(newrow);
+                        errorTable.Rows.Add(errrow);
+                    }
+                    #endregion
+
+                    //==============================
+                    //nếu có lỗi thì trả về kết quả lỗi
+                    var datatable = JsonHelper.DataTable2Json(convertedTable);
+                    var errtable = JsonHelper.DataTable2Json(errorTable);
+                    if (hasError)
+                    {
+                        return Json(new { isError = true,columnNames = columnNames, dataTable = datatable, errorTable = errtable });
+                    }
+                    //==============================
+                    //ok thì lưu kết quả
+                    //dataService.SaveListObject(SessionCollection.CurrentUserId, "", "");
+                }
+
+                return Json(new { isError = false });
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(int fileType)
+        {
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    //~/Resource/ProductImage/
+                    var file = Request.Files[0];
+                    var folderName = ConfigurationManager.AppSettings["UploadFilePath"] + "/FileType" + fileType + "/" + DateTime.Today.Year + "/" + DateTime.Today.Month;
+
+                    if (!Directory.Exists(Server.MapPath(folderName)))
+                        Directory.CreateDirectory(Server.MapPath(folderName));
+
+                    var name_only = Path.GetFileNameWithoutExtension(file.FileName);
+                    var ext = Path.GetExtension(file.FileName); //ext has .
+                    //var file_name = string.Format("{0}_{1}.{2}", name_only, Guid.NewGuid(), ext);
+
+                    var filename = folderName + "/" + DateTime.Now.ToString("hhmmss") + "_" + name_only  + ext;
+                    string path = Server.MapPath(filename);
+
+                    file.SaveAs(path);
+
+                    //Save url in object
+                    int id = dataService.SaveObject(SessionCollection.CurrentUserId, "T_Master_File",
+                        string.Format("{0}::{1},,{2}::{3},,{4}::{5},,IsActive::1,,Version::-1",
+                        "FileName", name_only + ext, "FilePath", filename, "FileTypeId", fileType));
+
+                    return Json(new {id = id, filename = filename});
+                }
+
+                return Json(new { id = 0, filename = "" });
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
+        public ActionResult DownloadExcelTemplate(string template)
+        {
+            string filepath = Server.MapPath(ConfigurationManager.AppSettings["ImportedTemplatePath"] + template +".xlsx");
+            return File(filepath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                , template + ".xlsx");
+        }
+
+        public ActionResult DownloadFile(int fileid)
+        {
+            try
+            {
+                var obj = dataService.GetObject(SessionCollection.CurrentUserId, "T_Master_File", "FileId", fileid.ToString());
+                string name = obj["FileName"].ToString(); ;
+                string filename = obj["FilePath"].ToString(); 
+                string ext = Path.GetExtension(filename);
+                string contentType = FileHelper.GetMimeType(ext);
+                string filepath = Server.MapPath(filename);
+                return File(filepath, contentType,name);
+            }
+            catch (Exception ex)
+            {
+                return Json("#error:" + ex.Message);
+            }
+        }
+
         [HttpPost]
         public ActionResult SaveFile(string objectName, string objectId, string PKField, string fieldName)
         {

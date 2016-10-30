@@ -444,6 +444,8 @@ mdlMenu.controller('LoadMenuController',
             }
         }
 
+       
+
         setTimeout(function () {
             if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0) {
                 // Store
@@ -454,6 +456,12 @@ mdlMenu.controller('LoadMenuController',
             }
 
         }, 2000);
+
+        /*---------show help---------*/
+        $scope.ShowHelp = function () {
+            var curUrl = $scope.CurrentUrl;
+            window.open(curUrl, '_blank');
+        }
 
     }]);
 

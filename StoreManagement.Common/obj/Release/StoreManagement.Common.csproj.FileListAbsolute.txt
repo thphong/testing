@@ -4,3 +4,9 @@ E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Release\DocumentForm
 E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.csprojResolveAssemblyReference.cache
 E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.dll
 E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.pdb
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Release\StoreManagement.Common.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Release\StoreManagement.Common.pdb
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Release\DocumentFormat.OpenXml.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.csprojResolveAssemblyReference.cache
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Release\StoreManagement.Common.pdb

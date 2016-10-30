@@ -1,21 +1,21 @@
-﻿<div ng-controller="CustomerController">
+﻿<div id="CustomerController" ng-controller="CustomerController">
     <div class="container-fluid">
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('Customers')">
+                    <li ng-click="SetCurrentTab('Customers')" ng-class="{active: CurrentTab == 'Customers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('SaleCustomers')">
+                    <li ng-click="SetCurrentTab('SaleCustomers')" ng-class="{active: CurrentTab == 'SaleCustomers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-user fa"></i>
                             <span>Khách hàng Sỉ</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Suppliers')">
+                    <li ng-click="SetCurrentTab('Suppliers')" ng-class="{active: CurrentTab == 'Suppliers'}">
                         <a data-toggle="tab">
                             <i class="blue fa-truck fa"></i>
                             <span>Nhà cung cấp</span>
@@ -54,7 +54,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
+                                   grid-filter-condition="[StoreId] = {{CurrentStore}} and [IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
                                                 or ({{AdditionalFilter.CustomerType}} = 1 and  [LastTimeVisited] is not null)
                                                 or ({{AdditionalFilter.CustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
@@ -68,7 +68,7 @@
                                         <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
                                         <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
                                         <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
-                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                         <th grid-defined-colum="Debt"><span>Nợ</span></th>
                                         <th></th>
                                     </tr>
@@ -91,16 +91,16 @@
                                     </tr>
                                     <tr ng-if="!DataSet.Customers.HasRecord()">
                                         @*Edit colspan*@
-                                        <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                        <td colspan="8" align="center">Không có dữ liệu!</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="8" align="left">
                                             <div style="float: left;">
-                                                <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.Customers.TotalItems"></span>
-                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.Debt | currency:'':0"></span> đ</span>
+                                                Số khách hàng : <span class="total-highlight" ng-bind="DataSet.Customers.TotalItems"></span>
+                                                Tổng tiền : <span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                Nợ : <span class="total-highlight"><span ng-bind="DataSet.Customers.Sums.Debt | currency:'':0"></span> đ</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -147,7 +147,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
+                                   grid-filter-condition="[StoreId] = {{CurrentStore}} and [IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
                                                 or ({{AdditionalFilter.SaleCustomerType}} = 1 and  [LastTimeVisited] is not null)
                                                 or ({{AdditionalFilter.SaleCustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
@@ -161,7 +161,7 @@
                                         <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
                                         <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
                                         <th grid-defined-colum="LastTimeVisited"><span>Lần mua cuối cùng</span></th>
-                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                         <th grid-defined-colum="Debt"><span>Nợ</span></th>
                                         <th></th>
                                     </tr>
@@ -184,16 +184,16 @@
                                     </tr>
                                     <tr ng-if="!DataSet.SaleCustomers.HasRecord()">
                                         @*Edit colspan*@
-                                        <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                                        <td colspan="8" align="center">Không có dữ liệu!</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="8" align="left">
                                             <div style="float: left;">
-                                                <span>Số khách hàng: </span><span class="total-highlight" ng-bind="DataSet.SaleCustomers.TotalItems"></span>
-                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.Debt | currency:'':0"></span> đ</span>
+                                                Số khách hàng : <span class="total-highlight" ng-bind="DataSet.SaleCustomers.TotalItems"></span>
+                                                Tổng tiền : <span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                Nợ : <span class="total-highlight"><span ng-bind="DataSet.SaleCustomers.Sums.Debt | currency:'':0"></span> đ</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -244,7 +244,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Suppliers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
+                                   grid-filter-condition="[StoreId] = {{CurrentStore}} and [IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
                                                 or ({{AdditionalFilter.SupplierType}} = 1 and  [LastTimeProvided] is not null)
                                                 or ({{AdditionalFilter.SupplierType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[SupplierCode] ASC" @*must have [fieldname] for each colum field*@
@@ -257,8 +257,8 @@
                                         <th grid-defined-colum="SupplierName"><span>Tên NCC</span></th>
                                         <th grid-defined-colum="Phone"><span>Điện thoại</span></th>
                                         <th grid-defined-colum="Address"><span>Địa chỉ</span></th>
-                                        <th grid-defined-colum="LastTimeProvided"><span>Lần cuối mua hàng</span></th>
-                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền hàng</span></th>
+                                        <th grid-defined-colum="LastTimeProvided"><span>Lần mua cuối cùng</span></th>
+                                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                         <th grid-defined-colum="Debt"><span>Nợ</span></th>
                                         <th></th>
                                     </tr>
@@ -281,16 +281,16 @@
                                     </tr>
                                     <tr ng-if="!DataSet.Suppliers.HasRecord()">
                                         @*Edit colspan*@
-                                        <td colspan="8" align="center"> Không có dữ liệu!  </td>
+                                        <td colspan="8" align="center">Không có dữ liệu!</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="8" align="left">
                                             <div style="float: left;">
-                                                <span>Số nhà cung cấp: </span><span class="total-highlight" ng-bind="DataSet.Suppliers.TotalItems"></span>
-                                                <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.SumMoney | currency:'':0"></span> đ</span>
-                                                <span>Tổng nợ: </span><span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.Debt | currency:'':0"></span> đ</span>
+                                                Số nhà cung cấp : <span class="total-highlight" ng-bind="DataSet.Suppliers.TotalItems"></span>
+                                                Tổng tiền : <span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.SumMoney | currency:'':0"></span> đ</span>
+                                                Nợ : <span class="total-highlight"><span ng-bind="DataSet.Suppliers.Sums.Debt | currency:'':0"></span> đ</span>
                                             </div>
                                         </td>
                                     </tr>

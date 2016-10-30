@@ -35,7 +35,7 @@
                             <th grid-defined-colum="ErrorMessage"><span>Message</span></th>
                             <th grid-defined-colum="Data"><span>Data</span></th>
                             <th grid-defined-colum="Source"><span>Source</span></th>
-                            <th grid-defined-colum="CreatedBy.UserName, Logger"><span>Logged By</span></th>
+                            <th grid-defined-colum="CreatedBy.UserName, Logger"><span>LoggedBy</span></th>
                             <th grid-defined-colum="Hero.UserName, Hero"><span>Hero</span></th>
                             <th grid-defined-colum="Remarks"><span>Remarks</span></th>
                             <th></th>
@@ -64,13 +64,13 @@
                                 <button class="btn btn-primary"
                                         ng-if="item._CanUpdate"
                                         ng-click="ResolveBug(item)">
-                                    Resolve
+                                    <span>Resolve</span>
                                 </button>
                             </td>
                         </tr>
                         <tr ng-if="!DataSet.Exceptions.HasRecord()">
                             @*Edit colspan*@
-                            <td colspan="8" align="center"> Không có dữ liệu! </td>
+                            <td colspan="8" align="center">Không có dữ liệu!</td>
                         </tr>
                     </tbody>
                 </table>
@@ -91,17 +91,17 @@
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header infobox-blue white border-6">
+                <div class="modal-header infobox-primary white border-6">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Tạo mới Bug </h4>
+                    <h4 class="modal-title">Tạo Bug</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Object </label>
+                            <label class="col-sm-4 control-label">Object</label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.ObjectName"
-                                       check-empty="" check-empty-message="Vui lòng nhập chức năng bị lỗi."
+                                       check-empty="" check-empty-message="Vui lòng nhập chức năng bị lỗi"
                                        check-length="100" check-length-message="Chiều dài tối ta là {0}."
                                        check-under="check-bug" />
                             </div>
@@ -109,10 +109,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Error Message </label>
+                            <label class="col-sm-4 control-label">Message</label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.ErrorMessage"
-                                       check-empty="" check-empty-message="Vui lòng mô tả lỗi"
+                                       check-empty="" check-empty-message="Vui lòng mô tả lỗi."
                                        check-length="1000" check-length-message="Chiều dài tối ta là {0}."
                                        check-under="check-bug" />
                             </div>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Data </label>
+                            <label class="col-sm-4 control-label" >Data</label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.Data"
                                        check-empty="" check-empty-message="Vui lòng nhập dữ liệu gây ra lỗi."
@@ -130,7 +130,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="col-sm-4 control-label ">Source </label>
+                            <label class="col-sm-4 control-label">Source</label>
                             <div class="col-sm-7">
                                 <input class="form-control" ng-model="ExceptionForm.Source"
                                        check-length="100" check-length-message="Chiều dài tối ta là {0}."
@@ -142,11 +142,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         <i class="fa-undo fa"></i>
-                        Trở về
+                        <span>Trở về</span>
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="SaveBug()">
                         <i class="fa-save fa"></i>
-                        Lưu
+                        <span>Lưu</span>
                     </button>
                 </div>
             </div>

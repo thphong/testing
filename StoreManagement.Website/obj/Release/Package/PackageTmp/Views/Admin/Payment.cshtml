@@ -1,21 +1,21 @@
-﻿<div id="InventoryController" ng-controller="PaymentController">
+﻿<div id="PaymentController" ng-controller="PaymentController">
     <div class="container-fluid">
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('Costs')">
+                    <li ng-click="SetCurrentTab('Costs')" ng-class="{active : (CurrentTab =='Costs') }">
                         <a data-toggle="tab">
                             <i class="blue fa-file-text fa"></i>
                             <span>Chi phí</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('Payments')">
+                    <li ng-click="SetCurrentTab('Payments')" ng-class="{active : (CurrentTab =='Payments') }">
                         <a data-toggle="tab">
                             <i class="blue fa-sign-in fa"></i>
                             <span>Thu tiền bán hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('CollectMoneys')">
+                    <li ng-click="SetCurrentTab('CollectMoneys')" ng-class="{active : (CurrentTab =='CollectMoneys') }">
                         <a data-toggle="tab">
                             <i class="blue fa-money fa"></i>
                             <span>Nhận tiền</span>
@@ -79,7 +79,7 @@
                                                     <span style="display: inline-block">
                                                         <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
                                                                 dropdown-name-field="CostTypeName" dropdown-empty-text="Loại chi phí" dropdown-empty-value="0"
-                                                                dropdown-condition="[IsActive] = 1"
+                                                                dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                                                                 ng-change="ReloadGrid('Costs')"></select>
                                                     </span>
                                                 </th>

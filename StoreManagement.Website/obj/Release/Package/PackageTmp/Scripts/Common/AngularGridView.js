@@ -70,7 +70,7 @@ mdlCommon.directive('gridPageSizeFor', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridPageSizeFor;
-        element.append('<div class="input-group">  <span class="input-group-addon"> <span> Số dòng</span> / <span > Tổng</span> <span ng-bind="DataSet.' + gridId + '.TotalItems"></span> : </span>'
+        element.append('<div class="input-group">  <span class="input-group-addon"> Số dòng / Tổng <span ng-bind="DataSet.' + gridId + '.TotalItems"></span> : </span>'
            + '<select class="form-control input-sm" ng-model="Config.' + gridId + '.NumOfItemOnPage" ng-change="GridChangeNumRowsOnPage(\'' + gridId + '\')" data-ng-options="num as num for num in ListNumOfItem" style="width: auto">'
            + '</select> '
            + '</div>');
@@ -351,7 +351,30 @@ mdlCommon.directive('datePickerFor', function () {
     return directive;
 });
 
+
 mdlCommon.directive('bindHtmlCompile', ['$compile', function ($compile) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            scope.$watch(function () {
+                return scope.$eval(attrs.bindHtmlCompile);
+            }, function (value) {
+                // In case value is a TrustedValueHolderType, sometimes it
+                // needs to be explicitly called into a string in order to
+                // get the HTML string.
+                element.html(value && value.toString());
+                // If scope is provided use it, otherwise use parent scope
+                var compileScope = scope;
+                if (attrs.bindHtmlScope) {
+                    compileScope = scope.$eval(attrs.bindHtmlScope);
+                }
+                $compile(element.contents())(compileScope);
+            });
+        }
+    };
+}]);
+
+mdlMenu.directive('bindHtmlCompile', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -383,14 +406,14 @@ mdlCommon.directive('dateRangeFilterFor', function () {
         + 'placeholder="Từ ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
         + ' <input type="text" class="form-control input-sm width-20" readonly date-picker-for="' + gridId + '" ng-model="FilterRangeDate.EndDate"'
         + 'placeholder="Đến ngày" >'//ng-change="ChangeFilterRangeDate(\'' + gridId + '\')"
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')">Tuần</button>'
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')">Tháng</button>'
-        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')">Quí</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{1:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(1, \'' + gridId + '\')"> Tuần</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{2:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(2, \'' + gridId + '\')"> Tháng</button>'
+        + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{3:\'clicked\'}[RangeDateCode]" ng-click="SetFilterRangeDate(3, \'' + gridId + '\')"> Quí</button>'
         + ' <button type="button" class="btn btn-sm btn-outline" ng-class="{4:\'clicked\', 5:\'clicked\', 6:\'clicked\'}[RangeDateCode]" data-toggle="dropdown" style="padding: 5px 3px"><i class="fa fa-caret-down"></i></button>'
         + ' <ul class="dropdown-menu dropdown-menu-right" role="menu">'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')">Tuần trước</a></li>'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')">Tháng trước</a></li>'
-        + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')">Quí trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(4, \'' + gridId + '\')"> Tuần trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(5, \'' + gridId + '\')"> Tháng trước</a></li>'
+        + ' <li><a href="#" ng-click="SetFilterRangeDate(6, \'' + gridId + '\')"> Quí trước</a></li>'
         + ' </ul>'
         );
         if (attributes.dateRangeInitCode) {
@@ -405,11 +428,26 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentUserName = g_currentUserName;
     $scope.CurrentStore = g_currentStoreId;
-    $scope.CurrentProductGroup = g_currentStoreProductGroup;
     $scope.StoreName = g_storeName;
     $scope.StoreAddress = g_storeAddress;
     $scope.StorePhone = g_storePhone;
     $scope.RULES = {};
+    //$scope.Language = {
+    //    Code: "",
+    //    Resource: {}
+    //};
+    //$scope.ChangeLanguage = function (code) {
+    //    if (code != $scope.Language.Code) {
+    //        $scope.Language.Code = code;
+    //        if (code == "VN") {
+    //            $scope.Language.Resource = gVNResource;
+    //        }
+    //        if (code == "EN") {
+    //            $scope.Language.Resource = gENResource;
+    //        }
+    //    }
+    //}
+    //$scope.ChangeLanguage(g_defaultLang);
 
     if (g_currentUserId > 0) {
         AjaxAsync(g_getAllRulesUrl, '{}', function (result) {
@@ -658,14 +696,16 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         }
     }
 
-    $scope.InitFilterRangeDate = function (option, gridId) {
-        $scope.SetFilterRangeDate(($scope.RangeDateCode == 0 ? option : $scope.RangeDateCode), gridId);
+    $scope.InitFilterRangeDate = function (option, listgridIds) {
+        $scope.SetFilterRangeDate(($scope.RangeDateCode == 0 ? option : $scope.RangeDateCode), listgridIds);
     }
 
-    $scope.SetFilterRangeDate = function (option, gridId) {
+    $scope.SetFilterRangeDate = function (option, listgridIds) {
 
         var curr = new Date(); // get current date
-        var first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
+        var dayOfWeek = curr.getDay();
+        if (dayOfWeek == 0) dayOfWeek = 7;
+        var first = curr.getDate() - dayOfWeek + 1; // First day is the day of the month - the day of the week        
         var last = first + 6; // last day is the first day + 6
         var y = curr.getFullYear(), m = curr.getMonth();
         var quarter = Math.floor(curr.getMonth() / 3);
@@ -676,8 +716,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
                 $scope.FilterRangeDate.EndDate = formatDate(curr);
                 break;
             case 1: //This week
-                $scope.FilterRangeDate.StartDate = formatDate(new Date(curr.setDate(first)));
-                $scope.FilterRangeDate.EndDate = formatDate(new Date(curr.setDate(last)));
+                $scope.FilterRangeDate.StartDate = formatDate(new Date((new Date()).setDate(first)));
+                $scope.FilterRangeDate.EndDate = formatDate(new Date((new Date()).setDate(last)));
                 break;
             case 2: //This month
                 $scope.FilterRangeDate.StartDate = formatDate(new Date(y, m, 1));
@@ -708,7 +748,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
 
         //$("input[date-picker-for][ng-model='FilterRangeDate.EndDate']")
         //.datepicker("setDate", $scope.FilterRangeDate.EndDate);
-        $scope.ReloadGrid(gridId);
+        var listIds = listgridIds.split(',');
+        for (var i = 0 ; i < listIds.length; i++) {
+            $scope.ReloadGrid(listIds[i]);
+        }
     }
 
     $scope.InitAutoComplete = function (autocompleteId) {
@@ -793,13 +836,16 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         }, 10);
     }
 
-    $scope.InitDatePickerFor = function (datepickerId, gridId) {
+    $scope.InitDatePickerFor = function (datepickerId, listgridIds) {
         setTimeout(function () {
             $('input[date-picker-id="' + datepickerId + '"]').datepicker({ format: 'dd-mm-yyyy', autoclose: true/*, startDate: '23-03-2016'*/ })
             .on('hide', function (e) {
                 var scope = angular.element($(this).parents("[ng-controller]")[0]).scope();
                 scope.$apply(function () {
-                    scope.ReloadGrid(gridId);
+                    var listIds = listgridIds.split(',');
+                    for (var i = 0; i < listIds.length; i++) {
+                        scope.ReloadGrid(listIds[i]);
+                    }
                 })
             });
         }, 10);

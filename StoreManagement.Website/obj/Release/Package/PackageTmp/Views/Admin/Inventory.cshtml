@@ -7,25 +7,25 @@
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('InventoryProduct')">
+                    <li ng-click="SetCurrentTab('InventoryProduct')" ng-class="{active : (CurrentTab =='InventoryProduct') }" >
                         <a data-toggle="tab">
                             <i class="blue fa-list-alt fa"></i>
                             <span>Tồn kho</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventoryInOut')">
+                    <li ng-click="SetCurrentTab('InventoryInOut')" ng-class="{active : (CurrentTab =='InventoryInOut') }">
                         <a data-toggle="tab">
                             <i class="blue fa-exchange fa"></i>
                             <span>Nhập xuất tồn</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventoryCheck')">
+                    <li ng-click="SetCurrentTab('InventoryCheck')" ng-class="{active : (CurrentTab =='InventoryCheck') }">
                         <a data-toggle="tab">
                             <i class="blue fa-calendar fa"></i>
                             <span>Kiểm kê</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('InventTrans')">
+                    <li ng-click="SetCurrentTab('InventTrans')" ng-class="{active : (CurrentTab =='InventTrans') }">
                         <a data-toggle="tab">
                             <i class="blue fa-chain fa"></i>
                             <span>Chuyển kho</span>
@@ -46,7 +46,7 @@
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryProduct')"
-                                        dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
@@ -108,30 +108,30 @@
                                     <table grid-data="InventoryProduct"
                                            grid-data-type="table" @*table/storedprocedure*@
                                            grid-data-action="get" @*get/getall*@
-                                           grid-data-object="T_Trans_Product_Store" @*table name or stored procedure name*@
-                                           grid-filter-condition="[ProductId.IsActive] = 1
-                                                and [ProductId.IsSelling] = 1
-                                                and [ProductId.IsCombo] = 0
+                                           grid-data-object="T_Trans_Products" @*table name or stored procedure name*@
+                                           grid-filter-condition="[IsActive] = 1
+                                                and [IsSelling] = 1
+                                                and [IsCombo] = 0
                                                 and [StoreId] = {{CurrentStore}}
-                                                and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductId.ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
+                                                and ({{AdditionalFilter.InventoryProductGroup}} = 0 or [ProductGroup] = {{AdditionalFilter.InventoryProductGroup}})
                                                 and ({{AdditionalFilter.InventoryProductType}} = 0
                                                 or ({{AdditionalFilter.InventoryProductType}} = 1 and [Quantity] > 0)
                                                 or ({{AdditionalFilter.InventoryProductType}} = 2 and [Quantity] <= 0)
-                                                or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [ProductId.AllowMin])
-                                                or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [ProductId.AllowMax])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 3 and [Quantity] < [AllowMin])
+                                                or ({{AdditionalFilter.InventoryProductType}} = 4 and [Quantity] > [AllowMax])
                                                 or ({{AdditionalFilter.InventoryProductType}} = 5 and [Quantity] > 0
-                                                        and convert(date,[ProductId.LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'')), getdate()))))" @*must have [fieldname] for each colum field*@
-                                           grid-sort-condition="[ProductId.ProductCode] ASC" @*must have [fieldname] for each colum field*@
-                                           grid-sum-collection="[ProductId.Cost]*[Quantity],SumCost;[ProductId.Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
+                                                        and convert(date,[LastBoughtDate]) <= convert(date, dateadd(dd, convert(int, dbo.UFN_System_GetRule(''LONG_INVENTORY'', {{CurrentStore}})), getdate()))))" @*must have [fieldname] for each colum field*@
+                                           grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
+                                           grid-sum-collection="[Cost]*[Quantity],SumCost;[Price]*[Quantity],SumPrice" @*must have [fieldname] for each colum field*@
                                            class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th grid-defined-colum="!ProductId" class="none-display"></th>
-                                                <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng hóa</span></th>
-                                                <th grid-defined-colum="ProductId.ProductName"><span>Tên hàng hóa</span></th>
-                                                <th grid-defined-colum="Quantity"><span>SL</span></th>
-                                                <th grid-defined-colum="ProductId.Cost"><span>Vốn tồn kho</span></th>
-                                                <th grid-defined-colum="ProductId.Price"><span>Giá trị tồn</span></th>
+                                                <th grid-defined-colum="ProductCode"><span>Mã hàng</span></th>
+                                                <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                                <th grid-defined-colum="Quantity"><span>Số lượng</span></th>
+                                                <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
+                                                <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -148,7 +148,7 @@
                                             </tr>
                                             <tr ng-if="!DataSet.InventoryProduct.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="8" align="center"> Không có dữ liệu! </td>
+                                                <td colspan="8" align="center"> Không có dữ liệu!</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -170,12 +170,12 @@
                     <div ng-if="CurrentTab =='InventoryInOut'">
                         <div class="row" style="padding-bottom: 10px; padding-top: 5px">
                             <div class="col-md-4 margin-top-5">
-                                <span grid-filter-for="InventoryInOut" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
+                                <span grid-filter-for="InventoryInOut" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryInOut')"
-                                        dropdown-condition="[IsActive]  = 1 and [ParentId] = {{CurrentProductGroup}}"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-4 margin-top-5">
                                 <span date-range-filter-for="InventoryInOut" date-range-init-code="2"></span>
@@ -242,7 +242,7 @@
                                             <tr>
                                                 <th grid-defined-colum="!ProductId" class="none-display"></th>
                                                 <th grid-defined-colum="!Quantity" class="none-display"></th>
-                                                <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
+                                                <th grid-defined-colum="ProductCode"><span>Mã hàng</span></th>
                                                 <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
                                                 <th grid-defined-colum="BeginPeriod"><span>Đầu kỳ</span></th>
                                                 <th grid-defined-colum="NumIn"><span>SL nhập</span></th>
@@ -262,7 +262,7 @@
                                             </tr>
                                             <tr ng-if="!DataSet.InventoryInOut.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="6" align="center"> Không có dữ liệu!  </td>
+                                                <td colspan="6" align="center">Không có dữ liệu!</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -348,7 +348,7 @@
                                             </tr>
                                             <tr ng-if="!DataSet.InventoryCheck.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="9" align="center"> Không có dữ liệu!  </td>
+                                                <td colspan="9" align="center">Không có dữ liệu!</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -444,7 +444,7 @@
                                             </tr>
                                             <tr ng-if="!DataSet.InventTrans.HasRecord()">
                                                 @*Edit colspan*@
-                                                <td colspan="10" align="center"> Không có dữ liệu!  </td>
+                                                <td colspan="10" align="center"> Không có dữ liệu!</td>
                                             </tr>
                                         </tbody>
                                     </table>

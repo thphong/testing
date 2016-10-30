@@ -20,7 +20,7 @@
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content" ng-if="IsShownUserRolesModal">
-            <div class="modal-header infobox-blue white border-6">
+            <div class="modal-header infobox-primary white border-6">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title bold">Chức vụ của nhân viên '{{UserForm.LoginId}} - {{UserForm.UserName}}' </h4>
             </div>
@@ -63,7 +63,7 @@
                                             <td>
                                                 <select class="form-control min-width-150" ng-model="UserRoleForm.StoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                                         dropdown-name-field="StoreCode" dropdown-empty-text="Chọn cửa hàng" dropdown-empty-value=""
-                                                        dropdown-condition=""
+                                                        dropdown-condition="[IsActive] = 1"
                                                         check-empty="" check-empty-message="Vui lòng chọn cửa hàng."></select>
                                             </td>
                                             <td>

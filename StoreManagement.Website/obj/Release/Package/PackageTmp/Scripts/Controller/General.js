@@ -33,7 +33,7 @@ mdlCommon.controller('GeneralController',
                         data: { x: 'x', columns: [], type: "bar", order: null },
                         axis: {
                             x: { label: 'Ngày', type: 'category' } //this needed to load string x value
-                            , y: { label: 'Doanh thu' }
+                            , y: { label: 'Doanh số' }
                         },
                         bar: { width: { ratio: 0.5 } }
                     });
@@ -74,7 +74,7 @@ mdlCommon.controller('GeneralController',
         $scope.Revenue =
         {
             Data: {},
-            DateRangeText: "Tuần này"
+            DateRangeText: 'Tuần này'
         }
 
         $scope.ShowRevenue = function()

@@ -25,7 +25,7 @@ mdlCommon.controller('POSController',
     function ($scope, $filter, $controller, $interpolate, $sce) {
 
         $scope.SortByCreatedDate = function () {
-            $scope.Config.Products.GridSortCondition = "ProductId.CreatedDate DESC";
+            $scope.Config.Products.GridSortCondition = "[CreatedDate] DESC";
             $scope.ReloadGrid("Products");
 
         }
@@ -46,7 +46,9 @@ mdlCommon.controller('POSController',
         //Form
         $scope.CancelOrder = function () {
             $scope.ResetOrderForm();
+            $scope.ResetDiscountForm();
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
+            $scope.ListPromotion = [];
         }
 
         
@@ -63,7 +65,7 @@ mdlCommon.controller('POSController',
 
             if ($scope.OrderForm.OrderId > 0) {
                 $scope.GetListPrintTerm("Order");
-                $scope.GetPrintTemplate("ORDER_POS");
+                $scope.GetPrintTemplate("ORDER_POS", $scope.CurrentStore);
 
                 setTimeout(function () {
                     $scope.PrintData("divPrint");
@@ -87,14 +89,17 @@ mdlCommon.controller('POSController',
             }
         }
 
+        $scope.IsShownPOSReport = false;
         $scope.SetShownPOSReport = function (isShown) {
             $scope.IsShownPOSReport = isShown;
         }
 
+        $scope.IsShownPOSInventory = false;
         $scope.SetShownPOSInventory = function (isShown) {
             $scope.IsShownPOSInventory = isShown;
         }
 
+        $scope.IsShownPOSAnnoucement = false;
         $scope.SetShownPOSAnnoucement = function (isShown) {
             $scope.IsShownPOSAnnoucement = isShown;
         }

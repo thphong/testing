@@ -1,28 +1,28 @@
-﻿<div ng-controller="ProfitController">
+﻿<div id="ProfitController" ng-controller="ProfitController">
     <div class="container-fluid">
 
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
-                    <li class="active" ng-click="SetCurrentTab('ReportByTime')">
+                    <li ng-click="SetCurrentTab('ReportByTime')" ng-class="{active : (CurrentTab =='ReportByTime') }">
                         <a data-toggle="tab">
                             <i class="blue fa-calendar fa"></i>
                             <span>Theo thời gian</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportByProduct')">
+                    <li ng-click="SetCurrentTab('ReportByProduct')" ng-class="{active : (CurrentTab =='ReportByProduct') }">
                         <a data-toggle="tab">
                             <i class="blue fa-qrcode fa"></i>
                             <span>Theo sản phẩm</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportByStore')">
+                    <li ng-click="SetCurrentTab('ReportByStore')" ng-class="{active : (CurrentTab =='ReportByStore') }">
                         <a data-toggle="tab">
                             <i class="blue fa-shopping-cart fa"></i>
                             <span>Theo cửa hàng</span>
                         </a>
                     </li>
-                    <li class="" ng-click="SetCurrentTab('ReportProfit')">
+                    <li ng-click="SetCurrentTab('ReportProfit')" ng-class="{active : (CurrentTab =='ReportProfit') }">
                         <a data-toggle="tab">
                             <i class="blue fa-laptop fa"></i>
                             <span>Báo cáo lãi lỗ</span>
@@ -61,6 +61,7 @@
                                         ng-change="ReloadGrid('ReportByTime')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -186,13 +187,14 @@
                                         dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng"
                                         dropdown-empty-value="0"
-                                        dropdown-condition="[IsActive]  = 1 and [IsParent] = 0"></select>
+                                        dropdown-condition="[IsActive]  = 1"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control" ng-model="Filter.CurrentStore"
                                         ng-change="ReloadGrid('ReportByProduct')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -320,6 +322,7 @@
                                         ng-change="ReloadGrid('ReportByStore')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             <div class="col-md-3 margin-top-5">
@@ -443,6 +446,7 @@
                                         ng-change="ReloadGrid('ReportProfit')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
                             @*<div class="col-md-3">

@@ -1,6 +1,6 @@
 ﻿
 <div class="row header-detail">
-    <div class="col-md-4 blue-dark">
+    <div class="col-md-4 primary-color">
         <h4 class="bold" style="display: inline-block"> Đơn hàng : </h4>
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
@@ -36,9 +36,9 @@
 <div class="row">
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
-            <h4 class="blue">
-                <i class="fa fa-info-circle"></i>
-                Danh sách hàng hóa
+            <h4 class="primary-color">
+                <i class="fa fa-info-circle margin-left-10"></i>                
+                <span>Danh sách hàng hóa</span>
             </h4>
             <div class="hr"></div>
         </div>
@@ -150,7 +150,7 @@
     </div>
     <div class="col-md-4 form-group">
         <div class="row margin-top-10">
-            <h4 class="blue">
+            <h4 class="primary-color">
                 <i class="fa fa-info-circle"></i>
                 Thông tin hóa đơn
             </h4>
@@ -181,7 +181,7 @@
                            autocomplete-colum-code="CustomerCode"
                            autocomplete-colum-name="CustomerName"
                            autocomplete-colum-additional="IsWholeSale"
-                           autocomplete-condition="[IsActive] = 1"
+                           autocomplete-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
                            autocomplete-model-id="#txtCustomerId"
                            autocomplete-model-additional="#txtIsWholeSale"
                            placeholder="Tìm khách hàng" />
@@ -236,7 +236,7 @@
             </div>
         </div>
         <div class="row margin-top-10">
-            <h4 class="blue">
+            <h4 class="primary-color">
                 <i class="fa fa-info-circle"></i>
                 Thông tin thanh toán
             </h4>
@@ -381,7 +381,7 @@
         </button>
         <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
             <i class="fa fa-print white"></i>
-            <span>Lưu và in</span>
+            <span >Lưu và in</span>
         </button>
         <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>

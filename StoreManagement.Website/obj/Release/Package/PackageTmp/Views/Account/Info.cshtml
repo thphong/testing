@@ -1,8 +1,8 @@
 ﻿<div ng-controller="UserController">
 
     <div class="row header-detail">
-        <div class="col-md-6 blue-dark">
-            <h4 class="bold"> Thông tin tài khoản </h4>
+        <div class="col-md-6 primary-color">
+            <h4 class="bold">Thông tin tài khoản</h4>
         </div>
     </div>
 
@@ -89,7 +89,7 @@
                             <thead>
                                 <tr>
                                     <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
-                                    <th grid-defined-colum="RoleId.RoleName"><span>Nhóm người dùng</span></th>
+                                    <th grid-defined-colum="RoleId.RoleName"><span >Nhóm người dùng</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,7 +100,7 @@
                                 </tr>
                                 <tr ng-if="!DataSet.UserRoles.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="2" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="2" align="center">Không có dữ liệu!</td>
                                 </tr>
                             </tbody>
                         </table>

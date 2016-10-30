@@ -3,7 +3,7 @@
     <div class="col-md-6 pull-right text-right">
         <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(1)">
             <i class="fa fa-save white"></i>
-            <span>Lưu</span>
+            <span>Lưu tạm</span>
         </button>
         <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(2)">
             <i class="fa fa-check white"></i>
@@ -20,7 +20,7 @@
 <div class="row">
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
-            <h4 class="blue">
+            <h4 class="primary-color">
                 <i class="fa fa-info-circle"></i>
                 Danh sách hàng hóa
             </h4>
@@ -114,7 +114,7 @@
     </div>
     <div class="col-md-4 form-group">
         <div class="row margin-top-10">
-            <h4 class="blue">
+            <h4 class="primary-color">
                 <i class="fa fa-info-circle"></i>
                 Thông tin phiếu
             </h4>
@@ -148,7 +148,7 @@
                 <span ng-bind="InventTranForm.ToStoreCode" ng-if="!InventTranForm._CanUpdate"></span>                
                 <select ng-show="InventTranForm._CanUpdate" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                         dropdown-name-field="StoreCode" dropdown-empty-text="Chọn cửa hàng" dropdown-empty-value="" 
-                        dropdown-condition="[StoreId] <> {{CurrentStore}} and [ProductGroup] = {{CurrentProductGroup}}"
+                        dropdown-condition="[StoreId] <> {{CurrentStore}} and [IsActive] = 1"
                         check-empty="" check-empty-message="Vui lòng chọn cửa hàng nhận" check-under="check-inventory-tran"
                         ></select>
 
@@ -200,7 +200,7 @@
             </div>
         </div>
         <div class="row margin-top-10">
-            <h4 class="blue">
+            <h4 class="primary-color">
                 <i class="fa fa-info-circle"></i>
                 Thông tin chuyển kho
             </h4>
@@ -221,7 +221,7 @@
     <div class="col-md-6 pull-right text-right">
         <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(1)">
             <i class="fa fa-save white"></i>
-            <span>Lưu</span>
+            <span>Lưu tạm</span>
         </button>
         <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(2)">
             <i class="fa fa-check white"></i>

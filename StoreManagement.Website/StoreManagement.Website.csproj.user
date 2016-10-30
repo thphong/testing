@@ -14,7 +14,7 @@
     </WebStackScaffolding_LayoutPageFile>
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <NameOfLastUsedPublishProfile>StoreManagement</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>publish_local</NameOfLastUsedPublishProfile>
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
