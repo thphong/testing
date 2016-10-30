@@ -459,8 +459,27 @@ mdlMenu.controller('LoadMenuController',
 
         /*---------show help---------*/
         $scope.ShowHelp = function () {
+           
+            var _helpMapping =  {
+                '/Admin/General' : 'lam-quen',
+                '/Admin/Orders' : 'quan-ly-don-hang',
+                '/Admin/Products' : 'quan-ly-hang-hoa',
+                '/Admin/Customers' : 'quan-ly-khach-hang',
+                '/Admin/Purchase' : 'quan-ly-nhap-kho',
+                '/Admin/Inventory' : 'quan-ly-ton-kho',
+                '/Admin/Revenue' : 'doanh-thu',
+                '/Admin/Payment' : 'thu-chi',
+                '/Admin/Profit' : 'loi-nhuan',
+                '/Admin/Setting' : 'thiet-lap',
+                '/Admin/Exception' : '',
+                '/Admin/LogData' : '',
+                '/Admin/Announcement' : '',
+                '/Admin/SQL' : '',
+                '/Admin/ManageStore': ''
+            }
             var curUrl = $scope.CurrentUrl;
-            window.open(curUrl, '_blank');
+            var helpPage = _helpMapping[curUrl];
+            window.open(g_documentUrl + helpPage, '_blank');
         }
 
     }]);

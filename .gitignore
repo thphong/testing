@@ -1,3 +1,4 @@
 .vs/config/applicationhost.config
 *.cache
 .vs/StoreManagement/v14/.suo
+/StoreManagement.Website
