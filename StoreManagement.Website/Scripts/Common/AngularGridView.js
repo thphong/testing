@@ -741,10 +741,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         setTimeout(function () {
             var scope = $scope.$new(true);
             scope.columnNames = result.columnNames;
+            scope.columnCodes = result.columnCodes;
             scope.dataTable = result.dataTable;
             scope.errorTable = result.errorTable;
-            var template = angular.element(
-                ' <table class="table table-striped  table-bordered  table-condensed has-error">'
+            var template = angular.element('<div> <h4 class="text-danger">Dữ liệu bị lỗi</h4>' 
+                + ' <table class="table table-striped  table-bordered  table-condensed has-error">'
                 + '<thead>'
                   + '<tr>'
                     + '<th>STT</th>'
@@ -754,12 +755,13 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                 + '<tbody>'
                   + '<tr ng-repeat="row in dataTable" >'
                     + '<td ng-init="errrow = errorTable[$index]">{{$index+1}}</td>'
-                    + '<td ng-repeat="col in columnNames" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" '
+                    + '<td ng-repeat="col in columnCodes" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" '
                         + ' data-toggle="tooltip" title="{{errrow[col]}}" >'
                         + '{{row[col]}}  </td>'
                   + '</tr>'
                 + '</tbody>'
                 + '</table>'
+                +'</div>'
             );
             var content = $compile(template)(scope);
 

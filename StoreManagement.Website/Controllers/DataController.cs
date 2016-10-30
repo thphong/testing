@@ -260,11 +260,12 @@ namespace StoreManagement.Website.Controllers
                     DataTable convertedTable = new DataTable();
                     DataTable errorTable = new DataTable();
                     List<string> columnNames = new List<string>();
+                    List<string> columnCodes = new List<string>();
                     #region convert datatble
                     for (int c = 0; c < templateinfo.Codes.Count; c++)
                     {
                         string code = templateinfo.Codes[c].ToString();
-                        string name = templateinfo.Codes[c].ToString();
+                        string name = templateinfo.Names[c].ToString();
 
                         DataColumn col = new DataColumn(code);
                         convertedTable.Columns.Add(col);
@@ -272,6 +273,7 @@ namespace StoreManagement.Website.Controllers
                         col = new DataColumn(code);
                         errorTable.Columns.Add(col);
 
+                        columnCodes.Add(code);
                         columnNames.Add(name);
                     }
                     
@@ -348,7 +350,7 @@ namespace StoreManagement.Website.Controllers
                     var errtable = JsonHelper.DataTable2Json(errorTable);
                     if (hasError)
                     {
-                        return Json(new { isError = true,columnNames = columnNames, dataTable = datatable, errorTable = errtable });
+                        return Json(new { isError = true, columnNames = columnNames, columnCodes = columnCodes, dataTable = datatable, errorTable = errtable });
                     }
                     //==============================
                     //ok thì lưu kết quả
