@@ -56,9 +56,10 @@
                         <label class="col-sm-4 control-label">Người chi</label>
                         <div class="col-sm-7">
                             <select class="form-control"
-                                    ng-model="CostForm.PaidBy" dropdown-master-table="T_Master_User" 
-                                    dropdown-value-field="UserId" dropdown-name-field="UserName"
-                                    dropdown-condition="[IsActive] = 1 and ([IsDeveloper] is null or [IsDeveloper] = 0 or [UserId] = {{CurrentUser}})"></select>
+                                    ng-model="CostForm.PaidBy" dropdown-master-table="T_Trans_User_Store" 
+                                    dropdown-value-field="UserId" dropdown-name-field="UserId.UserName"
+                                    dropdown-empty-text="Người đang đăng nhập" dropdown-empty-value="{{CurrentUser}}"
+                                    dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"></select>
                         </div>
                     </div>
                 </div>

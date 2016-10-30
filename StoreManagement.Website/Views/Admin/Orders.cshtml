@@ -3,6 +3,10 @@
     {
         <div ng-init="AdditionalFilter.Status = '@ViewBag.Status'"></div>
     }
+    @if (!String.IsNullOrWhiteSpace(@ViewBag.OrderType))
+    {
+        <div ng-init="AdditionalFilter.OrderType = '@ViewBag.OrderType'"></div>
+    }
     <div class="container-fluid none-display" ng-class="{'active-content' : !IsShowOrderDetail}">
         <div ng-if="!IsShowOrderDetail">
             <div class="row" style="padding-top: 5px">
@@ -29,6 +33,7 @@
                         <option selected="selected" value="1">Đơn hàng</option>
                         <option value="2">Đơn hàng bị xóa</option>
                         <option value="3">Đơn hàng còn nợ</option>
+                        <option value="4">Đơn hàng giảm giá</option>
                     </select>
                 </div>
                 <div class="col-md-5 col-xs-12 margin-top-5">
@@ -51,7 +56,8 @@
                                grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
                                grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.OrderType}} = 1)
                     or ({{AdditionalFilter.OrderType}} = 2 and  [IsActive] = 0)
-                    or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1))
+                    or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1)
+                    or ({{AdditionalFilter.OrderType}} = 4 and [OrginalMoney] > [SumMoney] and [IsActive] = 1))
                     and ([StoreId] = {{CurrentStore}})
                     and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
                     and  ([SoldDate] is null or

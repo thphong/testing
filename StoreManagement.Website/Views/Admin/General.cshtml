@@ -47,7 +47,8 @@
                             <span>Đơn hàng bị xóa</span>
                         </div>
                         <div class="infobox-data-number text-center">
-                            <span ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></span>
+                            <a href="#" ng-click="LoadViewBody('@Url.Action("Orders", "Admin", new { DateRangeCode = 0 , Status = 2, OrderType = 2})')"
+                               class="white" ng-bind="GeneralInfo.ReturnAmount | currency:'':0"></a>
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,8 @@
                             <span>Giảm giá</span>
                         </div>
                         <div class="infobox-data-number text-center">
-                            <span ng-bind="GeneralInfo.Discount | currency:'':0"></span>
+                            <a href="#" ng-click="LoadViewBody('@Url.Action("Orders", "Admin", new { DateRangeCode = 0 , Status = 2, OrderType = 4})')"
+                               class="white" ng-bind="GeneralInfo.Discount | currency:'':0"></a>
                         </div>
                     </div>
                 </div>

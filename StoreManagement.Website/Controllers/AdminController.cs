@@ -30,10 +30,11 @@ namespace StoreManagement.Website.Controllers
 
         
         [HttpGet]
-        public ActionResult Orders(string DateRangeCode, string Status)
+        public ActionResult Orders(string DateRangeCode, string Status, string OrderType)
         {
             ViewBag.DateRangeCode = DateRangeCode;
             ViewBag.Status = Status;
+            ViewBag.OrderType = OrderType;
             SessionCollection.LastUrl = "/Admin/Orders";
             return PartialView("Orders");
         }
