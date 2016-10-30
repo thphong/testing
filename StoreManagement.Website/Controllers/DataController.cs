@@ -366,7 +366,7 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(int fileType)
+        public ActionResult UploadFile(int fileType,string fileName ="")
         {
             try
             {
@@ -380,20 +380,24 @@ namespace StoreManagement.Website.Controllers
                         Directory.CreateDirectory(Server.MapPath(folderName));
 
                     var name_only = Path.GetFileNameWithoutExtension(file.FileName);
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        name_only = fileName; //lấy tên file mà ngưởi dùng đặt
+                    }
                     var ext = Path.GetExtension(file.FileName); //ext has .
                     //var file_name = string.Format("{0}_{1}.{2}", name_only, Guid.NewGuid(), ext);
 
-                    var filename = folderName + "/" + DateTime.Now.ToString("hhmmss") + "_" + name_only  + ext;
-                    string path = Server.MapPath(filename);
+                    var file_name = folderName + "/" + DateTime.Now.ToString("hhmmss") + "_" + name_only  + ext;
+                    string path = Server.MapPath(file_name);
 
                     file.SaveAs(path);
 
                     //Save url in object
                     int id = dataService.SaveObject(SessionCollection.CurrentUserId, "T_Master_File",
-                        string.Format("{0}::{1},,{2}::{3},,{4}::{5},,IsActive::1,,Version::-1",
-                        "FileName", name_only + ext, "FilePath", filename, "FileTypeId", fileType));
+                        string.Format("{0}::{1},,{2}::{3},,{4}::{5},,StoreId::{6},,IsActive::1,,Version::-1",
+                        "FileName", name_only + ext, "FilePath", file_name, "FileTypeId", fileType,SessionCollection.CurrentStore));
 
-                    return Json(new {id = id, filename = filename});
+                    return Json(new {id = id, filename = file_name});
                 }
 
                 return Json(new { id = 0, filename = "" });

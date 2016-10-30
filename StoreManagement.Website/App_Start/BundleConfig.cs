@@ -145,7 +145,8 @@ namespace StoreManagement.Website
                         "~/Scripts/Controller/ProductQuanHistory.js"));
             bundles.Add(new ScriptBundle("~/bundles/SQL").Include(
                         "~/Scripts/Controller/SQL.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/Files").Include(
+                       "~/Scripts/Controller/Files.js"));
             //========================================
             //Home page
             //css

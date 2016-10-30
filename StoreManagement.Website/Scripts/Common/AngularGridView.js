@@ -722,8 +722,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                         result = data;
                     }
                 }
-            });
-            //set image id to DataObject          
+            });       
         }
 
         if (result == null) return;

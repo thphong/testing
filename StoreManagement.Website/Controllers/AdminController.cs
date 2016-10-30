@@ -291,5 +291,12 @@ namespace StoreManagement.Website.Controllers
         {
             return PartialView("ExtendStoreModal");
         }
+
+        [HttpGet]
+        public ActionResult Files()
+        {
+            SessionCollection.LastUrl = "/Admin/Files";
+            return PartialView("Files");
+        }
     }
 }
