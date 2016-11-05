@@ -349,7 +349,7 @@ namespace StoreManagement.Website.Controllers
                     //ok thì lưu kết quả
                     if (!hasError)
                     {
-                        //dataService.SaveListObject(SessionCollection.CurrentUserId, "", "");
+                        //dataService.SaveListObject(SessionCollection.CurrentUserId, "TABLE", "OrderId::1,,OrderCode::EX_0001<<>>OrderId::2,,OrderCode::EX_0002");
                         iImporter importer = ImporterHelper.GetImporter(template);
                         if (importer == null) throw new Exception(string.Format("Not found :\"{0}\" Importer", template));
 
