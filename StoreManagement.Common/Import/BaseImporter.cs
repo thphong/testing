@@ -11,6 +11,11 @@ namespace StoreManagement.Common.Import
     {
         DataTable Import(DataTable data);
 
+        
+    }
+
+    public class ImporterHelper
+    {
         public static iImporter GetImporter(string template)
         {
             iImporter importer = null;

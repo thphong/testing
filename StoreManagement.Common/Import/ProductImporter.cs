@@ -12,5 +12,11 @@ namespace StoreManagement.Common.Import
         public ProductImporter()
         {
         }
+
+        public DataTable Import(DataTable data)
+        {
+            DataTable error = null;
+            return error;
+        }
     }
 }

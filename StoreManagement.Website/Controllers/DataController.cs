@@ -350,12 +350,18 @@ namespace StoreManagement.Website.Controllers
                     if (!hasError)
                     {
                         //dataService.SaveListObject(SessionCollection.CurrentUserId, "", "");
-                        iImporter importer = iImporter.GetImporter(template);
+                        iImporter importer = ImporterHelper.GetImporter(template);
                         if (importer == null) throw new Exception(string.Format("Not found :\"{0}\" Importer", template));
 
                         errorTable = importer.Import(convertedTable);
 
-                        if (errorTable != null)
+                        GridViewConfig config = new GridViewConfig();
+                        config.GridDataObject = "dbo.";
+                        config.GridDataType = "function";
+                        config.GridDataAction = "getall";
+                        config.GridParameters = "";//sessionid
+                        errorTable =  dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, config);
+                        if (errorTable != null && errorTable.Rows.Count > 0)
                             hasError = true;
                     }
 
