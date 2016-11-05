@@ -58,7 +58,7 @@
                                     <option value="5">Tồn kho lâu</option>
                                 </select>
                             </div>
-                            <div class="col-md-3 pull-right text-right margin-top-5">
+                            <div class="col-md-3 pull-right text-right margin-top-5" ng-if="CanViewPrice">
                                 <span grid-export-import-for="InventoryProduct" grid-export-template="InventoryProduct.xlsx"></span>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                         <div class="infobox-content">SL tồn kho</div>
                                     </div>
                                 </div>
-                                <div class="infobox infobox-orange">
+                                <div class="infobox infobox-orange" ng-if="CanViewPrice">
                                     <div class="infobox-icon">
                                         <i class="fa-refresh fa"></i>
                                     </div>
@@ -130,7 +130,7 @@
                                                 <th grid-defined-colum="ProductCode"><span>Mã hàng</span></th>
                                                 <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
                                                 <th grid-defined-colum="Quantity"><span>Số lượng</span></th>
-                                                <th grid-defined-colum="Cost"><span>Vốn tồn kho</span></th>
+                                                <th grid-defined-colum="Cost" ng-if="CanViewPrice"><span>Vốn tồn kho</span></th>
                                                 <th grid-defined-colum="Price"><span>Giá trị tồn</span></th>
                                             </tr>
                                         </thead>
@@ -143,7 +143,7 @@
                                                     <span ng-class="{'red bold': item.Quantity < 0 }" ng-bind="item.Quantity"></span>
                                                     @*<span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>*@
                                                 </td>
-                                                <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
+                                                <td ng-if="CanViewPrice" ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Cost) | currency:'':0"></td>
                                                 <td ng-class="{'red bold': item.Quantity < 0 }" ng-bind="(item.Quantity * item.Price) | currency:'':0"></td>
                                             </tr>
                                             <tr ng-if="!DataSet.InventoryProduct.HasRecord()">

@@ -49,6 +49,9 @@ mdlCommon.controller('InventoryController',
         $scope.InventoryFormConfig.CheckCanCreateObject();
         $scope.InventTranFormConfig.CheckCanCreateObject();
 
+        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
+        $scope.CanViewPrice = $scope.ProductFormConfig.CheckField('PRODUCT_PRICE');
+
         $scope.IsShowInventoryDetail = false;
         $scope.IsShowInventTranDetail = false;
         $scope.ListProductsInventory = [];
