@@ -9,6 +9,7 @@ using StoreManagement.Common;
 using System.Configuration;
 using System.IO;
 using Newtonsoft.Json;
+using StoreManagement.Common.Import;
 
 namespace StoreManagement.Website.Controllers
 {
@@ -345,16 +346,29 @@ namespace StoreManagement.Website.Controllers
                     #endregion
 
                     //==============================
-                    //nếu có lỗi thì trả về kết quả lỗi
-                    var datatable = JsonHelper.DataTable2Json(convertedTable);
-                    var errtable = JsonHelper.DataTable2Json(errorTable);
+                    //ok thì lưu kết quả
+                    if (!hasError)
+                    {
+                        //dataService.SaveListObject(SessionCollection.CurrentUserId, "", "");
+                        iImporter importer = iImporter.GetImporter(template);
+                        if (importer == null) throw new Exception(string.Format("Not found :\"{0}\" Importer", template));
+
+                        errorTable = importer.Import(convertedTable);
+
+                        if (errorTable != null)
+                            hasError = true;
+                    }
+
+
+                    //==============================
                     if (hasError)
                     {
+                        //==============================
+                        //nếu có lỗi thì trả về kết quả lỗi
+                        var datatable = JsonHelper.DataTable2Json(convertedTable);
+                        var errtable = JsonHelper.DataTable2Json(errorTable);
                         return Json(new { isError = true, columnNames = columnNames, columnCodes = columnCodes, dataTable = datatable, errorTable = errtable });
                     }
-                    //==============================
-                    //ok thì lưu kết quả
-                    //dataService.SaveListObject(SessionCollection.CurrentUserId, "", "");
                 }
 
                 return Json(new { isError = false });
