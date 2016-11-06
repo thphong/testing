@@ -4,7 +4,10 @@
             <div class="col-md-5 margin-top-5">
                 <span grid-filter-for="Announcements" place-holder-message="Tìm kiếm"></span>
             </div>
-            <div class="col-md-5 pull-right text-right margin-top-5">
+            <div class="col-md-4 margin-top-5">
+                <span date-range-filter-for="Announcements" date-range-init-code="1"></span>
+            </div>
+            <div class="col-md-3 pull-right text-right margin-top-5">
                 <button class="btn btn-success btn-primary" data-toggle="modal"
                         data-target="#annoucementModal"
                         ng-if="AnnouncementFormConfig._CanCreate"
@@ -21,7 +24,9 @@
                            grid-data-type="table" @*table/storedprocedure*@
                            grid-data-action="get" @*get/getall*@
                            grid-data-object="T_Trans_Announcement_Store" @*table name or stored procedure name*@
-                           grid-filter-condition="[StoreId] = {{CurrentStore}}"
+                           grid-filter-condition="[StoreId] = {{CurrentStore}}
+                                                    and (convert(date, [AnnouncementId.CreatedDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                        and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))"
                            @*must have [fieldname] for each colum field*@
                            grid-sort-condition="[AnnouncementId.CreatedDate] DESC" @*must have [fieldname] for each colum field*@
                            class="table table-striped table-bordered">

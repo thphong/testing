@@ -53,6 +53,7 @@
                                         ng-change="ReloadGrid('ReportBySeller')"
                                         dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                         dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                        ng-class="{notice:Filter.CurrentStore != 0 }"
                                         dropdown-condition="[IsActive] = 1"
                                         dropdown-name-field="StoreCode"></select>
                             </div>
@@ -337,6 +338,7 @@
                                     ng-change="ReloadGrid('ReportByMonth');ReloadGrid('ReportByYear')"
                                     dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                                     dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                    ng-class="{notice:Filter.CurrentStore != 0 }"
                                     dropdown-condition="[IsActive] = 1"
                                     dropdown-name-field="StoreCode"></select>
                         </div>
@@ -448,7 +450,8 @@
                             <select class="form-control" ng-model="Filter.CurrentStore"
                                     ng-change="ReloadGrid('ReportByProduct')"
                                     dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
-                                    dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"
+                                    dropdown-empty-text="Tất cả cửa hàng" dropdown-empty-value="0"                                    
+                                    ng-class="{notice:Filter.CurrentStore != 0 }"
                                     dropdown-condition="[IsActive] = 1"
                                     dropdown-name-field="StoreCode"></select>
                         </div>

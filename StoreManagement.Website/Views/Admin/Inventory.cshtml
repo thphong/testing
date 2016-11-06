@@ -46,10 +46,12 @@
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryProduct')"
+                                        ng-class="{notice:AdditionalFilter.InventoryProductGroup != 0 }"
                                         dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType" ng-change="ReloadGrid('InventoryProduct')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType"
+                                        ng-class="{notice:AdditionalFilter.InventoryProductType != 0 }" ng-change="ReloadGrid('InventoryProduct')">
                                     <option value="0">Tất cả</option>
                                     <option value="1">Chỉ lấy hàng tồn</option>
                                     <option value="2">Hết hàng</option>
@@ -174,6 +176,7 @@
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                        ng-class="{notice:AdditionalFilter.InventoryInOutProductGroup != 0 }"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryInOut')"
                                         dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
@@ -283,14 +286,18 @@
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventoryCheck') && !IsShowInventoryDetail}">
                     <div ng-if="(CurrentTab =='InventoryCheck') && !IsShowInventoryDetail">
                         <div class="row" style="padding-bottom: 10px; padding-top: 5px">
-                            <div class="col-md-5 margin-top-5">
+                            <div class="col-md-3 margin-top-5">
                                 <span grid-filter-for="InventoryCheck" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryStatus" dropdown-master-table="T_Master_InventoryStatus" dropdown-value-field="StatusId"
+                                        ng-class="{notice:AdditionalFilter.InventoryStatus != 0 }"
                                         dropdown-name-field="StatusName" dropdown-empty-text="Tất cả" ng-change="ReloadGrid('InventoryCheck')"></select>
                             </div>
-                            <div class="col-md-4 pull-right text-right margin-top-5">
+                            <div class="col-md-4 margin-top-5">
+                                <span date-range-filter-for="InventoryCheck" date-range-init-code="2"></span>
+                            </div>
+                            <div class="col-md-3 pull-right text-right margin-top-5">
                                 <button class="btn btn-success btn-primary" ng-click="AddInventory()"
                                         ng-if="InventoryFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
@@ -308,7 +315,9 @@
                                            grid-data-object="T_Trans_Inventory" @*table name or stored procedure name*@
                                            grid-filter-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}} and
                                                 ({{AdditionalFilter.InventoryStatus}} = 0
-                                                or {{AdditionalFilter.InventoryStatus}} = [StatusId])" @*must have [fieldname] for each colum field*@
+                                                or {{AdditionalFilter.InventoryStatus}} = [StatusId])
+                                                and (convert(date, [CreatedDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                        and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                            grid-sort-condition="[InventoryCode] ASC" @*must have [fieldname] for each colum field*@
                                            class="table table-striped table-bordered">
                                         <thead>
@@ -373,15 +382,19 @@
                 <div class="tab-pane col-md-12" ng-class="{active : (CurrentTab =='InventTrans') && !IsShowInventTranDetail}">
                     <div ng-if="(CurrentTab =='InventTrans') && !IsShowInventTranDetail">
                         <div class="row" style="padding-bottom: 10px; padding-top: 5px">
-                            <div class="col-md-5 margin-top-5">
+                            <div class="col-md-3 margin-top-5">
                                 <span grid-filter-for="InventTrans" place-holder-message="Nhập mã phiếu để tìm kiếm"></span>
                             </div>
 
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventTranStatus" dropdown-master-table="T_Master_InventTranStatus" dropdown-value-field="StatusId"
+                                        ng-class="{notice:AdditionalFilter.InventTranStatus != 0 }"
                                         dropdown-name-field="StatusName" dropdown-empty-text="Tất cả" ng-change="ReloadGrid('InventTrans')"></select>
                             </div>
-                            <div class="col-md-4 pull-right text-right margin-top-5">
+                            <div class="col-md-4 margin-top-5">
+                                <span date-range-filter-for="InventTrans" date-range-init-code="2"></span>
+                            </div>
+                            <div class="col-md-3 pull-right text-right margin-top-5">
                                 <button class="btn btn-success btn-primary" ng-click="AddInventTran()"
                                         ng-if="InventTranFormConfig._CanCreate">
                                     <i class="fa fa-plus white"></i>
@@ -399,7 +412,9 @@
                                            grid-data-object="T_Trans_InventTran" @*table name or stored procedure name*@
                                            grid-filter-condition="[IsActive] = 1 and ([FromStoreId] = {{CurrentStore}} or [ToStoreId] = {{CurrentStore}}) and
                                                 ({{AdditionalFilter.InventTranStatus}} = 0
-                                                or {{AdditionalFilter.InventTranStatus}} = [StatusId])" @*must have [fieldname] for each colum field*@
+                                                    or {{AdditionalFilter.InventTranStatus}} = [StatusId])
+                                                and (convert(date, [CreatedDate]) between dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
+                                                        and dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy''))" @*must have [fieldname] for each colum field*@
                                            grid-sort-condition="[InventTranCode] ASC" @*must have [fieldname] for each colum field*@
                                            class="table table-striped table-bordered">
                                         <thead>

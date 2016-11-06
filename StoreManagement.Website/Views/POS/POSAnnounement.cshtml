@@ -57,10 +57,13 @@
                             </div>
                         </div>
                         <div class="row margin-top-10" ng-if="!Announcement.IsShow">
-                            <div class="col-md-9">
+                            <div class="col-md-4 margin-top-10">
+                                <span date-range-filter-for="Announcement" date-range-init-code="1"></span>
+                            </div>
+                            <div class="col-md-4 margin-top-10">
                                 <span grid-paging-for="Announcement"></span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2 margin-top-10">
                                 <span grid-page-size-for="Announcement"></span>
                             </div>
                         </div>

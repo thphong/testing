@@ -33,7 +33,8 @@
                                 <span grid-filter-for="Customers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
                             </div>
                             <div class="col-md-2 col-xl-12 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.CustomerType" ng-change="ReloadGrid('Customers')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.CustomerType"
+                                        ng-class="{notice:AdditionalFilter.CustomerType != 0 }" ng-change="ReloadGrid('Customers')">
                                     <option value="0">Tất cả</option>
                                     <option value="1">KH từng mua hàng</option>
                                     <option value="2">KH còn nợ</option>
@@ -49,7 +50,7 @@
 
                                 <!--- excel import -export --->
                                 <div class="btn-group" >
-                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Excel <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-right">
@@ -138,7 +139,8 @@
                                 <span grid-filter-for="SaleCustomers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ khách hàng"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.SaleCustomerType" ng-change="ReloadGrid('SaleCustomers')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.SaleCustomerType"
+                                        ng-class="{notice:AdditionalFilter.SaleCustomerType != 0 }" ng-change="ReloadGrid('SaleCustomers')">
                                     <option selected="selected" value="0">Tất cả</option>
                                     <option value="1">KH từng mua hàng</option>
                                     <option value="2">KH còn nợ</option>
@@ -235,7 +237,8 @@
                                 <span grid-filter-for="Suppliers" place-holder-message="Nhập tên, mã, SĐT hoặc địa chỉ nhà cung cấp"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.SupplierType" ng-change="ReloadGrid('Suppliers')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.SupplierType"
+                                        ng-class="{notice:AdditionalFilter.SupplierType != 0 }" ng-change="ReloadGrid('Suppliers')">
                                     <option selected="selected" value="0">Tất cả</option>
                                     <option value="1">NCC từng nhập hàng</option>
                                     <option value="2">Còn nợ NCC</option>
@@ -251,7 +254,7 @@
 
                                 <!--- excel import -export --->
                                 <div class="btn-group">
-                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Excel <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-right">
