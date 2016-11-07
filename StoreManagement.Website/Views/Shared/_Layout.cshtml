@@ -127,13 +127,13 @@
                         </button>
                         <a class="navbar-brand white" href="#">
                             @StoreManagement.Website.SessionCollection.StoreName
-                        </a>
+                        </a>                        
                     </div>
                     @if (StoreManagement.Website.SessionCollection.IsLogIn)
             {
             <!-- /.navbar-header -->
                         <ul class="nav navbar-top-links navbar-right text-right">
-                            <li><a href="" title="Hướng dẫn" ng-click="ShowHelp()"><i class="fa fa-question white"></i></a></li>
+                            <a class="white help-icon" href="" title="Hướng dẫn" ng-click="ShowHelp()"><i class="fa fa-question-circle white"></i></a>
                             <input type="text" style="border: 0px solid white"
                                    placeholder="#Thao tác nhanh"
                                    autocomplete-master-table="T_Master_QuickAction"

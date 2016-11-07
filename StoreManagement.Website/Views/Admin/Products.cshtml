@@ -37,7 +37,7 @@
 
                                 <!--- excel import -export --->
                                 <div class="btn-group">
-                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Excel <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-right">
@@ -55,7 +55,8 @@
                                 <span grid-filter-for="Products" place-holder-message="Nhập tên hoặc mã hàng hóa"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus" ng-change="ReloadGrid('Products')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus"
+                                        ng-class="{notice:AdditionalFilter.ProductStatus != 1 }" ng-change="ReloadGrid('Products')">
                                     <option selected="selected" value="1">Hàng đang kinh doanh</option>
                                     <option value="2">Hàng đã ngừng kinh doanh</option>
                                     <option value="3">Hàng đã xóa</option>
@@ -64,15 +65,18 @@
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('Products')"
+                                        ng-class="{notice:AdditionalFilter.ProductGroup != 0 }"
                                         dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                                         dropdown-name-field="ProducerName" dropdown-empty-text="Tất cả nhà sản xuất" ng-change="ReloadGrid('Products')"
+                                        ng-class="{notice:AdditionalFilter.Producer != 0 }"
                                         dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')"
+                                        ng-class="{notice:AdditionalFilter.ProductType != 0 }">
                                     <option value="0">Tất cả hàng hóa</option>
                                     <option value="1">Chưa nhập giá bán</option>
                                     <option value="2">Chưa nhập giá mua</option>
@@ -250,7 +254,8 @@
                                 <span grid-filter-for="Combos" place-holder-message="Nhập tên hoặc mã combo"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus" ng-change="ReloadGrid('Combos')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.ProductStatus" 
+                                        ng-class="{notice:AdditionalFilter.ProductStatus != 1 }" ng-change="ReloadGrid('Combos')">
                                     <option selected="selected" value="1">Combo đang kinh doanh</option>
                                     <option value="2">Combo đã ngừng kinh doanh</option>
                                     <option value="3">Combo đã xóa</option>

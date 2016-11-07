@@ -84,7 +84,7 @@ mdlCommon.directive('gridExportImportFor', function () {
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridExportImportFor;
         var template = attributes.gridExportTemplate;
-        element.append('<button class="btn btn-success btn-warning"  ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
+        element.append('<button class="btn btn-warning"  ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
                     + '<i class="fa fa-download white"></i>'
                     + '<span>Xuất Excel</span>'
                     + '</button>');

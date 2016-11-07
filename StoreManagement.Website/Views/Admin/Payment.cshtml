@@ -44,7 +44,9 @@
                                 <span grid-filter-for="Costs" place-holder-message="Nhập mã, tên hoặc loại chi phí"></span>
                             </div>
                             <div class="col-md-2 margin-top-5">
-                                <select class="form-control input-sm" ng-model="AdditionalFilter.CostType" ng-change="ReloadGrid('Costs')">
+                                <select class="form-control input-sm" ng-model="AdditionalFilter.CostType"
+                                        ng-class="{notice : AdditionalFilter.CostType != 1 }"
+                                        ng-change="ReloadGrid('Costs')">
                                     <option value="1">Phiếu chi</option>
                                     <option value="2">Phiếu chi đã xóa</option>
                                 </select>
