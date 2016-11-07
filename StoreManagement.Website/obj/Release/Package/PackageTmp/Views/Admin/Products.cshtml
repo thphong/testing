@@ -34,7 +34,20 @@
                                     <i class="fa fa-plus white"></i>
                                     <span>Thêm hàng hóa</span>
                                 </button>
-                                <span grid-export-import-for="Products" grid-export-template="Products.xlsx"></span>
+
+                                <!--- excel import -export --->
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Excel <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><span grid-export-import-for="Products" grid-export-template="Products.xlsx"></span></span></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li ng-if="ProductFormConfig._CanCreate" ><span grid-import grid-import-template="Products"></span></li>
+                                  </ul>
+                                </div>
+
+                                
                             </div>
                         </div>
                         <div class="row" style="padding-bottom: 10px; padding-top: 10px">
@@ -51,12 +64,12 @@
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('Products')"
-                                        dropdown-condition="[IsActive]  = 1"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.Producer" dropdown-master-table="T_Master_Producers" dropdown-value-field="ProducerId"
                                         dropdown-name-field="ProducerName" dropdown-empty-text="Tất cả nhà sản xuất" ng-change="ReloadGrid('Products')"
-                                        dropdown-condition="[IsActive]  = 1"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.ProductType" ng-change="ReloadGrid('Products')">
@@ -117,7 +130,7 @@
                                                 <td ng-bind="item.ProductCode"></td>
                                                 <td>
                                                     <span ng-bind="item.Quantity"></span>
-                                                    <span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>
+                                                    @*<span id="divCountAllStore{{item.ProductId}}" ng-init="ShowCountProductQuanHistory(item, 'divCountAllStore'+item.ProductId)">(...)</span>*@
                                                 </td>
                                                 <td> <span ng-bind="item.Price | currency:'':0" class="bold"></span></td>
                                                 <td ng-bind="item.GroupName"></td>

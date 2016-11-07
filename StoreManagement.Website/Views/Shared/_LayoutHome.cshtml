@@ -18,6 +18,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/Images/logo/pholo_128.ico")">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/Images/logo/pholo_64.ico")">
     <link rel="apple-touch-icon-precomposed" href="@Url.Content("~/Images/logo/pholo_32.ico")">
+    <!-- google analytics -->
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -28,8 +29,14 @@
 
         ga('create', 'UA-85979724-1', 'auto');
         ga('send', 'pageview');
-
     </script>
+    <!--comodo -->
+    <script type="text/javascript"> //<![CDATA[ 
+        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
+        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+        //]]>
+    </script>
+
     <script type="text/javascript">
         var g_loginUrl = '@Url.Action("Login", "Account")';
         var g_logoutUrl = '@Url.Action("Logout", "Account")';
@@ -188,6 +195,9 @@
                         <a href="#" title="01 (6) by Victor1558, on Flickr"><img src="http://farm8.staticflickr.com/7148/6829524451_a725793358_s.jpg" width="75" height="75" alt="01 (6)"></a>
                     </li>
                 </ul>
+                <script language="JavaScript" type="text/javascript">
+                        TrustLogo("http://www.pholo.vn/Images/logo/comodo_secure_seal_100_85.png", "CL1", "none");
+                </script>
             </div>
             
 
@@ -207,6 +217,7 @@
         <div class="row-fluid">
             <div class="span5 cp">
                 &copy; 2016 <a target="_blank" href="http://phonet.net/" title="Pholo.net">Công ty dịch vụ công nghệ PHOLO</a> 
+                <img src="@Url.Content("~/Images/logo/comodo_secure_seal_76_26.png")" alt="COMODO - PositiveSSL Certificate "/>
             </div>
             <!--/Copyright-->
 

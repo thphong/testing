@@ -1,5 +1,4 @@
-﻿
-<div class="row margin-top-10">
+﻿<div class="row margin-top-10">
     <div class="col-md-6 pull-right text-right">
         <button class="btn btn-primary" ng-if="InventTranForm._CanUpdate" ng-click="SaveInventTranForm(1)">
             <i class="fa fa-save white"></i>
@@ -16,7 +15,6 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
@@ -28,11 +26,11 @@
         </div>
         <div class="row margin-top-10">
             <div class="col-md-12">
-                <input id="txtSearchProductTranIvent" class="form-control" ng-init="InitListAutoCompleteProducts('#txtSearchProductTranIvent', false, true, false)" 
+                <input id="txtSearchProductTranIvent" class="form-control" ng-init="InitListAutoCompleteProducts('#txtSearchProductTranIvent', false, true, false, true)" 
                        placeholder="Nhập mã hoặc tên hàng hóa"
                        check-custom="CheckNumOfProductTran" check-custom-message="Vui lòng chọn ít nhất một hàng hóa."
                        check-under="check-inventory-tran"
-                       ng-show="InventTranForm._CanUpdate" />
+                       ng-show="InventTranForm._CanUpdate && InventTranForm.ToStoreId > 0" />
             </div>
         </div>
         <div class="row margin-top-10">
@@ -81,7 +79,7 @@
                             </tr>
                             <tr ng-if="ListProductsInventTran.length == 0">
                                 @*Edit colspan*@
-                                <td colspan="6" align="center"> Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu chuyển </td>
+                                <td colspan="6" align="center">Vui lòng chọn cửa hàng nhận.Sau đó gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào phiếu chuyển </td>
                             </tr>
                         </tbody>
                     </table>
@@ -146,10 +144,12 @@
             </div>
             <div class="col-md-8">
                 <span ng-bind="InventTranForm.ToStoreCode" ng-if="!InventTranForm._CanUpdate"></span>                
-                <select ng-show="InventTranForm._CanUpdate" class="form-control" ng-model="InventTranForm.ToStoreId" dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
+                <select ng-show="InventTranForm._CanUpdate" class="form-control" ng-model="InventTranForm.ToStoreId" 
+                        dropdown-master-table="T_Master_Stores" dropdown-value-field="StoreId"
                         dropdown-name-field="StoreCode" dropdown-empty-text="Chọn cửa hàng" dropdown-empty-value="" 
                         dropdown-condition="[StoreId] <> {{CurrentStore}} and [IsActive] = 1"
                         check-empty="" check-empty-message="Vui lòng chọn cửa hàng nhận" check-under="check-inventory-tran"
+                        ng-change="ChangeStoreInInventTran()"
                         ></select>
 
             </div>

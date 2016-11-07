@@ -46,7 +46,19 @@
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo KH</span>
                                 </button>
-                                <span grid-export-import-for="Customers" grid-export-template="Customers.xlsx"></span>
+
+                                <!--- excel import -export --->
+                                <div class="btn-group" >
+                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Excel <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><span grid-export-import-for="Customers" grid-export-template="Customers.xlsx"></span></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li ng-if="CustomerFormConfig._CanCreate" ><span grid-import grid-import-template="Customers"></span></li>
+                                  </ul>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -236,7 +248,19 @@
                                     <i class="fa fa-plus white"></i>
                                     <span>Tạo NCC</span>
                                 </button>
-                                <span grid-export-import-for="Suppliers" grid-export-template="Suppliers.xlsx"></span>
+
+                                <!--- excel import -export --->
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Excel <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><span grid-export-import-for="Suppliers" grid-export-template="Suppliers.xlsx"></span></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li ng-if="SupplierFormConfig._CanCreate" ><span grid-import grid-import-template="Suppliers"></span></li>
+                                  </ul>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="table-responsive">

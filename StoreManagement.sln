@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Website", "StoreManagement.Website\StoreManagement.Website.csproj", "{D6CBA5B6-20D9-44FA-8536-80C896183C13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Service", "StoreManagement.Service\StoreManagement.Service.csproj", "{D2A10F0F-00BD-4073-8E32-88BC4C88FC99}"

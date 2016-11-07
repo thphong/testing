@@ -49,6 +49,9 @@ mdlCommon.controller('InventoryController',
         $scope.InventoryFormConfig.CheckCanCreateObject();
         $scope.InventTranFormConfig.CheckCanCreateObject();
 
+        $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
+        $scope.CanViewPrice = $scope.ProductFormConfig.CheckField('PRODUCT_PRICE');
+
         $scope.IsShowInventoryDetail = false;
         $scope.IsShowInventTranDetail = false;
         $scope.ListProductsInventory = [];
@@ -213,18 +216,29 @@ mdlCommon.controller('InventoryController',
                     }
                 }
                 if (!hasExist) {
-                    var item = {
-                        Id: "-1",
-                        InventTranId: $scope.InventTranForm.InventTranId,
-                        RowNum: $scope.ListProductsInventTran.length + 1,
-                        ProductId: product.ProductId,
-                        ProductCode: product.ProductCode,
-                        ProductName: product.ProductName,
-                        Quantity: product.Quantity,
-                        TranQuantity: "",
-                        Notes: ""
+                    var configList = new GridViewConfig("");
+                    configList.GridDataAction = "count";
+                    configList.GridDataType = "table";
+                    configList.GridDataObject = "T_Trans_Products";
+                    configList.GridFilterCondition = "[StoreId] = " + $scope.InventTranForm.ToStoreId + "and [ProductCode] = ''" + product.ProductCode + "''";
+                    var count = configList.CountListData();
+                    if (count > 0) {
+                        var item = {
+                            Id: "-1",
+                            InventTranId: $scope.InventTranForm.InventTranId,
+                            RowNum: $scope.ListProductsInventTran.length + 1,
+                            ProductId: product.ProductId,
+                            ProductCode: product.ProductCode,
+                            ProductName: product.ProductName,
+                            Quantity: product.Quantity,
+                            TranQuantity: "",
+                            Notes: ""
+                        }
+                        $scope.ListProductsInventTran.splice(0, 0, item);
                     }
-                    $scope.ListProductsInventTran.splice(0, 0, item);
+                    else {
+                        ShowErrorMessage("Mã hàng hóa '" + product.ProductCode + "' không tồn tại trong cửa hàng nhận.");
+                    }
                 }
                 $scope.SummarizeInventTran();
             }
@@ -307,6 +321,11 @@ mdlCommon.controller('InventoryController',
             $scope.InventTranForm.NumProducts = $scope.ListProductsInventTran.length;
         }
 
+        $scope.ChangeStoreInInventTran = function () {
+            $scope.ListProductsInventTran = [];
+            $scope.SummarizeInventTran();
+        }
+
         $scope.SaveInventoryForm = function (status) {
             if (FValidation.CheckControls("check-inventory")) {
                 $scope.InventoryForm.StatusId = status;
@@ -328,7 +347,7 @@ mdlCommon.controller('InventoryController',
                 var inventTranId = $scope.InventTranFormConfig.SaveComplexObject();
                 if (inventTranId > 0) {
                     ShowSuccessMessage("Phiếu chuyển kho được lưu thành công!");
-                    $scope.IsShowInventTranDetail = false;                    
+                    $scope.IsShowInventTranDetail = false;
                 }
             }
         }
@@ -381,8 +400,7 @@ mdlCommon.controller('InventoryController',
             //FValidation.ClearAllError();
         }
 
-        $scope.GetInventTranDetail = function (tran)
-        {
+        $scope.GetInventTranDetail = function (tran) {
             $scope.InventTranFormConfig.SetObject($scope.InventTranForm);
             var object = $scope.InventTranFormConfig.GetObject(tran.InventTranId);
             $scope.InventTranFormConfig.CopyFields(object, $scope.InventTranForm);
@@ -393,8 +411,7 @@ mdlCommon.controller('InventoryController',
 
         }
 
-        $scope.InitListProductsTran = function()
-        {
+        $scope.InitListProductsTran = function () {
             $scope.ListProductsInventTran = $scope.DataSet.ProductsInventTran.Data;
 
             var len = $scope.ListProductsInventTran.length;

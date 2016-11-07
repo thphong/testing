@@ -29,11 +29,6 @@ mdlMenu.controller('LoadMenuController',
         $scope.StoreName = g_storeName;
         $scope.StoreAddress = g_storeAddress;
         $scope.StorePhone = g_storePhone;
-        //$scope.Language = {
-        //    Code: "VN",
-        //    SelectedLanguage: "Tiếng Việt",
-        //    Resource: gVNResource
-        //};
 
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
@@ -42,19 +37,9 @@ mdlMenu.controller('LoadMenuController',
         configMenuList.GridParametersExpression = "{{CurrentUser}}";
         configMenuList.OrderBy = "DisplayOrder";
 
-        var configListStores = new GridViewConfig("");
-        configListStores.GridDataAction = "get10";
-        configListStores.GridDataType = "table";
-        configListStores.GridDataObject = "T_Master_Stores";
-        configListStores.GridDefinedColums = "StoreId;StoreName";
-        configListStores.GridSortCondition = "StoreName ASC";
-        configListStores.GridFilterCondition = "[IsActive] = 1";
-
         if ($scope.CurrentUser > 0) {
             configMenuList.EvaluateFieldExpression($interpolate, $scope);
             $scope.ListMenu = configMenuList.GetListData();
-
-            $scope.ListStores = configListStores.GetListData();
         }
 
         $scope.SetStoreId = function () {
@@ -120,149 +105,185 @@ mdlMenu.controller('LoadMenuController',
             switch ($scope.DataAction.Action) {
                 case "LIST_ORDERS":
                     scope = angular.element(document.getElementById("OrderController")).scope();
+                    if (!scope) break;
                     scope.CloseOrderDetail();
                     break;
                 case "ADD_ORDERS":
                     scope = angular.element(document.getElementById("OrderController")).scope();
+                    if (!scope) break;
                     scope.AddOrder();
                     break;
                 case "LIST_CUSTOMERS":
                     scope = angular.element(document.getElementById("CustomerController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Customers');
                     break;
                 case "LIST_SALECUSTOMERS":
                     scope = angular.element(document.getElementById("CustomerController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('SaleCustomers');
                     break;
                 case "LIST_SUPPLIER":
                     scope = angular.element(document.getElementById("CustomerController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Suppliers');
                     break;
                 case "LIST_PURCHASE":
                     scope = angular.element(document.getElementById("PurchaseController")).scope();
+                    if (!scope) break;
                     scope.ClosePurchaseDetail();
                     break;
                 case "ADD_PURCHASE":
                     scope = angular.element(document.getElementById("PurchaseController")).scope();
+                    if (!scope) break;
                     scope.AddPurchase();
                     break;
                 case "LIST_PRODUCTS":
                     scope = angular.element(document.getElementById("ProductController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Products');
                     scope.CloseProductDetail();
                     break;
                 case "ADD_PRODUCTS":
                     scope = angular.element(document.getElementById("ProductController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Products');
                     scope.AddProduct(0);
                     break;
                 case "LIST_COMBO":
                     scope = angular.element(document.getElementById("ProductController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Combos');
                     scope.CloseProductDetail()
                     break;
                 case "ADD_COMBO":
                     scope = angular.element(document.getElementById("ProductController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Combos');
                     scope.AddProduct(1);
                     break;
                 case "INVENTORY":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventoryProduct');
                     break;
                 case "INVENTORY_INOUT":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventoryInOut');
                     break;
                 case "INVENTORY_CHECK":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventoryCheck');
                     scope.CloseInventoryDetail();
                     break;
                 case "INVENTORY_TRAN":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventTrans');
                     scope.CloseInventTranDetail();
                     break;
                 case "ADD_INVENTORY_CHECK":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventoryCheck');
                     scope.AddInventory();
                     break;
                 case "ADD_INVENTORY_TRAN":
                     scope = angular.element(document.getElementById("InventoryController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('InventTrans');
                     scope.AddInventTran();
                     break;
                 case "REVENUE_BY_SELLER":
                     scope = angular.element(document.getElementById("RevenueController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportBySeller');
                     break;
                 case "REVENUE_BY_STORE":
                     scope = angular.element(document.getElementById("RevenueController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByStore');
                     break;
                 case "REVENUE_BY_MONTH":
                     scope = angular.element(document.getElementById("RevenueController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByMonth');
                     break;
                 case "REVENUE_BY_PRODUCT":
                     scope = angular.element(document.getElementById("RevenueController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByProduct');
                     break;
                 case "PAYMENT":
                     scope = angular.element(document.getElementById("PaymentController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Costs');
                     break;
                 case "PAYMENT_ORDER":
                     scope = angular.element(document.getElementById("PaymentController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Payments');
                     break;
                 case "RECEIVEMENT":
                     var scope = angular.element(document.getElementById("PaymentController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('CollectMoneys');
                     break;
                 case "PROFIT_BY_TIME":
                     scope = angular.element(document.getElementById("ProfitController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByTime');
                     break;
                 case "PROFIT_BY_PRODUCT":
                     scope = angular.element(document.getElementById("ProfitController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByProduct');
                     break;
                 case "PROFIT_BY_STORE":
                     scope = angular.element(document.getElementById("ProfitController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportByStore');
                     break;
                 case "PROFIT_SUMMARY":
                     scope = angular.element(document.getElementById("ProfitController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('ReportProfit');
                     break;
                 case "SETTING_USER":
                     scope = angular.element(document.getElementById("SettingController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Users');
                     break;
                 case "SETTING_STORE":
                     scope = angular.element(document.getElementById("SettingController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Stores');
                     break;
                 case "SETTING_CONFIG":
                     scope = angular.element(document.getElementById("SettingController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Setting');
                     break;
                 case "SETTING_PRINT":
                     scope = angular.element(document.getElementById("SettingController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Prints');
                     break;
                 case "SETTING_PROMOTION":
                     scope = angular.element(document.getElementById("SettingController")).scope();
+                    if (!scope) break;
                     scope.SetCurrentTab('Promotion');
                     break;
             }
-            scope.$apply();
+            if (scope && !scope.$$phase) {
+                scope.$apply();
+            }
         }
 
         $scope.HasLoadFinished = false;
+        $scope.StartLoad = false;
         $scope.LoadViewBody = function (url) {
             clearGlobalSession();
             $scope.CurrentUrl = url;
@@ -271,6 +292,7 @@ mdlMenu.controller('LoadMenuController',
             if (scope.SrcView != url) {
                 $("i.img-loading").show();
                 $("#bodyView").hide();
+                $scope.StartLoad = true;
                 scope.$apply(function () {
                     scope.SrcView = url;
                 });
@@ -280,12 +302,15 @@ mdlMenu.controller('LoadMenuController',
                 scope.$on('$includeContentLoaded', function () {
                     $("i.img-loading").hide();
                     $("#bodyView").show();
-                    $scope.SelectQuickAction();
+                    if ($scope.StartLoad) {
+                        $scope.SelectQuickAction();
+                        $scope.StartLoad = false;
+                    }
                 });
                 $scope.HasLoadFinished = true;
             }
         }
-                
+
         if (typeof (Storage) !== "undefined") {
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
@@ -350,6 +375,9 @@ mdlMenu.controller('LoadMenuController',
                     return false;
                 }
             })
+            .focus(function(){            
+                $(this).autocomplete("search");
+            })
             .autocomplete("instance")._renderItem = function (ul, item) {
                 var content;
                 if (item[element.attr("autocomplete-colum-code")]) {
@@ -404,6 +432,55 @@ mdlMenu.controller('LoadMenuController',
                 }
             }
         });
+
+        $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
+        $scope.CreateSampleDataStore = function () {
+            $scope.StoreFormConfig.SetObject({ StoreId: $scope.CurrentStore, TriggerCreateSampleData: 1, Version: -1 });
+            var storeId = $scope.StoreFormConfig.SaveObject();
+            if (storeId > 0) {
+                ShowSuccessMessage("Dữ liệu của cửa hàng '" + $scope.StoreName + "' được tạo thành công.");
+                $('#modalCreateSampleData').modal('hide');
+                location.reload();
+            }
+        }
+
+       
+
+        setTimeout(function () {
+            if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0) {
+                // Store
+                if (!localStorage.getItem("ShowCreateSampleData" + $scope.CurrentStore)) {
+                    $("#modalCreateSampleData").modal();
+                    localStorage.setItem("ShowCreateSampleData" + $scope.CurrentStore, "1");
+                }
+            }
+
+        }, 2000);
+
+        /*---------show help---------*/
+        $scope.ShowHelp = function () {
+           
+            var _helpMapping =  {
+                '/Admin/General' : 'lam-quen',
+                '/Admin/Orders' : 'quan-ly-don-hang',
+                '/Admin/Products' : 'quan-ly-hang-hoa',
+                '/Admin/Customers' : 'quan-ly-khach-hang',
+                '/Admin/Purchase' : 'quan-ly-nhap-kho',
+                '/Admin/Inventory' : 'quan-ly-ton-kho',
+                '/Admin/Revenue' : 'doanh-thu',
+                '/Admin/Payment' : 'thu-chi',
+                '/Admin/Profit' : 'loi-nhuan',
+                '/Admin/Setting' : 'thiet-lap',
+                '/Admin/Exception' : '',
+                '/Admin/LogData' : '',
+                '/Admin/Announcement' : '',
+                '/Admin/SQL' : '',
+                '/Admin/ManageStore': ''
+            }
+            var curUrl = $scope.CurrentUrl;
+            var helpPage = _helpMapping[curUrl];
+            window.open(g_documentUrl + helpPage, '_blank');
+        }
 
     }]);
 

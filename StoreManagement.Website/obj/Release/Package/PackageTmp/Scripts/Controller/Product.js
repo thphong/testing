@@ -1,10 +1,12 @@
 ﻿function CheckProductCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Trans_Products", null);
-        var object = config.GetObject(value, 'ProductCode');
-        if (object) {
-            return false;
-        }
+        var configList = new GridViewConfig("");
+        configList.GridDataAction = "count";
+        configList.GridDataType = "table";
+        configList.GridDataObject = "T_Trans_Products";
+        configList.GridFilterCondition = "[StoreId] = " + g_currentStoreId + "and [ProductCode] = ''" + value + "''";
+        var count = configList.CountListData();
+        return count == 0;
     }
     return true;
 }

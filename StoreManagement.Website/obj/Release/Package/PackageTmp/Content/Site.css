@@ -749,3 +749,31 @@ i.img-loading {
 .ui-autocomplete{
     z-index:1000;
 }
+
+.dropdown-menu li  button{
+    display:block;
+    margin:auto;
+}
+
+/*   tooltip   */
+.has-error .tooltip-inner {
+    background-color: #e8b110;
+    color: #fff;
+}
+
+.has-error .tooltip.top .tooltip-arrow {
+    border-top-color: #e8b110;
+}
+
+.has-error .tooltip.right .tooltip-arrow {
+    border-right-color: #e8b110;
+}
+
+.has-error .tooltip.bottom .tooltip-arrow {
+    border-bottom-color:#e8b110;
+}
+
+.has-error .tooltip.left .tooltip-arrow {
+    border-left-color: #e8b110;
+}
+

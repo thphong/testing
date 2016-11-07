@@ -84,9 +84,22 @@ mdlCommon.directive('gridExportImportFor', function () {
     directive.compile = function (element, attributes) {
         var gridId = attributes.gridExportImportFor;
         var template = attributes.gridExportTemplate;
-        element.append('<button class="btn btn-success btn-primary" ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
+        element.append('<button class="btn btn-success btn-warning"  ng-click="ExportExcel(\'' + gridId + '\', \'' + template + '\')">'
                     + '<i class="fa fa-download white"></i>'
                     + '<span>Xuất Excel</span>'
+                    + '</button>');
+    }
+    return directive;
+});
+
+mdlCommon.directive('gridImport', function () {
+    var directive = {};
+    directive.restrict = 'A';
+    directive.compile = function (element, attributes) {
+        var template = attributes.gridImportTemplate;
+        element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' +' \'' + template + '\')">'
+                    + '<i class="fa fa-upload white"></i>'
+                    + '<span>Nhập Excel</span>'
                     + '</button>');
     }
     return directive;
@@ -282,9 +295,10 @@ mdlCommon.directive('dropdownMasterTable', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
 
-        /*var dropdownConfig = new DropdownConfig(element, attributes);
-        _DropdownConfigs.push(dropdownConfig);
-        dropdownConfig.BindBody();*/
+        var getColumName = function (fieldName) {
+            var array = fieldName.split(".");
+            return array[array.length-1];
+        }
 
         var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
         element.attr("dropdown-id", dropdownId);
@@ -293,6 +307,8 @@ mdlCommon.directive('dropdownMasterTable', function () {
         var configList = new GridViewConfig(dropdownId);
         var valueField = attributes.dropdownValueField;
         var nameField = attributes.dropdownNameField;
+        var aliasValueField = getColumName(valueField);
+        var aliasNameField = getColumName(nameField);
         configList.GridDataAction = "getall";
         configList.GridDataObject = attributes.dropdownMasterTable;
         configList.GridDefinedColums = valueField + ";" + nameField;
@@ -310,7 +326,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
             }
             element.append(' <option value="' + emptyValue + '"> ' + emptyText + '</option>');
         }
-        element.append(' <option ng-repeat="item in Dropdowns.' + dropdownId + '" value="{{item.' + valueField + '}}" ng-bind="item.' + nameField + '"></option>');
+        element.append(' <option ng-repeat="item in Dropdowns.' + dropdownId + '" value="{{item.' + aliasValueField + '}}" ng-bind="item.' + aliasNameField + '"></option>');
     }
     return directive;
 });
@@ -423,7 +439,7 @@ mdlCommon.directive('dateRangeFilterFor', function () {
     return directive;
 });
 
-mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', function ($scope, $interpolate, $filter) {
+mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compile', function ($scope, $interpolate, $filter, $compile) {
     //Global variable
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentUserName = g_currentUserName;
@@ -608,7 +624,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
         //getDataListUrl is defined in global
         return config.SumListData();
     }*/
-
+    //==================================
+    //Excel-Export
     $scope.ExportExcel = function (gridId, template) {
         //Evaluate condition before send to execute in DB
         var config = $scope.Config[gridId];
@@ -622,6 +639,149 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
     }
 
 
+    //Excel-Import
+    $scope.ImportExcel = function (template) {
+        setTimeout(function () {
+            if ($('.import-modal').length == 0) {
+                $("#bodyView").append($compile(
+                    '<div class="import-modal modal fade" tabindex="-1" role="dialog">'
+                        + '<div class="modal-dialog modal-md" >'
+                        + '<div class="modal-content">'
+                          + '<div class="modal-header infobox-primary white">'
+                            + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                            + '<h4 class="modal-title">Nhập Excel</h4>'
+                          + '</div>'
+                          + '<div class="modal-body">'
+                            + '<div class="pull-right">Tải file mẫu : <a href="template/' + template + '"  > ' + template + '.xlsx' + '</a></div>' // ng-click="$event.preventDefault();DownloadExcelTemplate(\'' + template + '\')"
+                            + '<div>Chọn file excel : <input id="import-excel-input" type="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" /></div>'
+                            + '<div id="error-result" style="max-height:400px;overflow: scroll-y;" class="table-responsive"></div>'
+                          + '</div>'
+                          + '<div class="modal-footer">'
+                            + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+                            + '<button type="button" class="btn btn-primary" ng-click="alert(\'dsadsa\');ImportUploadedExcel(\'' + template + '\',' + '\'#import-excel-input\')">Upload</button>'
+                          + '</div>'
+                        + '</div><!-- /.modal-content -->'
+                      + '</div><!-- /.modal-dialog -->'
+                    + '</div><!-- /.modal -->'
+                )($scope));
+                $scope.$apply();
+
+                $('#import-excel-input').on("change", function () {
+                    var validExts = new Array(".xlsx", ".xls", ".csv");
+                    var fileExt = $(this).val();
+                    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+                    if (validExts.indexOf(fileExt) < 0) {
+                        ShowErrorMessage("Invalid file selected, valid files are of " +
+                                    validExts.toString() + " types.");
+                        return false;
+                    }
+                    else return true;
+                });
+            }
+            $('#import-excel-input').val("");
+
+            $('.import-modal .modal-dialog').removeClass("modal-lg");
+            $('.import-modal .modal-dialog').addClass("modal-md");
+            $('.import-modal #error-result').html("");
+            
+
+            $('.import-modal').on('shown.bs.modal', function () {
+
+            }).modal('show');
+
+        }, 100);
+    }
+
+    $scope.ImportUploadedExcel = function (template, fileinput) {
+        //test($scope, $compile);       return;
+        //upload and check file on server
+        if ($(fileinput)[0].files.length == 0)
+        {
+            ShowErrorMessage('Chưa chọn file');
+            return;
+        }
+        var result = 0;
+        if ($(fileinput)[0].files.length > 0) {
+            var file = $(fileinput)[0].files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('template', template);
+            $.ajax({
+                url: g_importExcelFileUrl,
+                type: 'POST',
+                data: formData,
+                async: false,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (typeof (data) == 'string' && data.startsWith("#error")) {
+                        ShowErrorMessage(data);
+                        result = null;
+                    }
+                    else {
+                        result = data;
+                    }
+                }
+            });       
+        }
+
+        if (result == null) return;
+        //============================
+        //check file excel
+        if (!result.isError) {
+            //Successful
+            ShowSuccessMessage("Đã nhập thành công");
+            $('.import-modal').modal('hide');
+            return;
+        }
+
+        //============================
+        //if error -> show erroes
+        setTimeout(function () {
+            var scope = $scope.$new(true);
+            scope.columnNames = result.columnNames;
+            scope.columnCodes = result.columnCodes;
+            scope.dataTable = result.dataTable;
+            scope.errorTable = result.errorTable;
+            var template = angular.element('<div> <h4 class="text-danger">Dữ liệu bị lỗi</h4>' 
+                + ' <table class="table table-striped  table-bordered  table-condensed has-error">'
+                + '<thead>'
+                  + '<tr>'
+                    + '<th>STT</th>'
+                    + '<th ng-repeat="col in columnNames">{{col}}</th>'
+                  + '</tr>'
+                + '</thead>'
+                + '<tbody>'
+                  + '<tr ng-repeat="row in dataTable" >'
+                    + '<td ng-init="errrow = errorTable[$index]">{{$index+1}}</td>'
+                    + '<td ng-repeat="col in columnCodes" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" '
+                        + ' data-toggle="tooltip" title="{{errrow[col]}}" >'
+                        + '{{row[col]}}  </td>'
+                  + '</tr>'
+                + '</tbody>'
+                + '</table>'
+                +'</div>'
+            );
+            var content = $compile(template)(scope);
+
+            //append content;
+            $('.import-modal #error-result').html(content);
+            $scope.$apply();
+
+            $('.import-modal .modal-dialog').removeClass("modal-md");
+            $('.import-modal .modal-dialog').addClass("modal-lg");
+            $('[data-toggle="tooltip"]').tooltip();
+        }, 100);
+    }
+
+    $scope.DownloadExcelTemplate = function (template) {
+        AjaxAsync(g_downloadExcelTemplateUrl, '{ template : "' + template + '"}',
+            function (url) {
+                window.location = url;
+            });
+    }
+
+    //==================================
     $scope.ReloadGrid = function (gridId) {
         $scope.CalculatedGridPara(gridId);
     }
@@ -895,6 +1055,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', functio
             //});
         }
     }
+
+
 }]);
 
 

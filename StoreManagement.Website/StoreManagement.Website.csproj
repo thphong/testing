@@ -510,6 +510,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\logo\comodo_secure_seal_100_85.png" />
+    <Content Include="Images\logo\comodo_secure_seal_113_59.png" />
+    <Content Include="Images\logo\comodo_secure_seal_76_26.png" />
     <Content Include="Images\logo\pholo-border.png" />
     <Content Include="Images\logo\pholo.png" />
     <Content Include="Images\logo\pholo_128.ico" />

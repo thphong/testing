@@ -21,7 +21,7 @@
         $scope.ConfigStoreList.GridDataType = "table";
         $scope.ConfigStoreList.GridDataObject = "T_Trans_Products";
         $scope.ConfigStoreList.GridDefinedColums = "StoreId;StoreId.StoreCode;Quantity";
-        $scope.ConfigStoreList.GridFilterConditionExpression = "T_Trans_Products.ProductId = {{ProductQuanHistoryForm.ProductId}}";
+        $scope.ConfigStoreList.GridFilterConditionExpression = "T_Trans_Products.ProductCode = ''{{ProductQuanHistoryForm.ProductCode}}''";
         $scope.ConfigStoreList.GridSortCondition = "StoreId.StoreCode ASC";
 
         $scope.ListStores = [];

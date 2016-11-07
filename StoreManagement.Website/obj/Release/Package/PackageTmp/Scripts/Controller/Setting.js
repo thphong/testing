@@ -167,7 +167,8 @@ mdlCommon.controller('SettingController',
             ProductGroup: "",
             IsEditing: false,
             Version: 0,
-            IsActive: 1
+            IsActive: 1,
+            TriggerCreateSampleData: 0
         }
 
         $scope.ResetStoreForm = function () {
@@ -182,6 +183,7 @@ mdlCommon.controller('SettingController',
             $scope.StoreForm.IsEditing = false;
             $scope.StoreForm.Version = 0;
             $scope.StoreForm.IsActive = 1;
+            $scope.StoreForm.TriggerCreateSampleData = 0;
         }
 
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
@@ -202,7 +204,7 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.SaveStoreForm = function () {
-            if (FValidation.CheckControls("")) {
+            if (FValidation.CheckControls("") && ($scope.StoreForm.StoreId > 0 || $scope.CanAddStore)) {
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
                 if (storeId > 0) {
@@ -213,6 +215,28 @@ mdlCommon.controller('SettingController',
                         $scope.StoreFormConfig.CopyFields(store, $scope.StoreForm);
                     }
                     $scope.StoreForm.IsEditing = false;
+                }
+            }
+        }
+
+        $scope.DeleteDataStore = function () {
+            if (confirm("Dữ liệu không thể phục hồi. Bạn có muốn xóa toàn bộ dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
+                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.TriggerCreateSampleData) + 1;
+                $scope.StoreFormConfig.SetObject($scope.StoreForm);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Tất cả dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "' được xóa thành công.");
+                }
+            }
+        }
+
+        $scope.CreateSampleDataStore = function () {
+            if (confirm("Bạn có muốn tạo dữ liệu mẫu cho cửa hàng '" + $scope.StoreForm.StoreName + "'?")) {
+                $scope.StoreForm.TriggerCreateSampleData = parseInt($scope.StoreForm.TriggerCreateSampleData) + 1;
+                $scope.StoreFormConfig.SetObject($scope.StoreForm);
+                var storeId = $scope.StoreFormConfig.SaveObject();
+                if (storeId > 0) {
+                    ShowSuccessMessage("Dữ liệu của cửa hàng '" + $scope.StoreForm.StoreName + "' được tạo thành công.");
                 }
             }
         }
