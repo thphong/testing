@@ -16,7 +16,8 @@
         $scope.Filter = {
             SelectedMonth: ((new Date()).getMonth() + 1).toString(),
             SelectedYear: (new Date()).getFullYear().toString(),
-            CurrentStore: "0"
+            CurrentStore: "0",
+            ProductGroup: "0"
         };
 
         $scope.SelectUserId = function (user) {

@@ -126,8 +126,9 @@
                                             @*Dataset must have grid id*@
                                             <tr ng-repeat-start="item in DataSet.Products.Data" >
                                                 <td>
-                                                    <a class="badge badge-primary" ng-click="SelectProductId(item)">
-                                                        <i class="fa-plus fa"></i>
+                                                    <a class="icon" ng-click="SelectProductId(item)">
+                                                        <i ng-if="SelectedProductId != item.ProductId" class="fa-plus-circle fa"></i>
+                                                        <i ng-if="SelectedProductId == item.ProductId" class="fa-minus-circle fa"></i>
                                                     </a>
                                                 </td>
                                                 <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>
@@ -295,8 +296,9 @@
                                             @*Dataset must have grid id*@
                                             <tr ng-repeat-start="item in DataSet.Combos.Data">
                                                 <td>
-                                                    <a class="badge badge-primary" ng-click="SelectProductId(item)">
-                                                        <i class="fa-plus fa"></i>
+                                                    <a class="icon" ng-click="SelectProductId(item)">
+                                                        <i ng-if="SelectedProductId != item.ProductId" class="fa-plus-circle fa"></i>
+                                                        <i ng-if="SelectedProductId == item.ProductId" class="fa-minus-circle fa"></i>
                                                     </a>
                                                 </td>
                                                 <td> <a href="#" ng-bind="item.ProductName" ng-click="ShowProductDetail(item)"></a></td>

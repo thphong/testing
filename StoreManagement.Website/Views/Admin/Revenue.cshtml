@@ -118,8 +118,9 @@
                                         @*Dataset must have grid id*@
                                         <tr ng-repeat-start="item in DataSet.ReportBySeller.Data">
                                             <td>
-                                                <a class="badge badge-primary" ng-click="SelectUserId(item)">
-                                                    <i class="fa-plus fa"></i>
+                                                <a class="icon" ng-click="SelectUserId(item)">
+                                                    <i ng-if="SelectedUserId != item.UserId" class="fa-plus-circle fa"></i>
+                                                    <i ng-if="SelectedUserId == item.UserId" class="fa-minus-circle fa"></i>
                                                 </a>
                                             </td>
                                             <td ng-bind="item.CashierName"></td>
@@ -254,8 +255,9 @@
                                         @*Dataset must have grid id*@
                                         <tr ng-repeat-start="item in DataSet.ReportByStore.Data">
                                             <td>
-                                                <a class="badge badge-primary" ng-click="SelectStoreId(item)">
-                                                    <i class="fa-plus fa"></i>
+                                                <a class="icon" ng-click="SelectStoreId(item)">
+                                                    <i ng-if="SelectedStoreId != item.StoreId" class="fa-plus-circle fa"></i>
+                                                    <i ng-if="SelectedStoreId == item.StoreId" class="fa-minus-circle fa"></i>
                                                 </a>
                                             </td>
                                             <td ng-bind="item.StoreCode"></td>
@@ -440,11 +442,20 @@
                 </div>
                 <div class="tab-pane col-md-12" ng-class="{'active': CurrentTab =='ReportByProduct'}">
                     <div class="row margin-top-10">
-                        <div class="col-md-3 margin-top-5">
+                        <div class="col-md-2 margin-top-5">
                             <span grid-filter-for="ReportByProduct" place-holder-message="Nhập mã hoặc tên hàng hóa để tìm kiếm"></span>
                         </div>
-                        <div class="col-md-5 margin-top-5">
+                        <div class="col-md-4 margin-top-5">
                             <span date-range-filter-for="ReportByProduct"></span>
+                        </div>
+                        <div class="col-md-2 margin-top-5">
+                            <select class="form-control" ng-model="Filter.ProductGroup"
+                                    ng-change="ReloadGrid('ReportByProduct')"
+                                    dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
+                                    dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng"
+                                    dropdown-empty-value="0"
+                                    ng-class="{notice : Filter.ProductGroup != 0 }"
+                                    dropdown-condition="[IsActive] = 1"></select>
                         </div>
                         <div class="col-md-2 margin-top-5">
                             <select class="form-control" ng-model="Filter.CurrentStore"
@@ -469,7 +480,8 @@
                                        grid-parameters="{{CurrentUser}}
                                             ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.StartDate}}'', ''dd-MM-yyyy'')
                                             ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
-                                            ,{{Filter.CurrentStore}}"
+                                            ,{{Filter.CurrentStore}}
+                                            ,{{Filter.ProductGroup}}"
                                        grid-sort-condition="[Quantity] DESC" @*must have [fieldname] for each colum field*@
                                        grid-sum-collection="" @*must have [fieldname] for each colum field*@
                                        class="table table-striped table-bordered">
@@ -478,6 +490,7 @@
                                             <th><span>STT</span></th>
                                             <th grid-defined-colum="ProductCode"><span>Mã hàng hóa</span></th>
                                             <th grid-defined-colum="ProductName"><span>Tên hàng hóa</span></th>
+                                            <th grid-defined-colum="ProductGroupName"><span>Nhóm hàng</span></th>
                                             <th grid-defined-colum="Revenue"><span>Doanh thu</span></th>
                                             <th grid-defined-colum="Quantity"><span>Số lượng</span></th>
                                         </tr>
@@ -487,12 +500,13 @@
                                             <td ng-bind="item.RowNum"></td>
                                             <td ng-bind="item.ProductCode"></td>
                                             <td ng-bind="item.ProductName"></td>
+                                            <td ng-bind="item.ProductGroupName"></td>
                                             <td ng-bind="item.Revenue | currency:'':0"></td>
                                             <td ng-bind="item.Quantity"></td>
                                         </tr>
                                         <tr ng-if="!DataSet.ReportByProduct.HasRecord()">
                                             @*Edit colspan*@
-                                            <td colspan="5" align="center"> Không có dữ liệu! </td>
+                                            <td colspan="6" align="center"> Không có dữ liệu! </td>
                                         </tr>
                                     </tbody>
                                 </table>

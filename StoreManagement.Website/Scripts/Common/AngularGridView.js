@@ -823,8 +823,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
     $scope.InitVisibleDropdown = function (dropdownId) {
         //if ($('select[dropdown-id="' + dropdownId + '"]').is(":visible")) {
         if (!this.Dropdowns[dropdownId]) {
-            //alert('dropdown ' + dropdownId);
-            $scope.ReloadDropdown(dropdownId);
+            setTimeout(function () {
+                $scope.ReloadDropdown(dropdownId);
+            }, 100);
+            
         }
     }
 
