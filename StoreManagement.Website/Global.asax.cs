@@ -40,5 +40,11 @@ namespace StoreManagement.Website
             var dataService = DependencyResolver.Current.GetService<DataService>();
             dataService.Logout(SessionCollection.CurrentUserId);
         }
+
+        protected void Application_BeginRequest()
+        {
+            if (!Context.Request.IsSecureConnection)
+                Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
+        }
     }
 }
