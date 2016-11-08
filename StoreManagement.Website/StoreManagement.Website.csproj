@@ -594,9 +594,6 @@
     <Content Include="Resource\ImportedTemplate\Products.xlsx" />
     <Content Include="Resource\ImportedTemplate\Customers.conf" />
     <Content Include="Resource\ImportedTemplate\Customers.xlsx" />
-    <Content Include="Resource\ImportedTemplate\Products.conf" />
-    <Content Include="Resource\ImportedTemplate\Suppliers.conf" />
-    <Content Include="Resource\ImportedTemplate\Suppliers.xlsx" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
@@ -906,12 +903,12 @@
     <Content Include="Scripts\Common\LoadMenu.js" />
     <Content Include="Scripts\Controller\Announcement.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
-    <Content Include="Scripts\Controller\Files.js" />
     <Content Include="Scripts\Controller\CostType.js" />
     <Content Include="Scripts\Controller\Customer.js" />
     <Content Include="Scripts\Controller\CustomerModal.js" />
     <Content Include="Scripts\Controller\DataLog.js" />
     <Content Include="Scripts\Controller\Exception.js" />
+    <Content Include="Scripts\Controller\Files.js" />
     <Content Include="Scripts\Controller\General.js" />
     <Content Include="Scripts\Controller\ManageStore.js" />
     <Content Include="Scripts\Controller\Payment.js" />
