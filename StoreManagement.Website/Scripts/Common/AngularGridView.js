@@ -447,6 +447,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
     $scope.StoreName = g_storeName;
     $scope.StoreAddress = g_storeAddress;
     $scope.StorePhone = g_storePhone;
+    $scope.ParentStore = g_parentStore;
     $scope.RULES = {};
     //$scope.Language = {
     //    Code: "",

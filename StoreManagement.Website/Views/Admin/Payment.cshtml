@@ -81,7 +81,7 @@
                                                     <span style="display: inline-block">
                                                         <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_CostTypes" dropdown-value-field="CostTypeId"
                                                                 dropdown-name-field="CostTypeName" dropdown-empty-text="Loại chi phí" dropdown-empty-value="0"
-                                                                dropdown-condition="[IsActive] = 1 and [StoreId] = {{CurrentStore}}"
+                                                                dropdown-condition="[IsActive] = 1 and [StoreId] = {{ParentStore}}"
                                                                 ng-change="ReloadGrid('Costs')"></select>
                                                     </span>
                                                 </th>

@@ -9,7 +9,7 @@
                 <div class="col-md-3 col-xs-12 margin-top-10">
                     <select class="form-control input-sm" ng-model="AdditionalFilter.ProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                             dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" dropdown-empty-value="0" ng-change="ReloadGrid('Products')"
-                            dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
+                            dropdown-condition="[IsActive]  = 1 and [StoreId] = {{ParentStore}}"></select>
                 </div>
                 <div class="col-md-4 col-xs-12 margin-top-10">
                     <span grid-filter-for="Products" place-holder-message="Nhập mã hoặc tên hàng hóa"></span>

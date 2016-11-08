@@ -438,7 +438,7 @@ mdlCommon.controller('InventoryController',
 
         $scope.PrintForm = function () {
             $scope.GetListPrintTerm("Transfer");
-            $scope.GetPrintTemplate("PRODUCT_TRANSFER", $scope.CurrentStore);
+            $scope.GetPrintTemplate("PRODUCT_TRANSFER", $scope.ParentStore);
 
             setTimeout(function () {
                 $scope.PrintData("divPrint");

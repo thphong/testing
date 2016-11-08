@@ -47,7 +47,7 @@
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryProduct')"
                                         ng-class="{notice:AdditionalFilter.InventoryProductGroup != 0 }"
-                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{ParentStore}}"></select>
                             </div>
                             <div class="col-md-2 margin-top-5">
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryProductType"
@@ -178,7 +178,7 @@
                                 <select class="form-control input-sm" ng-model="AdditionalFilter.InventoryInOutProductGroup" dropdown-master-table="T_Master_ProductGroups" dropdown-value-field="ProductGroupId"
                                         ng-class="{notice:AdditionalFilter.InventoryInOutProductGroup != 0 }"
                                         dropdown-name-field="GroupName" dropdown-empty-text="Tất cả nhóm hàng" ng-change="ReloadGrid('InventoryInOut')"
-                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{CurrentStore}}"></select>
+                                        dropdown-condition="[IsActive]  = 1 and [StoreId] = {{ParentStore}}"></select>
                             </div>
                             <div class="col-md-4 margin-top-5">
                                 <span date-range-filter-for="InventoryInOut" date-range-init-code="2"></span>

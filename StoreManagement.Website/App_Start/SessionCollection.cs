@@ -205,5 +205,18 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["IsDeveloper"] = value;
             }
         }
+
+        public static int ParentStore
+        {
+            get
+            {
+                return HttpContext.Current.Session["ParentStore"] != null ? (int)HttpContext.Current.Session["ParentStore"] : 0;
+            }
+            set
+            {
+                HttpContext.Current.Session["ParentStore"] = value;
+            }
+        }
+        
     }
 }

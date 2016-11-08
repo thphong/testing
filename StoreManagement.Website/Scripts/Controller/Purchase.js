@@ -310,7 +310,7 @@ mdlCommon.controller('PurchaseController',
 
         $scope.PrintForm = function () {
             $scope.GetListPrintTerm("Purchase");
-            $scope.GetPrintTemplate("PURCHASE", $scope.CurrentStore);
+            $scope.GetPrintTemplate("PURCHASE", $scope.ParentStore);
 
             setTimeout(function () {
                 $scope.PrintData("divPrint");

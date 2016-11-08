@@ -132,6 +132,7 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.StoreName = store["StoreName"].ToString();
                 SessionCollection.StorePhone = store["PhoneNumber"].ToString();
                 SessionCollection.StoreAddress = store["Address"].ToString();
+                SessionCollection.ParentStore = int.Parse(store["ParentStore"].ToString());
 
                 return Json(true);
             }
@@ -510,7 +511,7 @@ namespace StoreManagement.Website.Controllers
                     GridDataObject = "T_System_Rule",
                     GridDefinedColums = "RuleName;Value",
                     GridDataAction = "getall",
-                    GridFilterCondition = "StoreId = 0 or StoreId = " + SessionCollection.CurrentStore
+                    GridFilterCondition = "StoreId = 0 or StoreId = " + SessionCollection.ParentStore
                 };
                 return Json(dataService.GetRules(SessionCollection.CurrentUserId, config));
             }

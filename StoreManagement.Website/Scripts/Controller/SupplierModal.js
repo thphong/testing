@@ -26,7 +26,7 @@ mdlCommon.controller('SupplierModalController',
             TaxCode: "",
             Notes: "",
             IsActive: 1,
-            StoreId: $scope.CurrentStore,
+            StoreId: $scope.ParentStore,
             _CanUpdate: true,
             _CanDelete: true,
             Version : 0
@@ -41,7 +41,7 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.TaxCode = "";
             $scope.SupplierForm.Notes = "";
             $scope.SupplierForm.Address = "";
-            $scope.SupplierForm.StoreId = $scope.CurrentStore;
+            $scope.SupplierForm.StoreId = $scope.ParentStore;
             $scope.SupplierForm._CanUpdate = true;
             $scope.SupplierForm._CanDelete = true;
             $scope.SupplierForm.Version = 0;
