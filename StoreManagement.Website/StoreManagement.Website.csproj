@@ -594,6 +594,9 @@
     <Content Include="Resource\ImportedTemplate\Products.xlsx" />
     <Content Include="Resource\ImportedTemplate\Customers.conf" />
     <Content Include="Resource\ImportedTemplate\Customers.xlsx" />
+    <Content Include="Resource\ImportedTemplate\Products.conf" />
+    <Content Include="Resource\ImportedTemplate\Suppliers.conf" />
+    <Content Include="Resource\ImportedTemplate\Suppliers.xlsx" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
