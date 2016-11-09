@@ -165,6 +165,7 @@ mdlCommon.controller('SettingController',
             Address: "",
             TaxCode: "",
             ProductGroup: "",
+            ParentStore: $scope.ParentStore,
             IsEditing: false,
             Version: 0,
             IsActive: 1,
@@ -180,6 +181,7 @@ mdlCommon.controller('SettingController',
             $scope.StoreForm.Address = "";
             $scope.StoreForm.TaxCode = "";
             $scope.StoreForm.ProductGroup = "";
+            $scope.StoreForm.ParentStore = $scope.ParentStore;
             $scope.StoreForm.IsEditing = false;
             $scope.StoreForm.Version = 0;
             $scope.StoreForm.IsActive = 1;
@@ -187,7 +189,6 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.StoreFormConfig = new ObjectDataConfig("T_Master_Stores", $scope);
-        $scope.CanAddStore = $scope.StoreFormConfig.CheckField('ADD_STORE');
         $scope.StoreFormConfig.CheckCanCreateObject();
         $scope.LoadStoreForm = function () {
             if ($scope.StoreForm.StoreId <= 0) {
@@ -204,7 +205,7 @@ mdlCommon.controller('SettingController',
         }
 
         $scope.SaveStoreForm = function () {
-            if (FValidation.CheckControls("") && ($scope.StoreForm.StoreId > 0 || $scope.CanAddStore)) {
+            if (FValidation.CheckControls("")) {
                 $scope.StoreFormConfig.SetObject($scope.StoreForm);
                 var storeId = $scope.StoreFormConfig.SaveObject();
                 if (storeId > 0) {
