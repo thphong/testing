@@ -67,7 +67,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[StoreId] = {{ParentStore}} and [IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
+                                   grid-filter-condition="[ParentStore] = {{ParentStore}} and [IsWholeSale] = 0 and [IsActive] = 1 and ({{AdditionalFilter.CustomerType}} = 0
                                                 or ({{AdditionalFilter.CustomerType}} = 1 and  [LastTimeVisited] is not null)
                                                 or ({{AdditionalFilter.CustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
@@ -161,7 +161,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Customers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[StoreId] = {{ParentStore}} and [IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
+                                   grid-filter-condition="[ParentStore] = {{ParentStore}} and [IsWholeSale] = 1 and [IsActive] = 1 and ({{AdditionalFilter.SaleCustomerType}} = 0
                                                 or ({{AdditionalFilter.SaleCustomerType}} = 1 and  [LastTimeVisited] is not null)
                                                 or ({{AdditionalFilter.SaleCustomerType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[CustomerCode] ASC" @*must have [fieldname] for each colum field*@
@@ -271,7 +271,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Master_Suppliers" @*table name or stored procedure name*@
-                                   grid-filter-condition="[StoreId] = {{ParentStore}} and [IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
+                                   grid-filter-condition="[ParentStore] = {{ParentStore}} and [IsActive] = 1 and ({{AdditionalFilter.SupplierType}} = 0
                                                 or ({{AdditionalFilter.SupplierType}} = 1 and  [LastTimeProvided] is not null)
                                                 or ({{AdditionalFilter.SupplierType}} = 2 and [Debt] > 0))" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[SupplierCode] ASC" @*must have [fieldname] for each colum field*@

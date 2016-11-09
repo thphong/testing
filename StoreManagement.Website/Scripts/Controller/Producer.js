@@ -19,7 +19,8 @@
             ProducerName: "",
             IsActive: "1",
             Version: 0,
-            StoreId: $scope.ParentStore
+            StoreId: $scope.CurrentStore,
+            ParentStore: $scope.ParentStore
         };
 
         $scope.ResetProducerForm = function () {
@@ -27,7 +28,8 @@
             $scope.ProducerForm.ProducerName = "";
             $scope.ProducerForm.IsActive = "1";
             $scope.ProducerForm.Version = 0;            
-            $scope.ProducerForm.StoreId = $scope.ParentStore;
+            $scope.ProducerForm.StoreId = $scope.CurrentStore;
+            $scope.ProducerForm.ParentStore = $scope.ParentStore;
         };
 
         $scope.ProducerFormConfig = new ObjectDataConfig("T_Master_Producers", $scope);
