@@ -46,7 +46,7 @@
         <label class="col-sm-4 control-label ">Số điện thoại </label>
         <div class="col-sm-7">
             <span ng-if="!IsEditingSupplierDetail" ng-bind="SupplierForm.Phone"></span>
-            <input class="form-control" ng-model="SupplierForm.Phone || '(Chưa có)'" 
+            <input class="form-control" ng-model="SupplierForm.Phone || '(Chưa có)'"
                    ng-if="IsEditingSupplierDetail"
                    check-length="50" check-length-message="Chiều dài tối ta là {0}." />
         </div>
@@ -55,7 +55,7 @@
         <label class="col-sm-4 control-label ">Email </label>
         <div class="col-sm-7">
             <span ng-if="!IsEditingSupplierDetail" ng-bind="SupplierForm.Email || '(Chưa có)'"></span>
-            <input class="form-control" ng-model="SupplierForm.Email" 
+            <input class="form-control" ng-model="SupplierForm.Email"
                    ng-if="IsEditingSupplierDetail"
                    check-length="50" check-length-message="Chiều dài tối ta là {0}."
                    check-custom="CheckEmailValid" check-custom-message="Vui lòng nhập email hợp lệ." />
@@ -67,9 +67,9 @@
         <label class="col-sm-4 control-label ">Địa chỉ </label>
         <div class="col-sm-7">
             <span ng-if="!IsEditingSupplierDetail" ng-bind="SupplierForm.Address || '(Chưa có)'"></span>
-            <textarea class="form-control" ng-model="SupplierForm.Address" 
-                   ng-if="IsEditingSupplierDetail"
-                   check-length="500" check-length-message="Chiều dài tối ta là {0}." ></textarea>
+            <textarea class="form-control" ng-model="SupplierForm.Address"
+                      ng-if="IsEditingSupplierDetail"
+                      check-length="500" check-length-message="Chiều dài tối ta là {0}."></textarea>
         </div>
     </div>
     <div class="form-group col-md-6">
@@ -86,11 +86,94 @@
     <div class="form-group col-md-6">
         <label class="col-sm-4 control-label ">Ghi chú </label>
         <div class="col-sm-7">
-            <span ng-if="!IsEditingSupplierDetail" ng-bind="SupplierForm.Notes || '(Chưa có)'" ></span>
+            <span ng-if="!IsEditingSupplierDetail" ng-bind="SupplierForm.Notes || '(Chưa có)'"></span>
             <textarea class="form-control" ng-model="SupplierForm.Notes"
-                   ng-if="IsEditingSupplierDetail"
-                   check-length="500" check-length-message="Chiều dài tối ta là {0}."></textarea>
+                      ng-if="IsEditingSupplierDetail"
+                      check-length="500" check-length-message="Chiều dài tối ta là {0}."></textarea>
         </div>
     </div>
 </div>
 
+
+<div class="row form-group col-md-12">
+    <div class="summary-head">
+        <div class="infobox infobox-blue">
+            <div class="infobox-icon">
+                <i class="fa-dollar fa"></i>
+            </div>
+            <div class="infobox-data">
+                <span class="infobox-data-number infobox-blue" ng-bind="DataSet.ListPurchases.Sums.SumMoney | currency:'':0"></span>
+                <div class="infobox-content">Doanh thu</div>
+            </div>
+        </div>
+        <div class="infobox infobox-green">
+            <div class="infobox-icon">
+                <i class="fa-shopping-cart fa"></i>
+            </div>
+            <div class="infobox-data">
+                <span class="infobox-data-number infobox-green" ng-bind="DataSet.ListPurchases.TotalItems"></span>
+                <div class="infobox-content">SL giao dịch</div>
+            </div>
+        </div>
+        <div class="infobox infobox-orange">
+            <div class="infobox-icon">
+                <i class="fa-money fa"></i>
+            </div>
+            <div class="infobox-data">
+                <span class="infobox-data-number infobox-orange" ng-bind="DataSet.ListPurchases.Sums.Debt | currency:'':0"></span>
+                <div class="infobox-content">Nợ</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table grid-data="ListPurchases"
+                   grid-data-type="table" @*table/storedprocedure*@
+                   grid-data-action="get" @*get/getall*@
+                   grid-data-object="T_Trans_Purchase" @*table name or stored procedure name*@
+                   grid-filter-condition="[SupplierId] = {{SupplierForm.SupplierId}}"
+                   grid-sort-condition="[PurchaseId] ASC" @*must have [fieldname] for each colum field*@
+                   grid-sum-collection="[SumMoney];[Debt]" @*must have [fieldname] for each colum field*@
+                   class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th><span>STT</span></th>
+                        <th grid-defined-colum="PurchaseCode"><span>Mã phiếu nhập</span></th>
+                        <th grid-defined-colum="StatusId.StatusName"><span>Tình trạng</span></th>
+                        <th grid-defined-colum="PurchaseDate"><span>Ngày nhập</span></th>
+                        <th grid-defined-colum="Quantity"><span>SL hàng hóa</span></th>
+                        <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
+                        <th grid-defined-colum="Debt"><span>Nợ</span></th>
+                        <th grid-defined-colum="StatusId.DisplayClass" style="display: none"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Dataset must have grid id*@
+                    <tr ng-repeat="item in DataSet.ListPurchases.Data">
+                        <td ng-bind="item.RowNum"></td>
+                        <td ng-bind="item.PurchaseCode"></td>
+                        <td> <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span> </td>
+                        <td ng-bind="item.PurchaseDate"></td>
+                        <td ng-bind="item.Quantity"></td>
+                        <td ng-bind="item.SumMoney | currency:'':0"></td>
+                        <td ng-bind="item.Debt | currency:'':0"></td>
+                    </tr>
+                    <tr ng-if="!DataSet.ListPurchases.HasRecord()">
+                        @*Edit colspan*@
+                        <td colspan="7" align="center"> Không có dữ liệu! </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <span grid-paging-for="ListPurchases"></span>
+            </div>
+            <div class="col-md-3">
+                <span grid-page-size-for="ListPurchases"></span>
+            </div>
+        </div>
+    </div>
+</div>

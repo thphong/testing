@@ -91,6 +91,8 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm._CanUpdate = supplier._CanUpdate;
             $scope.SupplierForm._CanDelete = supplier._CanDelete;
             $scope.IsShowSupplierDetail = true;
+
+            $scope.ReloadGrid('ListPurchases');
         }
 
         $scope.CloseSupplierDetail = function () {
