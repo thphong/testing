@@ -1,10 +1,12 @@
 ﻿function CheckSupplierCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Master_Suppliers", null);
-        var object = config.GetObject(value, 'SupplierCode');
-        if (object) {
-            return false;
-        }
+        var configList = new GridViewConfig("");
+        configList.GridDataAction = "count";
+        configList.GridDataType = "table";
+        configList.GridDataObject = "T_Master_Suppliers";
+        configList.GridFilterCondition = "[ParentStore] = " + g_parentStore + "and [SupplierCode] = ''" + value + "''";
+        var count = configList.CountListData();
+        return count == 0;
     }
     return true;
 }
@@ -26,7 +28,8 @@ mdlCommon.controller('SupplierModalController',
             TaxCode: "",
             Notes: "",
             IsActive: 1,
-            StoreId: $scope.ParentStore,
+            StoreId: $scope.CurrentStore,
+            ParentStore: $scope.ParentStore,
             _CanUpdate: true,
             _CanDelete: true,
             Version : 0
@@ -41,7 +44,8 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm.TaxCode = "";
             $scope.SupplierForm.Notes = "";
             $scope.SupplierForm.Address = "";
-            $scope.SupplierForm.StoreId = $scope.ParentStore;
+            $scope.SupplierForm.StoreId = $scope.CurrentStore;
+            $scope.SupplierForm.ParentStore = $scope.ParentStore;
             $scope.SupplierForm._CanUpdate = true;
             $scope.SupplierForm._CanDelete = true;
             $scope.SupplierForm.Version = 0;
@@ -87,6 +91,8 @@ mdlCommon.controller('SupplierModalController',
             $scope.SupplierForm._CanUpdate = supplier._CanUpdate;
             $scope.SupplierForm._CanDelete = supplier._CanDelete;
             $scope.IsShowSupplierDetail = true;
+
+            $scope.ReloadGrid('ListPurchases');
         }
 
         $scope.CloseSupplierDetail = function () {

@@ -56,7 +56,7 @@
                                                grid-data-type="table" @*table/storedprocedure*@
                                                grid-data-action="get" @*get/getall*@
                                                grid-data-object="T_Master_Attibutes" @*table name or stored procedure name*@
-                                               grid-filter-condition="[IsActive] = 1 and [StoreId] = {{ParentStore}}" @*must have [fieldname] for each colum field*@
+                                               grid-filter-condition="[IsActive] = 1 and [ParentStore] = {{ParentStore}}" @*must have [fieldname] for each colum field*@
                                                grid-sort-condition="[AttributeName] ASC" @*must have [fieldname] for each colum field*@
                                                class="table table-striped table-bordered">
                                             <thead>

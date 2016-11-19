@@ -1,10 +1,12 @@
 ﻿function CheckCustomerCodeUnique(value) {
     if (value) {
-        var config = new ObjectDataConfig("T_Master_Customers", null);
-        var object = config.GetObject(value, 'CustomerCode');
-        if (object) {
-            return false;
-        }
+        var configList = new GridViewConfig("");
+        configList.GridDataAction = "count";
+        configList.GridDataType = "table";
+        configList.GridDataObject = "T_Master_Customers";
+        configList.GridFilterCondition = "[ParentStore] = " + g_parentStore + "and [CustomerCode] = ''" + value + "''";
+        var count = configList.CountListData();
+        return count == 0;
     }
     return true;
 }
@@ -29,7 +31,8 @@ mdlCommon.controller('CustomerModalController',
             IsWholeSale: 0,
             Gender: "M",
             IsActive: 1,
-            StoreId: $scope.ParentStore,
+            StoreId: $scope.CurrentStore,
+            ParentStore: $scope.ParentStore,
             _CanUpdate: true,
             _CanDelete: true,
             Version : 0
@@ -47,7 +50,8 @@ mdlCommon.controller('CustomerModalController',
             $scope.CustomerForm.IsWholeSale = 0;
             $scope.CustomerForm.Gender = "M";
             $scope.CustomerForm.IsActive = 1;
-            $scope.CustomerForm.StoreId = $scope.ParentStore;
+            $scope.CustomerForm.StoreId = $scope.CurrentStore;
+            $scope.CustomerForm.ParentStore = $scope.ParentStore;
             $scope.CustomerForm._CanUpdate = 1;
             $scope.CustomerForm._CanDelete = 1;
             $scope.CustomerForm.Version = 0;

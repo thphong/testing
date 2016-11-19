@@ -33,7 +33,7 @@
                                        grid-data-type="table" @*table/storedprocedure*@
                                        grid-data-action="getall" @*get/getall*@
                                        grid-data-object="T_Trans_User_Store" @*table name or stored procedure name*@
-                                       grid-filter-condition="[UserId] = {{UserForm.UserId}} and [IsActive] = 1" @*must have [fieldname] for each colum field*@
+                                       grid-filter-condition="[UserId] = {{UserForm.UserId}} and [IsActive] = 1 and [RoleId.IsSpecial] = 0" @*must have [fieldname] for each colum field*@
                                        grid-sort-condition="[StoreId.StoreCode] ASC" @*must have [fieldname] for each colum field*@
                                        grid-sum-collection="" @*must have [fieldname] for each colum field*@
                                        class="table table-striped table-bordered">

@@ -263,9 +263,9 @@
                 },
                 phone: {
                     validators: {
-                        notEmpty: {
-                            message: 'Chưa điền số điện thoại'
-                        },
+                        //notEmpty: {
+                        //    message: 'Chưa điền số điện thoại'
+                        //},
                         phone: {
                             country: 'US',
                             message: 'Số điện thoại không hợp lệ'
@@ -276,20 +276,20 @@
                     validators: {
                         stringLength: {
                             min: 8,
-                        },
-                        notEmpty: {
-                            message: 'Chưa điền địa chỉ'
                         }
+                        //,notEmpty: {
+                        //    message: 'Chưa điền địa chỉ'
+                        //}
                     }
                 },
                 city: {
                     validators: {
                         stringLength: {
                             min: 4,
-                        },
-                        notEmpty: {
-                            message: 'Chưa điền tỉnh thành'
                         }
+                        //,notEmpty: {
+                        //    message: 'Chưa điền tỉnh thành'
+                        //}
                     }
                 },
                 productgroup: {
