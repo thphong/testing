@@ -43,8 +43,8 @@ namespace StoreManagement.Website
 
         protected void Application_BeginRequest()
         {
-            if (!Context.Request.IsSecureConnection)
-                Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
+            //if (!Context.Request.IsSecureConnection)
+                //Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
         }
     }
 }

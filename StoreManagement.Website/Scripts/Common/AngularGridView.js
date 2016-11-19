@@ -659,7 +659,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                           + '</div>'
                           + '<div class="modal-footer">'
                             + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                            + '<button type="button" class="btn btn-primary" ng-click="alert(\'dsadsa\');ImportUploadedExcel(\'' + template + '\',' + '\'#import-excel-input\')">Upload</button>'
+                            + '<button type="button" class="btn btn-primary upload-excel" ng-click="ImportUploadedExcel(\'' + template + '\',' + '\'#import-excel-input\')"><i class="fa fa-upload white"></i><span>Upload</span></button>'
                           + '</div>'
                         + '</div><!-- /.modal-content -->'
                       + '</div><!-- /.modal-dialog -->'
@@ -694,13 +694,20 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
     }
 
     $scope.ImportUploadedExcel = function (template, fileinput) {
-        //test($scope, $compile);       return;
+        //clear error result neu co
+        $('.import-modal #error-result').html("");
+
         //upload and check file on server
         if ($(fileinput)[0].files.length == 0)
         {
             ShowErrorMessage('Chưa chọn file');
             return;
         }
+
+        //ShowLoading();
+        $('button.upload-excel i.fa').hide().after('<i class="fa fa-refresh white loading"></i>');
+        $('button.upload-excel').prop('disabled', true);
+
         var result = 0;
         if ($(fileinput)[0].files.length > 0) {
             var file = $(fileinput)[0].files[0];
@@ -712,6 +719,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                 type: 'POST',
                 data: formData,
                 async: false,
+
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
@@ -726,13 +734,24 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             });       
         }
 
-        if (result == null) return;
+        if (result == null) {
+            //HideLoading();
+            var loading = $('button.upload-excel i.fa.loading');
+            loading.prev().show(); loading.remove();
+            $('button.upload-excel').prop('disabled', false);
+            return;
+        }
         //============================
         //check file excel
         if (!result.isError) {
             //Successful
             ShowSuccessMessage("Đã nhập thành công");
             $('.import-modal').modal('hide');
+
+            //HideLoading();
+            var loading = $('button.upload-excel i.fa.loading');
+            loading.prev().show(); loading.remove();
+            $('button.upload-excel').prop('disabled', false);
             return;
         }
 
@@ -772,6 +791,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             $('.import-modal .modal-dialog').removeClass("modal-md");
             $('.import-modal .modal-dialog').addClass("modal-lg");
             $('[data-toggle="tooltip"]').tooltip();
+
+            //HideLoading();
+            var loading = $('button.upload-excel i.fa.loading');
+            loading.prev().show(); loading.remove();
+            $('button.upload-excel').prop('disabled', false);
         }, 100);
     }
 

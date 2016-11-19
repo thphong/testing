@@ -326,5 +326,78 @@ namespace StoreManagement.Service
             return rows;
         }
 
+        public  DataTable ImportExcel(DataTable data, string dbtable,
+            int userid,
+            int storeid,
+            string session)
+        {
+            DataTable error = null;
+
+            //--------------------
+            SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;
+            sqlConn.Open();
+            SqlTransaction trans = sqlConn.BeginTransaction();
+            try
+            {
+                List<string> cols = new List<string>();
+                cols.AddRange(new List<string>(){"[UserId]","[StoreId]","[Session]"});
+                foreach (DataColumn col in data.Columns)
+                {
+                    cols.Add("[" + col.ColumnName + "]");
+                }
+                string colstr = string.Join(",", cols);
+
+                //=====================
+                string insertSql = "INSERT INTO {0}({1}) VALUES({2});";
+                foreach (DataRow row in data.Rows)
+                {
+                    List<string> vals = new List<string>();
+                    vals.AddRange(new List<string>() { userid.ToString(), storeid.ToString(), "'" + session + "'" });
+                    foreach (DataColumn col in data.Columns)
+                    {
+                        string val = row[col.ColumnName].ToString();
+                        vals.Add("N'" + val + "'");
+                    }
+                    string valstr = string.Join(",", vals);
+                    //============================
+                    string sql = string.Format(insertSql, dbtable, colstr, valstr);
+                    SqlCommand cmd = new SqlCommand(sql, sqlConn,trans);
+                    cmd.ExecuteNonQuery();
+                }
+
+                //=====================
+                //insert to real table
+                using (SqlCommand cmd = new SqlCommand("USP_System_ImportExcelData", sqlConn, trans))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userid;
+                    cmd.Parameters.Add("@Template", SqlDbType.VarChar).Value = dbtable;
+                    cmd.Parameters.Add("@Session", SqlDbType.VarChar).Value = session;
+
+                    //===============
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                    DataSet retVal = new DataSet();
+                    dataAdapter.Fill(retVal);
+                    if (retVal.Tables.Count > 0)
+                    {
+                        error = retVal.Tables[0];
+                    }
+                }
+
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                throw new Exception("Không thể import data : " + dbtable +". " + ex.Message);
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+
+            return error;
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace StoreManagement.Service
 
         Dictionary<string, object> GetRules(int userId, GridViewConfig gridConfig);
         IList<Dictionary<string, object>> ExecuteSQL(int userId, string sql);
+
+        DataTable ImportExcel(DataTable data, string dbtable, int userid,int storeid,string session);
     }
 }

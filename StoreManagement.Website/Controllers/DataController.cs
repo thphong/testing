@@ -351,17 +351,15 @@ namespace StoreManagement.Website.Controllers
                     if (!hasError)
                     {
                         //dataService.SaveListObject(SessionCollection.CurrentUserId, "TABLE", "OrderId::1,,OrderCode::EX_0001<<>>OrderId::2,,OrderCode::EX_0002");
-                        iImporter importer = ImporterHelper.GetImporter(template);
-                        if (importer == null) throw new Exception(string.Format("Not found :\"{0}\" Importer", template));
+                       
+                        string unique_session = Guid.NewGuid().ToString();
+                        string dbtablename = ImporterHelper.GetDBTableName(template);
 
-                        errorTable = importer.Import(convertedTable);
+                        //import excel
+                        errorTable = dataService.ImportExcel(convertedTable, dbtablename, 
+                            SessionCollection.CurrentUserId,SessionCollection.CurrentStore,
+                            unique_session );
 
-                        GridViewConfig config = new GridViewConfig();
-                        config.GridDataObject = "dbo.";
-                        config.GridDataType = "function";
-                        config.GridDataAction = "getall";
-                        config.GridParameters = "";//sessionid
-                        errorTable =  dataService.GetDataFromConfiguration(SessionCollection.CurrentUserId, config);
                         if (errorTable != null && errorTable.Rows.Count > 0)
                             hasError = true;
                     }
