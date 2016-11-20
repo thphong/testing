@@ -336,7 +336,7 @@ namespace StoreManagement.Service
             //--------------------
             SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;
             sqlConn.Open();
-            SqlTransaction trans = sqlConn.BeginTransaction();
+            //SqlTransaction trans = sqlConn.BeginTransaction();
             try
             {
                 List<string> cols = new List<string>();
@@ -361,17 +361,18 @@ namespace StoreManagement.Service
                     string valstr = string.Join(",", vals);
                     //============================
                     string sql = string.Format(insertSql, dbtable, colstr, valstr);
-                    SqlCommand cmd = new SqlCommand(sql, sqlConn,trans);
+                    SqlCommand cmd = new SqlCommand(sql, sqlConn);// SqlCommand cmd = new SqlCommand(sql, sqlConn, trans);
                     cmd.ExecuteNonQuery();
                 }
 
                 //=====================
                 //insert to real table
-                using (SqlCommand cmd = new SqlCommand("USP_System_ImportExcelData", sqlConn, trans))
+                using (SqlCommand cmd = new SqlCommand("USP_System_ImportExcelData", sqlConn)) //,trans
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userid;
+                    cmd.Parameters.Add("@StoreId", SqlDbType.Int).Value = storeid;
                     cmd.Parameters.Add("@Template", SqlDbType.VarChar).Value = dbtable;
                     cmd.Parameters.Add("@Session", SqlDbType.VarChar).Value = session;
 
@@ -385,11 +386,11 @@ namespace StoreManagement.Service
                     }
                 }
 
-                trans.Commit();
+                //trans.Commit();
             }
             catch (Exception ex)
             {
-                trans.Rollback();
+                //trans.Rollback();
                 throw new Exception("Không thể import data : " + dbtable +". " + ex.Message);
             }
             finally
