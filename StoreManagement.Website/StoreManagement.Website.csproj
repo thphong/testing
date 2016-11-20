@@ -1091,6 +1091,7 @@
     <Content Include="Views\Home\Document\tonkho_taophieuchuyenkho.cshtml" />
     <Content Include="Views\Home\Document\tonkho_taophieukiemke.cshtml" />
     <Content Include="Views\Home\Document\tonkho_xemphieukiemke.cshtml" />
+    <Content Include="Views\Admin\Files.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
