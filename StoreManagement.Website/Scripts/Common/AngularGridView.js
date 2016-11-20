@@ -97,7 +97,8 @@ mdlCommon.directive('gridImport', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var template = attributes.gridImportTemplate;
-        element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' +' \'' + template + '\')">'
+        var tableName = attributes.gridTablemame;
+        element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' +' \'' + tableName + '\','  +' \'' + template + '\'' + ')">'
                     + '<i class="fa fa-upload white"></i>'
                     + '<span>Nhập Excel</span>'
                     + '</button>');
@@ -641,7 +642,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
 
 
     //Excel-Import
-    $scope.ImportExcel = function (template) {
+    $scope.ImportExcel = function (tableName, template) {
         setTimeout(function () {
             if ($('.import-modal').length == 0) {
                 $("#bodyView").append($compile(
@@ -659,7 +660,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                           + '</div>'
                           + '<div class="modal-footer">'
                             + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                            + '<button type="button" class="btn btn-primary upload-excel" ng-click="ImportUploadedExcel(\'' + template + '\',' + '\'#import-excel-input\')"><i class="fa fa-upload white"></i><span>Upload</span></button>'
+                            + '<button type="button" class="btn btn-primary upload-excel" ng-click="ImportUploadedExcel(\'' + tableName + '\','+ '\'' + template + '\','+ '\'#import-excel-input\')"><i class="fa fa-upload white"></i><span>Upload</span></button>'
                           + '</div>'
                         + '</div><!-- /.modal-content -->'
                       + '</div><!-- /.modal-dialog -->'
@@ -693,7 +694,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         }, 100);
     }
 
-    $scope.ImportUploadedExcel = function (template, fileinput) {
+    $scope.ImportUploadedExcel = function (tableName, template, fileinput) {
         //clear error result neu co
         $('.import-modal #error-result').html("");
 
@@ -748,6 +749,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             ShowSuccessMessage("Đã nhập thành công");
             $('.import-modal').modal('hide');
 
+            //reload data
+            if ($scope.ReloadMasterDrodowns) 
+                $scope.ReloadMasterDrodowns(tableName);
+
             //HideLoading();
             var loading = $('button.upload-excel i.fa.loading');
             loading.prev().show(); loading.remove();
@@ -774,9 +779,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                 + '<tbody>'
                   + '<tr ng-repeat="row in dataTable" >'
                     + '<td ng-init="errrow = errorTable[$index]">{{$index+1}}</td>'
-                    + '<td ng-repeat="col in columnCodes" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" '
-                        + ' data-toggle="tooltip" title="{{errrow[col]}}" >'
-                        + '{{row[col]}}  </td>'
+                    + '<td ng-repeat="col in columnCodes" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" >'
+                        + '<span data-toggle="tooltip" title="{{errrow[col]}}" >'
+                        + '{{row[col]}} </span>'
+                    +'</td>'
                   + '</tr>'
                 + '</tbody>'
                 + '</table>'

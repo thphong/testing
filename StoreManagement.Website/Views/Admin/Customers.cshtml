@@ -56,7 +56,7 @@
                                   <ul class="dropdown-menu dropdown-menu-right">
                                     <li><span grid-export-import-for="Customers" grid-export-template="Customers.xlsx"></span></li>
                                     <li role="separator" class="divider"></li>
-                                    <li ng-if="CustomerFormConfig._CanCreate" ><span grid-import grid-import-template="Customers"></span></li>
+                                    <li ng-if="CustomerFormConfig._CanCreate" ><span grid-import grid-tablename="T_Master_Customers" grid-import-template="Customers"></span></li>
                                   </ul>
                                 </div>
                                 
@@ -260,7 +260,7 @@
                                   <ul class="dropdown-menu dropdown-menu-right">
                                     <li><span grid-export-import-for="Suppliers" grid-export-template="Suppliers.xlsx"></span></li>
                                     <li role="separator" class="divider"></li>
-                                    <li ng-if="SupplierFormConfig._CanCreate" ><span grid-import grid-import-template="Suppliers"></span></li>
+                                    <li ng-if="SupplierFormConfig._CanCreate" ><span grid-import grid-tablename="T_Master_Suppliers" grid-import-template="Suppliers"></span></li>
                                   </ul>
                                 </div>
                                 
