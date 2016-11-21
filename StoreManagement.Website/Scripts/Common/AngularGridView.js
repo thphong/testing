@@ -97,7 +97,7 @@ mdlCommon.directive('gridImport', function () {
     directive.restrict = 'A';
     directive.compile = function (element, attributes) {
         var template = attributes.gridImportTemplate;
-        var tableName = attributes.gridTablemame;
+        var tableName = attributes.gridTablename;
         element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' +' \'' + tableName + '\','  +' \'' + template + '\'' + ')">'
                     + '<i class="fa fa-upload white"></i>'
                     + '<span>Nhập Excel</span>'
