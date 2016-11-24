@@ -58,6 +58,29 @@ namespace StoreManagement.Website.Controllers
                 }
                 #endregion
 
+                bool IsShowProductName = true;
+                bool IsShowPrice = true;
+                #region get item info
+                switch (itemInfo)
+                {
+                    case 1: //show barcode only
+                        IsShowPrice = false;
+                        IsShowProductName = false;
+                        break;
+                    case 2: //barcode and productname
+                        IsShowPrice = false;
+                        IsShowProductName = true;
+                        break;
+                    case 3: //barcode and price
+                        IsShowPrice = true;
+                        IsShowProductName = false;
+                        break;
+                    case 4: //all
+                        IsShowPrice = true;
+                        IsShowProductName = true;
+                        break;
+                }
+                #endregion
                 //====================================
                 var result = string.Format(" {0} - {1} : {2}" , printSize,itemInfo, list.Count);
                 var listPDFItems = new List<iPDFItem>();
@@ -71,6 +94,8 @@ namespace StoreManagement.Website.Controllers
                     for (int i = 0; i < quantity; i++)
                     {
                         ProductPDFItem product = new ProductPDFItem(code, name, price);
+                        product.IsShowPrice = IsShowPrice;
+                        product.IsShowProductName = IsShowProductName;
                         listPDFItems.Add(product);
                     }
                 }

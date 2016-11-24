@@ -10,7 +10,7 @@ namespace StoreManagement.Common.PDF
 {
     public class BasePDFItem : iPDFItem
     {
-        public virtual PdfPCell Create(PdfContentByte pdfContentByte)
+        public virtual PdfPCell Create(PdfContentByte pdfContentByte, float width, float height)
         {
             return new PdfPCell(new Phrase("BaseItem"));
         }
@@ -18,6 +18,6 @@ namespace StoreManagement.Common.PDF
 
     public interface iPDFItem
     {
-        PdfPCell Create(PdfContentByte pdfContentByte);
+        PdfPCell Create(PdfContentByte pdfContentByte, float width, float height);
     }
 }

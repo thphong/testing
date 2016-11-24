@@ -17,6 +17,7 @@ namespace StoreManagement.Common.PDF
            
             //CreatePDF(outputStream, items, rows, cols , pagesize);
             var padding = 5;
+            var tablecellpadding = 2;
             if (pagesize == null) pagesize = PageSize.A4;
 
             //==========================
@@ -24,7 +25,7 @@ namespace StoreManagement.Common.PDF
             Document document = new Document(pagesize, padding, padding, padding, padding);
             Rectangle size = document.PageSize;
             float width = size.Width - 2 * padding;
-            float height = size.Height - 2 * padding;
+            float height = size.Height - 2 * padding - 2 * rows * tablecellpadding;
 
             //writer
             PdfWriter pdfWriter = PdfWriter.GetInstance(document, outputStream);
@@ -37,19 +38,24 @@ namespace StoreManagement.Common.PDF
             float itemWidth = width / cols;
             float itemHeight = height / rows;
 
+
+            //Font bfPrice = new Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+            //document.Add(new Phrase(new Chunk("Hoang xuan loc",bfPrice)));
+
+            //Image imageEan = BarcodeHelper.GetBarcode128(pdfContentByte, ((ProductPDFItem)items[0]).Code, false, Barcode.EAN13);
+            //document.Add(imageEan);
             //=========================
             //create table
             PdfPTable table = new PdfPTable(cols) { WidthPercentage = 100 };
-            //table.DefaultCell.Border = Rectangle.NO_BORDER;
+            table.DefaultCell.Border = Rectangle.NO_BORDER;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
             table.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            table.DefaultCell.FixedHeight = itemHeight;
-
             for (int i = 0; i < items.Count; i++)
             {
                 //create stemp
-                var stemp = createTableItem(pdfContentByte, items[i] );
-
+                var stemp = createTableItem(pdfContentByte, items[i], itemWidth, itemHeight);
+                stemp.Padding = tablecellpadding;
+                stemp.FixedHeight = itemHeight;
                 //=====================
                 //add celltable
                 table.AddCell(stemp);
@@ -107,9 +113,9 @@ namespace StoreManagement.Common.PDF
             document.Close();
         }
 
-        private static PdfPCell createTableItem(PdfContentByte pdfContentByte , iPDFItem item)
+        private static PdfPCell createTableItem(PdfContentByte pdfContentByte , iPDFItem item, float width , float height)
         {
-            return item.Create(pdfContentByte);
+            return item.Create(pdfContentByte,width,height);
         }
 
         //
