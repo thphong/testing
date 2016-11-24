@@ -122,15 +122,40 @@ mdlCommon.directive('ngEnter', function () {
 
 mdlCommon.directive('checkInteger', function () {
     return function (scope, element, attrs) {
-        element.bind("change", function (event) {
+        element.bind("keyup", function (event) {
             var value = $(this).val();
+            if (value == '') return;
+            //==============
             value = parseInt(value);
             if (value) {
                 $(this).val(value);
             }
             else {
-                $(this).val("0");
+                //$(this).val("0");
+                value = 0;
             }
+
+            //loc
+            //min-max
+            if (attrs.min) {
+                var minValue = parseInt(attrs.min);
+                if (minValue) {
+                        if (value < minValue) value = minValue;
+                }
+            }
+            
+            if (attrs.max) {
+                var maxValue = parseInt(attrs.max);
+                if (maxValue) {
+                        if (value > maxValue) value = maxValue;
+                }
+            }
+            
+            var that = this;
+            scope.$apply(function () {
+                    $(that).val(value);
+                    $(that).change();
+                });
         });
     };
 });

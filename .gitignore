@@ -2,3 +2,6 @@
 *.cache
 .vs/StoreManagement/v14/.suo
 /StoreManagement.Website
+/StoreManagement.Common/bin/Debug
+/StoreManagement.Common/obj/Debug/StoreManagement.Common.dll
+/StoreManagement.Common/obj/Debug/StoreManagement.Common.pdb
