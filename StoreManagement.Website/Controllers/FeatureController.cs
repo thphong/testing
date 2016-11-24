@@ -27,7 +27,9 @@ namespace StoreManagement.Website.Controllers
             try
             {
                 int rows = 5, cols = 5;
+                var padding = 4;
                 iTextSharp.text.Rectangle rect = iTextSharp.text.PageSize.A4;
+                
                 #region get page info
                 switch (printSize)
                 {
@@ -46,12 +48,14 @@ namespace StoreManagement.Website.Controllers
                         break;
                     //Decan nhiệt
                     case 4: //1 =1X1
-                        rect = new iTextSharp.text.Rectangle(40, 20);
+                        rect = new iTextSharp.text.Rectangle(80, 40);
+                        padding = 2;
                         rows = 1;
                         cols = 1;
                         break;
                     case 5://2 = 2x1
-                        rect = new iTextSharp.text.Rectangle(80, 20);
+                        rect = new iTextSharp.text.Rectangle(160, 40);
+                        padding = 2;
                         rows = 1;
                         cols = 2;
                         break;
@@ -105,7 +109,7 @@ namespace StoreManagement.Website.Controllers
                             + "_" + DateTime.Now.ToString(" dd-MM-yyyy hh_mm_ss") + ".pdf";
                 string path =  Server.MapPath(ConfigurationManager.AppSettings["ExportedBarcodePDF"] + filename);
 
-                ProductBarcodeHelper.CreatePDF(path, listPDFItems, rows, cols,rect);
+                ProductBarcodeHelper.CreatePDF(path, listPDFItems, rows, cols ,padding,rect);
                 //ProductBarcodeHelper.CreateBarcode(path);
 
                 //return File(stream, "application/pdf", filename);

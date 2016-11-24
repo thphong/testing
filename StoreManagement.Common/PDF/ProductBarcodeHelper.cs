@@ -11,13 +11,17 @@ namespace StoreManagement.Common.PDF
 {
     public class ProductBarcodeHelper
     {
-        public static void CreatePDF(string path, List<iPDFItem> items, int rows, int cols, Rectangle pagesize = null)
+        public static void CreatePDF(string path, List<iPDFItem> items, int rows, int cols,  float padding ,Rectangle pagesize = null)
         {
             var outputStream = new FileStream(path, FileMode.Create);
-           
-            //CreatePDF(outputStream, items, rows, cols , pagesize);
-            var padding = 5;
-            var tablecellpadding = 2;
+
+            CreatePDF(outputStream, items, rows, cols, padding, pagesize);
+            
+        }
+
+        public static void CreatePDF(Stream outputStream, List<iPDFItem> items, int rows, int cols, float padding, Rectangle pagesize = null)
+        {
+            var tablecellpadding = padding / 2;
             if (pagesize == null) pagesize = PageSize.A4;
 
             //==========================
@@ -25,7 +29,7 @@ namespace StoreManagement.Common.PDF
             Document document = new Document(pagesize, padding, padding, padding, padding);
             Rectangle size = document.PageSize;
             float width = size.Width - 2 * padding;
-            float height = size.Height - 2 * padding - 2 * rows * tablecellpadding;
+            float height = size.Height - 2 * padding - 2;
 
             //writer
             PdfWriter pdfWriter = PdfWriter.GetInstance(document, outputStream);
@@ -49,12 +53,16 @@ namespace StoreManagement.Common.PDF
             PdfPTable table = new PdfPTable(cols) { WidthPercentage = 100 };
             table.DefaultCell.Border = Rectangle.NO_BORDER;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            table.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
+            table.DefaultCell.FixedHeight = itemHeight;
             for (int i = 0; i < items.Count; i++)
             {
                 //create stemp
-                var stemp = createTableItem(pdfContentByte, items[i], itemWidth, itemHeight);
+                var stemp = createTableItem(pdfContentByte, items[i], itemWidth - 2 * tablecellpadding, itemHeight - 2 * tablecellpadding);
                 stemp.Padding = tablecellpadding;
+                stemp.Border = Rectangle.NO_BORDER;
+                stemp.HorizontalAlignment = Element.ALIGN_CENTER;
+                stemp.VerticalAlignment = Element.ALIGN_TOP;
                 stemp.FixedHeight = itemHeight;
                 //=====================
                 //add celltable
@@ -63,52 +71,7 @@ namespace StoreManagement.Common.PDF
 
             //when items < cols
             table.CompleteRow();
-           
-            document.Add(table);
-            document.Close();
-        }
 
-        public static void CreatePDF(Stream outputstream, List<iPDFItem> items, int rows, int cols, Rectangle pagesize = null)
-        {
-            var padding = 10;
-            if (pagesize == null) pagesize = PageSize.A4;
- 
-            //==========================
-            //config document
-            Document document = new Document(pagesize, padding, padding, padding, padding);
-            Rectangle size = document.PageSize;
-            float width =  size.Width - 2 * padding;
-            float height = size.Height - 2 * padding;
-
-            //writer
-            PdfWriter pdfWriter = PdfWriter.GetInstance(document, outputstream);
-            document.Open();
-            PdfContentByte pdfContentByte = pdfWriter.DirectContent;
-
-            
-            //=========================
-            //calculate grid size
-            float itemWidth = width / cols;
-            float itemHeight = height / rows;
-
-            //=========================
-            //create table
-            PdfPTable table = new PdfPTable(cols) { WidthPercentage = 100 };
-            //table.DefaultCell.Border = Rectangle.NO_BORDER;
-            table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            table.DefaultCell.FixedHeight = itemHeight;
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                //create stemp
-                //var stemp = createTableItem(pdfContentByte, items[i] );
-
-                //=====================
-                //add celltable
-                table.AddCell("chumano" + i);
-
-            }
             document.Add(table);
             document.Close();
         }
