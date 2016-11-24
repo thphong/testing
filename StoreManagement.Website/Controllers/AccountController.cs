@@ -66,6 +66,7 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.DefaultController = result["DefaultController"].ToString();
                 SessionCollection.IsDeveloper = (bool)result["IsDeveloper"];
                 SessionCollection.ParentStore = (int)result["ParentStore"];
+                SessionCollection.TriggerCreateSampleData = (int)result["TriggerCreateSampleData"];
                 SessionCollection.IsLogIn = true;
                 return Json(true);
             }
@@ -99,7 +100,7 @@ namespace StoreManagement.Website.Controllers
                 RegisterSession.UserName = username;
                 RegisterSession.Email = email;
                 RegisterSession.StoreName = storename;
-                return Json(true);
+                return Login(username, password);
             }
             catch (Exception ex)
             {
