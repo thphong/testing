@@ -25,17 +25,19 @@ namespace StoreManagement.Common.PDF
         {
             //barcode
             Image imageEan = BarcodeHelper.GetBarcode128(pdfContentByte, this.Code, false, Barcode.EAN13);
+            Rectangle rect = imageEan.GetRectangle(0,0);
+            imageEan.ScaleToFit(60, 20);
             Phrase bc_ph = new Phrase(new Chunk(imageEan, 0, 0));
 
             //--------------
             PdfPTable stemp = new PdfPTable(1) { WidthPercentage = 100 };
             stemp.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
             stemp.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-
+            stemp.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             //barcode cell
             var bc_cell = new PdfPCell(bc_ph);
             //bc_cell.Colspan = 1;
-            stemp.AddCell(bc_ph);
+            stemp.AddCell(imageEan);
 
             //price
             stemp.AddCell(string.Format("{0} vnđ" , this.Price) );

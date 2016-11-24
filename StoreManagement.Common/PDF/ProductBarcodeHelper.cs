@@ -14,7 +14,52 @@ namespace StoreManagement.Common.PDF
         public static void CreatePDF(string path, List<iPDFItem> items, int rows, int cols, Rectangle pagesize = null)
         {
             var outputStream = new FileStream(path, FileMode.Create);
-            CreatePDF(outputStream, items, rows, cols , pagesize);
+           
+            //CreatePDF(outputStream, items, rows, cols , pagesize);
+            var padding = 5;
+            if (pagesize == null) pagesize = PageSize.A4;
+
+            //==========================
+            //config document
+            Document document = new Document(pagesize, padding, padding, padding, padding);
+            Rectangle size = document.PageSize;
+            float width = size.Width - 2 * padding;
+            float height = size.Height - 2 * padding;
+
+            //writer
+            PdfWriter pdfWriter = PdfWriter.GetInstance(document, outputStream);
+            document.Open();
+            PdfContentByte pdfContentByte = pdfWriter.DirectContent;
+
+
+            //=========================
+            //calculate grid size
+            float itemWidth = width / cols;
+            float itemHeight = height / rows;
+
+            //=========================
+            //create table
+            PdfPTable table = new PdfPTable(cols) { WidthPercentage = 100 };
+            //table.DefaultCell.Border = Rectangle.NO_BORDER;
+            table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            table.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            table.DefaultCell.FixedHeight = itemHeight;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                //create stemp
+                var stemp = createTableItem(pdfContentByte, items[i] );
+
+                //=====================
+                //add celltable
+                table.AddCell(stemp);
+            }
+
+            //when items < cols
+            table.CompleteRow();
+           
+            document.Add(table);
+            document.Close();
         }
 
         public static void CreatePDF(Stream outputstream, List<iPDFItem> items, int rows, int cols, Rectangle pagesize = null)
@@ -98,7 +143,7 @@ namespace StoreManagement.Common.PDF
                 PdfPTable stemp = new PdfPTable(1) { WidthPercentage = 100 };
                 stemp.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 stemp.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-
+                //stemp.DefaultCell.FixedHeight = 70;
                 //barcode cell
                 var bc_cell = new PdfPCell(bc_ph);
                 //bc_cell.Colspan = 1;
@@ -116,6 +161,7 @@ namespace StoreManagement.Common.PDF
             }
             document.Add(table);
             document.Close();
+
         }
 
     }

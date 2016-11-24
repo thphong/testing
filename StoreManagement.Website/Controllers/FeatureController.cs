@@ -26,6 +26,39 @@ namespace StoreManagement.Website.Controllers
         {
             try
             {
+                int rows = 5, cols = 5;
+                iTextSharp.text.Rectangle rect = iTextSharp.text.PageSize.A4;
+                #region get page info
+                switch (printSize)
+                {
+                    //A4
+                    case 1: //65 = 5X13
+                        rows = 13;
+                        cols = 5;
+                        break;
+                    case 2: //100 = 5x20
+                        rows = 20;
+                        cols = 5;
+                        break;
+                    case 3: //180 = 10x18
+                        rows = 18;
+                        cols = 10;
+                        break;
+                    //Decan nhiệt
+                    case 4: //1 =1X1
+                        rect = new iTextSharp.text.Rectangle(40, 20);
+                        rows = 1;
+                        cols = 1;
+                        break;
+                    case 5://2 = 2x1
+                        rect = new iTextSharp.text.Rectangle(80, 20);
+                        rows = 1;
+                        cols = 2;
+                        break;
+                }
+                #endregion
+
+                //====================================
                 var result = string.Format(" {0} - {1} : {2}" , printSize,itemInfo, list.Count);
                 var listPDFItems = new List<iPDFItem>();
                 foreach(ExpandoObject obj in list){
@@ -43,11 +76,12 @@ namespace StoreManagement.Website.Controllers
                 }
 
                 MemoryStream stream = new MemoryStream(new byte[2000]);
-                string filename = "MaVach_" + Guid.NewGuid() + ".pdf";
+                string filename = "MaVach_" + SessionCollection.CurrentUserId + "_" + SessionCollection.CurrentStore
+                            + "_" + DateTime.Now.ToString(" dd-MM-yyyy hh_mm_ss") + ".pdf";
                 string path =  Server.MapPath(ConfigurationManager.AppSettings["ExportedBarcodePDF"] + filename);
 
-                //ProductBarcodeHelper.CreatePDF(path, listPDFItems, 10, 10);
-                ProductBarcodeHelper.CreateBarcode(path);
+                ProductBarcodeHelper.CreatePDF(path, listPDFItems, rows, cols,rect);
+                //ProductBarcodeHelper.CreateBarcode(path);
 
                 //return File(stream, "application/pdf", filename);
                 //return File(path, "application/pdf", filename);
