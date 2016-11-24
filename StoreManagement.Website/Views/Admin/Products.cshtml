@@ -3,7 +3,7 @@
     {
         <div ng-init="AdditionalFilter.ProductType = '@ViewBag.ProductType'"></div>
     }
-    <div class="container-fluid">
+    <div class="container-fluid" ng-show="!IsShowPrintProductBarcode">
         <div class="row">
             <div class="tabbable" style="padding-top: 10px">
                 <ul class="nav nav-tabs padding-left-18">
@@ -33,6 +33,11 @@
                                 <button class="btn btn-success btn-primary" ng-if="ProductFormConfig._CanCreate" ng-click="AddProduct(0)">
                                     <i class="fa fa-plus white"></i>
                                     <span>Thêm hàng hóa</span>
+                                </button>
+
+                                <button class="btn btn-success btn-primary"  ng-click="ShowPrintProductBarcode()">
+                                    <i class="fa fa-barcode"></i>
+                                    <span>In mã vạch</span>
                                 </button>
 
                                 <!--- excel import -export --->
@@ -414,4 +419,11 @@
     </div>
     <div ng-include src="'@Url.Action("ProductQuantityHistory", "Admin")'">
     </div>
+
+
+    <div class="container-fluid" ng-class="{'active-content' : IsShowPrintProductBarcode}" ng-controller="PrintProductBarcodeController">
+        <div ng-show="IsShowPrintProductBarcode" ng-include src="'@Url.Action("PrintProductBarcode", "Admin")'">
+        </div>
+    </div>
+
 </div>

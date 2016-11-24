@@ -55,6 +55,7 @@ mdlCommon.controller('ProductController',
 
         $scope.IsShowProductDetail = false;
         $scope.IsEditingProductDetail = false;
+        $scope.IsShowPrintProductBarcode = false;
 
         $scope.ProductForm = {
             OldProductId: -1,
@@ -448,5 +449,18 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.Cost = cost;
             $scope.ProductForm.SumPriceInCombo = sumPrice;            
         }
+
+
+        //==============================
+        //Print ProductBarCode
+        $scope.ShowPrintProductBarcode = function () {
+            $scope.IsShowPrintProductBarcode = true;
+            
+        }
+
+        $scope.ClosePrintProductBarcode = function () {
+            $scope.IsShowPrintProductBarcode = false;
+        }
+
 
     }]);

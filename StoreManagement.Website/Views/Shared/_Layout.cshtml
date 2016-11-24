@@ -43,10 +43,14 @@
         var g_storeAddress = '@Html.Raw(StoreManagement.Website.SessionCollection.StoreAddress)';
         var g_storePhone = '@Html.Raw(@StoreManagement.Website.SessionCollection.StorePhone)';
         var g_parentStore = '@Html.Raw(@StoreManagement.Website.SessionCollection.ParentStore)';
+
         var g_exportExcelAjaxUrl = '@Url.Action("ExportExcelWithTemplateAjax", "Data")';
         var g_exportExcelUrl = '@Url.Action("ExportExcelWithTemplate", "Data")';
         var g_importExcelFileUrl = '@Url.Action("ImportExcelFile", "Data")';
         var g_downloadExcelTemplateUrl = '@Url.Action("DownloadExcelTemplate", "Data")';
+
+        var g_createProductBarcodePDF = '@Url.Action("CreateProductBarcodePDF", "Feature")';
+
         var g_saveProductImageUrl = '@Url.Action("SaveProductImage", "Data")';
         var g_saveFileUrl = '@Url.Action("SaveFile", "Data")';
         var g_uploadFileUrl = '@Url.Action("UploadFile", "Data")';
@@ -95,6 +99,7 @@
     @Scripts.Render("~/bundles/Inventory")
     @Scripts.Render("~/bundles/ProductQuanHistory")
     @Scripts.Render("~/bundles/ProductList")
+    @Scripts.Render("~/bundles/PrintProductBarcode")
     @Scripts.Render("~/bundles/Print")
     @Scripts.Render("~/bundles/DataLog")
     @Scripts.Render("~/bundles/Order")
