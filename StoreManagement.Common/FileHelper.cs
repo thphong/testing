@@ -9,10 +9,6 @@ namespace StoreManagement.Common
 {
     public class FileHelper
     {
-        public static bool IsExists(string path)
-        {
-            return File.Exists(path);
-        }
         public static string ReadFile(string filepath)
         {
             string text = File.ReadAllText(filepath);
@@ -604,7 +600,6 @@ namespace StoreManagement.Common
 
             return _mappings.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
         }
-
 
         #endregion
     }

@@ -64,7 +64,7 @@ function AjaxSync(service, para) {
         type: "POST",
         url: service,
         data: para,
-        contentType: "application/json; charset=utf-8",
+        contentType: "application/json",
         async: false,
         beforeSend: ShowLoading,
         complete: HideLoading,
@@ -79,25 +79,8 @@ function AjaxSync(service, para) {
         },
         error: function (e) {
             result = null;
-
-            var msg = '';
-            if (jqXHR.status === 0) {
-                msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-                msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-                msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-                msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-                msg = 'Time out error.';
-            } else if (exception === 'abort') {
-                msg = 'Ajax request aborted.';
-            } else {
-                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
-
-            ShowErrorMessage(msg);
+            //alert(e.responseText);
+            //ShowErrorMessage("Gặp lỗi trong quá trình truy xuất dữ liệu.");
         }
     });
     return result;

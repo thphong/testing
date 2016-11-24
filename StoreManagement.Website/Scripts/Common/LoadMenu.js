@@ -29,6 +29,7 @@ mdlMenu.controller('LoadMenuController',
         $scope.StoreName = g_storeName;
         $scope.StoreAddress = g_storeAddress;
         $scope.StorePhone = g_storePhone;
+        $scope.TriggerData = g_triggerData;
 
         var configMenuList = new GridViewConfig("");
         configMenuList.GridDataAction = "getall";
@@ -447,7 +448,7 @@ mdlMenu.controller('LoadMenuController',
        
 
         setTimeout(function () {
-            if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0) {
+            if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0 && $scope.TriggerData == 0) {
                 // Store
                 if (!localStorage.getItem("ShowCreateSampleData" + $scope.CurrentStore)) {
                     $("#modalCreateSampleData").modal();

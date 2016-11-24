@@ -217,6 +217,18 @@ namespace StoreManagement.Website
                 HttpContext.Current.Session["ParentStore"] = value;
             }
         }
-        
+
+        public static int TriggerCreateSampleData
+        {
+            get
+            {
+                return HttpContext.Current.Session["TriggerCreateSampleData"] != null ? (int)HttpContext.Current.Session["TriggerCreateSampleData"] : 0;
+            }
+            set
+            {
+                HttpContext.Current.Session["TriggerCreateSampleData"] = value;
+            }
+        }
+
     }
 }

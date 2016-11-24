@@ -91,12 +91,6 @@ namespace StoreManagement.Website.Controllers
         }
 
         [HttpGet]
-        public ActionResult PrintProductBarcode()
-        {
-            return PartialView("PrintProductBarcode");
-        }
-
-        [HttpGet]
         public ActionResult SupplierModal()
         {
             return PartialView("SupplierModal");

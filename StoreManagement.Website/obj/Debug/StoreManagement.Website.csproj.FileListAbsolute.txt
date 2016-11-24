@@ -310,5 +310,3 @@ D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\obj\Debug
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\obj\Debug\StoreManagement.Website.csprojResolveAssemblyReference.cache
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\obj\Debug\MySchool.Website.dll
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\obj\Debug\MySchool.Website.pdb
-D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\bin\itextsharp.dll
-D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Website\bin\itextsharp.xml

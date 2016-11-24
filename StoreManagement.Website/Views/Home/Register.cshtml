@@ -238,6 +238,9 @@
                     validators: {
                         notEmpty: {
                             message: 'Chưa điền mật khẩu'
+                        },
+                        stringLength: {
+                            min: 6,
                         }
                         
                     }
@@ -263,9 +266,9 @@
                 },
                 phone: {
                     validators: {
-                        //notEmpty: {
-                        //    message: 'Chưa điền số điện thoại'
-                        //},
+                        notEmpty: {
+                            message: 'Chưa điền số điện thoại'
+                        },
                         phone: {
                             country: 'US',
                             message: 'Số điện thoại không hợp lệ'
@@ -322,7 +325,7 @@
                     if (typeof (result) == 'string' && result.startsWith("#error:")) {
                         ShowErrorMessage(result);
                     } else {
-                        window.location = '@Url.Action("RegisterSuccess","Home")';
+                        window.location = '@Url.Action("Index","Admin")';
                     }
                 }, 'json');
             });
