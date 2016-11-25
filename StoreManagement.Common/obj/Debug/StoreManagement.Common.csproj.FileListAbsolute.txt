@@ -19,6 +19,8 @@ E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagemen
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.dll
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.pdb
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenXml.dll
-D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\itextsharp.dll
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\itextsharp.xml
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb
+D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
