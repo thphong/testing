@@ -72,8 +72,10 @@ namespace StoreManagement.Common.PDF
 
             float widthBarcode = width;
             float heightBarcode = height - errorSize;
-            if (IsShowPrice) heightBarcode -= h1;
-            if (IsShowProductName) heightBarcode -= h2;
+            //if (IsShowPrice) 
+                heightBarcode -= h1;
+            //if (IsShowProductName) 
+                heightBarcode -= h2;
             //=========================
             //barcode
             Image imageEan = BarcodeHelper.GetBarcode128(pdfContentByte, this.Code, false, Barcode.EAN13);
