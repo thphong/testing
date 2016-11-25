@@ -36,5 +36,11 @@ namespace StoreManagement.Website.Controllers
         {
             return PartialView("POSAnnounement");
         }
+
+        [HttpGet]
+        public ActionResult POSReturnProduct()
+        {
+            return PartialView("POSReturnProduct");
+        }
     }
 }

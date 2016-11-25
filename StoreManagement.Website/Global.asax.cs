@@ -1,6 +1,7 @@
 ﻿using StoreManagement.Service;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -29,16 +30,13 @@ namespace StoreManagement.Website
 
         protected void Session_Start()
         {
-            //get session
-            //SessionCollection.CurrentUserId = 1;
-            //SessionCollection.CurrentStore = 1;
-
         }
 
         protected void Session_End()
         {
-            var dataService = DependencyResolver.Current.GetService<DataService>();
-            dataService.Logout(SessionCollection.CurrentUserId);
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            var dataService = new DataService(new DatabaseFactory(connectionString));  //DependencyResolver.Current.GetService<DataService>();
+            dataService.Logout(int.Parse(Session["CurrentUserId"].ToString()));
         }
 
         protected void Application_BeginRequest()
