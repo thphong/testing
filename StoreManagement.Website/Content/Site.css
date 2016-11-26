@@ -601,6 +601,7 @@ textarea.form-control {
     border-top: 1px solid #E3E3E3;
     margin: 12px 0;
     border-top-color: rgba(0,0,0,.11);
+    width: 98%;
 }
 
 input[type='checkbox'] {

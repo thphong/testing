@@ -34,6 +34,7 @@
                         <option value="2">Đơn hàng bị xóa</option>
                         <option value="3">Đơn hàng còn nợ</option>
                         <option value="4">Đơn hàng giảm giá</option>
+                        <option value="5">Đơn hàng bị trả</option>
                     </select>
                 </div>
                 <div class="col-md-5 col-xs-12 margin-top-5">
@@ -57,7 +58,8 @@
                                grid-filter-condition="(([IsActive] = 1 and {{AdditionalFilter.OrderType}} = 1)
                     or ({{AdditionalFilter.OrderType}} = 2 and  [IsActive] = 0)
                     or ({{AdditionalFilter.OrderType}} = 3 and [DebtMoney] > 0 and [IsActive] = 1)
-                    or ({{AdditionalFilter.OrderType}} = 4 and [OrginalMoney] > [SumMoney] and [IsActive] = 1))
+                    or ({{AdditionalFilter.OrderType}} = 4 and [OrginalMoney] > [SumMoney] and [IsActive] = 1)
+                    or ({{AdditionalFilter.OrderType}} = 5 and [ReturnMoney] > 0 and [IsActive] = 1))
                     and ([StoreId] = {{CurrentStore}})
                     and ({{AdditionalFilter.Status}} = 0 or {{AdditionalFilter.Status}} = [OrderStatus])
                     and  ([SoldDate] is null or

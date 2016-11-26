@@ -53,7 +53,7 @@ mdlCommon.controller('POSController',
 
         
         $scope.SavePOSOrder = function () {
-            $scope.SaveOrderForm(2);
+            $scope.SaveOrderForm(2, false);
             if ($scope.OrderForm.OrderId > 0) {
                 $scope.CancelOrder();
                 $scope.ReloadGrid('Products');
@@ -61,7 +61,7 @@ mdlCommon.controller('POSController',
         }
 
         $scope.SavePrintPOSOrder = function () {
-            $scope.SaveOrderForm(2);
+            $scope.SaveOrderForm(2, false);
 
             if ($scope.OrderForm.OrderId > 0) {
                 $scope.GetListPrintTerm("Order");

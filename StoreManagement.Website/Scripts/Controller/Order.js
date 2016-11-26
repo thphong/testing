@@ -31,13 +31,16 @@ mdlCommon.controller('OrderController',
 
         $scope.OrderFormConfig = new ObjectDataConfig("T_Trans_Orders", $scope);
         $scope.OrderFormConfig.SetSubTableName("T_Trans_Order_Product");
+        $scope.ReturnProductConfig = new ObjectDataConfig("T_Trans_Order_Product_Return", $scope);
         $scope.ProductOrderFormConfig = new ObjectDataConfig("T_Trans_Order_Product", $scope);
         $scope.ProductFormConfig = new ObjectDataConfig("T_Trans_Products", $scope);
         $scope.PaymentFormConfig = new ObjectDataConfig("T_Trans_Payment", $scope);
+        
 
         $scope.OrderFormConfig.CheckCanCreateObject();
 
         $scope.IsShowOrderDetail = false;
+        $scope.IsReturnProducts = false;
 
         $scope.OrderForm = {
             OrderId: -1,
@@ -67,6 +70,7 @@ mdlCommon.controller('OrderController',
             IsEditingPaidForDebt: false,
             Version: 0,
             IsPOS: false,
+            ReturnMoney: 0,
             _CanUpdate: true,
             _CanDelete: true
         };
@@ -97,6 +101,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.PaidForDebt = 0;
             $scope.OrderForm.IsEditingPaidForDebt = false;
             $scope.OrderForm.Version = 0;
+            $scope.OrderForm.ReturnMoney = 0;
             $scope.OrderForm._CanUpdate = true;
             $scope.OrderForm._CanDelete = true;
         }
@@ -123,10 +128,17 @@ mdlCommon.controller('OrderController',
             FValidation.ClearAllError();
             $scope.ResetOrderForm();
             $scope.ListProductsOrder = [];
+            $scope.DataSet.ProductsReturn.TotalItems = 0;
+            $scope.IsReturnProducts = false;
         }
 
         $scope.CloseOrderDetail = function () {
-            $scope.IsShowOrderDetail = false;
+            if ($scope.IsReturnProducts) {
+                $scope.IsReturnProducts = false;
+            }
+            else {
+                $scope.IsShowOrderDetail = false;
+            }
         }
 
 
@@ -317,7 +329,7 @@ mdlCommon.controller('OrderController',
             for (var i = 0 ; i < $scope.ListProductsOrder.length ; i++) {
                 var item = $scope.ListProductsOrder[i];
                 sum += parseInt(item.RealPrice);
-                initSum += item.Quantity * parseInt(item.Price);
+                initSum += item.Quantity * parseInt(item.Price);                
             }
             $scope.OrderForm.Price = sum;
 
@@ -369,7 +381,7 @@ mdlCommon.controller('OrderController',
             }
         }
 
-        $scope.SaveOrderForm = function (status) {
+        $scope.SaveOrderForm = function (status, hasPrint) {
             $scope.ReloadListProducts();
             if (FValidation.CheckControls("check-order")) {
                 $scope.OrderForm.OrderStatus = status;
@@ -382,6 +394,70 @@ mdlCommon.controller('OrderController',
                     ShowSuccessMessage("Đơn hàng được lưu thành công!");
                     $scope.IsShowOrderDetail = false;
                     $scope.OrderForm.OrderId = orderId;
+
+                    if (hasPrint) {
+                        PrintForm('ORDER_ADMIN');
+                    }
+                }
+            }
+        }
+
+        $scope.ReturnOrder = function () {
+            $scope.IsReturnProducts = true;
+
+            var len = $scope.ListProductsOrder.length;
+            for (var i = 0 ; i < len; i++) {
+                var item = $scope.ListProductsOrder[i];
+                item.ReturnQuantity = 0;
+            }
+        }
+
+        $scope.SaveReturnOrder = function () {
+            var listReturn = [];
+            
+            var len = $scope.ListProductsOrder.length;
+            for (var i = 0 ; i < len; i++) {
+                var item = $scope.ListProductsOrder[i];
+                if (item.ReturnQuantity > 0) {
+                    listReturn.push(item);
+                }
+            }
+
+            if (listReturn.length > 0) {
+                $scope.ReturnProductConfig.SetListObject(listReturn);
+                var result = $scope.ReturnProductConfig.SaveListObject();
+                if (result) {
+                    $scope.IsReturnProducts = false;
+                    ShowSuccessMessage("Hàng được trả thành công.");
+                    $scope.ReloadGrid("ProductsOrder");
+                    $scope.ReloadGrid("ProductsReturn");
+                    $scope.InitListProducts();
+                }
+            }
+            else {
+                ShowErrorMessage("Không có hàng hóa nào được trả");
+            }
+        }
+        $scope.ChangeReturnQuantity = function (item) {
+            item.ReturnQuantity = parseInt(item.ReturnQuantity);
+            if (item.ReturnQuantity < 0) {
+                ShowErrorMessage("Số lượng trả không được âm.");
+                item.ReturnQuantity = 0;
+            }
+            if (item.ReturnQuantity > item.Quantity) {
+                ShowErrorMessage("Số lượng không được vượt quá số lượng đã mua là " + item.Quantity);
+                item.ReturnQuantity = item.Quantity;
+            }
+            $scope.SummarizeReturnMoney();
+        }
+
+        $scope.SummarizeReturnMoney = function () {
+            $scope.OrderForm.ReturnMoney = 0;
+            var len = $scope.ListProductsOrder.length;
+            for (var i = 0 ; i < len; i++) {
+                var item = $scope.ListProductsOrder[i];
+                if (item.ReturnQuantity > 0 && item.SellPrice > 0) {
+                    $scope.OrderForm.ReturnMoney += parseInt(item.ReturnQuantity) * parseFloat(item.SellPrice) / parseInt(item.Quantity);
                 }
             }
         }
@@ -389,10 +465,12 @@ mdlCommon.controller('OrderController',
         $scope.ShowOrderDetail = function (order) {
             //Load Order form
             $scope.IsShowOrderDetail = true;
+            $scope.IsReturnProducts = false;
             $scope.GetOrderDetail(order);
             $scope.OrderForm._CanUpdate = order._CanUpdate;
             $scope.OrderForm._CanDelete = order._CanDelete;
             $scope.ReloadGrid("ProductsOrder");
+            $scope.ReloadGrid("ProductsReturn");
             $scope.InitListProducts();
         }
 
@@ -410,7 +488,6 @@ mdlCommon.controller('OrderController',
             var len = $scope.ListProductsOrder.length;
             for (var i = 0 ; i < len; i++) {
                 var item = $scope.ListProductsOrder[i];
-
                 if (item.IsDiscountPercent == 0) {
                     item.RealPrice = item.Quantity * (item.Price - item.Discount);
                 }

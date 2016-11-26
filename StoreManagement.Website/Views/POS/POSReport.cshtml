@@ -114,8 +114,9 @@
                                     @*Dataset must have grid id*@
                                     <tr ng-repeat-start="item in DataSet.Orders.Data">
                                         <td>
-                                            <a class="badge badge-primary" ng-click="SelectOrderId(item)">
-                                                <i class="fa-plus fa"></i>
+                                            <a class="icon" ng-click="SelectOrderId(item)">
+                                                <i ng-if="SelectedOrderId != item.OrderId" class="fa-plus-circle fa"></i>
+                                                <i ng-if="SelectedOrderId == item.OrderId" class="fa-minus-circle fa"></i>
                                             </a>
                                         </td>
                                         <td>

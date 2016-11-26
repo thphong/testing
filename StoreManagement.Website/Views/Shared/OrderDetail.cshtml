@@ -5,23 +5,31 @@
         <span ng-bind="OrderForm.OrderCode"> </span>
     </div>
     <div class="col-md-8 pull-right text-right">
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate && !IsReturnProducts && !OrderForm.ReturnMoney && RULES.ALLOW_RETURN_PRODUCT == 1" ng-click="ReturnOrder()">
+            <i class="fa fa-recycle white"></i>
+            <span>Trả hàng</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="IsReturnProducts" ng-click="SaveReturnOrder()">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate && !IsReturnProducts" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && !IsReturnProducts" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(2, true);">
             <i class="fa fa-print white"></i>
             <span>Lưu và in</span>
         </button>
@@ -37,7 +45,7 @@
     <div class="col-md-8 form-group">
         <div class="row margin-top-10">
             <h4 class="primary-color">
-                <i class="fa fa-info-circle margin-left-10"></i>                
+                <i class="fa fa-info-circle margin-left-10"></i>
                 <span>Danh sách hàng hóa</span>
             </h4>
             <div class="hr"></div>
@@ -61,7 +69,8 @@
                                 <th><span>Mã hàng</span></th>
                                 <th style="width: 30%"><span>Tên hàng hóa</span></th>
                                 <th style="width: 20%"><span>Số lượng</span></th>
-                                <th style="width: 15%"><span>Giá bán</span></th>
+                                <th style="width: 15%" ng-if="IsReturnProducts"><span>Số lượng trả</span></th>
+                                <th style="width: 12%"><span>Giá bán</span></th>
                                 <th><span>Thành tiền</span></th>
                                 <th ng-if="OrderForm._CanUpdate"></th>
                             </tr>
@@ -95,6 +104,11 @@
                                             <i class="fa fa-sort-down" style=" font-size: 15px; margin-bottom: 2px"></i>
                                         </button>
                                     </div>
+                                </td>
+                                <td ng-if="IsReturnProducts">
+                                    <input class="form-control" ng-model="item.ReturnQuantity" ng-change="ChangeReturnQuantity(item)"
+                                           check-range="0;{{item.Quantity}}" check-range-message="Số lượng không được âm và vượt quá số lượng đã mua là {{item.Quantity}}"
+                                           check-under="check-order"/>
                                 </td>
                                 <td>
                                     <span ng-bind="item.Price | currency:'':0"></span>
@@ -142,9 +156,49 @@
                             <th grid-defined-colum="Quantity"></th>
                             <th grid-defined-colum="Discount"></th>
                             <th grid-defined-colum="IsDiscountPercent"></th>
+                            <th class="none-display" grid-defined-colum="RealPrice,SellPrice"></th>
                         </tr>
                     </thead>
                 </table>
+            </div>
+        </div>
+        <div class="row margin-top-10" ng-if="DataSet.ProductsReturn.HasRecord()">
+            <h4 class="primary-color">
+                <i class="fa fa-info-circle margin-left-10"></i>
+                <span>Danh sách hàng hóa bị trả</span>
+            </h4>
+            <div class="hr"></div>
+        </div>
+        <div class="row margin-top-10" ng-if="DataSet.ProductsReturn.HasRecord()">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered"
+                           grid-data="ProductsReturn"
+                           grid-data-type="table" @*table/storedprocedure*@
+                           grid-data-action="getall" @*get/getall*@
+                           grid-data-object="T_Trans_Order_Product_Return" @*table name or stored procedure name*@
+                           grid-filter-condition="[OrderId] = {{OrderForm.OrderId}}" @*must have [fieldname] for each colum field*@
+                           grid-sort-condition="[Id] ASC" @*must have [fieldname] for each colum field*@>
+                        <thead>
+                            <tr>
+                                <th grid-defined-colum="ProductId.ProductCode"><span>Mã hàng</span></th>
+                                <th grid-defined-colum="ProductId.ProductName" style="width: 30%"><span>Tên hàng hóa</span></th>
+                                <th grid-defined-colum="ReturnQuantity" style="width: 20%"><span>Số lượng trả</span></th>
+                                <th><span>Thành tiền</span></th>
+                                <th class="none-display" grid-defined-colum="Quantity"></th>
+                                <th class="none-display" grid-defined-colum="SellPrice"></th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in DataSet.ProductsReturn.Data">
+                                <td ng-bind="item.ProductCode"> </td>
+                                <td ng-bind="item.ProductName"> </td>
+                                <td ng-bind="item.ReturnQuantity"> </td>
+                                <td><span ng-bind="(item.ReturnQuantity * item.SellPrice / item.Quantity) | currency:'':0"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -197,7 +251,7 @@
                 </div>
             </div>
         </div>
-        <div class="row margin-top-10">
+        @*<div class="row margin-top-10">
             <div class="col-md-4">
                 <label class="control-label">Ngày bán</label>
             </div>
@@ -208,7 +262,7 @@
                        placeholder="Hôm nay" />
 
             </div>
-        </div>
+        </div>*@
         <div class="row margin-top-10">
             <div class="col-md-4">
                 <label class="control-label">Người bán</label>
@@ -216,7 +270,7 @@
             <div class="col-md-8">
                 <span ng-bind="OrderForm.CashierName" ng-if="!OrderForm._CanUpdate"></span>
                 <select class="form-control" ng-show="OrderForm._CanUpdate"
-                        ng-model="OrderForm.Cashier" dropdown-master-table="T_Trans_User_Store" 
+                        ng-model="OrderForm.Cashier" dropdown-master-table="T_Trans_User_Store"
                         dropdown-value-field="UserId"
                         dropdown-name-field="UserId.UserName"
                         dropdown-empty-text="Người đang đăng nhập" dropdown-empty-value="{{CurrentUser}}"
@@ -323,8 +377,16 @@
                 <span ng-if="OrderForm.ExtraMoney > 0" ng-bind="OrderForm.ExtraMoney | currency:'':0"></span>
             </div>
         </div>
+        <div class="row margin-top-5" ng-if="OrderForm.ReturnMoney > 0">
+            <div class="col-xs-4">
+                <label class="control-label">Tiền trả hàng</label>
+            </div>
+            <div class="col-xs-8">
+                <span ng-bind="OrderForm.ReturnMoney | currency:'':0"></span>
+            </div>
+        </div>
     </div>
-    
+
     <div ng-include src="'@Url.Action("CustomerModal", "Admin")'">
     </div>
 </div>
@@ -365,25 +427,33 @@
 </div>
 <div class="row">
     <div class="col-md-6 pull-right text-right">
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate" ng-click="AddOrder()">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate && !IsReturnProducts && !OrderForm.ReturnMoney && RULES.ALLOW_RETURN_PRODUCT == 1" ng-click="ReturnOrder()">
+            <i class="fa fa-recycle white"></i>
+            <span>Trả hàng</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="IsReturnProducts" ng-click="SaveReturnOrder()">
+            <i class="fa fa-save white"></i>
+            <span>Lưu</span>
+        </button>
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && OrderFormConfig._CanCreate && !IsReturnProducts" ng-click="AddOrder()">
             <i class="fa fa-plus white"></i>
             <span>Tạo đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate" ng-click="PrintForm('ORDER_ADMIN')">
+        <button class="btn btn-primary margin-top-5" ng-if="!OrderForm._CanUpdate && !IsReturnProducts" ng-click="PrintForm('ORDER_ADMIN')">
             <i class="fa fa-print white"></i>
             <span>In đơn hàng</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(1)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(1)">
             <i class="fa fa-save white"></i>
             <span>Lưu tạm</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2)">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(2)">
             <i class="fa fa-check white"></i>
             <span>Lưu</span>
         </button>
-        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate" ng-click="SaveOrderForm(2);PrintForm('ORDER_ADMIN');">
+        <button class="btn btn-primary margin-top-5" ng-if="OrderForm._CanUpdate && !IsReturnProducts" ng-click="SaveOrderForm(2, true);">
             <i class="fa fa-print white"></i>
-            <span >Lưu và in</span>
+            <span>Lưu và in</span>
         </button>
         <button class="btn btn-default margin-top-5" ng-click="CloseOrderDetail()">
             <i class="fa fa-arrow-left"></i>
