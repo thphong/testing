@@ -21,7 +21,7 @@
                     <button class="btn btn-success btn-sm" ng-click="SortByNumSelling()">
                         Hàng bán chạy
                     </button>
-                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#returnPOSModal">
+                    <button ng-if="RULES.ALLOW_RETURN_PRODUCT == 1" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#returnPOSModal">
                         Trả hàng
                     </button>
                 </div>
@@ -350,6 +350,7 @@
         <div ng-include src="'@Url.Action("POSReport", "POS")'"></div>
         <div ng-include src="'@Url.Action("POSInventory", "POS")'"></div>
         <div ng-include src="'@Url.Action("POSAnnounement", "POS")'"></div>
+        <div ng-include src="'@Url.Action("POSReturnProduct", "POS")'"></div>
         <div class="none-display" id="divPrint">
             <span bind-html-compile="PrintTemplate">
             </span>

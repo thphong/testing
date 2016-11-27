@@ -74,7 +74,6 @@
                                     <th grid-defined-colum="!OrderId" class="none-display"></th>
                                     <th grid-defined-colum="!Customer.IsWholeSale, CustomerIsWholeSale" class="none-display"></th>
                                     <th grid-defined-colum="OrderCode"><span>Mã đơn hàng</span></th>
-                                    <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                                     <th grid-defined-colum="SoldDate"><span>Ngày bán</span></th>
                                     <th grid-defined-colum="Cashier.UserName, CashierName"><span>Thu ngân</span></th>
                                     <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
@@ -87,6 +86,7 @@
                                     </th>
                                     <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                     <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                                    <th grid-defined-colum="ReturnMoney"><span>Trả hàng</span></th>
                                     <th></th>
                                     <th grid-defined-colum="!OrderStatus.DisplayClass" class="none-display"></th>
                                     <th grid-defined-colum="!Notes" class="none-display"></th>
@@ -103,7 +103,6 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </td>
-                                    <td ng-bind="item.StoreCode"></td>
                                     <td ng-bind="item.SoldDate"></td>
                                     <td ng-bind="item.CashierName"></td>
                                     <td ng-bind="item.CustomerName"></td>
@@ -112,6 +111,7 @@
                                     </td>
                                     <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
                                     <td ng-bind="item.DebtMoney  | currency:'':0"></td>
+                                    <td ng-bind="item.ReturnMoney  | currency:'':0"></td>
                                     <td>
                                         <a class="grey margin-left-10" ng-click="PrintOrderAdmin(item, 'ORDER_ADMIN')">
                                             <i class="fa-print fa"></i>

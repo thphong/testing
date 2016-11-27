@@ -429,6 +429,7 @@ mdlCommon.controller('OrderController',
                 if (result) {
                     $scope.IsReturnProducts = false;
                     ShowSuccessMessage("Hàng được trả thành công.");
+                    $('#returnPOSModal').modal('hide');
                     $scope.ReloadGrid("ProductsOrder");
                     $scope.ReloadGrid("ProductsReturn");
                     $scope.InitListProducts();

@@ -104,6 +104,7 @@
                                         <th grid-defined-colum="Customer.CustomerName"><span>Khách hàng</span></th>
                                         <th grid-defined-colum="SumMoney"><span>Tổng tiền</span></th>
                                         <th grid-defined-colum="DebtMoney"><span>Nợ</span></th>
+                                        <th grid-defined-colum="ReturnMoney"><span>Trả hàng</span></th>
                                         <th></th>
                                         <th grid-defined-colum="!OrderStatus.DisplayClass" class="none-display"></th>
                                         <th grid-defined-colum="!Notes" class="none-display"></th>
@@ -132,6 +133,7 @@
                                         <td ng-bind="item.CustomerName"></td>
                                         <td><span ng-bind="item.SumMoney | currency:'':0" class="bold"></span></td>
                                         <td ng-bind="item.DebtMoney  | currency:'':0"></td>
+                                        <td ng-bind="item.ReturnMoney  | currency:'':0"></td>
                                         <td>
                                             <a class="grey margin-left-10" ng-click="PrintOrderAdmin(item, 'ORDER_POS')">
                                                 <i class="fa-print fa"></i>
@@ -139,7 +141,7 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat-end ng-if="SelectedOrderId == item.OrderId">
-                                        <td colspan="9">
+                                        <td colspan="10">
                                             <div class="row col-md-12 bold margin-top-5">Danh sách sản phẩm</div>
                                             <div class="row col-md-12">
                                                 <table grid-data="ListProductsByOrder"
@@ -187,12 +189,12 @@
                                     </tr>
                                     <tr ng-if="!DataSet.Orders.HasRecord()">
                                         @*Edit colspan*@
-                                        <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                        <td colspan="10" align="center"> Không có dữ liệu! </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="9" align="left">
+                                        <td colspan="10" align="left">
                                             <div style="float: left;">
                                                 <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Orders.TotalItems"></span>
                                                 <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Orders.Sums.SumMoney | currency:'':0"></span> đ</span>

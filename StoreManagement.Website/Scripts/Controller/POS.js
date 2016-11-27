@@ -49,6 +49,7 @@ mdlCommon.controller('POSController',
             $scope.ResetDiscountForm();
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
             $scope.ListPromotion = [];
+            FValidation.ClearAllError();
         }
 
         
@@ -102,6 +103,11 @@ mdlCommon.controller('POSController',
         $scope.IsShownPOSAnnoucement = false;
         $scope.SetShownPOSAnnoucement = function (isShown) {
             $scope.IsShownPOSAnnoucement = isShown;
+        }
+
+        $scope.IsShownReturnProduct = false;
+        $scope.SetShownReturnProduct = function (isShown) {
+            $scope.IsShownReturnProduct = isShown;
         }
 
         $scope.configPromotion = new GridViewConfig("");
@@ -171,5 +177,17 @@ mdlCommon.controller('POSController',
             $scope.Announcement.CreatorName = announce.CreatorName;
             $scope.Announcement.CreatedDate = announce.CreatedDate;
             $scope.Announcement.IsShow = true;
+        }
+
+        $scope.GetReturnOrder = function () {
+            var id = $scope.OrderForm.OrderId;
+            var customerName = $scope.OrderForm.CustomerName;
+            $scope.ResetOrderForm();
+            var object = $scope.OrderFormConfig.GetObject(id);
+            $scope.OrderFormConfig.CopyFields(object, $scope.OrderForm);
+            $scope.OrderForm.CustomerName = customerName;
+            $scope.ReloadGrid("ProductsReturn");
+            $scope.ListProductsOrder = $scope.DataSet.ProductsReturn.Data;
+            $scope.Summarize(false);
         }
     }]);

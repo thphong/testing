@@ -98,7 +98,7 @@ mdlCommon.directive('gridImport', function () {
     directive.compile = function (element, attributes) {
         var template = attributes.gridImportTemplate;
         var tableName = attributes.gridTablename;
-        element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' +' \'' + tableName + '\','  +' \'' + template + '\'' + ')">'
+        element.append('<button class="btn btn-success btn-success" style="display: block;margin: auto;" ng-click="ImportExcel(' + ' \'' + tableName + '\',' + ' \'' + template + '\'' + ')">'
                     + '<i class="fa fa-upload white"></i>'
                     + '<span>Nhập Excel</span>'
                     + '</button>');
@@ -140,22 +140,22 @@ mdlCommon.directive('checkInteger', function () {
             if (attrs.min) {
                 var minValue = parseInt(attrs.min);
                 if (minValue) {
-                        if (value < minValue) value = minValue;
+                    if (value < minValue) value = minValue;
                 }
             }
-            
+
             if (attrs.max) {
                 var maxValue = parseInt(attrs.max);
                 if (maxValue) {
-                        if (value > maxValue) value = maxValue;
+                    if (value > maxValue) value = maxValue;
                 }
             }
-            
+
             var that = this;
             scope.$apply(function () {
-                    $(that).val(value);
-                    $(that).change();
-                });
+                $(that).val(value);
+                $(that).change();
+            });
         });
     };
 });
@@ -212,7 +212,7 @@ mdlCommon.directive('gridData', function () {
         else {
             alert("Grid with id '" + window._CurrentGridId + "' is duplicted, please change to new id");
         }
-        
+
     }
     return directive;
 });
@@ -323,7 +323,7 @@ mdlCommon.directive('dropdownMasterTable', function () {
 
         var getColumName = function (fieldName) {
             var array = fieldName.split(".");
-            return array[array.length-1];
+            return array[array.length - 1];
         }
 
         var dropdownId = "dropdown" + parseInt(Math.random() * 1000000);
@@ -465,7 +465,7 @@ mdlCommon.directive('dateRangeFilterFor', function () {
     return directive;
 });
 
-mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compile', function ($scope, $interpolate, $filter, $compile) {
+mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', '$compile', function ($scope, $interpolate, $filter, $compile) {
     //Global variable
     $scope.CurrentUser = g_currentUserId;
     $scope.CurrentUserName = g_currentUserName;
@@ -685,7 +685,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                           + '</div>'
                           + '<div class="modal-footer">'
                             + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                            + '<button type="button" class="btn btn-primary upload-excel" ng-click="ImportUploadedExcel(\'' + tableName + '\','+ '\'' + template + '\','+ '\'#import-excel-input\')"><i class="fa fa-upload white"></i><span>Upload</span></button>'
+                            + '<button type="button" class="btn btn-primary upload-excel" ng-click="ImportUploadedExcel(\'' + tableName + '\',' + '\'' + template + '\',' + '\'#import-excel-input\')"><i class="fa fa-upload white"></i><span>Upload</span></button>'
                           + '</div>'
                         + '</div><!-- /.modal-content -->'
                       + '</div><!-- /.modal-dialog -->'
@@ -710,7 +710,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             $('.import-modal .modal-dialog').removeClass("modal-lg");
             $('.import-modal .modal-dialog').addClass("modal-md");
             $('.import-modal #error-result').html("");
-            
+
 
             $('.import-modal').on('shown.bs.modal', function () {
 
@@ -724,8 +724,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         $('.import-modal #error-result').html("");
 
         //upload and check file on server
-        if ($(fileinput)[0].files.length == 0)
-        {
+        if ($(fileinput)[0].files.length == 0) {
             ShowErrorMessage('Chưa chọn file');
             return;
         }
@@ -757,7 +756,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                         result = data;
                     }
                 }
-            });       
+            });
         }
 
         if (result == null) {
@@ -775,7 +774,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             $('.import-modal').modal('hide');
 
             //reload data
-            if ($scope.ReloadMasterDrodowns) 
+            if ($scope.ReloadMasterDrodowns)
                 $scope.ReloadMasterDrodowns(tableName);
 
             //HideLoading();
@@ -793,7 +792,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             scope.columnCodes = result.columnCodes;
             scope.dataTable = result.dataTable;
             scope.errorTable = result.errorTable;
-            var template = angular.element('<div> <h4 class="text-danger">Dữ liệu bị lỗi</h4>' 
+            var template = angular.element('<div> <h4 class="text-danger">Dữ liệu bị lỗi</h4>'
                 + ' <table class="table table-striped  table-bordered  table-condensed has-error">'
                 + '<thead>'
                   + '<tr>'
@@ -807,11 +806,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                     + '<td ng-repeat="col in columnCodes" style="{{errrow[col]==\'\' ? \'\': \'background-color:red !important;\' }}" >'
                         + '<span data-toggle="tooltip" title="{{errrow[col]}}" >'
                         + '{{row[col]}} </span>'
-                    +'</td>'
+                    + '</td>'
                   + '</tr>'
                 + '</tbody>'
                 + '</table>'
-                +'</div>'
+                + '</div>'
             );
             var content = $compile(template)(scope);
 
@@ -882,7 +881,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
             setTimeout(function () {
                 $scope.ReloadDropdown(dropdownId);
             }, 100);
-            
+
         }
     }
 
@@ -974,6 +973,12 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
 
     $scope.InitAutoComplete = function (autocompleteId) {
         var element = $('input[autocomplete-id="' + autocompleteId + '"]');
+
+        var getColumName = function (fieldName) {
+            var array = fieldName.split(".");
+            return array[array.length - 1];
+        }
+
         element.autocomplete({
             minLength: 0,
             source: function (request, response) {
@@ -1006,8 +1011,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                 }
             },
             focus: function (event, ui) {
-                if (ui.item[element.attr("autocomplete-colum-id")]) {
-                    $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
+                if (ui.item[getColumName(element.attr("autocomplete-colum-id"))]) {
+                    $(element).val(ui.item[getColumName(element.attr("autocomplete-colum-name"))]);
                     /*$(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
                     if (element.attr("autocomplete-model-additional")) {
                         $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
@@ -1016,11 +1021,11 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
                 return false;
             },
             select: function (event, ui) {
-                if (ui.item[element.attr("autocomplete-colum-id")]) {
-                    $(element).val(ui.item[element.attr("autocomplete-colum-name")]);
-                    $(element.attr("autocomplete-model-id")).val(ui.item[element.attr("autocomplete-colum-id")]).change();
+                if (ui.item[getColumName(element.attr("autocomplete-colum-id"))]) {
+                    $(element).val(ui.item[getColumName(element.attr("autocomplete-colum-name"))]);
+                    $(element.attr("autocomplete-model-id")).val(ui.item[getColumName(element.attr("autocomplete-colum-id"))]).change();
                     if (element.attr("autocomplete-model-additional")) {
-                        $(element.attr("autocomplete-model-additional")).val(ui.item[element.attr("autocomplete-colum-additional")]).change();
+                        $(element.attr("autocomplete-model-additional")).val(ui.item[getColumName(element.attr("autocomplete-colum-additional"))]).change();
                     }
                 }
                 return false;
@@ -1029,10 +1034,10 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         .autocomplete("instance")._renderItem = function (ul, item) {
             var content;
             if (item[element.attr("autocomplete-colum-code")]) {
-                content = "<a> <b>" + item[element.attr("autocomplete-colum-code")] + " </b><br>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+                content = "<a> <b>" + item[getColumName(element.attr("autocomplete-colum-code"))] + " </b><br>" + item[getColumName(element.attr("autocomplete-colum-name"))] + "</a>";
             }
             else if (item[element.attr("autocomplete-colum-name")]) {
-                content = "<a>" + item[element.attr("autocomplete-colum-name")] + "</a>";
+                content = "<a>" + item[getColumName(element.attr("autocomplete-colum-name"))] + "</a>";
             }
             else {
                 content = "<a>" + item.label + "</a>";
@@ -1069,8 +1074,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         }, 10);
     }
 
-    $scope.InitFilterCurrency = function ()
-    {
+    $scope.InitFilterCurrency = function () {
         setTimeout(function () {
             $("input.check-currency").each(function () {
                 var value = $(this).val();
@@ -1094,8 +1098,8 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         clearGlobalSession();
         $("i.img-loading").show();
         url = $interpolate(url)($scope);
-        
-        var menuScope = angular.element(document.getElementById("LoadMenuController")).scope();        
+
+        var menuScope = angular.element(document.getElementById("LoadMenuController")).scope();
         menuScope.$apply(function () {
             if (url.indexOf("?") > 0) {
                 menuScope.CurrentUrl = url.substr(url, url.indexOf("?"));
@@ -1109,7 +1113,7 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter','$compil
         if (scope.SrcView != url) {
             $("#bodyView").hide();
             //scope.$apply(function () {
-                scope.SrcView = url;
+            scope.SrcView = url;
             //});
         }
     }

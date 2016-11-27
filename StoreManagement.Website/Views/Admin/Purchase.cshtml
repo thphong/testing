@@ -55,7 +55,6 @@
                                 <tr>
                                     <th grid-defined-colum="!PurchaseId" class="none-display"></th>
                                     <th grid-defined-colum="PurchaseCode"><span>Mã hóa đơn</span></th>
-                                    <th grid-defined-colum="StoreId.StoreCode"><span>Cửa hàng</span></th>
                                     <th grid-defined-colum="StatusId.StatusName">
                                         <span style="display: inline-block">
                                             <select class="form-control min-width-100" ng-model="AdditionalFilter.Status" dropdown-master-table="T_Master_PurchaseStatus" dropdown-value-field="StatusId"
@@ -85,7 +84,6 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </td>
-                                    <td ng-bind="item.StoreCode"></td>
                                     <td>
                                         <span class="{{item.DisplayClass}}" ng-bind="item.StatusName"></span>
                                     </td>
@@ -105,12 +103,12 @@
                                 </tr>
                                 <tr ng-if="!DataSet.Purchases.HasRecord()">
                                     @*Edit colspan*@
-                                    <td colspan="9" align="center"> Không có dữ liệu! </td>
+                                    <td colspan="8" align="center"> Không có dữ liệu! </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" align="left">
+                                    <td colspan="8" align="left">
                                         <div style="float: left;">
                                             <span>Tổng hóa đơn: </span><span class="total-highlight" ng-bind="DataSet.Purchases.TotalItems"></span>
                                             <span>Tổng tiền: </span> <span class="total-highlight"><span ng-bind="DataSet.Purchases.Sums.SumMoney | currency:'':0"></span> đ</span>

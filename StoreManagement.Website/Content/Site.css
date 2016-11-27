@@ -748,7 +748,7 @@ i.img-loading {
 }
 
 .ui-autocomplete{
-    z-index:1000;
+    z-index: 99999;
 }
 
 .dropdown-menu li  button{
