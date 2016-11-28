@@ -909,6 +909,7 @@
     <Content Include="Scripts\Common\DataObject.js" />
     <Content Include="Scripts\Common\Language.js" />
     <Content Include="Scripts\Common\LoadMenu.js" />
+    <Content Include="Scripts\Controller\ActivityLog.js" />
     <Content Include="Scripts\Controller\Announcement.js" />
     <Content Include="Scripts\Controller\Attribute.js" />
     <Content Include="Scripts\Controller\CostType.js" />
@@ -1100,6 +1101,7 @@
     <Content Include="Views\Admin\Files.cshtml" />
     <Content Include="Views\POS\POSReturnProduct.cshtml" />
     <Content Include="Views\Shared\PrintProductBarcode.cshtml" />
+    <Content Include="Views\Admin\ActivityLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

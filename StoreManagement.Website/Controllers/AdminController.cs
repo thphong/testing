@@ -304,5 +304,12 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.LastUrl = "/Admin/Files";
             return PartialView("Files");
         }
+
+        [HttpGet]
+        public ActionResult ActivityLog()
+        {
+            SessionCollection.LastUrl = "/Admin/ActivityLog";
+            return PartialView("ActivityLog");
+        }
     }
 }
