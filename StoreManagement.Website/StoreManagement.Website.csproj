@@ -453,6 +453,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\sb-admin-2.css" />
+    <Content Include="Content\sitemap.xml" />
     <Content Include="Content\themes\2-colors.css" />
     <Content Include="Content\themes\3-colors.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
