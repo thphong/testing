@@ -924,6 +924,7 @@
     <Content Include="Scripts\Controller\Order.js" />
     <Content Include="Scripts\Controller\POS.js" />
     <Content Include="Scripts\Controller\Print.js" />
+    <Content Include="Scripts\Controller\PrintProductBarcode.js" />
     <Content Include="Scripts\Controller\Producer.js" />
     <Content Include="Scripts\Controller\Product.js" />
     <Content Include="Scripts\Controller\ProductGroup.js" />
