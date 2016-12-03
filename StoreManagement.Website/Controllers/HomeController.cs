@@ -17,15 +17,13 @@ namespace StoreManagement.Website.Controllers
 
         public ActionResult Index()
         {
-            //if (SessionCollection.IsLogIn)
-            //{
-            //    return RedirectToAction(SessionCollection.DefaultController, SessionCollection.DefaultAction);
-            //}
-            //else
+            HttpCookie cookie = Request.Cookies["Username"];
+            
+            if (cookie != null && !SessionCollection.IsLogIn)
             {
-                //return RedirectToAction("Login", "Account", new { auto = true });
-                return View();
+                return RedirectToAction("Login", "Account");
             }
+            return View();
         }
 
         public ActionResult AboutUs()

@@ -15,14 +15,42 @@ namespace StoreManagement.Website.Controllers
 
         public ActionResult Login()
         {
-            if (SessionCollection.IsLogIn)
+            try
             {
-                return RedirectToAction(SessionCollection.DefaultAction, SessionCollection.DefaultController);
+                if (SessionCollection.IsLogIn)
+                {
+                    return RedirectToAction(SessionCollection.DefaultAction, SessionCollection.DefaultController);
+                }
+                else if (!SessionCollection.IsLogOut)
+                {
+                    HttpCookie cookie = Request.Cookies["Username"];
+
+                    if (cookie != null)
+                    {
+                        var result = dataService.Login("", "", true, cookie != null ? cookie.Value : "");
+                        SessionCollection.CurrentUserId = (int)result["UserId"];
+                        SessionCollection.UserName = result["UserName"].ToString();
+                        SessionCollection.CurrentStore = (int)result["CurrentStore"];
+                        SessionCollection.StoreName = result["StoreName"].ToString();
+                        SessionCollection.StorePhone = result["StorePhone"].ToString();
+                        SessionCollection.StoreAddress = result["StoreAddress"].ToString();
+                        SessionCollection.DefaultAction = result["DefaultAction"].ToString();
+                        SessionCollection.DefaultController = result["DefaultController"].ToString();
+                        SessionCollection.IsDeveloper = (bool)result["IsDeveloper"];
+                        SessionCollection.ParentStore = (int)result["ParentStore"];
+                        SessionCollection.TriggerCreateSampleData = (int)result["TriggerCreateSampleData"];
+                        SessionCollection.IsLogIn = true;
+
+                        return RedirectToAction(SessionCollection.DefaultAction, SessionCollection.DefaultController);
+                    }
+                }
             }
-            else
+            catch
             {
                 return View();
             }
+            
+            return View();
         }
 
         [HttpGet]
@@ -51,11 +79,12 @@ namespace StoreManagement.Website.Controllers
 
 
         [HttpPost]
-        public ActionResult Login(string loginId, string password)
+        public ActionResult Login(string loginId, string password, bool isRemember)
         {
             try
             {
-                var result = dataService.Login(loginId, password);
+                HttpCookie cookie = Request.Cookies["Username"];
+                var result = dataService.Login(loginId, password, isRemember, cookie != null ? cookie.Value : "");
                 SessionCollection.CurrentUserId = (int)result["UserId"];
                 SessionCollection.UserName = result["UserName"].ToString();
                 SessionCollection.CurrentStore = (int)result["CurrentStore"];
@@ -68,6 +97,15 @@ namespace StoreManagement.Website.Controllers
                 SessionCollection.ParentStore = (int)result["ParentStore"];
                 SessionCollection.TriggerCreateSampleData = (int)result["TriggerCreateSampleData"];
                 SessionCollection.IsLogIn = true;
+
+                if (SessionCollection.CurrentUserId > 0 && cookie == null)
+                {
+                    var userName = new HttpCookie("Username");
+                    userName.Value = loginId;
+                    userName.Expires = DateTime.Now.AddYears(50);
+                    userName.Secure = false;
+                    Response.Cookies.Add(userName);
+                }
                 return Json(true);
             }
             catch (Exception ex)
@@ -81,6 +119,11 @@ namespace StoreManagement.Website.Controllers
         {
             dataService.Logout(SessionCollection.CurrentUserId);
             SessionCollection.ClearSession();
+            HttpCookie cookie = Request.Cookies["Username"];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-1);
+            }
             SessionCollection.IsLogOut = true;
             return Json(true);
         }
@@ -100,7 +143,7 @@ namespace StoreManagement.Website.Controllers
                 RegisterSession.UserName = username;
                 RegisterSession.Email = email;
                 RegisterSession.StoreName = storename;
-                return Login(username, password);
+                return Login(username, password, true);
             }
             catch (Exception ex)
             {

@@ -50,20 +50,14 @@ mdlMenu.controller('LoadMenuController',
 
         $scope.LogIn = function () {
             if (FValidation.CheckControls("")) {
-                var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
+                var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '", "isRemember" : ' + $scope.LoginInfo.Remember + '}');
                 if (result) {
                     if (typeof (Storage) !== "undefined") {
                         // Store
-                        if ($scope.LoginInfo.Remember) {
-                            localStorage.setItem("SM_LoginId", $scope.LoginInfo.LoginId);
-                            localStorage.setItem("SM_Password", $scope.LoginInfo.Password);
-                            localStorage.setItem("SM_Remember", $scope.LoginInfo.Remember);
-                        }
-                        else {
-                            localStorage.setItem("SM_LoginId", "");
-                            localStorage.setItem("SM_Password", "");
-                            localStorage.setItem("SM_Remember", $scope.LoginInfo.Remember);
-                        }
+                        localStorage.setItem("SM_LoginId", $scope.LoginInfo.LoginId);
+                        localStorage.setItem("SM_Password", $scope.LoginInfo.Password);
+                        localStorage.setItem("SM_Remember", $scope.LoginInfo.Remember);
+
                     }
 
                     location.reload();
@@ -316,14 +310,14 @@ mdlMenu.controller('LoadMenuController',
             $scope.LoginInfo.LoginId = localStorage.getItem("SM_LoginId");
             $scope.LoginInfo.Password = localStorage.getItem("SM_Password");
             $scope.LoginInfo.Remember = localStorage.getItem("SM_Remember") == "true";
-            if (window.location.href.toLowerCase().indexOf("/account/login?auto") >= 0) {
-                if ($scope.LoginInfo.LoginId && $scope.LoginInfo.Password) {
-                    var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '"}');
-                    if (result) {
-                        location.reload();
-                    }
-                }
-            }
+            //if (window.location.href.toLowerCase().indexOf("/account/login?auto") >= 0) {
+            //    if ($scope.LoginInfo.LoginId && $scope.LoginInfo.Password) {
+            //        var result = AjaxSync(g_loginUrl, '{ "loginId": "' + $scope.LoginInfo.LoginId + '", "password": "' + $scope.LoginInfo.Password + '", "isRemember" : ' + $scope.LoginInfo.Remember + '}');
+            //        if (result) {
+            //            location.reload();
+            //        }
+            //    }
+            //}
         }
 
         $scope.InitAutoComplete = function (autocompleteId) {
@@ -376,7 +370,7 @@ mdlMenu.controller('LoadMenuController',
                     return false;
                 }
             })
-            .focus(function(){            
+            .focus(function () {
                 $(this).autocomplete("search");
             })
             .autocomplete("instance")._renderItem = function (ul, item) {
@@ -445,7 +439,7 @@ mdlMenu.controller('LoadMenuController',
             }
         }
 
-       
+
 
         setTimeout(function () {
             if (typeof (Storage) !== "undefined" && $scope.CurrentStore > 0 && $scope.TriggerData == 0) {
@@ -460,22 +454,22 @@ mdlMenu.controller('LoadMenuController',
 
         /*---------show help---------*/
         $scope.ShowHelp = function () {
-           
-            var _helpMapping =  {
-                '/Admin/General' : 'lam-quen',
-                '/Admin/Orders' : 'quan-ly-don-hang',
-                '/Admin/Products' : 'quan-ly-hang-hoa',
-                '/Admin/Customers' : 'quan-ly-khach-hang',
-                '/Admin/Purchase' : 'quan-ly-nhap-kho',
-                '/Admin/Inventory' : 'quan-ly-ton-kho',
-                '/Admin/Revenue' : 'doanh-thu',
-                '/Admin/Payment' : 'thu-chi',
-                '/Admin/Profit' : 'loi-nhuan',
-                '/Admin/Setting' : 'thiet-lap',
-                '/Admin/Exception' : '',
-                '/Admin/LogData' : '',
-                '/Admin/Announcement' : '',
-                '/Admin/SQL' : '',
+
+            var _helpMapping = {
+                '/Admin/General': 'lam-quen',
+                '/Admin/Orders': 'quan-ly-don-hang',
+                '/Admin/Products': 'quan-ly-hang-hoa',
+                '/Admin/Customers': 'quan-ly-khach-hang',
+                '/Admin/Purchase': 'quan-ly-nhap-kho',
+                '/Admin/Inventory': 'quan-ly-ton-kho',
+                '/Admin/Revenue': 'doanh-thu',
+                '/Admin/Payment': 'thu-chi',
+                '/Admin/Profit': 'loi-nhuan',
+                '/Admin/Setting': 'thiet-lap',
+                '/Admin/Exception': '',
+                '/Admin/LogData': '',
+                '/Admin/Announcement': '',
+                '/Admin/SQL': '',
                 '/Admin/ManageStore': ''
             }
             var curUrl = $scope.CurrentUrl;
