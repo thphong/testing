@@ -19,9 +19,9 @@ namespace StoreManagement.Service
         }
         #endregion
 
-        public Dictionary<string, object> Login(string loginId, string password)
+        public Dictionary<string, object> Login(string loginId, string password, bool IsRember, string ClientIP)
         {
-            string statement = string.Format("exec [dbo].[USP_System_Login] @Login = N'{0}', @Password = N'{1}'", loginId, password);
+            string statement = string.Format("exec [dbo].[USP_System_Login] @Login = N'{0}', @Password = N'{1}' , @IsRember = {2}, @ClientIP = '{3}'", loginId, password, IsRember?1:0, ClientIP);
             
             DataSet retVal = new DataSet();
             SqlConnection sqlConn = (SqlConnection)dbFactory.GetContext().Database.Connection;

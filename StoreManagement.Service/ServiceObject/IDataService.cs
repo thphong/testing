@@ -10,7 +10,7 @@ namespace StoreManagement.Service
 {
     public interface IDataService
     {
-        Dictionary<string, object> Login(string LoginId, string Password);
+        Dictionary<string, object> Login(string LoginId, string Password, bool IsRember, string ClientIP);
         void Logout(int userId);
         Dictionary<string, object> Register(string name, string username, string email, string password,
             string storename, string phone, string address, string city, int productgroup);
