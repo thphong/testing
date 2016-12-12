@@ -41,6 +41,7 @@
                             <tr>
                                 <th>STT</th>
                                 <th style="width: 30%"><span>Hàng hóa</span></th>
+                                <th><span>Giá vốn</span></th>
                                 <th><span>SL Tồn</span></th>
                                 <th><span>SL Chuyển</span></th>
                                 <th><span>Diễn giải</span></th>
@@ -53,6 +54,9 @@
                                 <td class="text-v-middle">
                                     <div class="bold" ng-bind="item.ProductCode"></div>
                                     <a ng-bind="item.ProductName"></a>
+                                </td>
+                                <td class="text-center text-v-middle">
+                                    <span ng-bind="item.Cost| currency:'':0"></span>
                                 </td>
                                 <td class="text-center text-v-middle">
                                     <span ng-bind="item.Quantity"></span>
@@ -99,6 +103,7 @@
                             <th grid-defined-colum="Id"></th>
                             <th grid-defined-colum="InventTranId"></th>
                             <th grid-defined-colum="ProductId"></th>
+                            <th grid-defined-colum="ProductId.Cost"></th>
                             <th grid-defined-colum="ProductId.ProductCode"></th>
                             <th grid-defined-colum="ProductId.ProductName"></th>
                             <th grid-defined-colum="Quantity"></th>

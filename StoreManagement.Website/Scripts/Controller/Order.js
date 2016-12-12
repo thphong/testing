@@ -49,7 +49,7 @@ mdlCommon.controller('OrderController',
             Customer: "",
             CustomerName: "",
             CustomerIsWholeSale: "",
-            SoldDate: $filter('date')(new Date(), "dd-MM-yyyy hh:mm:ss"),
+            SoldDate: "",
             Cashier: $scope.CurrentUser,
             CashierName: $scope.CurrentUserName,
             Notes: "",
@@ -82,7 +82,7 @@ mdlCommon.controller('OrderController',
             $scope.OrderForm.Customer = "";
             $scope.OrderForm.CustomerName = "";
             $scope.OrderForm.CustomerIsWholeSale = "";
-            $scope.OrderForm.SoldDate = $filter('date')(new Date(), "dd-MM-yyyy hh:mm:ss");
+            $scope.OrderForm.SoldDate = "";
             $scope.OrderForm.Cashier = $scope.CurrentUser;
             $scope.OrderForm.CashierName = $scope.CurrentUserName;
             $scope.OrderForm.Notes = "";
