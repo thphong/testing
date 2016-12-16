@@ -6,6 +6,7 @@ mdlCommon.controller('ProductListController',
         $scope.InitListAutoCompleteProducts = function (elementId, includeNegative, includeNotPrice, includeCombo, includeNotCost) {
             $(elementId).autocomplete({
                 minLength: 0,
+                //selectFirst :true,
                 source: function (request, response) {
                     var configList = new GridViewConfig("");
                     configList.GridDataAction = "get10";
@@ -33,13 +34,15 @@ mdlCommon.controller('ProductListController',
                     var listData = configList.GetListData();
                     if (listData.length > 0) {
                         response(listData);
+
+                        
                     }
                     else {
                         response(["Không tìm thấy kết quả"]);
                     }
                 },
                 focus: function (event, ui) {
-                    $(elementId).val(ui.item.ProductCode);
+                    //$(elementId).val(ui.item.ProductCode);
                     return false;
                 },
                 select: function (event, ui) {
@@ -49,9 +52,42 @@ mdlCommon.controller('ProductListController',
                             scope.SelectProduct(ui.item);
                         })
                         $(elementId).val("").change();
+                        setTimeout(function () { $(".ui-menu-item").hide(); }, 200);
+                        
                     }
                     return false;
+                },
+                open: function (event, ui) {
+                    var widget = $(this).data('ui-autocomplete');
+                    var menu = widget.menu
+                    , i = 0
+                    , $items = $('li', menu.element)
+                    , item
+                    , text
+                    , startsWith = new RegExp("^" + this.value, "i");
+
+                    /*
+                    for (; i < $items.length && !item; i++) {
+                        text = $items.eq(i).text();
+                        console.log(startsWith);
+                        if (startsWith.test(text)) {
+                            item = $items.eq(i);
+                        }
+                    }
+                    */
+                    if ($items.length == 1)
+                        item = $items.eq(i);
+
+                    if (item) {
+                        menu.focus(null, item);
+                        
+                    }
                 }
+            })
+            .keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }            
             })
             .autocomplete("instance")._renderItem = function (ul, item) {
                 var content;

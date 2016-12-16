@@ -17,6 +17,9 @@
             }
         }
     });
+
+    //focus txtSearchProduct
+    $("#txtSearchProduct").focus();
 });
 
 
