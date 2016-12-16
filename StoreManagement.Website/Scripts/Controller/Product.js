@@ -242,6 +242,7 @@ mdlCommon.controller('ProductController',
                         $scope.ProductForm.ProducerName = $("select[ng-model='ProductForm.ProducerId'] option:selected").html();
 
                         $scope.IsEditingProductDetail = false;
+                        $scope.ReloadGrid("ProductAttributes");
                                                 
                         if ($scope.CurrentTab == "Products") {
                             ShowSuccessMessage("Hàng hóa được sửa thành công!");

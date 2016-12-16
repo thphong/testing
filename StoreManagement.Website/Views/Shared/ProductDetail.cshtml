@@ -59,7 +59,7 @@
 
             </div>
             <div class="col-md-6">
-                <div class="row">
+                @*<div class="row">
                     <div class="col-md-12 margin-top-10">
                         <input id="chbTrackInventory" type="checkbox" ng-model="ProductForm.TrackInventory" 
                                ng-change="ChangeTrackInventory()" ng-disabled="ProductForm.IsManageAsSerial == 1"
@@ -72,7 +72,7 @@
                         </span>
                         <label class="font-weigth-normal" for="chbTrackInventory">Theo dõi tồn kho</label>
                     </div>
-                </div>
+                </div>*@
                 <div class="row">
                     <div class="col-md-12 margin-top-10">
                         <input id="chbAllowNegative" type="checkbox" ng-model="ProductForm.AllowNegative" 
@@ -192,7 +192,7 @@
                        check-range="{{ProductForm.AllowMin}};" check-range-message="Tồn kho tối đa phải lớn hơn hoặc bằng tồn kho tối thiểu." />
             </div>
         </div>
-        <div class="row">
+        @*<div class="row">
             <div class="col-md-12 margin-top-10">
                 <input id="chbIsManageAsSerial" type="checkbox" ng-model="ProductForm.IsManageAsSerial" ng-change="ChangeIsManageAsSerial()"
                        ng-true-value="1" ng-false-value="0"
@@ -204,13 +204,13 @@
                 <label class="font-weigth-normal" for="chbIsManageAsSerial"> Quản lý tồn kho theo serial</label>
 
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <div class="col-md-9 margin-top-10">
                 <input id="chbIsManageAttribute" type="checkbox" ng-model="ProductForm.IsManageAttribute" ng-click="InitProductAttribute()"
-                       ng-true-value="1" ng-false-value="0"
+                       ng-true-value="'1'" ng-false-value="'0'"
                        ng-if="IsEditingProductDetail"
-                       ng-disabled="ProductForm.ProductId != -1" />
+                       @*ng-disabled="ProductForm.ProductId != -1"*@ />
                 <span class="margin-top-10" ng-if="!IsEditingProductDetail">
                     <span class="label label-success" ng-if="ProductForm.IsManageAttribute == 1">Có</span>
                     <span class="label label-warning" ng-if="ProductForm.IsManageAttribute == 0">Không</span>
@@ -270,6 +270,9 @@
                             </tr>
                             <tr ng-if="IsEditingProductDetail">
                                 <td colspan="3"> <button class="btn btn-primary btn-tiny" ng-click="AddProductAttribute()"> <i class="fa fa-plus"></i> </button> </td>
+                            </tr>
+                            <tr ng-if="!IsEditingProductDetail && !DataSet.ProductAttributes.HasRecord()">
+                                <td colspan="3"> Chưa có thuộc tính </td>
                             </tr>
                         </tbody>
                     </table>

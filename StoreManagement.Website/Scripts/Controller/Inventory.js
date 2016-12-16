@@ -230,6 +230,7 @@ mdlCommon.controller('InventoryController',
                             ProductId: product.ProductId,
                             ProductCode: product.ProductCode,
                             ProductName: product.ProductName,
+                            Cost: product.Cost,
                             Quantity: product.Quantity,
                             TranQuantity: "",
                             Notes: ""

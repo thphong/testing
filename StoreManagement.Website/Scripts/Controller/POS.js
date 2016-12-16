@@ -23,6 +23,11 @@
 mdlCommon.controller('POSController',
 ['$scope', '$filter', '$controller', '$interpolate', '$sce',
     function ($scope, $filter, $controller, $interpolate, $sce) {
+                
+        setTimeout(function () {
+            $scope.InitListAutoCompleteProducts('#txtSearchProduct', false, $scope.RULES.ALLOW_PRICE_ZERO == 1, true, $scope.RULES.ALLOW_COST_ZERO == 1);
+        }, 100);
+        
 
         $scope.SortByCreatedDate = function () {
             $scope.Config.Products.GridSortCondition = "[CreatedDate] DESC";

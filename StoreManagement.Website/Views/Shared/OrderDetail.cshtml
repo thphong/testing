@@ -251,18 +251,18 @@
                 </div>
             </div>
         </div>
-        @*<div class="row margin-top-10">
+        <div class="row margin-top-10" ng-if="!OrderForm._CanUpdate">
             <div class="col-md-4">
                 <label class="control-label">Ngày bán</label>
             </div>
             <div class="col-md-8" ng-init="InitDatePicker()">
-                <span ng-bind="OrderForm.SoldDate" ng-if="!OrderForm._CanUpdate"></span>
-                <input ng-show="OrderForm._CanUpdate"
+                <span ng-bind="OrderForm.SoldDate"></span>
+                @*<input ng-show="OrderForm._CanUpdate"
                        class="form-control date-picker" ng-model="OrderForm.SoldDate"
-                       placeholder="Hôm nay" />
+                       placeholder="Hôm nay" />*@
 
             </div>
-        </div>*@
+        </div>
         <div class="row margin-top-10">
             <div class="col-md-4">
                 <label class="control-label">Người bán</label>
