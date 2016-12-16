@@ -75,12 +75,12 @@ mdlCommon.controller('ProductListController',
                         }
                     }
                     */
+                    //nếu có 1 item thì focus nó
                     if ($items.length == 1)
                         item = $items.eq(i);
 
                     if (item) {
                         menu.focus(null, item);
-                        
                     }
                 }
             })
