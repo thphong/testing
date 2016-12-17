@@ -12,7 +12,8 @@ namespace StoreManagement.Website
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui.js"));
+                        "~/Scripts/jquery-ui.js",
+                        "~/Scripts/jquery.ui.autocomplete.selectFirst.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",

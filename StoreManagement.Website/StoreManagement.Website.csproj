@@ -953,6 +953,7 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.ba-cond.min.js" />
     <Content Include="Scripts\jquery.slitslider.js" />
+    <Content Include="Scripts\jquery.ui.autocomplete.selectFirst.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\masterpage.js" />
