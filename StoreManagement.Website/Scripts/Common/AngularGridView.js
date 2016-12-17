@@ -1009,6 +1009,12 @@ mdlCommon.controller('ctrlPaging', ['$scope', '$interpolate', '$filter', '$compi
                 else {
                     response(["Không tìm thấy kết quả"]);
                 }
+                if ($.trim(element.val()) == "") {
+                    $(element.attr("autocomplete-model-id")).val("").change();
+                    if (element.attr("autocomplete-model-additional")) {
+                        $(element.attr("autocomplete-model-additional")).val("").change();
+                    }
+                }
             },
             focus: function (event, ui) {
                 if (ui.item[getColumName(element.attr("autocomplete-colum-id"))]) {

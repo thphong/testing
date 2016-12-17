@@ -53,7 +53,6 @@ mdlCommon.controller('POSController',
             $scope.ResetOrderForm();
             $scope.ResetDiscountForm();
             $scope.ListProductsOrder.splice(0, $scope.ListProductsOrder.length);
-            $scope.ListPromotion = [];
             FValidation.ClearAllError();
         }
 
@@ -119,12 +118,12 @@ mdlCommon.controller('POSController',
         $scope.configPromotion.GridDataAction = "getall";
         $scope.configPromotion.GridDataType = "function";
         $scope.configPromotion.GridDataObject = "dbo.UFN_Promotion_Calcualte";
-        $scope.configPromotion.GridParametersExpression = "{{OrderForm.Customer}}, {{CurrentStore}}";
+        $scope.configPromotion.GridParametersExpression = "''{{OrderForm.Customer}}'', {{CurrentStore}}";
         $scope.ListPromotion = [];
         
         //Calculate Promotion
         $scope.$watch('OrderForm.Customer', function (newVal, oldVal) {
-            if (newVal > 0 && $scope.OrderForm.IsPOS) {
+            if ( $scope.OrderForm.IsPOS) {
 
                 $scope.configPromotion.EvaluateFieldExpression($interpolate, $scope);
                 $scope.ListPromotion = $scope.configPromotion.GetListData();
