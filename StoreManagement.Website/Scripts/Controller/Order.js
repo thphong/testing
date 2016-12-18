@@ -365,13 +365,13 @@ mdlCommon.controller('OrderController',
 
             var configList = new GridViewConfig("");
             configList.GridDataAction = "getall";
-            configList.GridDataObject = "T_Trans_Products";
-            configList.GridDefinedColums = "Quantity;AllowNegative";
+            configList.GridDataObject = "T_Trans_Product_Store";
+            configList.GridDefinedColums = "Quantity;ProductId.AllowNegative";
 
             for (var i = 0 ; i < len; i++) {
 
-                configList.GridFilterCondition = "T_Trans_Products.ProductId = " + $scope.ListProductsOrder[i].ProductId
-                                                 + " and StoreId = " + $scope.CurrentStore;
+                configList.GridFilterCondition = "T_Trans_Product_Store.ProductId = " + $scope.ListProductsOrder[i].ProductId
+                                                 + " and T_Trans_Product_Store.StoreId = " + $scope.CurrentStore;
 
                 var productStore = configList.GetListData()[0];
                 if (productStore) {
