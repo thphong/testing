@@ -29,6 +29,7 @@ function GridViewConfig(gridId) {
     this.EvaluateFieldExpression = function ($interpolate, $scope) {
         this.GridFilterCondition = $interpolate(this.GridFilterConditionExpression)($scope);
         this.GridParameters = $interpolate(this.GridParametersExpression)($scope);
+        this.GridDefinedColums = $interpolate(this.GridDefinedColums)($scope);
         return;
     }
 

@@ -10,12 +10,6 @@ E:\StoreManagement\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenX
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
 E:\StoreManagement\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb
-E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.dll
-E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.pdb
-E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenXml.dll
-E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
-E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
-E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.dll
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.pdb
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenXml.dll
@@ -24,3 +18,11 @@ D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\bin\Debug\
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb
 D:\STARTUP\projects\PHOLO\github\PHOLO\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\StoreManagement.Common.pdb
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\DocumentFormat.OpenXml.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\itextsharp.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\bin\Debug\itextsharp.xml
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.csprojResolveAssemblyReference.cache
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.dll
+E:\Work\StoreManagement2\testing\StoreManagement.Common\obj\Debug\StoreManagement.Common.pdb

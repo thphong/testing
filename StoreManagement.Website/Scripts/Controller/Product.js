@@ -87,6 +87,7 @@ mdlCommon.controller('ProductController',
             Version: 0,
             isCombo: 0,
             StoreId: $scope.CurrentStore,
+            ParentStore: $scope.ParentStore,
             Quantity: 0,
             NumSelling: 0,
             _CanUpdate: true,
@@ -125,6 +126,7 @@ mdlCommon.controller('ProductController',
             $scope.ProductForm.Version = 0;
             $scope.ProductForm.isCombo = 0;
             $scope.ProductForm.StoreId = $scope.CurrentStore;
+            $scope.ProductForm.ParentStore = $scope.ParentStore;
             $scope.ProductForm.Quantity = 0;
             $scope.ProductForm.NumSelling = 0;
         };
@@ -318,6 +320,7 @@ mdlCommon.controller('ProductController',
             $scope.ResetProductForm();
             var object = $scope.ProductFormConfig.GetObject(product.ProductId);
             $scope.ProductFormConfig.CopyFields(object, $scope.ProductForm);
+            $scope.ProductForm.Quantity = product.Quantity;
             $scope.ProductForm.ProductGroupName = product.GroupName;
             $scope.ProductForm.ProducerName = product.ProducerName;
             $scope.ProductForm._CanUpdate = product._CanUpdate;
