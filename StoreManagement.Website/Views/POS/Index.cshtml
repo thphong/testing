@@ -29,25 +29,25 @@
             <div class="row col-md-12" grid-data="Products"
                  grid-data-type="table"
                  grid-data-action="get"
-                 grid-data-object="T_Trans_Products"
-                 grid-filter-condition="([StoreId] = {{CurrentStore}} and [IsSelling] = 1 and [IsActive] = 1
-                                     and ([AllowNegative] = 1 or [Quantity] > 0)
-                                     and ([Cost] > 0 or dbo.UFN_System_GetRule(''ALLOW_COST_ZERO'', {{CurrentStore}}) = 1) 
-                                     and ([Price] > 0 or dbo.UFN_System_GetRule(''ALLOW_PRICE_ZERO'', {{CurrentStore}}) = 1)
-                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductGroup]))"
-                 grid-sort-condition="[ProductName] ASC">
+                 grid-data-object="T_Trans_Product_Store"
+                 grid-filter-condition="([StoreId] = {{CurrentStore}} and [ProductId.IsSelling] = 1 and [ProductId.IsActive] = 1
+                                     and ([ProductId.AllowNegative] = 1 or [Quantity] > 0)
+                                     and ([ProductId.Cost] > 0 or dbo.UFN_System_GetRule(''ALLOW_COST_ZERO'', {{CurrentStore}}) = 1) 
+                                     and ([ProductId.Price] > 0 or dbo.UFN_System_GetRule(''ALLOW_PRICE_ZERO'', {{CurrentStore}}) = 1)
+                                     and ({{AdditionalFilter.ProductGroup}} = 0 or {{AdditionalFilter.ProductGroup}} = [ProductId.ProductGroup]))"
+                 grid-sort-condition="[ProductId.ProductName] ASC">
 
                 <div grid-defined-colum="ProductId" class="none-display"></div>
-                <div grid-defined-colum="ProductName" class="none-display"></div>
-                <div grid-defined-colum="ProductCode" class="none-display"></div>
-                <div grid-defined-colum="Price" class="none-display"></div>
-                <div grid-defined-colum="Cost" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductName" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductCode" class="none-display"></div>
+                <div grid-defined-colum="ProductId.Price" class="none-display"></div>
+                <div grid-defined-colum="ProductId.Cost" class="none-display"></div>
                 <div grid-defined-colum="Quantity" class="none-display"></div>
-                <div grid-defined-colum="VAT" class="none-display"></div>
-                <div grid-defined-colum="ProductImageUrl" class="none-display"></div>
-                <div grid-defined-colum="#CreatedDate" class="none-display"></div>
-                <div grid-defined-colum="#NumSelling" class="none-display"></div>
-                <div grid-defined-colum="AllowNegative" class="none-display"></div>
+                <div grid-defined-colum="ProductId.VAT" class="none-display"></div>
+                <div grid-defined-colum="ProductId.ProductImageUrl" class="none-display"></div>
+                <div grid-defined-colum="#ProductId.CreatedDate" class="none-display"></div>
+                <div grid-defined-colum="#ProductId.NumSelling" class="none-display"></div>
+                <div grid-defined-colum="ProductId.AllowNegative" class="none-display"></div>
 
                 <div class="col-md-12 row" ng-init="Config.Products.NumOfItemOnPage = 12">
                     <div class="col-md-3 col-xs-4 col-lg-3" ng-repeat="item in DataSet.Products.Data">

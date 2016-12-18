@@ -33,13 +33,13 @@ mdlCommon.controller('POSController',
         
 
         $scope.SortByCreatedDate = function () {
-            $scope.Config.Products.GridSortCondition = "[CreatedDate] DESC";
+            $scope.Config.Products.GridSortCondition = "ProductId.CreatedDate DESC";
             $scope.ReloadGrid("Products");
 
         }
 
         $scope.SortByNumSelling = function () {
-            $scope.Config.Products.GridSortCondition = "[NumSelling] DESC";
+            $scope.Config.Products.GridSortCondition = "ProductId.NumSelling DESC";
             $scope.ReloadGrid("Products");
         }
 
