@@ -44,7 +44,7 @@
                                    grid-data-type="table" @*table/storedprocedure*@
                                    grid-data-action="get" @*get/getall*@
                                    grid-data-object="T_Trans_ProductQuantity_History" @*table name or stored procedure name*@
-                                   grid-filter-condition="[ProductId.ProductCode] = ''{{ProductQuanHistoryForm.ProductCode}}'' and [StoreId] = {{SelectedStoreId}}" @*must have [fieldname] for each colum field*@
+                                   grid-filter-condition="[ProductId] = {{ProductQuanHistoryForm.ProductId}} and [StoreId] = {{SelectedStoreId}}" @*must have [fieldname] for each colum field*@
                                    grid-sort-condition="[CreatedDate] DESC" @*must have [fieldname] for each colum field*@
                                    class="table table-striped table-bordered">
                                 <thead>

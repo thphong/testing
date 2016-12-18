@@ -19,9 +19,9 @@
         $scope.ConfigStoreList = new GridViewConfig("");
         $scope.ConfigStoreList.GridDataAction = "getall";
         $scope.ConfigStoreList.GridDataType = "table";
-        $scope.ConfigStoreList.GridDataObject = "T_Trans_Products";
+        $scope.ConfigStoreList.GridDataObject = "T_Trans_Product_Store";
         $scope.ConfigStoreList.GridDefinedColums = "StoreId;StoreId.StoreCode;Quantity";
-        $scope.ConfigStoreList.GridFilterConditionExpression = "T_Trans_Products.ProductCode = ''{{ProductQuanHistoryForm.ProductCode}}''";
+        $scope.ConfigStoreList.GridFilterConditionExpression = "ProductId = {{ProductQuanHistoryForm.ProductId}}";
         $scope.ConfigStoreList.GridSortCondition = "StoreId.StoreCode ASC";
 
         $scope.ListStores = [];
