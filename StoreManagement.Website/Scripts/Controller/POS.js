@@ -195,6 +195,6 @@ mdlCommon.controller('POSController',
             $scope.OrderForm.CustomerName = customerName;
             $scope.ReloadGrid("ProductsReturn");
             $scope.ListProductsOrder = $scope.DataSet.ProductsReturn.Data;
-            $scope.Summarize(false);
+            //$scope.Summarize(false);
         }
     }]);

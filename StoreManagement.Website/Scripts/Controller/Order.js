@@ -413,31 +413,34 @@ mdlCommon.controller('OrderController',
         }
 
         $scope.SaveReturnOrder = function () {
-            var listReturn = [];
             
-            var len = $scope.ListProductsOrder.length;
-            for (var i = 0 ; i < len; i++) {
-                var item = $scope.ListProductsOrder[i];
-                if (item.ReturnQuantity > 0) {
-                    listReturn.push(item);
-                }
-            }
+                var listReturn = [];
 
-            if (listReturn.length > 0) {
-                $scope.ReturnProductConfig.SetListObject(listReturn);
-                var result = $scope.ReturnProductConfig.SaveListObject();
-                if (result) {
-                    $scope.IsReturnProducts = false;
-                    ShowSuccessMessage("Hàng được trả thành công.");
-                    $('#returnPOSModal').modal('hide');
-                    $scope.ReloadGrid("ProductsOrder");
-                    $scope.ReloadGrid("ProductsReturn");
-                    $scope.InitListProducts();
+                var len = $scope.ListProductsOrder.length;
+                for (var i = 0 ; i < len; i++) {
+                    var item = $scope.ListProductsOrder[i];
+                    if (item.ReturnQuantity > 0) {
+                        listReturn.push(item);
+                    }
                 }
-            }
-            else {
-                ShowErrorMessage("Không có hàng hóa nào được trả");
-            }
+
+                if (listReturn.length > 0) {
+                    if (confirm("Hệ thống mặc định bạn phải trả tiền lại cho khách hàng khi trả hàng nếu đơn hàng đã được thanh toán/thanh toán một phần. Bạn có muốn tiếp tục?")) {
+                        $scope.ReturnProductConfig.SetListObject(listReturn);
+                        var result = $scope.ReturnProductConfig.SaveListObject();
+                        if (result) {
+                            $scope.IsReturnProducts = false;
+                            ShowSuccessMessage("Hàng được trả thành công.");
+                            $('#returnPOSModal').modal('hide');
+                            $scope.ReloadGrid("ProductsOrder");
+                            $scope.ReloadGrid("ProductsReturn");
+                            $scope.InitListProducts();
+                        }
+                    }
+                }
+                else {
+                    ShowErrorMessage("Không có hàng hóa nào được trả");
+                }
         }
         $scope.ChangeReturnQuantity = function (item) {
             item.ReturnQuantity = parseInt(item.ReturnQuantity);
@@ -461,6 +464,16 @@ mdlCommon.controller('OrderController',
                     $scope.OrderForm.ReturnMoney += parseInt(item.ReturnQuantity) * parseFloat(item.SellPrice) / parseInt(item.Quantity);
                 }
             }
+            
+            if ($scope.OrderForm.DebtMoney > 0) {
+                if ($scope.OrderForm.ReturnMoney < $scope.OrderForm.DebtMoney) {
+                    $scope.OrderForm.ReturnMoney = 0;
+                }
+                else {
+                    $scope.OrderForm.ReturnMoney -= $scope.OrderForm.DebtMoney;
+                }
+            }
+            
         }
 
         $scope.ShowOrderDetail = function (order) {

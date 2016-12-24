@@ -142,7 +142,7 @@
                    grid-data-type="table" @*table/storedprocedure*@
                    grid-data-action="get" @*get/getall*@
                    grid-data-object="T_Trans_Orders" @*table name or stored procedure name*@
-                   grid-filter-condition="[Customer] = {{CustomerForm.CustomerId}}" @*must have [fieldname] for each colum field*@
+                   grid-filter-condition="[Customer] = {{CustomerForm.CustomerId}} and [IsActive] = 1" @*must have [fieldname] for each colum field*@
                    grid-sort-condition="[OrderId] ASC" @*must have [fieldname] for each colum field*@
                    grid-sum-collection="[SumMoney];[DebtMoney]" @*must have [fieldname] for each colum field*@
                    class="table table-striped table-bordered">
