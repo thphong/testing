@@ -112,8 +112,17 @@
                                         <i class="fa-trash-o fa"></i>
                                     </div>
                                     <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByTime.Sums.ReturnAmount | currency:'':0"></span>
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByTime.Sums.DeleteAmount | currency:'':0"></span>
                                         <div class="infobox-content">Đơn hàng bị xóa</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-blue">
+                                    <div class="infobox-icon">
+                                        <i class="fa-rebel fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-blue" ng-bind="DataSet.ReportByTime.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Tiền trả hàng</div>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +148,7 @@
                                             ,{{Filter.CurrentStore}}
                                             ,''{{Filter.ReportGroupBy}}''"
                                        grid-sort-condition="GroupBy ASC" @*must have [fieldname] for each colum field*@
-                                       grid-sum-collection="Revenue;Profit;ReturnAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
+                                       grid-sum-collection="Revenue;Profit;DeleteAmount;ReturnAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
                                        class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
@@ -247,10 +256,19 @@
                                         <i class="fa-trash-o fa"></i>
                                     </div>
                                     <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByProduct.Sums.ReturnAmount | currency:'':0"></span>
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByProduct.Sums.DeleteAmount | currency:'':0"></span>
                                         <div class="infobox-content">Đơn hàng bị xóa</div>
                                     </div>
                                 </div>
+                                @*<div class="infobox infobox-blue">
+                                    <div class="infobox-icon">
+                                        <i class="fa-rebel fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-blue" ng-bind="DataSet.ReportByProduct.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Tiền trả hàng</div>
+                                    </div>
+                                </div>*@
                             </div>
                         </div>
                         <div class="row col-md-12 text-center">
@@ -274,7 +292,7 @@
                                             ,{{Filter.CurrentStore}}
                                             ,{{Filter.ProductGroup}}"
                                        grid-sort-condition="[ProductCode] ASC" @*must have [fieldname] for each colum field*@
-                                       grid-sum-collection="Revenue;Profit;ReturnAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
+                                       grid-sum-collection="Revenue;Profit;DeleteAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
                                        class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
@@ -376,8 +394,17 @@
                                         <i class="fa-trash-o fa"></i>
                                     </div>
                                     <div class="infobox-data">
-                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByStore.Sums.ReturnAmount | currency:'':0"></span>
+                                        <span class="infobox-data-number infobox-red" ng-bind="DataSet.ReportByStore.Sums.DeleteAmount | currency:'':0"></span>
                                         <div class="infobox-content">Đơn hàng bị xóa</div>
+                                    </div>
+                                </div>
+                                <div class="infobox infobox-blue">
+                                    <div class="infobox-icon">
+                                        <i class="fa-rebel fa"></i>
+                                    </div>
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number infobox-blue" ng-bind="DataSet.ReportByStore.Sums.ReturnAmount | currency:'':0"></span>
+                                        <div class="infobox-content">Tiền trả hàng</div>
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +429,7 @@
                                             ,dbo.UFN_System_GetDateTime(''{{FilterRangeDate.EndDate}}'', ''dd-MM-yyyy'')
                                             ,{{Filter.CurrentStore}}"
                                        grid-sort-condition="StoreCode ASC" @*must have [fieldname] for each colum field*@
-                                       grid-sum-collection="Revenue;Profit;ReturnAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
+                                       grid-sum-collection="Revenue;Profit;DeleteAmount;ReturnAmount;Cost;Discount" @*must have [fieldname] for each colum field*@
                                        class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
