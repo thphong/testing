@@ -33,7 +33,6 @@
             StoreId: -1,
             Amount: "",
             Payer: "",
-            NumMonth: "",
             PaymentType: "1",
             Description: "",
             IsActive: 1,
@@ -44,7 +43,6 @@
             $scope.ExtendForm.StoreId = -1;
             $scope.ExtendForm.Amount = "";
             $scope.ExtendForm.Payer = "";
-            $scope.ExtendForm.NumMonth = "";
             $scope.ExtendForm.PaymentType = "1";
             $scope.ExtendForm.Description = "";
             $scope.ExtendForm.IsActive = 1;
