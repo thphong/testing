@@ -152,6 +152,8 @@ namespace StoreManagement.Website
                        "~/Scripts/Controller/Files.js"));
             bundles.Add(new ScriptBundle("~/bundles/ActivityLog").Include(
                        "~/Scripts/Controller/ActivityLog.js"));
+            bundles.Add(new ScriptBundle("~/bundles/ManageAccount").Include(
+                       "~/Scripts/Controller/ManageAccount.js"));
             //========================================
             //Home page
             //css

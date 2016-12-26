@@ -311,5 +311,13 @@ namespace StoreManagement.Website.Controllers
             SessionCollection.LastUrl = "/Admin/ActivityLog";
             return PartialView("ActivityLog");
         }
+
+        [HttpGet]
+        public ActionResult ManageAccount()
+        {
+            SessionCollection.LastUrl = "/Admin/ManageAccount";
+            return PartialView("ManageAccount");
+        }
+        
     }
 }
