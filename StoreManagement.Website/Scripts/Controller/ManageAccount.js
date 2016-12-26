@@ -8,7 +8,7 @@
             AvailableAmount: "",
             UsedAmount: "",
             ChargedAmount: ""
-        }
+        } 
         
         $scope.SelectedMonth = -1;
         $scope.SelectedYear = -1;
