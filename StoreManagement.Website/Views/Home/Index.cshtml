@@ -6,94 +6,49 @@
 <section class="" style="background-color:#5AC3AF; color:white;">
     <div class="container">
     <div class="row-fluid">
-        <div class="img-banner-info span6">
+        <div class="img-banner-info span12">
             <div class="col-xs-12">
-                <h1>Phần mềm quản lý bán hàng PHOLO</h1>
-                <ul class="white">
-                    <li>POS bán hàng, tính tiền, in hoá đơn nhanh.</li>
-                    <li>Cực kỳ dễ sử dụng, kể cả người không biết nhiều về máy tính.</li>
-                    <li>Quản lý cửa hàng bán lẻ, theo dõi doanh số, tồn kho.</li>
-                    <li>Bảng biểu thống kê chi tiết và sinh động.</li>
-                </ul>
-                <div class="form-inline padding-xs-10">
-                    <div class="no-padding">
-                        <h4 class="white">Bắt đầu sử dụng MIỄN PHÍ</h4>
+                <center>
+                    <h1>Phần mềm quản lý bán hàng PHOLO</h1>
+                    <div class="form-inline ">
+                       
+                        <div class="" >
+                            <a class="btn btn-warning" href="@Url.Action("Register","Home")" style="padding:20px;font-size:20px">
+                                DÙNG THỬ MIỄN PHÍ
+                            </a>
+                        </div>
                     </div>
-                    <div class="no-padding">
-                        <a class="btn btn-warning" href="@Url.Action("Register","Home")">
-                            DÙNG THỬ MIỄN PHÍ
-                        </a>
+                    
+                    <div style="margin-top:40px;font-size:20px">
+                        <div>--- &#9830; ---</div>
+                        <br />
+                        <ul class="white" style="list-style-type:none">
+                        <li></li>
+                        <li>Bán hàng, tính tiền, in hoá đơn nhanh.</li>
+                        <li>&nbsp</li>
+                        <li>Đơn giản, dễ dùng và chạy trên mọi thiết bị.</li>
+                        <li>&nbsp</li>
+                        <li>Quản lý cửa hàng bán lẻ, theo dõi doanh số, tồn kho.</li>
+                        <li>&nbsp</li>
+                        <li>Bảng biểu thống kê chi tiết và sinh động.</li>
+                        </ul>
                     </div>
-                </div>
+                
+                </center>
+                
+                
             </div>
         </div>
-        <div class="img-banner-pic span6"><a href="#">
-            <img class="aligncenter wp-image-43 size-full" src="@Url.Content("~/Content/home/images/tongquan.png")" alt="phần mềm quản lý bán hàng pholo.net" width="600" height="347" sizes="(max-width: 600px) 100vw, 600px"></a></div>
+
+       @* <div class="img-banner-pic span12">
+            <a href="#"><img class="aligncenter wp-image-43 size-full" src="@Url.Content("~/Content/home/images/SODO.png")" alt="phần mềm quản lý bán hàng pholo.net" width="600" height="347" sizes="(max-width: 600px) 100vw, 600px"></a>
+        </div>*@
+
     </div>
     </div>
 </section>
 <!--/Introduction-->
 
-<!--Pricing-->
- <section id="pricing-table" class="container" >
-    <div class="center">
-        <h2>BẢNG GIÁ PHẦN MỀM</h2>
-        <p>Giá phần mềm tùy thuộc vào nhu cầu sử dụng của khách hàng. </p>
-    </div>
-
-    @*<div class="big-gap"></div>*@
-    <br />
-    <div class="row-fluid center clearfix">
-        <div class="span4">
-            <ul class="plan plan1">
-                <li class="plan-name">
-                    <h3>Cơ bản (Miễn phí)</h3>
-                </li>
-                <li class="plan-price"> <strong>0đ</strong> / tháng</li>
-                <li> Số cửa hàng : <strong>1</strong> </li>
-                <li> Số người dùng : <strong>3</strong>  </li
-                <li> <strong>Không hỗ trợ trực tuyến</strong>  </li>
-                <li class="plan-action">
-                    <a href="@Url.Action("Register", "Home")" class="btn btn-transparent">ĐĂNG KÝ</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="span4">
-            <ul class="plan plan2 featured">
-                <li class="plan-name">
-                    <h3>Bản chuẩn</h3>
-                </li>
-                <li class="plan-price"> <strong>100,000đ</strong> / tháng</li>
-                <li> Số cửa hàng : <strong>5</strong> </li>
-                <li> Số người dùng : <strong>10</strong>  </li>
-                <li> <strong>Hỗ trợ sản phẩm trực tuyến</strong>  </li>
-                <li class="plan-action">
-                    <a href="@Url.Action("Register", "Home")" class="btn btn-transparent">ĐĂNG KÝ</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="span4">
-            <ul class="plan plan3">
-                <li class="plan-name">
-                    <h3>Nâng cao </h3>
-                </li>
-                <li class="plan-price"> <strong>500,000đ</strong> / tháng</li>
-                <li> Số cửa hàng : <strong>Không giới hạn</strong> </li>
-                <li> Số người dùng : <strong>Không giới hạn</strong>  </li
-                <li> <strong>Hỗ trợ sản phẩm trực tuyến</strong>  </li>
-                <li class="plan-action">
-                    <a href="#" class="btn btn-transparent">ĐĂNG KÝ</a>
-                </li>
-            </ul>
-        </div>
-
-       
-    </div>
-
-</section>
-<!--/Pricing-->
 
 <!--Features-->
 <section class="services">
@@ -173,9 +128,72 @@ Nắm nhanh công nợ với nhà cung cấp, phân phối</p>
 </section>
 <!--/Features-->
 
+<!--Pricing-->
+<style>
+    .height-price
+    {
+        height:60px;
+    }
+</style>
+ <section id="pricing-table" class="container" >
+    <div class="center">
+        <h2>CÁCH THỨC HOẠT ĐỘNG</h2>
+        <p>PHOLO không thu phí khi cửa hàng không phát sinh đơn hàng. </p>
+    </div>
 
-<!--Clients-->
-<section id="clients" class="main">
+    @*<div class="big-gap"></div>*@
+    <br />
+    <div class="row-fluid  clearfix">
+        <div class="span4">
+            <ul class="plan plan1">
+                <li class="plan-name center">
+                    <h3>TÀI KHOẢN CỬA HÀNG</h3>
+                </li>
+                <li class="height-price"> <i class="fa fa-diamond"></i>  Mỗi cửa hàng sẽ một tài khoản tiền để hoạt động</li>
+                <li class="height-price"> <i class="fa fa-diamond"></i> Mỗi tháng sẽ trừ đi một số tiền trong tài khoản dựa vào số đơn hàng mà cửa hàng đã bán được</li>
+                <li class="height-price"> <i class="fa fa-diamond"></i> <strong>100 đơn hàng = 20.000 vnđ</strong></li>
+                <li class="height-price"> <i class="fa fa-diamond"></i> *** Đặc biệt là số tiền bị trừ tối đa 200.000 vnđ </li>
+                
+            </ul>
+        </div>
+
+        <div class="span4">
+            <ul class="plan plan2 ">
+                <li class="plan-name center">
+                    <h3>ĐĂNG KÝ MIỄN PHÍ</h3>
+                </li>
+                <li class="height-price"> <i class="fa fa-gift"></i> Tặng 500.000 vnđ vào tài khoản khi đăng ký</li>
+                <li class="height-price"> <i class="fa fa-gift"></i> Với tài khoản đăng ký, quý khách sẽ sử dụng được tất cả các tính năng của phần mềm</li>
+                <li class="height-price"> <i class="fa fa-gift"></i> Tài khoản sẽ được tặng thưởng nếu có những đóng góp xây dựng trong quá trình sử dụng</li>
+                <li class="height-price"> <i class="fa fa-gift"></i> Ngoài ra, sẽ có những khoảng thưởng vào những dịp lễ tết </li>
+               
+            </ul>
+        </div>
+
+        <div class="span4">
+            <ul class="plan plan3">
+                <li class="plan-name center">
+                    <h3>CÁCH DUY TRÌ CỬA HÀNG</h3>
+                </li>
+                <li class="height-price"> <i class="fa fa-send"></i> Quý khách phải nạp tiền vào tài khoản để duy trì cửa hàng khi tài khoản đã hết</li>
+                <li class="height-price"> <i class="fa fa-send"></i> Cửa hàng của quý khách sẽ bị khóa khi tài khoản không có đủ tiền thanh toán sau 1 tháng</li>
+                <li class="height-price"> <i class="fa fa-send"></i> Khi tài khoản sắp hết chúng tôi sẽ thông báo đến Quý khách</li>
+                <li class="height-price"> <i class="fa fa-send"></i> Để nạp tiền Quý khách vui lòng liên lạc qua email hoặc điện thoại để được hướng dẫn chi tiết hơn</li>
+                
+            </ul>
+        </div>
+
+       
+    </div>
+
+</section>
+<!--/Pricing-->
+
+
+
+
+<!--Clients hidden-->
+<section id="clients" class="main" style="display:none">
     <div class="container">
         <div class="row-fluid">
             <div class="span2">
