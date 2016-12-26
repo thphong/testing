@@ -5,53 +5,70 @@
 <!--Introduction-->
 <section class="" style="background-color:#5AC3AF; color:white;">
     <div class="container">
-    <div class="row-fluid">
-        <div class="img-banner-info span6">
-            <div class="col-xs-12">
-                <h1>Phần mềm quản lý bán hàng PHOLO</h1>
-                <ul class="white">
-                    <li>POS bán hàng, tính tiền, in hoá đơn nhanh.</li>
-                    <li>Cực kỳ dễ sử dụng, kể cả người không biết nhiều về máy tính.</li>
-                    <li>Quản lý cửa hàng bán lẻ, theo dõi doanh số, tồn kho.</li>
-                    <li>Bảng biểu thống kê chi tiết và sinh động.</li>
-                </ul>
-                <div class="form-inline padding-xs-10">
-                    <div class="no-padding">
-                        <h4 class="white">Bắt đầu sử dụng MIỄN PHÍ</h4>
+        <div class="row-fluid">
+            <div class="img-banner-info span6">
+                <div class="col-xs-12">
+                    <h1>Phần mềm quản lý bán hàng PHOLO</h1>
+                    <ul class="white">
+                        <li>Hỗ trợ quản lý hàng hóa, khách hàng, kho, và POS bán hàng</li>
+                        <li>Dễ sử dụng, có thể chạy trên laptop và mobile</li>
+                        <li>Báo cáo thống kê đầy đủ, chi tiết, trực quan</li>
+                        <li>Linh động tùy chỉnh theo nhu cầu của cửa hàng</li>
+                    </ul>
+                    <div class="form-inline padding-xs-10">
+                        <div class="no-padding">
+                            <h4 class="white">Bắt đầu sử dụng MIỄN PHÍ</h4>
+                        </div>
+                        <div class="no-padding">
+                            <a class="btn btn-warning" href="@Url.Action("Register","Home")">
+                                DÙNG THỬ MIỄN PHÍ
+                            </a>
+                        </div>
                     </div>
-                    <div class="no-padding">
-                        <a class="btn btn-warning" href="@Url.Action("Register","Home")">
-                            DÙNG THỬ MIỄN PHÍ
-                        </a>
-                    </div>
+                    <h1>Điểm nổi bật</h1>
+                    <ul class="white">
+                        <li>Mở thêm chi nhánh/cửa hàng phụ dễ dàng</li>
+                        <li>Không giới hạn số lượng nhân viên</li>
+                        <li>Giảm phí khi tình hình kinh doanh không tốt, không tăng phí khi lợi nhuận cao</li>
+                        <li>Luôn cải tiến để đáp ứng theo yêu cầu riêng của bạn</li>
+                    </ul>
+                    <h1>Bảng giá</h1>
+                    <ul class="white">
+                        <li>Mỗi cửa hàng (cửa hàng chính và phụ) sẽ tính phí 100k/tháng</li>
+                        <li>Được tặng 500k sử dụng miễn phí</li>
+                        <li>Xài trước, trả tiền sau</li>
+                        <li>Trong trường kinh doanh không tốt, phí sẽ được tính như sau:</li>
+                        <li style="margin-left:20px">Mỗi 100 đơn hàng sẽ tính giá 20k/tháng. Ví dụ, 0 đơn hàng thì ko tính phí. 80 đơn hàng phí 20k. 100 đơn hàng phí 20k. 150 đơn hàng phí 40k</li>
+                        <li style="margin-left:20px">Số đơn hàng được tính tổng cho cửa hàng chính và cửa hàng phụ</li>
+                        <li style="margin-left:20px">Không tính các yếu tố khác như số lượng nhập kho, hàng hóa, khách hàng, nhà cung cấp...</li>
+                    </ul>
                 </div>
             </div>
+            <div class="img-banner-pic span6">
+                <a href="#">
+                    <img class="aligncenter wp-image-43 size-full" src="@Url.Content("~/Content/home/images/tongquan.png")" alt="phần mềm quản lý bán hàng pholo.net" width="600" height="347" sizes="(max-width: 600px) 100vw, 600px">
+                </a>
+            </div>
         </div>
-        <div class="img-banner-pic span6"><a href="#">
-            <img class="aligncenter wp-image-43 size-full" src="@Url.Content("~/Content/home/images/tongquan.png")" alt="phần mềm quản lý bán hàng pholo.net" width="600" height="347" sizes="(max-width: 600px) 100vw, 600px"></a></div>
-    </div>
     </div>
 </section>
 <!--/Introduction-->
-
 <!--Pricing-->
- <section id="pricing-table" class="container" >
+@*<section id="pricing-table" class="container">
     <div class="center">
         <h2>BẢNG GIÁ PHẦN MỀM</h2>
-        <p>Giá phần mềm tùy thuộc vào nhu cầu sử dụng của khách hàng. </p>
+        <p>Giá cực mềm và cực hấp dẫn </p>
     </div>
-
-    @*<div class="big-gap"></div>*@
     <br />
     <div class="row-fluid center clearfix">
         <div class="span4">
             <ul class="plan plan1">
                 <li class="plan-name">
-                    <h3>Cơ bản (Miễn phí)</h3>
+                    <h3>Miễn phí lên đến 5 tháng</h3>
                 </li>
                 <li class="plan-price"> <strong>0đ</strong> / tháng</li>
                 <li> Số cửa hàng : <strong>1</strong> </li>
-                <li> Số người dùng : <strong>3</strong>  </li
+                <li>Số người dùng :<strong>3</strong></li>
                 <li> <strong>Không hỗ trợ trực tuyến</strong>  </li>
                 <li class="plan-action">
                     <a href="@Url.Action("Register", "Home")" class="btn btn-transparent">ĐĂNG KÝ</a>
@@ -81,146 +98,141 @@
                 </li>
                 <li class="plan-price"> <strong>500,000đ</strong> / tháng</li>
                 <li> Số cửa hàng : <strong>Không giới hạn</strong> </li>
-                <li> Số người dùng : <strong>Không giới hạn</strong>  </li
+                <li>Số người dùng :<strong>Không giới hạn</strong></li>
                 <li> <strong>Hỗ trợ sản phẩm trực tuyến</strong>  </li>
                 <li class="plan-action">
                     <a href="#" class="btn btn-transparent">ĐĂNG KÝ</a>
                 </li>
             </ul>
         </div>
-
-       
     </div>
 
-</section>
+</section>*@
 <!--/Pricing-->
-
 <!--Features-->
-<section class="services">
-    <div class="center">
-        <h2>TÍNH NĂNG PHẦN MỀM</h2>
-    </div>
+@*<section class="services">
+        <div class="center">
+            <h2>TÍNH NĂNG PHẦN MỀM</h2>
+        </div>
 
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-bar-chart icon-large"></i>
-                    <p> </p>
-                    <h4>Quản lý sản phẩm, đơn hàng</h4>
-                    <p>Hệ thống hỗ trợ lưu trữ, quản lý các sản phẩm và đơn hàng một cách đơn giản và thuận tiện nhất.</p>
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-bar-chart icon-large"></i>
+                        <p> </p>
+                        <h4>Quản lý sản phẩm, đơn hàng</h4>
+                        <p>Hệ thống hỗ trợ lưu trữ, quản lý các sản phẩm và đơn hàng một cách đơn giản và thuận tiện nhất.</p>
+                    </div>
                 </div>
+
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-cog icon-large"></i>
+                        <p></p>
+                        <h4>Bán hàng, tính tiền</h4>
+                        <p>Tính tiền đơn giản, dễ sử dụng, không mất thời gian hướng dẫn, chỉ cần 5 phút làm quen.
+    Bán hàng linh động hơn dùng máy tính bảng, điện thoại.</p>
+                    </div>
+                </div>
+
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-heart icon-large"></i>
+                        <p> </p>
+                        <h4>Quản lý tồn kho</h4>
+                        <p>Kiểm soát tồn kho chặt chẽ, giảm thất thoát. Nhập kho và cập nhật giá tiện lợi, bán hàng được ngay.
+    Phương thức quản trị tồn kho linh động theo từng loại hàng hóa, dịch vụ.
+    Nắm nhanh công nợ với nhà cung cấp, phân phối</p>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-cog icon-large"></i>
-                    <p></p>
-                    <h4>Bán hàng, tính tiền</h4>
-                    <p>Tính tiền đơn giản, dễ sử dụng, không mất thời gian hướng dẫn, chỉ cần 5 phút làm quen.
-Bán hàng linh động hơn dùng máy tính bảng, điện thoại.</p>
-                </div>
-            </div>
+            <hr>
 
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-heart icon-large"></i>
-                    <p> </p>
-                    <h4>Quản lý tồn kho</h4>
-                    <p>Kiểm soát tồn kho chặt chẽ, giảm thất thoát. Nhập kho và cập nhật giá tiện lợi, bán hàng được ngay.
-Phương thức quản trị tồn kho linh động theo từng loại hàng hóa, dịch vụ.
-Nắm nhanh công nợ với nhà cung cấp, phân phối</p>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-globe icon-large"></i>
+                        <p> </p>
+                        <h4>Quản lý khách hàng</h4>
+                        <p>Hệ thống lưu thông tin chi tiết khách hàng lúc tính tiền nhanh chóng, nhờ đó bạn nắm được thói quen mua hàng của khách, hiểu và chăm sóc họ tốt hơn.
+    Đổi trả hàng tiện lợi theo chính sách cửa hàng.</p>
+                    </div>
                 </div>
+
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-camera icon-large"></i>
+                        <p> </p>
+                        <h4>Khuyến mãi, sản phẩm COMBO</h4>
+                        <p>Hệ thống cho phép mở các đợt khuyến mãi hoặc giảm giá vào các dịp đặc biệt. Đồng thời cũng cho phép tạo các sản phẩm COMBO.</p>
+                    </div>
+                </div>
+
+                <div class="span4">
+                    <div class="center">
+                        <i style="font-size: 48px" class="icon-bullhorn icon-large"></i>
+                        <p> </p>
+                        <h4>Báo cáo thống kê</h4>
+                        <p>Phần mềm có đầy đủ và chi tiết các bảng biểu thống kê sinh động, giúp người quản lý dễ dàng nắm bắt được tình hình kinh doanh của cửa hàng.
+                            Từ đó có thể đưa ra kế hoạch phát triển phù hợp.</p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
-
-        <hr>
-
-        <div class="row-fluid">
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-globe icon-large"></i>
-                    <p> </p>
-                    <h4>Quản lý khách hàng</h4>
-                    <p>Hệ thống lưu thông tin chi tiết khách hàng lúc tính tiền nhanh chóng, nhờ đó bạn nắm được thói quen mua hàng của khách, hiểu và chăm sóc họ tốt hơn.
-Đổi trả hàng tiện lợi theo chính sách cửa hàng.</p>
-                </div>
-            </div>
-
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-camera icon-large"></i>
-                    <p> </p>
-                    <h4>Khuyến mãi, sản phẩm COMBO</h4>
-                    <p>Hệ thống cho phép mở các đợt khuyến mãi hoặc giảm giá vào các dịp đặc biệt. Đồng thời cũng cho phép tạo các sản phẩm COMBO.</p>
-                </div>
-            </div>
-
-            <div class="span4">
-                <div class="center">
-                    <i style="font-size: 48px" class="icon-bullhorn icon-large"></i>
-                    <p> </p>
-                    <h4>Báo cáo thống kê</h4>
-                    <p>Phần mềm có đầy đủ và chi tiết các bảng biểu thống kê sinh động, giúp người quản lý dễ dàng nắm bắt được tình hình kinh doanh của cửa hàng. 
-                        Từ đó có thể đưa ra kế hoạch phát triển phù hợp.</p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
+    </section>*@
 <!--/Features-->
-
-
 <!--Clients-->
-<section id="clients" class="main">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span2">
-                <div class="clearfix">
-                    <h4 class="pull-left">KHÁCH HÀNG</h4>
-                    <div class="pull-right">
-                        <a class="prev" href="#myCarousel" data-slide="prev"><i class="icon-angle-left icon-large"></i></a> <a class="next" href="#myCarousel" data-slide="next"><i class="icon-angle-right icon-large"></i></a>
-                    </div>
-                </div>
-                <p>Những khách hàng đã sử dụng dịch vụ của công ty chúng tôi.</p>
-            </div>
-
-            <div class="span10">
-                <div id="myCarousel" class="carousel slide clients">
-                  <!-- Carousel items -->
-                  <div class="carousel-inner">
-                    <div class="active item">
-                        <div class="row-fluid">
-                            <ul class="thumbnails">
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client1.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client2.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client3.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client4.png")"></a></li>
-                            </ul>
+@*<section id="clients" class="main">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span2">
+                    <div class="clearfix">
+                        <h4 class="pull-left">KHÁCH HÀNG</h4>
+                        <div class="pull-right">
+                            <a class="prev" href="#myCarousel" data-slide="prev"><i class="icon-angle-left icon-large"></i></a> <a class="next" href="#myCarousel" data-slide="next"><i class="icon-angle-right icon-large"></i></a>
                         </div>
                     </div>
-
-                    <div class="item">
-                        <div class="row-fluid">
-                            <ul class="thumbnails">
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client4.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client3.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client2.png")"></a></li>
-                                <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client1.png")"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    
+                    <p>Những khách hàng đã sử dụng dịch vụ của công ty chúng tôi.</p>
                 </div>
-                <!-- /Carousel items -->
 
+                <div class="span10">
+                    <div id="myCarousel" class="carousel slide clients">
+                      <!-- Carousel items -->
+                      <div class="carousel-inner">
+                        <div class="active item">
+                            <div class="row-fluid">
+                                <ul class="thumbnails">
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client1.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client2.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client3.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client4.png")"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="row-fluid">
+                                <ul class="thumbnails">
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client4.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client3.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client2.png")"></a></li>
+                                    <li class="span3"><a href="#"><img src="@Url.Content("~/Content/home/images/sample/clients/client1.png")"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /Carousel items -->
+
+                </div>
             </div>
         </div>
     </div>
-</div>
-</section>
+    </section>*@
 <!--/Clients-->
