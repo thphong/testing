@@ -1,5 +1,0 @@
-E:\Work\MyChemistry\MyChemistry.Common\bin\Debug\MyChemistry.Common.dll
-E:\Work\MyChemistry\MyChemistry.Common\bin\Debug\MyChemistry.Common.pdb
-E:\Work\MyChemistry\MyChemistry.Common\obj\Debug\MyChemistry.Common.dll
-E:\Work\MyChemistry\MyChemistry.Common\obj\Debug\MyChemistry.Common.pdb
-E:\Work\MyChemistry\MyChemistry.Common\obj\Debug\MyChemistry.Common.csprojResolveAssemblyReference.cache
