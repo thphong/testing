@@ -19,10 +19,10 @@ namespace StoreManagement.Website.Controllers
         {
             HttpCookie cookie = Request.Cookies["Username"];
             
-            if (cookie != null && !SessionCollection.IsLogIn)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (cookie != null && !SessionCollection.IsLogIn)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
 
