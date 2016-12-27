@@ -629,7 +629,6 @@
     <Content Include="Resource\ImportedTemplate\Products.conf" />
     <Content Include="Resource\ImportedTemplate\Suppliers.conf" />
     <Content Include="Resource\ImportedTemplate\Suppliers.xlsx" />
-    <Content Include="Scripts\blueimp-gallery-2.20.0\css\blueimp-gallery.less" />
     <Content Include="Scripts\blueimp-gallery-2.20.0\css\blueimp-gallery.min.css.map" />
     <Content Include="Scripts\blueimp-gallery-2.20.0\js\blueimp-gallery.min.js.map" />
     <Content Include="Scripts\blueimp-gallery-2.20.0\js\jquery.blueimp-gallery.min.js.map" />
